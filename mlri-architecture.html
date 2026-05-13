@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme: light only;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>MLRI Platform Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #0b1f3a;
+    --navy2: #132d52;
+    --teal: #0d9488;
+    --teal-light: #14b8a6;
+    --teal-glow: rgba(13,148,136,0.15);
+    --amber: #d97706;
+    --amber-light: #fbbf24;
+    --blue: #2563eb;
+    --blue-light: #60a5fa;
+    --rose: #e11d48;
+    --green: #059669;
+    --green-light: #34d399;
+    --purple: #7c3aed;
+    --purple-light: #a78bfa;
+    --white: #ffffff;
+    --off: #f8fafc;
+    --gray: #94a3b8;
+    --gray-d: #64748b;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    padding: 48px 24px 80px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 800;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .header h1 span { color: var(--teal-light); }
+  .header p {
+    font-size: 15px;
+    color: var(--gray);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* PHASE LEGEND */
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--gray);
+    font-family: 'DM Mono', monospace;
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  /* DIAGRAM WRAPPER */
+  .diagram {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* PHASE ROW */
+  .phase {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0;
+    margin-bottom: 6px;
+    animation: fadeIn 0.5s ease both;
+  }
+  .phase:nth-child(1) { animation-delay: 0.1s; }
+  .phase:nth-child(2) { animation-delay: 0.2s; }
+  .phase:nth-child(3) { animation-delay: 0.3s; }
+  .phase:nth-child(4) { animation-delay: 0.4s; }
+  .phase:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .phase-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding-right: 20px;
+    padding-top: 4px;
+  }
+  .phase-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .phase-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: right;
+    line-height: 1.3;
+  }
+  .phase-timeline {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--gray);
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  .phase-content {
+    border-left: 2px solid rgba(255,255,255,0.08);
+    padding-left: 24px;
+    padding-bottom: 32px;
+    position: relative;
+  }
+  .phase-content::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 16px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 2px solid var(--navy);
+  }
+
+  /* phase colors */
+  .p1 .phase-num { color: var(--teal-light); }
+  .p1 .phase-name { color: var(--teal-light); }
+  .p1 .phase-content::before { background: var(--teal-light); box-shadow: 0 0 8px var(--teal-light); }
+
+  .p2 .phase-num { color: var(--blue-light); }
+  .p2 .phase-name { color: var(--blue-light); }
+  .p2 .phase-content::before { background: var(--blue-light); box-shadow: 0 0 8px var(--blue-light); }
+
+  .p3 .phase-num { color: var(--purple-light); }
+  .p3 .phase-name { color: var(--purple-light); }
+  .p3 .phase-content::before { background: var(--purple-light); box-shadow: 0 0 8px var(--purple-light); }
+
+  /* CARDS */
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 8px;
+  }
+
+  .card {
+    border-radius: 10px;
+    padding: 16px 18px;
+    min-width: 160px;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .card-icon { font-size: 20px; margin-bottom: 8px; }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    line-height: 1.2;
+  }
+  .card-desc {
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0.7;
+  }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 3px;
+    opacity: 0.85;
+  }
+
+  /* Card themes */
+  .card-teal {
+    background: linear-gradient(135deg, rgba(13,148,136,0.2) 0%, rgba(13,148,136,0.08) 100%);
+  }
+  .card-teal .card-title { color: var(--teal-light); }
+  .card-teal .tag { background: rgba(13,148,136,0.2); color: var(--teal-light); }
+
+  .card-blue {
+    background: linear-gradient(135deg, rgba(37,99,235,0.2) 0%, rgba(37,99,235,0.08) 100%);
+  }
+  .card-blue .card-title { color: var(--blue-light); }
+  .card-blue .tag { background: rgba(37,99,235,0.2); color: var(--blue-light); }
+
+  .card-purple {
+    background: linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(124,58,237,0.08) 100%);
+  }
+  .card-purple .card-title { color: var(--purple-light); }
+  .card-purple .tag { background: rgba(124,58,237,0.2); color: var(--purple-light); }
+
+  .card-amber {
+    background: linear-gradient(135deg, rgba(217,119,6,0.2) 0%, rgba(217,119,6,0.08) 100%);
+  }
+  .card-amber .card-title { color: var(--amber-light); }
+  .card-amber .tag { background: rgba(217,119,6,0.2); color: var(--amber-light); }
+
+  .card-green {
+    background: linear-gradient(135deg, rgba(5,150,105,0.2) 0%, rgba(5,150,105,0.08) 100%);
+  }
+  .card-green .card-title { color: var(--green-light); }
+  .card-green .tag { background: rgba(5,150,105,0.2); color: var(--green-light); }
+
+  .card-rose {
+    background: linear-gradient(135deg, rgba(225,29,72,0.2) 0%, rgba(225,29,72,0.08) 100%);
+  }
+  .card-rose .card-title { color: #fb7185; }
+  .card-rose .tag { background: rgba(225,29,72,0.2); color: #fb7185; }
+
+  /* FLOW ARROWS between sections */
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    padding-left: 164px;
+    margin: -18px 0 -4px;
+    color: rgba(255,255,255,0.2);
+    font-size: 20px;
+  }
+
+  /* LAYER DIAGRAM — the stack visual */
+  .stack-diagram {
+    max-width: 900px;
+    margin: 48px auto 0;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 32px;
+  }
+  .stack-diagram-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .stack-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .stack-box {
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Syne', sans-serif;
+  }
+  .stack-arrow-center {
+    font-size: 18px;
+    color: rgba(255,255,255,0.25);
+    text-align: center;
+    width: 32px;
+  }
+  .stack-box-full {
+    grid-column: 1 / -1;
+    border-radius: 8px;
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .sb-learner { background: rgba(13,148,136,0.15); color: var(--teal-light); border: 1px solid rgba(13,148,136,0.3); }
+  .sb-frontend { background: rgba(37,99,235,0.15); color: var(--blue-light); border: 1px solid rgba(37,99,235,0.3); }
+  .sb-supabase { background: rgba(124,58,237,0.15); color: var(--purple-light); border: 1px solid rgba(124,58,237,0.3); }
+  .sb-bs { background: rgba(217,119,6,0.15); color: var(--amber-light); border: 1px solid rgba(217,119,6,0.3); }
+  .sb-api { background: rgba(5,150,105,0.12); color: var(--green-light); border: 1px solid rgba(5,150,105,0.25); font-size: 11px; font-family: 'DM Mono', monospace; }
+
+  .v-connector {
+    display: flex;
+    justify-content: center;
+    color: rgba(255,255,255,0.2);
+    font-size: 18px;
+    margin: 2px 0;
+  }
+
+  /* DATA FLOWS */
+  .data-flows {
+    max-width: 900px;
+    margin: 16px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .flow-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .flow-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .flow-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: white;
+  }
+  .flow-card ul {
+    list-style: none;
+  }
+  .flow-card ul li {
+    font-size: 12px;
+    color: var(--gray);
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-left: 14px;
+    position: relative;
+  }
+  .flow-card ul li:last-child { border-bottom: none; }
+  .flow-card ul li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    font-size: 16px;
+    line-height: 1;
+    top: 3px;
+  }
+
+  .fc-bs .flow-card-label { color: var(--amber-light); }
+  .fc-bs ul li::before { color: var(--amber-light); }
+  .fc-own .flow-card-label { color: var(--purple-light); }
+  .fc-own ul li::before { color: var(--purple-light); }
+  .fc-out .flow-card-label { color: var(--teal-light); }
+  .fc-out ul li::before { color: var(--teal-light); }
+
+  @media (max-width: 600px) {
+    .phase { grid-template-columns: 90px 1fr; }
+    .phase-label { padding-right: 12px; }
+    .flow-arrow { padding-left: 114px; }
+    .data-flows { grid-template-columns: 1fr; }
+    .stack-row { grid-template-columns: 1fr auto 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-tag">System Architecture · MLRI Learning Hub</div>
+  <h1>What We're <span>Building</span></h1>
+  <p>Three phases over 5–6 months — from Brightspace connection to a full custom data layer and reporting suite.</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#14b8a6"></div> Phase 1 · Months 1–2</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> Phase 2 · Months 2–4</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Phase 3 · Months 4–6</div>
+</div>
+
+<!-- PHASES -->
+<div class="diagram">
+
+  <div class="phase p1">
+    <div class="phase-label">
+      <div class="phase-num">Phase 1</div>
+      <div class="phase-name">Connect to Brightspace</div>
+      <div class="phase-timeline">Months 1–2</div>
+    </div>
+    <div class="phase-content">
+      <div class="cards">
+        <div class="card card-teal">
+          <div class="card-icon">🔌</div>
+          <div class="card-title">Brightspace API Auth</div>
+          <div class="card-desc">OAuth connection, token management, sandbox testing</div>
+          <div class="card-tags"><span class="tag">OAuth 2.0</span><span class="tag">API</span></div>
+        </div>
+        <div class="card card-teal">
+          <div class="card-icon">📊</div>
+          <div class="card-title">Pull Core Data</div>
+          <div class="card-desc">Enrollments, completions, grades, time-in-course</div>
+          <div class="card-tags"><span class="tag">BS API</span><span class="tag">Read-only</span></div>
+        </div>
+        <div class="card card-teal">
+          <div class="card-icon">🖥️</div>
+          <div class="card-title">Display in Frontend</div>
+          <div class="card-desc">Surface BS data in your custom discovery layer</div>
+          <div class="card-tags"><span class="tag">Frontend</span><span class="tag">React</span></div>
+        </div>
+        <div class="card card-teal">
+          <div class="card-icon">🔑</div>
+          <div class="card-title">SSO / Auth</div>
+          <div class="card-desc">Single login — no double sign-in for learners</div>
+          <div class="card-tags"><span class="tag">SSO</span><span class="tag">Identity</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-arrow">↓</div>
+
+  <div class="phase p2">
+    <div class="phase-label">
+      <div class="phase-num">Phase 2</div>
+      <div class="phase-name">Your Own Data Layer</div>
+      <div class="phase-timeline">Months 2–4</div>
+    </div>
+    <div class="phase-content">
+      <div class="cards">
+        <div class="card card-blue">
+          <div class="card-icon">🗄️</div>
+          <div class="card-title">Supabase Backend</div>
+          <div class="card-desc">Postgres DB for custom data BS can't capture</div>
+          <div class="card-tags"><span class="tag">Supabase</span><span class="tag">Postgres</span></div>
+        </div>
+        <div class="card card-blue">
+          <div class="card-icon">🔍</div>
+          <div class="card-title">Search Tracking</div>
+          <div class="card-desc">What learners search for, what they don't find</div>
+          <div class="card-tags"><span class="tag">Events</span><span class="tag">Custom</span></div>
+        </div>
+        <div class="card card-blue">
+          <div class="card-icon">⏱️</div>
+          <div class="card-title">Engagement Events</div>
+          <div class="card-desc">Time on page, clicks, path navigation, drop-off</div>
+          <div class="card-tags"><span class="tag">Analytics</span><span class="tag">Events</span></div>
+        </div>
+        <div class="card card-blue">
+          <div class="card-icon">⭐</div>
+          <div class="card-title">Learner Feedback</div>
+          <div class="card-desc">Ratings, flags, content usefulness signals</div>
+          <div class="card-tags"><span class="tag">UX</span><span class="tag">Feedback</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-arrow">↓</div>
+
+  <div class="phase p3">
+    <div class="phase-label">
+      <div class="phase-num">Phase 3</div>
+      <div class="phase-name">Reporting & Evaluation</div>
+      <div class="phase-timeline">Months 4–6</div>
+    </div>
+    <div class="phase-content">
+      <div class="cards">
+        <div class="card card-purple">
+          <div class="card-icon">👤</div>
+          <div class="card-title">Learner Dashboard</div>
+          <div class="card-desc">Personal progress, completions, recommendations</div>
+          <div class="card-tags"><span class="tag">Learner</span><span class="tag">UI</span></div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-icon">👥</div>
+          <div class="card-title">Manager View</div>
+          <div class="card-desc">Team completion rates, gaps, activity</div>
+          <div class="card-tags"><span class="tag">Manager</span><span class="tag">Reports</span></div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-icon">📈</div>
+          <div class="card-title">Program Evaluation</div>
+          <div class="card-desc">Cohort analysis, equity gaps, completion predictors</div>
+          <div class="card-tags"><span class="tag">Evaluation</span><span class="tag">Econometrics</span></div>
+        </div>
+        <div class="card card-purple">
+          <div class="card-icon">🗺️</div>
+          <div class="card-title">Population Insights</div>
+          <div class="card-desc">Who's completing, who isn't, and why — by learner segment</div>
+          <div class="card-tags"><span class="tag">Equity</span><span class="tag">Mission</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SYSTEM STACK -->
+<div class="stack-diagram">
+  <div class="stack-diagram-title">System Stack — How the layers connect</div>
+
+  <div class="stack-box-full sb-learner">👤 Learner / Manager / Admin — Browser</div>
+  <div class="v-connector">↕</div>
+  <div class="stack-row">
+    <div class="stack-box sb-frontend">🖥️ Your Frontend Layer<br><small style="opacity:0.6;font-size:11px">Discovery · Progress · Stats</small></div>
+    <div class="stack-arrow-center">⟷</div>
+    <div class="stack-box sb-supabase">🗄️ Supabase<br><small style="opacity:0.6;font-size:11px">Custom events · Feedback · Users</small></div>
+  </div>
+  <div class="v-connector">↕</div>
+  <div class="stack-box-full sb-api">Brightspace REST API — OAuth 2.0</div>
+  <div class="v-connector">↕</div>
+  <div class="stack-box-full sb-bs">📚 Brightspace (D2L) — Course content · Completions · Grades · Enrollments</div>
+</div>
+
+<!-- DATA FLOWS -->
+<div class="data-flows">
+  <div class="flow-card fc-bs">
+    <div class="flow-card-label">From Brightspace API</div>
+    <h3>What BS gives you</h3>
+    <ul>
+      <li>Enrollment status</li>
+      <li>Course completions</li>
+      <li>Quiz / assessment scores</li>
+      <li>Time in course</li>
+      <li>Last accessed</li>
+      <li>Grade data</li>
+    </ul>
+  </div>
+  <div class="flow-card fc-own">
+    <div class="flow-card-label">Your Own Data (Supabase)</div>
+    <h3>What you capture</h3>
+    <ul>
+      <li>Search queries + results</li>
+      <li>Click paths & navigation</li>
+      <li>Time on page (your layer)</li>
+      <li>Content ratings / flags</li>
+      <li>Learning path choices</li>
+      <li>Drop-off points</li>
+    </ul>
+  </div>
+  <div class="flow-card fc-out">
+    <div class="flow-card-label">Outputs / Reporting</div>
+    <h3>What you surface</h3>
+    <ul>
+      <li>Learner progress dashboards</li>
+      <li>Manager team views</li>
+      <li>Program completion rates</li>
+      <li>Cohort equity analysis</li>
+      <li>Content effectiveness</li>
+      <li>Catalog gap analysis</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

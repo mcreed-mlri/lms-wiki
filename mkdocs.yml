@@ -1,0 +1,51 @@
+site_name: MLRI Platform Wiki
+site_description: Internal team wiki for the MLRI Brightspace and learning platform project
+docs_dir: docs
+
+theme:
+  name: material
+  palette:
+    primary: teal
+    accent: amber
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.instant
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - toc.follow
+
+nav:
+  - Home: index.md
+  - Phases:
+    - Roadmap Overview: phases/overview.md
+    - "Phase 1 · Connect to Brightspace": phases/phase-1.md
+    - "Phase 2 · Own Data Layer": phases/phase-2.md
+    - "Phase 3 · Reporting & Evaluation": phases/phase-3.md
+  - Org Structure:
+    - Hierarchy Overview: org-structure/index.md
+    - Naming Conventions: org-structure/naming-conventions.md
+    - Training Areas: org-structure/training-areas.md
+  - Policies:
+    - Versioning & Archiving: policies/versioning.md
+    - Learner Update Notices: policies/learner-updates.md
+    - User Management: policies/user-management.md
+  - Decisions:
+    - Decision Log: decisions/decision-log.md
+  - Reference:
+    - Glossary: reference/glossary.md
+    - Quick Tasks: reference/quick-tasks.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - tables
+  - attr_list
+  - def_list
+  - toc:
+      permalink: true

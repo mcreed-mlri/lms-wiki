@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brightspace Interactive Features — Trainer Guide</title>
+  <style>
+    :root {
+      --navy:    #1E3A5F;
+      --blue:    #2C6FAC;
+      --teal:    #2A8F82;
+      --amber:   #B06A00;
+      --red:     #9B2335;
+      --bg:      #F4F6F9;
+      --white:   #FFFFFF;
+      --border:  #D0D7E2;
+      --text:    #222831;
+      --muted:   #5A6478;
+      --ph-bg:   #EEF1F6;
+      --ph-border: #9BAAC2;
+      --tip-bg:  #E8F6F3;
+      --tip-border: #2A8F82;
+      --note-bg: #FEF6E8;
+      --note-border: #B06A00;
+      --sidebar-w: 260px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ─────────────────────────────────── */
+    #sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: var(--navy);
+      color: #C8D8EC;
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+      padding-bottom: 2rem;
+    }
+
+    #sidebar-header {
+      background: #16304F;
+      padding: 1.25rem 1.1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    #sidebar-header .brand {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7B9FC4;
+      margin-bottom: 0.25rem;
+    }
+
+    #sidebar-header h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.35;
+    }
+
+    #sidebar nav { padding: 0.75rem 0; }
+
+    #sidebar nav .section-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6B8BAD;
+      padding: 0.8rem 1.1rem 0.25rem;
+      display: block;
+    }
+
+    #sidebar nav a {
+      display: block;
+      padding: 0.42rem 1.1rem 0.42rem 1.3rem;
+      color: #B8CCE2;
+      text-decoration: none;
+      font-size: 0.82rem;
+      line-height: 1.4;
+      border-left: 3px solid transparent;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    #sidebar nav a:hover {
+      background: rgba(255,255,255,0.07);
+      color: #FFFFFF;
+    }
+
+    #sidebar nav a.active {
+      background: rgba(44, 111, 172, 0.3);
+      color: #FFFFFF;
+      border-left-color: #5BA8E0;
+    }
+
+    #sidebar nav a.sub {
+      padding-left: 2.1rem;
+      font-size: 0.78rem;
+      color: #8AACC8;
+    }
+
+    #sidebar nav a.sub:hover { color: #FFFFFF; }
+    #sidebar nav a.sub.active { color: #FFFFFF; border-left-color: #5BA8E0; }
+
+    /* ── Main content ─────────────────────────────── */
+    #main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 2.5rem 2.75rem 4rem;
+      max-width: 900px;
+    }
+
+    /* ── Section spacing ─────────────────────────── */
+    .guide-section { margin-bottom: 3.5rem; }
+
+    .guide-section + .guide-section {
+      border-top: 1px solid var(--border);
+      padding-top: 3rem;
+    }
+
+    /* ── Typography ──────────────────────────────── */
+    h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1.25rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 2px solid var(--blue);
+      display: inline-block;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 1.75rem 0 0.6rem;
+    }
+
+    h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 1.25rem 0 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    p {
+      line-height: 1.7;
+      margin-bottom: 0.9rem;
+      color: var(--text);
+    }
+
+    ul, ol {
+      padding-left: 1.5rem;
+      margin-bottom: 0.9rem;
+    }
+
+    li { line-height: 1.7; margin-bottom: 0.3rem; }
+
+    strong { color: var(--navy); }
+
+    code {
+      background: #E8EDF4;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.1em 0.4em;
+      font-size: 0.88em;
+      font-family: "Consolas", "Courier New", monospace;
+      color: var(--navy);
+    }
+
+    /* ── Step lists ──────────────────────────────── */
+    ol.steps { padding-left: 0; list-style: none; counter-reset: steps; }
+    ol.steps > li {
+      counter-increment: steps;
+      position: relative;
+      padding-left: 2.5rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.7;
+    }
+    ol.steps > li::before {
+      content: counter(steps);
+      background: var(--blue);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left: 0;
+      top: 0.18rem;
+    }
+
+    /* Nested lists inside steps — plain bullets, no circles */
+    ol.steps > li ul {
+      list-style: disc;
+      padding-left: 1.1rem;
+      margin: 0.45rem 0 0.2rem;
+    }
+    ol.steps > li ul li {
+      display: list-item;
+      counter-increment: none;
+      margin-bottom: 0.3rem;
+      line-height: 1.6;
+    }
+    ol.steps > li ul li::before { display: none; }
+
+    /* ── Callouts ─────────────────────────────────── */
+    .tip, .note {
+      border-left: 4px solid;
+      border-radius: 0 6px 6px 0;
+      padding: 0.85rem 1rem;
+      margin: 1.25rem 0;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border-color: var(--tip-border);
+    }
+
+    .tip::before {
+      content: "Tip  ";
+      font-weight: 700;
+      color: var(--teal);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .note {
+      background: var(--note-bg);
+      border-color: var(--note-border);
+    }
+
+    .note::before {
+      content: "Note  ";
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    /* ── Screenshot placeholders ─────────────────── */
+    .screenshot {
+      border: 2px dashed var(--ph-border);
+      background: var(--ph-bg);
+      border-radius: 8px;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      margin: 1.25rem 0 1.5rem;
+      gap: 0.5rem;
+    }
+
+    .screenshot .cam {
+      font-size: 2rem;
+      opacity: 0.35;
+    }
+
+    .screenshot .label {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 0.9rem;
+    }
+
+    .screenshot .hint {
+      color: var(--muted);
+      font-size: 0.8rem;
+      max-width: 480px;
+    }
+
+    /* Smaller placeholder for secondary screenshots */
+    .screenshot.sm { min-height: 200px; }
+
+    /* ── Tables ──────────────────────────────────── */
+    .table-wrap { overflow-x: auto; margin: 1rem 0 1.5rem; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    th {
+      background: var(--navy);
+      color: #fff;
+      text-align: left;
+      padding: 0.6rem 0.85rem;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 0.55rem 0.85rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    tr:nth-child(even) td { background: #F0F3F8; }
+
+    /* ── Feature badge ───────────────────────────── */
+    .badge {
+      display: inline-block;
+      background: var(--teal);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.18em 0.55em;
+      border-radius: 3px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+
+    /* ── Intro card ──────────────────────────────── */
+    .intro-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .intro-card h4 { margin-top: 0; }
+
+    /* ── Print styles ────────────────────────────── */
+    @media print {
+      #sidebar { display: none !important; }
+      #main { margin-left: 0; padding: 1rem; max-width: 100%; }
+      .screenshot { min-height: 200px; }
+      h2 { page-break-after: avoid; }
+      h3 { page-break-after: avoid; }
+    }
+
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 800px) {
+      #sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+      }
+      #main { margin-left: 0; padding: 1.25rem 1rem; }
+      body { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     SIDEBAR / TABLE OF CONTENTS
+══════════════════════════════════════════════════ -->
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <div class="brand">Trainer Reference Guide</div>
+    <h2>Brightspace Interactive Features</h2>
+  </div>
+  <nav>
+    <span class="section-label">Getting Started</span>
+    <a href="#intro">Introduction</a>
+    <a href="#navigating">Navigating to the Editor</a>
+
+    <span class="section-label">H5P Interactive Content</span>
+    <a href="#h5p">What Is H5P?</a>
+    <a href="#h5p-how-to-insert">How to Insert H5P</a>
+    <a href="#interactive-video" class="sub">Interactive Video</a>
+    <a href="#image-hotspots" class="sub">Image Hotspots</a>
+    <a href="#flashcards" class="sub">Flashcards</a>
+    <a href="#drag-and-drop" class="sub">Drag and Drop</a>
+    <a href="#course-presentation" class="sub">Course Presentation</a>
+    <a href="#accordion" class="sub">Accordion</a>
+
+    <span class="section-label">Built-In Tools</span>
+    <a href="#quizzes">Quizzes (Knowledge Checks)</a>
+    <a href="#surveys">Surveys &amp; Reflections</a>
+    <a href="#discussions">Discussions</a>
+    <a href="#assignments">Assignments</a>
+    <a href="#checklists">Checklists</a>
+
+    <span class="section-label">Reference</span>
+    <a href="#quick-reference">Quick Reference Table</a>
+  </nav>
+</aside>
+
+<!-- ═══════════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════════════ -->
+<main id="main">
+
+  <h1>Brightspace Interactive Features</h1>
+  <p class="page-subtitle">A step-by-step guide for trainers and facilitators building legal skills training modules</p>
+
+  <!-- ─────────────────────────────────────────────
+       1. INTRODUCTION
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="intro">
+    <h2>Introduction</h2>
+
+    <p>This guide is for trainers and facilitators who build and run training modules in Brightspace for legal aid staff, advocates, and community members, your organization's learning management system (LMS). Your organization uses Brightspace with the <strong>Creator+</strong> add-on, which unlocks a powerful set of interactive tools.</p>
+
+    <p>You don't need a technical background to use any of these features. This guide walks you through each tool step by step, explains what it's for, and includes space for screenshots you'll add to make instructions even clearer for your team.</p>
+
+    <div class="intro-card">
+      <h4>What Is Brightspace?</h4>
+      <p style="margin-bottom:0;">Brightspace (made by D2L) is the platform where you build online and blended training modules. Learners enrolled in your trainings can watch videos, complete activities, read materials, and interact with each other — all in one place.</p>
+    </div>
+
+    <div class="intro-card">
+      <h4>What Is Creator+?</h4>
+      <p style="margin-bottom:0;">Creator+ is an upgrade that gives your organization access to <strong>H5P</strong> — a library of interactive content tools. With H5P you can embed questions inside videos, create drag-and-drop exercises, build flashcard decks, and more, all without any coding.</p>
+    </div>
+
+    <div class="intro-card">
+      <h4>How Training Is Organized in Brightspace</h4>
+      <p>Brightspace organizes training into three levels:</p>
+      <ul>
+        <li><strong>Training Modules</strong> — the top-level container for a topic (e.g., "Eviction Defense Fundamentals")</li>
+        <li><strong>Units / Sections</strong> — chapters or topic groupings within the module</li>
+        <li><strong>Content Items</strong> — the individual pieces: videos, readings, activities, and interactive exercises</li>
+      </ul>
+      <p style="margin-bottom:0;">Think of it like a binder: the module is the binder, units are the tabbed sections, and content items are the pages inside.</p>
+    </div>
+
+    <div class="tip">
+      Throughout this guide, participants are referred to as <strong>learners</strong> and outcomes as <strong>training completions</strong>.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       2. NAVIGATING TO THE CONTENT EDITOR
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="navigating">
+    <h2>Navigating to the Content Editor</h2>
+
+    <p>Before you can add any interactive elements, you need to open your training module and reach the content editor. All of the tools in this guide are accessed from there.</p>
+
+    <h3>Opening a Training Module</h3>
+    <ol class="steps">
+      <li>Log in to Brightspace at your organization's URL.</li>
+      <li>From your dashboard, click the name of the training module you want to edit.</li>
+      <li>Click the <strong>Content</strong> tab in the top navigation of the module.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: Your training module dashboard and the Content tab</div>
+      <div class="hint">Show the module home page with the top navigation bar, highlighting the Content tab.</div>
+    </div>
+
+    <h3>Opening the Content Editor</h3>
+    <ol class="steps">
+      <li>In the content area, click <strong>New</strong> to create a new content item, or click the title of an existing item and then click the edit (pencil) icon.</li>
+      <li>The <strong>Content Editor</strong> opens — this is the toolbar-driven editing area where you build and format content.</li>
+      <li>The toolbar at the top of the editor is where you'll find the Insert menu and the H5P tools covered in the next section.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Content Editor open with the toolbar visible</div>
+      <div class="hint">Show the full editor interface — toolbar at top, editing canvas below. Highlight the Insert option in the toolbar.</div>
+    </div>
+
+    <div class="note">
+      The exact appearance of the toolbar may vary slightly depending on your organization's Brightspace configuration and version. If something looks different from a screenshot, look for a similar button or label nearby.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       3. H5P — OVERVIEW
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="h5p">
+    <h2>H5P Interactive Content <span class="badge">Creator+</span></h2>
+
+    <p><strong>H5P</strong> is a library of ready-made interactive activities you can embed directly into your training content. With Creator+, your organization has access to H5P at no additional cost.</p>
+
+    <p>H5P activities are well-suited for legal skills training because they:</p>
+    <ul>
+      <li>Let learners engage with material actively, not just read or watch passively</li>
+      <li>Allow practice and self-checking without any grade pressure</li>
+      <li>Can be retaken as many times as an learner wants</li>
+      <li>Work on phones, tablets, and computers</li>
+      <li>Are built once and reusable across multiple training modules</li>
+    </ul>
+
+    <p>The following H5P activity types are covered in this guide:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>H5P Type</th>
+            <th>What Learners Do</th>
+            <th>Great For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Interactive Video</strong></td>
+            <td>Answer questions embedded at points in a video</td>
+            <td>Video walkthroughs of procedures</td>
+          </tr>
+          <tr>
+            <td><strong>Image Hotspots</strong></td>
+            <td>Click labeled spots on an image to reveal information</td>
+            <td>Annotating forms, diagrams, documents</td>
+          </tr>
+          <tr>
+            <td><strong>Flashcards</strong></td>
+            <td>Flip through digital cards to review terms</td>
+            <td>Legal vocabulary, key concepts</td>
+          </tr>
+          <tr>
+            <td><strong>Drag and Drop</strong></td>
+            <td>Drag items to correct zones on a background</td>
+            <td>Matching, sorting, categorizing exercises</td>
+          </tr>
+          <tr>
+            <td><strong>Course Presentation</strong></td>
+            <td>Click through slides with embedded activities</td>
+            <td>Structured mini-modules</td>
+          </tr>
+          <tr>
+            <td><strong>Accordion</strong></td>
+            <td>Expand and collapse content sections</td>
+            <td>Reference material, FAQs, procedures</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       3a. HOW TO INSERT H5P
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="h5p-how-to-insert">
+    <h2>How to Insert an H5P Activity</h2>
+
+    <p>All H5P activities are added to content items using the same starting steps. The steps below get you to the H5P activity library, where you choose which type to create.</p>
+
+    <ol class="steps">
+      <li>Open a content item in the <strong>Content Editor</strong> (see previous section).</li>
+      <li>Click <strong>Insert</strong> in the editor toolbar.</li>
+      <li>Select <strong>Insert Stuff</strong> from the dropdown menu.</li>
+      <li>In the window that opens, look for <strong>H5P</strong> in the list of options and click it.</li>
+      <li>Click <strong>Create New</strong> to build a new activity, or <strong>Add Existing</strong> to reuse one you've already made.</li>
+      <li>Choose the H5P activity type you want from the list (each type is covered in the sections below).</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Insert menu in the Content Editor toolbar, with "Insert Stuff" highlighted</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Insert Stuff dialog window with the H5P option visible</div>
+      <div class="hint">Show the full dialog with H5P highlighted or circled.</div>
+    </div>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The H5P activity type selection list</div>
+      <div class="hint">Show the list of H5P types learners can choose from (Interactive Video, Flashcards, etc.).</div>
+    </div>
+
+    <div class="tip">
+      H5P activities you create are saved to a reusable library. Once you build a flashcard deck or interactive video, you can add it to any training module without rebuilding it. Use <strong>Add Existing</strong> to reuse a saved activity.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       H5P: INTERACTIVE VIDEO
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="interactive-video">
+    <h2>H5P: Interactive Video <span class="badge">Creator+</span></h2>
+
+    <h3>What It Is</h3>
+    <p>A video with questions, notes, or clickable markers embedded at specific moments in the timeline. When the video reaches that point, it pauses and the learner must respond before it continues.</p>
+
+    <h3>When to Use It</h3>
+    <p>Any time you have a training video and want to make sure learners are actively following along — for example, a video walkthrough of a client intake procedure with comprehension checks at key points.</p>
+
+    <h3>How to Build One</h3>
+    <ol class="steps">
+      <li>Follow the H5P insertion steps above and select <strong>Interactive Video</strong> from the activity list.</li>
+      <li>Add your video by uploading a file, or by pasting a video URL (YouTube, Vimeo, or a direct video link).</li>
+      <li>Click the <strong>+</strong> button on the video timeline to add an interaction at any moment in the video.</li>
+      <li>Choose the type of interaction:
+        <ul>
+          <li><strong>Multiple Choice Question</strong> — pause the video and present a question</li>
+          <li><strong>Fill in the Blank</strong> — learners complete a sentence or key phrase</li>
+          <li><strong>Text Overlay</strong> — display a note, key point, or definition</li>
+          <li><strong>Bookmark</strong> — add a labeled navigation marker (like a chapter marker)</li>
+        </ul>
+      </li>
+      <li>Fill in your question text and answer choices. Mark the correct answer if applicable.</li>
+      <li>Optionally add feedback text for correct and incorrect answers.</li>
+      <li>Click <strong>Save</strong> when finished.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Interactive Video editor showing the video timeline with the + button</div>
+      <div class="hint">Show the timeline bar at the bottom of the video editor and the + button used to add interactions.</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The interaction editor — adding a multiple choice question at a specific timestamp</div>
+      <div class="hint">Show the question text field, answer options, and the correct-answer selector.</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: How the pause-and-question appears to an learner during playback</div>
+      <div class="hint">Show the video paused with the question overlay visible on screen.</div>
+    </div>
+
+    <div class="tip">
+      Keep embedded questions short and focused — one key concept per pause point. Two or three questions spread across a 10-minute video is usually the right balance. More than that can feel like an exam rather than a training.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       H5P: IMAGE HOTSPOTS
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="image-hotspots">
+    <h2>H5P: Image Hotspots <span class="badge">Creator+</span></h2>
+
+    <h3>What It Is</h3>
+    <p>An image with clickable marker spots that reveal information when an learner clicks them. Each hotspot can display a short explanation, a definition, a link, or an image.</p>
+
+    <h3>When to Use It</h3>
+    <p>Annotating documents, forms, or diagrams — for example, a sample client intake form where each section has a hotspot explaining what information goes there and why it matters, or a courtroom layout explaining where each party stands.</p>
+
+    <h3>How to Build One</h3>
+    <ol class="steps">
+      <li>Follow the H5P insertion steps and select <strong>Image Hotspots</strong> from the activity list.</li>
+      <li>Upload your background image (e.g., a sample form, a workflow diagram, or a document page).</li>
+      <li>Click anywhere on the image to place a hotspot marker at that location.</li>
+      <li>For each hotspot, fill in:
+        <ul>
+          <li><strong>Header</strong> — a short label (e.g., "Client Name Field")</li>
+          <li><strong>Content</strong> — the explanation text that appears when clicked</li>
+        </ul>
+      </li>
+      <li>Optionally change the hotspot icon style (circle, plus, etc.) and color.</li>
+      <li>Repeat for each spot you want to annotate on the image.</li>
+      <li>Click <strong>Save</strong> when finished.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Image Hotspots editor with a background image loaded and hotspot markers placed</div>
+      <div class="hint">Show the image with two or three hotspot icons placed on it.</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The hotspot configuration panel — header and content fields for one hotspot</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: How the image looks to an learner — with a hotspot popup open showing the explanation</div>
+    </div>
+
+    <div class="tip">
+      Use Image Hotspots to make reference documents interactive. A sample retainer agreement or fee waiver form becomes a learning tool when learners can click each section to understand what it means and why it's there.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       H5P: FLASHCARDS
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="flashcards">
+    <h2>H5P: Flashcards <span class="badge">Creator+</span></h2>
+
+    <h3>What It Is</h3>
+    <p>A digital flashcard deck. Each card shows a term, question, or prompt on the front. The learner clicks to flip the card and see the definition, answer, or explanation on the back.</p>
+
+    <h3>When to Use It</h3>
+    <p>Building vocabulary (legal terms, Latin phrases, statute names), reviewing procedural steps, or any situation where quick recall is useful. A "Client Rights" deck or "Common Intake Forms" deck can be referenced any time during the training program.</p>
+
+    <h3>How to Build One</h3>
+    <ol class="steps">
+      <li>Follow the H5P insertion steps and select <strong>Flashcards</strong> from the activity list.</li>
+      <li>Enter a title for the deck (e.g., "Housing Law — Key Terms").</li>
+      <li>Click <strong>Add Card</strong> to create the first card.</li>
+      <li>For each card, enter:
+        <ul>
+          <li><strong>Front text</strong> — the term, question, or prompt learners see first</li>
+          <li><strong>Back text</strong> — the definition, answer, or full explanation</li>
+          <li>Optionally upload an image to either side of the card</li>
+        </ul>
+      </li>
+      <li>Click <strong>Add Card</strong> again to continue adding cards to the deck.</li>
+      <li>Click <strong>Save</strong> when the deck is complete.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Flashcards editor showing the front text and back text fields for one card</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: How the flashcard deck looks to an learner — a card showing the front, and the flip animation</div>
+    </div>
+
+    <div class="tip">
+      Flashcard decks are a great "just-in-time" resource. Consider creating one for every major training topic and making it available throughout the program — not just during the module where the terms are introduced — so learners can revisit it whenever they need a refresher.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       H5P: DRAG AND DROP
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="drag-and-drop">
+    <h2>H5P: Drag and Drop <span class="badge">Creator+</span></h2>
+
+    <h3>What It Is</h3>
+    <p>An activity where learners drag labeled items and drop them into the correct zones on a background image or grid. Immediate feedback is shown when the activity is submitted.</p>
+
+    <h3>When to Use It</h3>
+    <p>Matching and sorting exercises — for example: matching the steps of an eviction proceeding to the correct timeline stage, sorting different types of evidence into admissible vs. inadmissible categories, or matching legal terms to their definitions.</p>
+
+    <h3>How to Build One</h3>
+    <ol class="steps">
+      <li>Follow the H5P insertion steps and select <strong>Drag and Drop</strong> from the activity list.</li>
+      <li>Upload a background image, or choose a blank grid layout.</li>
+      <li>Define <strong>Drop Zones</strong> — click and drag on the background to draw the rectangular areas where items can be dropped. Label each zone.</li>
+      <li>Add <strong>Draggable Items</strong> — these are the items learners will drag. Each item can be a text label or an image.</li>
+      <li>Connect each draggable item to its correct drop zone (this tells Brightspace what the right answer is).</li>
+      <li>Set feedback messages for correct and incorrect responses (optional but helpful).</li>
+      <li>Click <strong>Save</strong> when finished.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Drag and Drop editor — background image with drop zones drawn on it</div>
+      <div class="hint">Show the editor with a background image and at least two labeled drop zones visible.</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The draggable items panel — adding text labels that learners will drag</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: How the completed activity looks to an learner before submitting</div>
+    </div>
+
+    <div class="tip">
+      Keep draggable items manageable — 6 to 10 is a good range. A very large set can become overwhelming and shifts the cognitive load from understanding to memorization. If you have more items to cover, break them into two separate activities.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       H5P: COURSE PRESENTATION
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="course-presentation">
+    <h2>H5P: Course Presentation <span class="badge">Creator+</span></h2>
+
+    <h3>What It Is</h3>
+    <p>A slide-based presentation where each slide can contain text, images, videos, and embedded interactive H5P elements. Learners click through the slides at their own pace.</p>
+
+    <h3>When to Use It</h3>
+    <p>Building a structured mini-module within a training — for example, a 10-slide overview of the eviction defense process with comprehension checks embedded in specific slides. Course Presentations let you combine explanatory content and practice in a single, self-contained activity.</p>
+
+    <h3>How to Build One</h3>
+    <ol class="steps">
+      <li>Follow the H5P insertion steps and select <strong>Course Presentation</strong> from the activity list.</li>
+      <li>Use the slide panel on the left to add, reorder, and delete slides.</li>
+      <li>For each slide, use the toolbar to add text, images, video, and links.</li>
+      <li>To embed an interactive element on a slide, click the <strong>+</strong> button and choose an H5P type (e.g., Multiple Choice, Drag and Drop).</li>
+      <li>In the <strong>Navigation</strong> settings, choose whether learners can skip ahead freely or must complete each slide before moving on.</li>
+      <li>Add a summary slide at the end with key takeaways from the presentation.</li>
+      <li>Click <strong>Save</strong> when finished.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Course Presentation editor with the slide panel on the left and the current slide on the right</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: A slide with an embedded multiple choice question added using the + button</div>
+    </div>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The navigation / settings panel showing the "prevent skipping" option</div>
+    </div>
+
+    <div class="tip">
+      A Course Presentation works like a self-paced mini-lesson. It's ideal when you want a training experience that's more structured than a single video or reading, but less complex than a full module. Aim for 8–15 slides — enough to cover a topic thoroughly without becoming a lengthy lecture.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       H5P: ACCORDION
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="accordion">
+    <h2>H5P: Accordion <span class="badge">Creator+</span></h2>
+
+    <h3>What It Is</h3>
+    <p>A list of expandable content sections. Each item has a clickable header — learners click it to expand and read the content beneath. Collapsed sections stay hidden until clicked, keeping the page clean and scannable.</p>
+
+    <h3>When to Use It</h3>
+    <p>Reference material, FAQs, step-by-step procedures for complex tasks, or any content where you want to organize a lot of information without overwhelming the reader at once. An Accordion is excellent for a "Procedures Reference" panel that learners can revisit throughout training.</p>
+
+    <h3>How to Build One</h3>
+    <ol class="steps">
+      <li>Follow the H5P insertion steps and select <strong>Accordion</strong> from the activity list.</li>
+      <li>Click <strong>Add Item</strong> to create your first section.</li>
+      <li>For each item, fill in:
+        <ul>
+          <li><strong>Title</strong> — the clickable header learners see (keep it short and descriptive)</li>
+          <li><strong>Content</strong> — the text that appears when the section is expanded; can include bullet lists, links, and images</li>
+        </ul>
+      </li>
+      <li>Repeat for each section you want to include.</li>
+      <li>Click <strong>Save</strong> when finished.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Accordion editor with the title and content fields for one item</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: How the Accordion looks to an learner — all panels collapsed, then one panel open</div>
+      <div class="hint">Consider two side-by-side screenshots: all collapsed, then one expanded.</div>
+    </div>
+
+    <div class="tip">
+      Write Accordion headings as questions or action phrases — "What documents does the client need to bring?" or "Steps to file a motion" — so learners can scan the headers and expand only what they need right now.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       4. QUIZZES
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="quizzes">
+    <h2>Quizzes — Knowledge Checks</h2>
+
+    <div class="note">
+      In Brightspace this tool is called <strong>Quizzes</strong>, but for legal training purposes think of them as <strong>knowledge checks</strong> — low-pressure activities that help learners confirm their understanding. They do not need to count toward any score.
+    </div>
+
+    <p>Knowledge checks work well after a video or reading to help learners confirm they absorbed the key points, before a training topic to gauge starting knowledge, or at the end of a module as a self-assessment.</p>
+
+    <h3>Creating a Knowledge Check</h3>
+    <ol class="steps">
+      <li>Click <strong>Tools</strong> in the top navigation of your training module.</li>
+      <li>Select <strong>Quizzes</strong> from the dropdown.</li>
+      <li>Click <strong>New Quiz</strong>.</li>
+      <li>Give the quiz a descriptive name (e.g., "Intake Procedure — Knowledge Check").</li>
+      <li>Click <strong>Add/Edit Questions</strong> to begin adding questions.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Quizzes tool in the module navigation, with "New Quiz" button visible</div>
+    </div>
+
+    <h3>Question Types</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Question Type</th>
+            <th>Best For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Multiple Choice</strong></td>
+            <td>Testing knowledge of a specific fact or concept; one correct answer</td>
+          </tr>
+          <tr>
+            <td><strong>True / False</strong></td>
+            <td>Quick checks on common misconceptions</td>
+          </tr>
+          <tr>
+            <td><strong>Multi-Select</strong></td>
+            <td>Questions where more than one answer can be correct</td>
+          </tr>
+          <tr>
+            <td><strong>Short Answer</strong></td>
+            <td>Open-ended reflection prompts; learner types a free response</td>
+          </tr>
+          <tr>
+            <td><strong>Matching</strong></td>
+            <td>Connecting terms to definitions, or steps to outcomes</td>
+          </tr>
+          <tr>
+            <td><strong>Ordering</strong></td>
+            <td>Arranging steps or events in the correct sequence</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Adding a Question</h3>
+    <ol class="steps">
+      <li>Click <strong>New</strong> → <strong>New Question</strong> → choose your question type.</li>
+      <li>Type the question in the <strong>Question Text</strong> field.</li>
+      <li>Add answer options. For multiple choice, check the box next to the correct answer.</li>
+      <li>Optionally add feedback text for correct and incorrect answers — this is shown to learners immediately after they respond and is a valuable teaching moment.</li>
+      <li>Click <strong>Save</strong>.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The question editor for a multiple choice question — question text, answer options, and correct-answer checkbox</div>
+    </div>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The feedback fields for correct and incorrect answers</div>
+    </div>
+
+    <h3>Setting the Quiz as Ungraded</h3>
+    <ol class="steps">
+      <li>In the quiz settings, click the <strong>Assessment</strong> tab.</li>
+      <li>Under <strong>Grade Item</strong>, select <strong>[None]</strong> — this removes the quiz from the gradebook entirely.</li>
+      <li>Alternatively, set the quiz to automatically award full credit on submission so learners aren't penalized for their answers.</li>
+    </ol>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Assessment tab with Grade Item set to [None]</div>
+    </div>
+
+    <h3>Allowing Unlimited Retakes</h3>
+    <ol class="steps">
+      <li>In the quiz settings, click the <strong>Attempts</strong> tab.</li>
+      <li>Set <strong>Attempts Allowed</strong> to <strong>Unlimited</strong> so learners can retake the check as many times as they want.</li>
+      <li>Click <strong>Save and Close</strong>.</li>
+    </ol>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Attempts tab with "Unlimited" selected</div>
+    </div>
+
+    <div class="tip">
+      Even when a quiz is ungraded, Brightspace still records completion. You can see which learners finished the knowledge check without assigning any score — useful for tracking engagement and identifying who may need follow-up.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       5. SURVEYS
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="surveys">
+    <h2>Surveys — Feedback and Reflection Tools</h2>
+
+    <p>Surveys let you collect input from learners in a way that is separate from the quiz tool. Responses are typically anonymous or confidential, making surveys better for honest feedback.</p>
+
+    <h4>Survey vs. Quiz — What's the Difference?</h4>
+    <ul>
+      <li>Quizzes have right and wrong answers. Surveys do not.</li>
+      <li>Surveys are better suited for gathering opinions, training evaluations, pre-training needs assessments, and open reflection prompts.</li>
+      <li>Survey results can be kept anonymous so individual learners' responses stay private.</li>
+    </ul>
+
+    <h3>Creating a Survey</h3>
+    <ol class="steps">
+      <li>Click <strong>Tools</strong> → <strong>Surveys</strong>.</li>
+      <li>Click <strong>New Survey</strong>.</li>
+      <li>Enter a name (e.g., "Training Feedback — Eviction Defense Module").</li>
+      <li>Click <strong>Add/Edit Questions</strong> to start adding questions.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Surveys tool with the "New Survey" button visible</div>
+    </div>
+
+    <h3>Useful Survey Question Types</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Question Type</th>
+            <th>Example Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Likert / Rating Scale</strong></td>
+            <td>"How confident do you feel about advising a client on [topic]?" (rate 1–5)</td>
+          </tr>
+          <tr>
+            <td><strong>Short Answer</strong></td>
+            <td>"What was the most useful part of this training?"</td>
+          </tr>
+          <tr>
+            <td><strong>Multiple Choice</strong></td>
+            <td>"Which topic would you like more training on?" (choose one)</td>
+          </tr>
+          <tr>
+            <td><strong>Multi-Select</strong></td>
+            <td>"Which formats work best for your learning?" (select all that apply)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The survey question editor showing a Likert / Rating Scale question being configured</div>
+    </div>
+
+    <h3>Enabling Anonymous Responses</h3>
+    <ol class="steps">
+      <li>In the survey settings, find the <strong>Responses</strong> section.</li>
+      <li>Check <strong>Allow anonymous responses</strong>.</li>
+      <li>With this enabled, you can view aggregated results but not individual learners' answers.</li>
+    </ol>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The survey settings panel with the "Allow anonymous responses" checkbox</div>
+    </div>
+
+    <div class="tip">
+      A short 3-to-5 question survey at the end of each training module takes learners less than two minutes and gives you data to continuously improve your trainings. Consider a "confidence before and after" question on a 1–5 scale — it's a simple way to demonstrate training impact over time.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       6. DISCUSSIONS
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="discussions">
+    <h2>Discussions</h2>
+
+    <p>Discussions give learners a space to post responses, ask questions, and learn from each other's approaches. Discussions in Brightspace are organized into <strong>Forums</strong> (broad topic containers) and <strong>Topics</strong> (the specific threads where learners post).</p>
+
+    <h4>Forum vs. Topic</h4>
+    <ul>
+      <li>A <strong>Forum</strong> is like a folder — it groups related discussion topics together.
+        <br><em>Example forum: "Case Scenario Practice"</em></li>
+      <li>A <strong>Topic</strong> is the actual discussion thread where learners write their posts.
+        <br><em>Example topic: "Module 2 — How would you handle this client interview situation?"</em></li>
+    </ul>
+
+    <h3>Creating a Forum</h3>
+    <ol class="steps">
+      <li>Click <strong>Tools</strong> → <strong>Discussions</strong>.</li>
+      <li>Click <strong>New</strong> → <strong>New Forum</strong>.</li>
+      <li>Enter a forum name and a brief description so learners understand its purpose.</li>
+      <li>Click <strong>Save and Add Topic</strong> to immediately create the first topic within this forum.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Discussions tool with the New Forum option in the dropdown</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The New Forum form with name and description fields</div>
+    </div>
+
+    <h3>Creating a Discussion Topic</h3>
+    <ol class="steps">
+      <li>Inside a forum, click <strong>New Topic</strong>.</li>
+      <li>Enter the topic title (short) and a <strong>description / prompt</strong> — this is the text learners see before they post. Make the prompt specific and scenario-based.</li>
+      <li>Under <strong>Options</strong>, consider enabling:
+        <ul>
+          <li><strong>"Require a post before reading replies"</strong> — learners must submit their own response before seeing what others wrote; this encourages original thinking</li>
+          <li><strong>"Allow anonymous posts"</strong> — creates a safer space for sensitive questions</li>
+        </ul>
+      </li>
+      <li>Click <strong>Save and Close</strong>.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The New Topic form — title, prompt/description, and the Options panel</div>
+    </div>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The "Require a post before reading replies" option checked in Topic Options</div>
+    </div>
+
+    <h3>Linking a Discussion to Your Training Content</h3>
+    <ol class="steps">
+      <li>Open your training module's content area.</li>
+      <li>Click <strong>Add Existing Activities</strong>.</li>
+      <li>Select <strong>Discussions</strong> and choose the topic you created.</li>
+      <li>This adds a direct link to the discussion thread from within the training flow, so learners don't need to hunt for it.</li>
+    </ol>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The "Add Existing Activities" menu with Discussions highlighted</div>
+    </div>
+
+    <h3>Facilitation Tips</h3>
+    <ul>
+      <li>Post a short opening message in the thread to model the tone and depth you're looking for.</li>
+      <li>Set up email notifications so you're alerted when someone posts — this lets you respond quickly, which signals to learners that engagement is valued.</li>
+      <li>Respond to at least a few posts publicly to validate contributions and add nuance.</li>
+      <li>Use the <strong>Moderate Posts</strong> setting if you want to review posts before they're visible to others.</li>
+    </ul>
+
+    <div class="tip">
+      A scenario-based discussion prompt — "Read this client intake situation and post what you would do first, and why" — is one of the most effective activities for legal skills training. It surfaces different approaches, creates peer learning, and gives you insight into where learners need more support.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       7. ASSIGNMENTS
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="assignments">
+    <h2>Assignments and Reflections</h2>
+
+    <p>In Brightspace, the <strong>Assignments</strong> tool (also called the Assignment Dropbox) is where learners submit work. For legal training purposes, "work" usually means a reflection, a written response to a scenario, or a practice document — not homework in the traditional sense.</p>
+
+    <h3>Creating an Assignment</h3>
+    <ol class="steps">
+      <li>Click <strong>Tools</strong> → <strong>Assignments</strong>.</li>
+      <li>Click <strong>New Assignment</strong>.</li>
+      <li>Enter an assignment name and write clear instructions in the description field. Tell learners exactly what you're asking them to submit and how long it should be.</li>
+      <li>Choose a submission type (see table below).</li>
+      <li>Click <strong>Save and Close</strong>.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Assignments tool with the "New Assignment" button</div>
+    </div>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The assignment editor — name field, instructions area, and submission type options</div>
+    </div>
+
+    <h3>Submission Types</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Submission Type</th>
+            <th>When to Use It</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>File Submission</strong></td>
+            <td>Learners upload a Word document, PDF, or other file — good for draft memos, sample client letters, or practice pleadings</td>
+          </tr>
+          <tr>
+            <td><strong>Text Submission</strong></td>
+            <td>Learners type directly in the browser — good for short reflections or written responses</td>
+          </tr>
+          <tr>
+            <td><strong>Video/Audio Recording</strong></td>
+            <td>Learners record themselves — good for oral skills practice, such as a mock client explanation</td>
+          </tr>
+          <tr>
+            <td><strong>On Paper / Observed in Person</strong></td>
+            <td>Record that a live skill demonstration was observed — useful for in-person components of a blended training</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The submission type selector in the assignment settings</div>
+    </div>
+
+    <h3>Setting the Assignment as Ungraded</h3>
+    <ol class="steps">
+      <li>In the assignment settings, find the <strong>Assessment</strong> section.</li>
+      <li>Set the <strong>Grade Item</strong> to <strong>[None]</strong>.</li>
+      <li>Learners can still submit, and you can still read their submissions — there's simply no score attached.</li>
+    </ol>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Assessment section with Grade Item set to [None]</div>
+    </div>
+
+    <h3>Adding a Rubric (Optional)</h3>
+    <p>Even without a grade, a rubric helps learners understand what a quality reflection or submission looks like — it becomes a self-assessment checklist rather than a grading tool.</p>
+    <ol class="steps">
+      <li>In the assignment editor, scroll to <strong>Evaluation and Feedback</strong>.</li>
+      <li>Click <strong>Add Rubric</strong>.</li>
+      <li>Select an existing rubric or click <strong>Create Rubric</strong> to build one.</li>
+    </ol>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The "Add Rubric" option in the Evaluation and Feedback section</div>
+    </div>
+
+    <div class="tip">
+      A simple completion reflection — two to three sentences about one thing they learned and one thing they'll do differently — is low-barrier and creates a meaningful record of training engagement. It also helps learners consolidate their learning at the end of a module.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       8. CHECKLISTS
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="checklists">
+    <h2>Checklists</h2>
+
+    <p>A Checklist in Brightspace is a to-do list that learners can check off as they complete training items. It helps them track their own progress and gives them a clear view of what's required.</p>
+
+    <p>Checklists work well for multi-part training programs, new staff onboarding, and any compliance or certification training where completion tracking matters.</p>
+
+    <h3>Creating a Checklist</h3>
+    <ol class="steps">
+      <li>Click <strong>Tools</strong> → <strong>Checklists</strong>.</li>
+      <li>Click <strong>New Checklist</strong>.</li>
+      <li>Enter a checklist name (e.g., "New Staff Onboarding — Training Checklist").</li>
+      <li>Optionally add a description explaining how to use the checklist.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Checklists tool with the "New Checklist" button</div>
+    </div>
+
+    <h3>Adding Categories and Items</h3>
+    <p>Checklists are organized by optional <strong>Categories</strong> (section headers) and <strong>Items</strong> (individual tasks).</p>
+    <ol class="steps">
+      <li>Click <strong>Add Category</strong> to create a section header (e.g., "Week 1 — Core Modules," "Required Readings").</li>
+      <li>Click <strong>Add Item</strong> under a category.</li>
+      <li>For each item, enter:
+        <ul>
+          <li>The item name (e.g., "Watch: Client Interview Overview Video")</li>
+          <li>An optional due date</li>
+          <li>An optional description or link for more context</li>
+        </ul>
+      </li>
+      <li>Repeat for all items across all categories.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Checklist editor with two categories and several items listed under each</div>
+    </div>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Add Item form with name, due date, and description fields</div>
+    </div>
+
+    <h3>Linking Items to Content (Auto-Completion)</h3>
+    <p>You can connect a checklist item directly to a Brightspace content item so it checks off automatically when the learner completes that activity.</p>
+    <ol class="steps">
+      <li>When adding or editing a checklist item, look for the <strong>Linked Object</strong> or <strong>Completion</strong> option.</li>
+      <li>Select the corresponding content item, quiz, or activity.</li>
+      <li>When the learner completes that item in the module, the checklist updates automatically — no manual checking required.</li>
+    </ol>
+
+    <div class="screenshot sm">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: The Linked Object option in the checklist item settings — connecting the item to a content activity</div>
+    </div>
+
+    <h3>How Learners Use the Checklist</h3>
+    <ol class="steps">
+      <li>Link the checklist from your training module's content area using <strong>Add Existing Activities</strong> → <strong>Checklists</strong>.</li>
+      <li>Learners see the checklist with empty checkboxes they can mark off manually, or items that check automatically if linked.</li>
+      <li>Progress is visible to both learners and trainers.</li>
+    </ol>
+
+    <div class="screenshot">
+      <div class="cam">&#128247;</div>
+      <div class="label">Screenshot: How the checklist appears to an learner — checkboxes next to each item, some checked</div>
+    </div>
+
+    <div class="tip">
+      Pin the checklist at the top of your training module's content area. Many learners find it helpful to see the full scope of a training before they start, so they can plan when to complete each part. It also reduces the anxiety of not knowing "how much is left."
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       9. QUICK REFERENCE TABLE
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="quick-reference">
+    <h2>Quick Reference</h2>
+
+    <p>Use this table to quickly identify which tool to use and where to find it.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Best Used For</th>
+            <th>Where to Find It</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>H5P: Interactive Video</strong></td>
+            <td>Questions embedded inside training videos</td>
+            <td>Content Editor → Insert → Insert Stuff → H5P</td>
+          </tr>
+          <tr>
+            <td><strong>H5P: Image Hotspots</strong></td>
+            <td>Annotating forms, documents, and diagrams</td>
+            <td>Content Editor → Insert → Insert Stuff → H5P</td>
+          </tr>
+          <tr>
+            <td><strong>H5P: Flashcards</strong></td>
+            <td>Legal vocabulary, key concepts, terminology review</td>
+            <td>Content Editor → Insert → Insert Stuff → H5P</td>
+          </tr>
+          <tr>
+            <td><strong>H5P: Drag and Drop</strong></td>
+            <td>Matching, sorting, and categorizing exercises</td>
+            <td>Content Editor → Insert → Insert Stuff → H5P</td>
+          </tr>
+          <tr>
+            <td><strong>H5P: Course Presentation</strong></td>
+            <td>Self-paced slide-based mini-modules with embedded activities</td>
+            <td>Content Editor → Insert → Insert Stuff → H5P</td>
+          </tr>
+          <tr>
+            <td><strong>H5P: Accordion</strong></td>
+            <td>Expandable reference material and procedures</td>
+            <td>Content Editor → Insert → Insert Stuff → H5P</td>
+          </tr>
+          <tr>
+            <td><strong>Quizzes</strong></td>
+            <td>Knowledge checks and self-assessments</td>
+            <td>Tools → Quizzes</td>
+          </tr>
+          <tr>
+            <td><strong>Surveys</strong></td>
+            <td>Training feedback, evaluations, reflection prompts</td>
+            <td>Tools → Surveys</td>
+          </tr>
+          <tr>
+            <td><strong>Discussions</strong></td>
+            <td>Scenario-based practice, peer learning, Q&amp;A</td>
+            <td>Tools → Discussions</td>
+          </tr>
+          <tr>
+            <td><strong>Assignments</strong></td>
+            <td>Written reflections, practice submissions, skill demonstrations</td>
+            <td>Tools → Assignments</td>
+          </tr>
+          <tr>
+            <td><strong>Checklists</strong></td>
+            <td>Tracking training completion, onboarding steps</td>
+            <td>Tools → Checklists</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      The exact navigation paths may vary slightly based on your organization's Brightspace configuration. If you can't find a tool at the path listed, look for it under Tools or the module's course navigation bar, or contact your Brightspace administrator.
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Highlight the active sidebar link based on scroll position
+  (function () {
+    const links = document.querySelectorAll('#sidebar nav a');
+    const targets = Array.from(links)
+      .map(a => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean);
+
+    function onScroll() {
+      let current = targets[0];
+      for (const t of targets) {
+        if (t.getBoundingClientRect().top <= 80) current = t;
+      }
+      links.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+</body>
+</html>
