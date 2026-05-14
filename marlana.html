@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marlie's Workspace — MLRI Build</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     SIDEBAR
+══════════════════════════════════════════════════ -->
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <div class="brand">Workspace</div>
+    <h2>Marlie's Workspace</h2>
+  </div>
+  <nav>
+    <span class="section-label">Start Here</span>
+    <a href="#home">This Week</a>
+    <a href="#current-phase">Current Phase</a>
+
+    <span class="section-label">Platform Roadmap</span>
+    <a href="#marlies-roadmap">Overview</a>
+    <a href="#marlie-phase-1" class="sub">Phase 1 · Connect to Brightspace</a>
+    <a href="#marlie-phase-2" class="sub">Phase 2 · Own Data Layer</a>
+    <a href="#marlie-phase-3" class="sub">Phase 3 · Reporting &amp; Evaluation</a>
+
+    <span class="section-label">Decisions in Flight</span>
+    <a href="#open-decisions">Open Decisions</a>
+
+    <span class="section-label">Other Roadmaps</span>
+    <a href="#other-roadmaps">Add a Teammate</a>
+
+    <span class="section-label">Related Docs</span>
+    <a href="index.html" class="external">Team Wiki</a>
+    <a href="brightspace-interactive-guide.html" class="external">Brightspace Interactive Guide</a>
+    <a href="mlri-architecture.html" class="external">MLRI Architecture</a>
+  </nav>
+</aside>
+
+<!-- ═══════════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════════════ -->
+<main id="main">
+
+  <h1>Marlie's Workspace</h1>
+  <p class="page-subtitle">Personal working space for the platform build — roadmap, decisions in flight, notes</p>
+
+  <!-- ─────────────────────────────────────────────
+       HOME / THIS WEEK
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="home">
+    <h2>This Week</h2>
+
+    <div class="tip">
+      This is your working space. Technical roadmap, open decisions, scratch notes. The <a href="index.html">team wiki</a> is for everyone else.
+    </div>
+
+    <div class="intro-card">
+      <h4>What's Here</h4>
+      <ul>
+        <li><strong>Current Phase</strong> — where Phase 1 stands and what's blocking</li>
+        <li><strong>Platform Roadmap</strong> — full 3-phase build (Brightspace API → custom data layer → reporting)</li>
+        <li><strong>Open Decisions</strong> — questions still in flight; resolved ones move to the team wiki's decision log</li>
+        <li><strong>Other Roadmaps</strong> — template for teammates' personal pages</li>
+      </ul>
+    </div>
+
+    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-14</em></p>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       CURRENT PHASE
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="current-phase">
+    <h2>Current Phase</h2>
+
+    <div class="intro-card">
+      <h4>Phase 1 · Connect to Brightspace <span class="status in-progress">In Progress</span></h4>
+      <p style="margin-bottom: 0.5rem;"><strong>Months 1–2.</strong> Working toward: OAuth API connection, pulling core learner data, displaying it in the custom frontend layer, and getting SSO working so learners have a single login.</p>
+      <p style="margin-bottom: 0;"><a href="#marlie-phase-1">Phase 1 details and task checklist &rarr;</a> &middot; <a href="#marlies-roadmap">Full roadmap &rarr;</a></p>
+    </div>
+
+    <h3>Open Questions Blocking Phase 1</h3>
+    <p>The four open decisions live in their own section below. Resolved ones go to the <a href="index.html#decision-log">team wiki's decision log</a>.</p>
+
+    <p><a href="#open-decisions">See Open Decisions &rarr;</a></p>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       MARLIE'S ROADMAP — OVERVIEW
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="marlies-roadmap">
+    <div class="section-banner b-teal"><span class="banner-dot"></span> Platform Roadmap &middot; Overview</div>
+    <h2>Platform Roadmap</h2>
+
+    <p>MLRI's Brightspace + custom platform build is organized into three phases over approximately 5–6 months. The goal is to move from a basic Brightspace connection to a full custom data layer and reporting suite that supports MLRI's legal education mission.</p>
+
+    <div class="showcase">
+      <div class="showcase-header">
+        <div class="showcase-tag">Roadmap · Marlie</div>
+        <h3 class="showcase-title">Platform Connection &amp; <em>Data Layer</em></h3>
+        <p class="showcase-subtitle">Three phases over 5–6 months — from Brightspace connection to a full custom data layer and reporting suite.</p>
+      </div>
+
+      <div class="showcase-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#14b8a6"></span> Phase 1 &middot; Months 1–2</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#60a5fa"></span> Phase 2 &middot; Months 2–4</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#a78bfa"></span> Phase 3 &middot; Months 4–6</div>
+      </div>
+
+      <div class="showcase-timeline">
+
+        <div class="phase p1">
+          <div class="phase-label">
+            <div class="phase-num">Phase 1</div>
+            <div class="phase-name">Connect to Brightspace</div>
+            <div class="phase-when">Months 1–2</div>
+          </div>
+          <div class="phase-content">
+            <div class="feature-cards">
+              <div class="feature-card card-teal">
+                <div class="card-icon">&#128268;</div>
+                <div class="card-title">Brightspace API Auth</div>
+                <div class="card-desc">OAuth connection, token management, sandbox testing</div>
+                <div class="card-tags"><span class="tag">OAuth 2.0</span><span class="tag">API</span></div>
+              </div>
+              <div class="feature-card card-teal">
+                <div class="card-icon">&#128202;</div>
+                <div class="card-title">Pull Core Data</div>
+                <div class="card-desc">Enrollments, completions, grades, time-in-course</div>
+                <div class="card-tags"><span class="tag">BS API</span><span class="tag">Read-only</span></div>
+              </div>
+              <div class="feature-card card-teal">
+                <div class="card-icon">&#128187;</div>
+                <div class="card-title">Display in Frontend</div>
+                <div class="card-desc">Surface BS data in the custom discovery layer</div>
+                <div class="card-tags"><span class="tag">Frontend</span><span class="tag">React</span></div>
+              </div>
+              <div class="feature-card card-teal">
+                <div class="card-icon">&#128273;</div>
+                <div class="card-title">SSO / Auth</div>
+                <div class="card-desc">Single login — no double sign-in for learners</div>
+                <div class="card-tags"><span class="tag">SSO</span><span class="tag">Identity</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase-flow-arrow">&darr;</div>
+
+        <div class="phase p2">
+          <div class="phase-label">
+            <div class="phase-num">Phase 2</div>
+            <div class="phase-name">Own Data Layer</div>
+            <div class="phase-when">Months 2–4</div>
+          </div>
+          <div class="phase-content">
+            <div class="feature-cards">
+              <div class="feature-card card-blue">
+                <div class="card-icon">&#128451;</div>
+                <div class="card-title">Supabase Backend</div>
+                <div class="card-desc">Postgres DB for data BS can't capture on its own</div>
+                <div class="card-tags"><span class="tag">Supabase</span><span class="tag">Postgres</span></div>
+              </div>
+              <div class="feature-card card-blue">
+                <div class="card-icon">&#128269;</div>
+                <div class="card-title">Search Tracking</div>
+                <div class="card-desc">What learners search for, what they don't find</div>
+                <div class="card-tags"><span class="tag">Events</span><span class="tag">Custom</span></div>
+              </div>
+              <div class="feature-card card-blue">
+                <div class="card-icon">&#9201;</div>
+                <div class="card-title">Engagement Events</div>
+                <div class="card-desc">Time on page, clicks, navigation, drop-off points</div>
+                <div class="card-tags"><span class="tag">Analytics</span><span class="tag">Events</span></div>
+              </div>
+              <div class="feature-card card-blue">
+                <div class="card-icon">&#11088;</div>
+                <div class="card-title">Learner Feedback</div>
+                <div class="card-desc">Ratings, flags, content usefulness signals</div>
+                <div class="card-tags"><span class="tag">UX</span><span class="tag">Feedback</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase-flow-arrow">&darr;</div>
+
+        <div class="phase p3">
+          <div class="phase-label">
+            <div class="phase-num">Phase 3</div>
+            <div class="phase-name">Reporting &amp; Evaluation</div>
+            <div class="phase-when">Months 4–6</div>
+          </div>
+          <div class="phase-content">
+            <div class="feature-cards">
+              <div class="feature-card card-purple">
+                <div class="card-icon">&#128100;</div>
+                <div class="card-title">Learner Dashboard</div>
+                <div class="card-desc">Personal progress, completions, recommendations</div>
+                <div class="card-tags"><span class="tag">Learner</span><span class="tag">UI</span></div>
+              </div>
+              <div class="feature-card card-purple">
+                <div class="card-icon">&#128101;</div>
+                <div class="card-title">Manager View</div>
+                <div class="card-desc">Team completion rates, gaps, activity</div>
+                <div class="card-tags"><span class="tag">Manager</span><span class="tag">Reports</span></div>
+              </div>
+              <div class="feature-card card-purple">
+                <div class="card-icon">&#128200;</div>
+                <div class="card-title">Program Evaluation</div>
+                <div class="card-desc">Cohort analysis, equity gaps, completion predictors</div>
+                <div class="card-tags"><span class="tag">Evaluation</span><span class="tag">Econometrics</span></div>
+              </div>
+              <div class="feature-card card-purple">
+                <div class="card-icon">&#128506;</div>
+                <div class="card-title">Population Insights</div>
+                <div class="card-desc">Who's completing, who isn't, and why — by learner segment</div>
+                <div class="card-tags"><span class="tag">Equity</span><span class="tag">Mission</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <h3>Phase Timeline</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Name</th>
+            <th>Months</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><a href="#marlie-phase-1">Connect to Brightspace</a></td><td>1–2</td><td><span class="status in-progress">In Progress</span></td></tr>
+          <tr><td>2</td><td><a href="#marlie-phase-2">Own Data Layer</a></td><td>2–4</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td>3</td><td><a href="#marlie-phase-3">Reporting &amp; Evaluation</a></td><td>4–6</td><td><span class="status not-started">Not Started</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Phase 1 · Connect to Brightspace (Months 1–2)</h3>
+    <p>Get a working, authenticated connection to the Brightspace API and surface core learner data in our custom frontend.</p>
+    <p><strong>Key deliverables:</strong></p>
+    <ul>
+      <li>Brightspace API OAuth 2.0 connection with token management</li>
+      <li>Pull: enrollments, completions, grades, time-in-course</li>
+      <li>Display Brightspace data in the custom frontend discovery layer</li>
+      <li>SSO so learners have a single login — no double sign-in</li>
+    </ul>
+    <p><a href="#marlie-phase-1">Phase 1 details &rarr;</a></p>
+
+    <h3>Phase 2 · Own Data Layer (Months 2–4)</h3>
+    <p>Build our own database (Supabase/Postgres) to capture behavioral data that Brightspace cannot track on its own.</p>
+    <p><strong>Key deliverables:</strong></p>
+    <ul>
+      <li>Supabase backend for custom events and user data</li>
+      <li>Search tracking: what learners search for, what they don't find</li>
+      <li>Engagement events: time on page, click paths, drop-off points</li>
+      <li>Learner feedback: ratings, content usefulness flags</li>
+    </ul>
+    <p><a href="#marlie-phase-2">Phase 2 details &rarr;</a></p>
+
+    <h3>Phase 3 · Reporting &amp; Evaluation (Months 4–6)</h3>
+    <p>Surface data to learners, managers, and the MLRI team through dashboards and evaluation tools.</p>
+    <p><strong>Key deliverables:</strong></p>
+    <ul>
+      <li>Learner dashboard: personal progress, completions, recommendations</li>
+      <li>Manager view: team completion rates, gaps, activity</li>
+      <li>Program evaluation: cohort analysis, equity gaps, completion predictors</li>
+      <li>Population insights: who's completing, who isn't, and why — by learner segment</li>
+    </ul>
+    <p><a href="#marlie-phase-3">Phase 3 details &rarr;</a></p>
+
+    <h3>System Stack — How the Layers Connect</h3>
+
+    <div class="showcase">
+      <div class="showcase-stack">
+        <div class="showcase-stack-title">System Stack — How the layers connect</div>
+
+        <div class="stack-box-full sb-learner">&#128100; Learner / Manager / Admin &mdash; Browser</div>
+        <div class="v-connector">&#8597;</div>
+        <div class="stack-row">
+          <div class="stack-box sb-frontend">&#128187; Your Frontend Layer<small>Discovery &middot; Progress &middot; Stats</small></div>
+          <div class="stack-arrow-center">&#10231;</div>
+          <div class="stack-box sb-supabase">&#128451; Supabase<small>Custom events &middot; Feedback &middot; Users</small></div>
+        </div>
+        <div class="v-connector">&#8597;</div>
+        <div class="stack-box-full sb-api">Brightspace REST API &mdash; OAuth 2.0</div>
+        <div class="v-connector">&#8597;</div>
+        <div class="stack-box-full sb-bs">&#128218; Brightspace (D2L) &mdash; Course content &middot; Completions &middot; Grades &middot; Enrollments</div>
+      </div>
+
+      <div class="showcase-data-flows">
+        <div class="flow-card fc-bs">
+          <div class="flow-card-label">From Brightspace API</div>
+          <h3>What BS gives us</h3>
+          <ul>
+            <li>Enrollment status</li>
+            <li>Course completions</li>
+            <li>Quiz / assessment scores</li>
+            <li>Time in course</li>
+            <li>Last accessed date</li>
+            <li>Grade data</li>
+          </ul>
+        </div>
+        <div class="flow-card fc-own">
+          <div class="flow-card-label">Our Own Data (Supabase)</div>
+          <h3>What we capture</h3>
+          <ul>
+            <li>Search queries + results</li>
+            <li>Click paths &amp; navigation</li>
+            <li>Time on page (our layer)</li>
+            <li>Content ratings / flags</li>
+            <li>Learning path choices</li>
+            <li>Drop-off points</li>
+          </ul>
+        </div>
+        <div class="flow-card fc-out">
+          <div class="flow-card-label">Outputs / Reporting</div>
+          <h3>What we surface</h3>
+          <ul>
+            <li>Learner progress dashboards</li>
+            <li>Manager team views</li>
+            <li>Program completion rates</li>
+            <li>Cohort equity analysis</li>
+            <li>Content effectiveness</li>
+            <li>Catalog gap analysis</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p>For the full standalone version of this diagram, see <a href="mlri-architecture.html">MLRI Architecture &rarr;</a></p>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       PHASE 1
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="marlie-phase-1">
+    <div class="section-banner b-teal"><span class="banner-dot"></span> Platform Roadmap &middot; Phase 1</div>
+    <h2>Phase 1 &middot; Connect to Brightspace <span class="status in-progress">In Progress</span></h2>
+
+    <p><strong>Timeline:</strong> Months 1–2</p>
+
+    <p>The goal of Phase 1 is a working, authenticated connection to the Brightspace API and core learner data surfaced in our custom frontend. Everything in Phase 2 and 3 depends on this foundation being solid.</p>
+
+    <h3>Task Checklist</h3>
+
+    <h4>Brightspace API Auth</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Set up OAuth 2.0 connection to Brightspace</span></li>
+      <li><input type="checkbox" disabled><span class="label">Implement token management (storage, refresh)</span></li>
+      <li><input type="checkbox" disabled><span class="label">Test connection in Brightspace sandbox environment</span></li>
+      <li><input type="checkbox" disabled><span class="label">Document the auth flow for future reference</span></li>
+    </ul>
+
+    <h4>Pull Core Data</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Enrollments — who is in which course</span></li>
+      <li><input type="checkbox" disabled><span class="label">Completions — who has finished what</span></li>
+      <li><input type="checkbox" disabled><span class="label">Grades — quiz and assessment scores</span></li>
+      <li><input type="checkbox" disabled><span class="label">Time-in-course — how long learners spend</span></li>
+      <li><input type="checkbox" disabled><span class="label">Last accessed — when someone was last active</span></li>
+    </ul>
+
+    <h4>Display in Frontend</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Wire Brightspace data into the custom discovery layer</span></li>
+      <li><input type="checkbox" disabled><span class="label">Learner can see their enrolled courses</span></li>
+      <li><input type="checkbox" disabled><span class="label">Learner can see their completion status</span></li>
+      <li><input type="checkbox" disabled><span class="label">Basic progress display working end-to-end</span></li>
+    </ul>
+
+    <h4>SSO / Auth</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Single login — learner authenticates once, gets into both the frontend and Brightspace</span></li>
+      <li><input type="checkbox" disabled><span class="label">No double sign-in required</span></li>
+      <li><input type="checkbox" disabled><span class="label">Identity flow tested with a real account</span></li>
+    </ul>
+
+    <h3>Notes &amp; Blockers</h3>
+    <blockquote>Use this section for notes as you work through Phase 1. Add dates when things happen.</blockquote>
+    <ul>
+      <li><em>(Add notes here)</em></li>
+    </ul>
+
+    <h3>Resources</h3>
+    <ul>
+      <li><a href="https://docs.valence.desire2learn.com/" target="_blank" rel="noopener">Brightspace API documentation</a> — D2L's official API docs</li>
+      <li><a href="#marlies-roadmap">Phase Overview</a> — Full roadmap context</li>
+    </ul>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       PHASE 2
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="marlie-phase-2">
+    <div class="section-banner b-blue"><span class="banner-dot"></span> Platform Roadmap &middot; Phase 2</div>
+    <h2>Phase 2 &middot; Own Data Layer <span class="status not-started">Not Started</span></h2>
+
+    <p><strong>Timeline:</strong> Months 2–4</p>
+
+    <p>Brightspace tracks what happens inside its own courses — but it can't capture how learners interact with our custom frontend: what they search for, where they get lost, what content they rate highly. Phase 2 builds a Supabase (Postgres) database to capture exactly that.</p>
+
+    <h3>Task Checklist</h3>
+
+    <h4>Supabase Backend</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Set up Supabase project and database schema</span></li>
+      <li><input type="checkbox" disabled><span class="label">Define tables for: users, events, search logs, feedback</span></li>
+      <li><input type="checkbox" disabled><span class="label">Connect frontend to Supabase</span></li>
+      <li><input type="checkbox" disabled><span class="label">Set up row-level security so only appropriate data is accessible</span></li>
+    </ul>
+
+    <h4>Search Tracking</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Log what learners search for in the catalog</span></li>
+      <li><input type="checkbox" disabled><span class="label">Log what results they get (and click vs. skip)</span></li>
+      <li><input type="checkbox" disabled><span class="label">Log "zero results" searches — content gaps</span></li>
+      <li><input type="checkbox" disabled><span class="label">Build a way to review search logs periodically</span></li>
+    </ul>
+
+    <h4>Engagement Events</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Track time on page (frontend layer, not Brightspace)</span></li>
+      <li><input type="checkbox" disabled><span class="label">Log click paths — how learners navigate the catalog</span></li>
+      <li><input type="checkbox" disabled><span class="label">Log path navigation patterns</span></li>
+      <li><input type="checkbox" disabled><span class="label">Track drop-off points — where learners leave without completing</span></li>
+    </ul>
+
+    <h4>Learner Feedback</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Build a lightweight rating mechanism (e.g., thumbs up/down or stars)</span></li>
+      <li><input type="checkbox" disabled><span class="label">Allow learners to flag content (outdated, unclear, etc.)</span></li>
+      <li><input type="checkbox" disabled><span class="label">Store usefulness signals by content item</span></li>
+      <li><input type="checkbox" disabled><span class="label">Decide: is feedback anonymous or attributed?</span></li>
+    </ul>
+
+    <h3>Notes &amp; Blockers</h3>
+    <blockquote>Use this section for notes as you work through Phase 2. Add dates when things happen.</blockquote>
+    <ul>
+      <li><em>(Add notes here)</em></li>
+    </ul>
+
+    <h3>Open Questions for Phase 2</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">What's the privacy policy for behavioral tracking? Do learners need to be informed?</span></li>
+      <li><input type="checkbox" disabled><span class="label">Is feedback anonymous or tied to learner accounts?</span></li>
+      <li><input type="checkbox" disabled><span class="label">What's the data retention policy for event logs?</span></li>
+    </ul>
+
+    <h3>Resources</h3>
+    <ul>
+      <li><a href="#marlies-roadmap">Phase Overview</a> — Full roadmap context</li>
+      <li><a href="https://supabase.com/docs" target="_blank" rel="noopener">Supabase documentation</a></li>
+    </ul>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       PHASE 3
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="marlie-phase-3">
+    <div class="section-banner b-purple"><span class="banner-dot"></span> Platform Roadmap &middot; Phase 3</div>
+    <h2>Phase 3 &middot; Reporting &amp; Evaluation <span class="status not-started">Not Started</span></h2>
+
+    <p><strong>Timeline:</strong> Months 4–6</p>
+
+    <p>Phase 3 is where the data from Phases 1 and 2 gets turned into something useful for learners, managers, and MLRI's program team. The equity and population insights work here is tied directly to MLRI's mission — understanding who is completing training and who isn't.</p>
+
+    <h3>Task Checklist</h3>
+
+    <h4>Learner Dashboard</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Learner can see their enrolled courses and completion status</span></li>
+      <li><input type="checkbox" disabled><span class="label">Learner can see a history of what they've completed</span></li>
+      <li><input type="checkbox" disabled><span class="label">Recommendations surfaced based on role or past activity</span></li>
+      <li><input type="checkbox" disabled><span class="label">Mobile-friendly layout</span></li>
+    </ul>
+
+    <h4>Manager View</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Manager can see completion rates for their team</span></li>
+      <li><input type="checkbox" disabled><span class="label">Manager can identify gaps — who hasn't completed required training</span></li>
+      <li><input type="checkbox" disabled><span class="label">Activity summary (last accessed, time spent)</span></li>
+      <li><input type="checkbox" disabled><span class="label">Export or share options for reporting up</span></li>
+    </ul>
+
+    <h4>Program Evaluation</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Cohort analysis — how did a specific group do in a specific course?</span></li>
+      <li><input type="checkbox" disabled><span class="label">Equity gap analysis — are certain groups completing at lower rates?</span></li>
+      <li><input type="checkbox" disabled><span class="label">Completion predictors — what factors correlate with finishing?</span></li>
+      <li><input type="checkbox" disabled><span class="label">Content effectiveness — which modules have high drop-off?</span></li>
+    </ul>
+
+    <h4>Population Insights</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Who is completing training — by learner segment</span></li>
+      <li><input type="checkbox" disabled><span class="label">Who isn't completing — and why (if data supports it)</span></li>
+      <li><input type="checkbox" disabled><span class="label">Catalog gap analysis — what topics are being searched for but not found?</span></li>
+      <li><input type="checkbox" disabled><span class="label">Reporting format for stakeholders (funders, leadership)</span></li>
+    </ul>
+
+    <h3>Notes &amp; Blockers</h3>
+    <blockquote>Use this section for notes as you work through Phase 3. Add dates when things happen.</blockquote>
+    <ul>
+      <li><em>(Add notes here)</em></li>
+    </ul>
+
+    <h3>Open Questions for Phase 3</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">What "learner segments" are meaningful for equity analysis at MLRI? (e.g., by office, practice area, years of experience?)</span></li>
+      <li><input type="checkbox" disabled><span class="label">Who has access to the Manager View? How is "manager" defined?</span></li>
+      <li><input type="checkbox" disabled><span class="label">What does the stakeholder report need to include? (For funders, board, etc.)</span></li>
+      <li><input type="checkbox" disabled><span class="label">How do we handle update notices on the learner dashboard? (See <a href="index.html#learner-updates">Learner Update Notices policy</a>)</span></li>
+    </ul>
+
+    <h3>Resources</h3>
+    <ul>
+      <li><a href="#marlies-roadmap">Phase Overview</a> — Full roadmap context</li>
+    </ul>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       OPEN DECISIONS — in-flight, not yet resolved
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="open-decisions">
+    <h2>Open Decisions</h2>
+
+    <p>Questions in flight — not yet resolved. When one resolves, move it to the <a href="index.html#decision-log">team wiki's decision log</a> as a resolved entry.</p>
+
+    <h4>Versioning Threshold <span class="status proposed">Open</span></h4>
+    <p><strong>Question:</strong> When do we archive a course and create a new offering vs. updating the existing one in place? We need a clear line between "minor" and "major."</p>
+    <p><strong>Why it matters:</strong> Without a defined threshold, this becomes a judgment call every time — and over time, inconsistent decisions make the catalog messy. A clear rule also helps us communicate to learners when they need to retake something.</p>
+    <p><strong>Options being considered:</strong></p>
+    <ul>
+      <li>Archive only when the law changes or &gt;30–40% of content is replaced</li>
+      <li>Archive any time a new assessment is added</li>
+      <li>Archive any time completion requirements change</li>
+    </ul>
+    <p><strong>Status:</strong> Open &middot; Added 2026-05-13<br>
+    <strong>See:</strong> <a href="index.html#versioning">Versioning &amp; Archiving policy</a></p>
+
+    <h4>Learner Update Notices <span class="status proposed">Open</span></h4>
+    <p><strong>Question:</strong> If enrolled learners need to know about a significant content change, how do we reach them reliably? Brightspace email has deliverability limitations.</p>
+    <p><strong>Why it matters:</strong> Legal professionals need accurate information. If a law changes and we update a course, we need to be confident the right people actually see the notice — not just that we sent an email that may have gone to spam.</p>
+    <p><strong>Options being considered:</strong></p>
+    <ul>
+      <li>Brightspace email only (available now, but unreliable for critical notices)</li>
+      <li>Custom frontend dashboard notification (reliable, but not built until Phase 3)</li>
+      <li>Direct outreach by the training team for critical updates</li>
+    </ul>
+    <p><strong>Status:</strong> Open &middot; Added 2026-05-13<br>
+    <strong>See:</strong> <a href="index.html#learner-updates">Learner Update Notices policy</a></p>
+
+    <h4 id="sections-vs-new-offerings-for-cohorts">Sections vs. New Offerings for Cohorts <span class="status proposed">Open</span></h4>
+    <p><strong>Question:</strong> When we have different cohorts, organizations, or scheduled runs of the same course — do we use Brightspace Sections inside one Offering, or create a separate Offering for each?</p>
+    <p><strong>Why it matters:</strong> This affects enrollment management, completion reporting, and how much administrative overhead is created for every new cohort.</p>
+    <p><strong>Options being considered:</strong></p>
+    <ul>
+      <li>Sections inside one Offering (less clutter, but may complicate reporting)</li>
+      <li>Separate Offerings per cohort (cleaner reporting, but more objects to manage)</li>
+    </ul>
+    <p><strong>Status:</strong> Open &middot; Added 2026-05-13</p>
+
+    <h4 id="audience-routing">Audience Routing — How to Split Content by User Type <span class="status proposed">Open</span></h4>
+    <p><strong>Question:</strong> When the same topic (e.g., Pre-Trial Skills) needs different content for Lawyers vs. Advocates vs. ?Paralegals — how do we route them in Brightspace? Options to explore: org-unit "containers," release conditions on shared content, or separate Course Offerings per audience.</p>
+    <p><strong>Why it matters:</strong> This is the Brightspace mechanic that enforces the <a href="index.html#user-types-matrix">User Types &amp; Access Matrix</a> — the unauthorized-practice-of-law guardrails. Wrong mechanic means either (a) non-lawyers see content that implies practice qualification, or (b) admin overhead balloons because every audience is a separate offering to maintain.</p>
+    <p><strong>Options being considered:</strong></p>
+    <ul>
+      <li><strong>Org-unit containers</strong> — separate org units per audience type, content inherited or restricted accordingly. Brightspace-native, may need rep input on whether this fits the existing MLRI → MA → Training Area hierarchy</li>
+      <li><strong>Release conditions</strong> — one offering, content modules gated by role/group. Most flexible, more complex to maintain</li>
+      <li><strong>Separate offerings per audience</strong> — Lawyer Pre-Trial vs. Advocate Pre-Trial as distinct offerings. Simplest mental model, highest admin overhead, more chances for divergence</li>
+    </ul>
+    <p><strong>Deadline:</strong> Decide before Pilot 2 (Oct 1) so audience access is configured correctly for non-MLRI users<br>
+    <strong>Status:</strong> Open &middot; Added 2026-05-14<br>
+    <strong>See:</strong> <a href="index.html#user-types-matrix">User Types &amp; Access Matrix</a></p>
+
+    <h4 id="discover-page-vs-custom-catalog">Discover Page vs. Custom Catalog <span class="status proposed">Open</span></h4>
+    <p><strong>Question:</strong> Are we using Brightspace's built-in Discover page, our own custom frontend catalog, or both for learners to find courses?</p>
+    <p><strong>Why it matters:</strong> This affects Phase 1 scope and the long-term UX of the platform. Running both requires keeping them in sync.</p>
+    <p><strong>Status:</strong> Open &middot; Added 2026-05-13</p>
+
+    <div class="tip">
+      When a decision resolves: copy the entry to the <a href="index.html#decision-log">team wiki's Decision Log</a> under "Resolved Decisions" with the date, what was decided, and why — then delete the open version here.
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       OTHER ROADMAPS — placeholder for teammates
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="other-roadmaps">
+    <h2>Other Roadmaps</h2>
+
+    <p>Space for teammates' individual roadmaps. Each person gets their own showcase timeline below the section banner, color-coded with the next available palette slot.</p>
+
+    <div class="showcase">
+      <div class="showcase-header">
+        <div class="showcase-tag">Template · Add a teammate</div>
+        <h3 class="showcase-title">Your <em>teammate's name</em> goes here</h3>
+        <p class="showcase-subtitle">Duplicate this panel as a starting point. Replace the name, dates, and phases — the gradient cards underneath are color-coded by phase order (teal &rarr; blue &rarr; purple &rarr; amber &rarr; green &rarr; rose).</p>
+      </div>
+
+      <div class="showcase-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#fbbf24"></span> Phase 1 &middot; (when)</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#34d399"></span> Phase 2 &middot; (when)</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#fb7185"></span> Phase 3 &middot; (when)</div>
+      </div>
+
+      <div class="showcase-timeline">
+        <div class="phase p4">
+          <div class="phase-label">
+            <div class="phase-num">Phase 1</div>
+            <div class="phase-name">Phase name</div>
+            <div class="phase-when">When</div>
+          </div>
+          <div class="phase-content">
+            <div class="feature-cards">
+              <div class="feature-card card-amber">
+                <div class="card-icon">&#10024;</div>
+                <div class="card-title">Workstream 1</div>
+                <div class="card-desc">Short description of what this workstream delivers.</div>
+                <div class="card-tags"><span class="tag">Tag</span></div>
+              </div>
+              <div class="feature-card card-amber">
+                <div class="card-icon">&#10024;</div>
+                <div class="card-title">Workstream 2</div>
+                <div class="card-desc">Short description of what this workstream delivers.</div>
+                <div class="card-tags"><span class="tag">Tag</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase-flow-arrow">&darr;</div>
+
+        <div class="phase p5">
+          <div class="phase-label">
+            <div class="phase-num">Phase 2</div>
+            <div class="phase-name">Phase name</div>
+            <div class="phase-when">When</div>
+          </div>
+          <div class="phase-content">
+            <div class="feature-cards">
+              <div class="feature-card card-green">
+                <div class="card-icon">&#10024;</div>
+                <div class="card-title">Workstream 1</div>
+                <div class="card-desc">Short description.</div>
+                <div class="card-tags"><span class="tag">Tag</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase-flow-arrow">&darr;</div>
+
+        <div class="phase p6">
+          <div class="phase-label">
+            <div class="phase-num">Phase 3</div>
+            <div class="phase-name">Phase name</div>
+            <div class="phase-when">When</div>
+          </div>
+          <div class="phase-content">
+            <div class="feature-cards">
+              <div class="feature-card card-rose">
+                <div class="card-icon">&#10024;</div>
+                <div class="card-title">Workstream 1</div>
+                <div class="card-desc">Short description.</div>
+                <div class="card-tags"><span class="tag">Tag</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>How to add a teammate:</strong> in the sidebar, add a new <code>section-label</code> (e.g., "<em>Name</em>'s Roadmap") above the "Other Roadmaps" group, plus sub-links for each phase. Then in the body, duplicate this <code>&lt;section class="guide-section"&gt;</code> with a new id (e.g., <code>id="alex-phase-1"</code>) for each phase, and copy the showcase panel above into a new overview section. Phase color palette cycles teal &rarr; blue &rarr; purple &rarr; amber &rarr; green &rarr; rose (classes <code>p1</code>–<code>p6</code> on the timeline, matching card classes <code>card-teal</code>–<code>card-rose</code>).
+    </div>
+  </section>
+
+</main>
+
+<script>
+  (function () {
+    const links = document.querySelectorAll('#sidebar nav a:not(.external)');
+    const targets = Array.from(links)
+      .map(a => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean);
+
+    function onScroll() {
+      let current = targets[0];
+      for (const t of targets) {
+        if (t.getBoundingClientRect().top <= 80) current = t;
+      }
+      if (!current) return;
+      links.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+</body>
+</html>
