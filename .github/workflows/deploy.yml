@@ -30,6 +30,7 @@ jobs:
           cp brightspace-interactive-guide.html _site/
           cp mlri-architecture.html _site/
           cp styles.css _site/
+          cp sidebar.js _site/
           if [ -d screenshots ]; then cp -r screenshots _site/; fi
 
       - name: Configure Pages

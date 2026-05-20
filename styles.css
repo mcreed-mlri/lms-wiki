@@ -16,6 +16,7 @@
   --note-bg: #FEF6E8;
   --note-border: #B06A00;
   --sidebar-w: 260px;
+  --sidebar-toggle-size: 2rem;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,9 +41,104 @@ body {
   position: fixed;
   top: 0; left: 0;
   height: 100vh;
+  overflow-x: hidden;
   overflow-y: auto;
   z-index: 100;
   padding-bottom: 2rem;
+  transition: width 0.25s ease, min-width 0.25s ease, transform 0.25s ease;
+}
+
+/* Collapse toggle (all wiki pages with #sidebar) */
+.sidebar-toggle {
+  position: fixed;
+  top: 1.15rem;
+  left: calc(var(--sidebar-w) - (var(--sidebar-toggle-size) / 2));
+  z-index: 110;
+  width: var(--sidebar-toggle-size);
+  height: var(--sidebar-toggle-size);
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: #16304f;
+  color: #e2e8f0;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  transition: left 0.25s ease, background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.sidebar-toggle:hover {
+  background: #1e4a75;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.sidebar-toggle:focus-visible {
+  outline: 2px solid #5ba8e0;
+  outline-offset: 2px;
+}
+
+html.sidebar-collapsed .sidebar-toggle {
+  left: 0.65rem;
+}
+
+html.sidebar-collapsed .sidebar-toggle::before {
+  content: '\203A';
+}
+
+.sidebar-toggle::before {
+  content: '\2039';
+  display: block;
+  margin-top: -1px;
+}
+
+body.page-marlana .sidebar-toggle {
+  background: #0d3540;
+  border-color: rgba(45, 212, 191, 0.35);
+  color: #99f6e4;
+}
+
+body.page-marlana .sidebar-toggle:hover {
+  background: #115e59;
+  color: #f0fdfa;
+}
+
+body.page-marlana .sidebar-toggle:focus-visible {
+  outline-color: #2dd4bf;
+}
+
+body.page-interactive-guide .sidebar-toggle {
+  background: #115e59;
+  border-color: rgba(94, 234, 212, 0.35);
+  color: #ccfbf1;
+}
+
+body.page-interactive-guide .sidebar-toggle:hover {
+  background: #0f766e;
+}
+
+body.page-interactive-guide .sidebar-toggle:focus-visible {
+  outline-color: #5eead4;
+}
+
+#sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(10, 22, 40, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+html.sidebar-collapsed #sidebar {
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 #sidebar-header {
@@ -198,8 +294,8 @@ body {
 }
 
 body.page-marlana #sidebar details.nav-accordion .nav-accordion-panel a.active {
-  background: rgba(124, 58, 237, 0.32);
-  border-left-color: #c4b5fd;
+  background: rgba(45, 212, 191, 0.22);
+  border-left-color: #2dd4bf;
 }
 
 body.page-interactive-guide #sidebar details.nav-accordion .nav-accordion-panel a.active {
@@ -208,74 +304,52 @@ body.page-interactive-guide #sidebar details.nav-accordion .nav-accordion-panel 
 }
 
 body.page-marlana #sidebar details.nav-accordion:has(.nav-accordion-panel a.active) > summary {
-  color: #f5f3ff;
+  color: #ecfdf5;
 }
 
 body.page-interactive-guide #sidebar details.nav-accordion:has(.nav-accordion-panel a.active) > summary {
   color: #ecfdf5;
 }
 
-/* Sidebar: unpublished / placeholder rows (no link) */
-#sidebar .nav-soon {
-  display: block;
-  padding: 0.38rem 1.1rem 0.38rem 1.3rem;
-  font-size: 0.78rem;
-  line-height: 1.45;
-  color: #7A8FA8;
-  border-left: 3px solid transparent;
-}
-
-#sidebar .nav-soon strong {
-  color: #9EB0C4;
-  font-weight: 600;
-}
-
-body.page-marlana #sidebar .nav-soon {
-  color: #8b7aad;
-}
-
-body.page-marlana #sidebar .nav-soon strong {
-  color: #c4b5fd;
-}
-
-body.page-interactive-guide #sidebar .nav-soon {
-  color: #5a9e94;
-}
-
-body.page-interactive-guide #sidebar .nav-soon strong {
-  color: #99f6e4;
-}
-
-/* Sidebar theme: Marlie's workspace (purple) */
+/* Sidebar theme: Marlie's workspace (navy-teal — matches architecture showcase) */
 body.page-marlana #sidebar {
-  background: #2a1f42;
-  color: #ddd6fe;
+  background: #0a1628;
+  color: #cbd5e1;
 }
 body.page-marlana #sidebar-header {
-  background: #352456;
-  border-bottom-color: rgba(255, 255, 255, 0.12);
+  background: #0d3540;
+  border-bottom-color: rgba(45, 212, 191, 0.15);
 }
 body.page-marlana #sidebar-header .brand {
-  color: #a78bfa;
+  color: #2dd4bf;
+}
+body.page-marlana #sidebar-header h2 {
+  color: #f8fafc;
 }
 body.page-marlana #sidebar nav .section-label {
-  color: #8b7aad;
+  color: #5a8f94;
 }
 body.page-marlana #sidebar nav a {
-  color: #d4cce8;
+  color: #b8d4d8;
 }
 body.page-marlana #sidebar nav a.sub {
-  color: #a898c9;
+  color: #7eb8bc;
+}
+body.page-marlana #sidebar nav a:hover {
+  color: #f0fdfa;
 }
 body.page-marlana #sidebar nav a.active {
-  background: rgba(124, 58, 237, 0.32);
-  border-left-color: #c4b5fd;
+  background: rgba(45, 212, 191, 0.18);
+  border-left-color: #2dd4bf;
 }
 body.page-marlana #sidebar nav a.sub.active {
-  border-left-color: #c4b5fd;
+  border-left-color: #2dd4bf;
 }
 body.page-marlana #sidebar nav a.external::after {
-  color: #8b7aad;
+  color: #5a8f94;
+}
+body.page-marlana #sidebar details.nav-accordion > summary:hover {
+  color: #f0fdfa;
 }
 
 /* Sidebar theme: Brightspace interactive trainer guide (teal) */
@@ -316,10 +390,66 @@ body.page-interactive-guide #sidebar nav a.external::after {
   flex: 1;
   padding: 2.5rem 2.75rem 4rem;
   max-width: 900px;
+  transition: margin-left 0.25s ease;
+}
+
+html.sidebar-collapsed #main {
+  margin-left: 0;
 }
 
 #main > h1:first-of-type {
   letter-spacing: -0.02em;
+}
+
+/* Marlie's workspace — main content (teal accent, separate from team wiki) */
+body.page-marlana {
+  background: #f0f7f6;
+  background-image:
+    radial-gradient(ellipse 70% 45% at 100% 0%, rgba(45, 212, 191, 0.1) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 35% at 0% 100%, rgba(96, 165, 250, 0.05) 0%, transparent 50%);
+}
+
+body.page-marlana #main h1 {
+  color: #0a1628;
+}
+
+body.page-marlana #main .page-subtitle {
+  border-bottom-color: rgba(13, 148, 136, 0.2);
+  color: #475569;
+}
+
+body.page-marlana #main h2::after {
+  background: linear-gradient(90deg, #2dd4bf, #60a5fa);
+}
+
+body.page-marlana #main h3 {
+  color: #0d9488;
+}
+
+body.page-marlana #main a {
+  color: #0d9488;
+}
+
+body.page-marlana #main a:hover {
+  border-bottom-color: #0d9488;
+}
+
+body.page-marlana .guide-section + .guide-section {
+  border-top-color: rgba(13, 148, 136, 0.12);
+}
+
+body.page-marlana .intro-card {
+  border-color: rgba(13, 148, 136, 0.2);
+  border-left: 3px solid #2dd4bf;
+}
+
+body.page-marlana table th {
+  background: #0a1628;
+  color: #e2e8f0;
+}
+
+body.page-marlana table tr:hover td {
+  background: rgba(45, 212, 191, 0.06);
 }
 
 /* ── Section spacing ─────────────────────────── */
@@ -880,6 +1010,8 @@ tr:nth-child(even) td { background: #F0F3F8; }
 /* ── Print styles ────────────────────────────── */
 @media print {
   #sidebar { display: none !important; }
+  .sidebar-toggle,
+  #sidebar-backdrop { display: none !important; }
   #main { margin-left: 0; padding: 1rem; max-width: 100%; }
   .screenshot { min-height: 200px; }
   h2 { page-break-after: avoid; }
@@ -889,11 +1021,38 @@ tr:nth-child(even) td { background: #F0F3F8; }
 /* ── Responsive ──────────────────────────────── */
 @media (max-width: 800px) {
   #sidebar {
-    position: static;
-    width: 100%;
-    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(var(--sidebar-w), 88vw);
+    min-width: min(var(--sidebar-w), 88vw);
+    height: 100vh;
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.2);
+    pointer-events: auto;
   }
-  #main { margin-left: 0; padding: 1.25rem 1rem; }
+
+  html.sidebar-collapsed #sidebar {
+    transform: translateX(-100%);
+    width: min(var(--sidebar-w), 88vw);
+    min-width: min(var(--sidebar-w), 88vw);
+    pointer-events: none;
+  }
+
+  #sidebar-backdrop:not([hidden]) {
+    display: block;
+  }
+
+  .sidebar-toggle {
+    top: 0.85rem;
+    left: 0.65rem;
+  }
+
+  html:not(.sidebar-collapsed) .sidebar-toggle {
+    left: calc(min(var(--sidebar-w), 88vw) - (var(--sidebar-toggle-size) / 2));
+  }
+
+  #main { margin-left: 0; padding: 1.25rem 1rem; max-width: 100%; }
   body { flex-direction: column; }
 }
 
