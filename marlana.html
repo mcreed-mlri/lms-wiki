@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marlie's Workspace — MLRI Build</title>
+  <title>Marlie's Workspace — LACE Build</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="page-marlana">
 
 <!-- ═══════════════════════════════════════════════
      SIDEBAR
@@ -23,23 +23,31 @@
     <span class="section-label">Start Here</span>
     <a href="#home">This Week</a>
     <a href="#current-phase">Current Phase</a>
+    <a href="#marlie-program-timeline" class="sub">Program timeline · my tasks</a>
 
     <span class="section-label">Platform Roadmap</span>
     <a href="#marlies-roadmap">Overview</a>
+    <a href="#marlie-phase-0" class="sub">Phase 0 · In-Course HTML Wrappers</a>
     <a href="#marlie-phase-1" class="sub">Phase 1 · Connect to Brightspace</a>
     <a href="#marlie-phase-2" class="sub">Phase 2 · Own Data Layer</a>
     <a href="#marlie-phase-3" class="sub">Phase 3 · Reporting &amp; Evaluation</a>
 
+    <span class="section-label">Teaching &amp; Evidence</span>
+    <a href="#teaching-evidence">Research library</a>
+
     <span class="section-label">Decisions in Flight</span>
     <a href="#open-decisions">Open Decisions</a>
 
+    <!-- Other roadmaps (teammate template) — uncomment when needed
     <span class="section-label">Other Roadmaps</span>
     <a href="#other-roadmaps">Add a Teammate</a>
+    -->
 
     <span class="section-label">Related Docs</span>
     <a href="index.html" class="external">Team Wiki</a>
-    <a href="brightspace-interactive-guide.html" class="external">Brightspace Interactive Guide</a>
-    <a href="mlri-architecture.html" class="external">MLRI Architecture</a>
+    <span class="nav-soon"><strong>Brightspace Interactive Guide</strong> &mdash; <em>coming soon</em></span>
+    <a href="mlri-architecture.html" class="external">LACE Architecture</a>
+    <a href="https://github.com/mcreed-mlri/Brightspace-Courses" class="external" target="_blank" rel="noopener">Brightspace-Courses repo</a>
   </nav>
 </aside>
 
@@ -49,7 +57,7 @@
 <main id="main">
 
   <h1>Marlie's Workspace</h1>
-  <p class="page-subtitle">Personal working space for the platform build — roadmap, decisions in flight, notes</p>
+  <p class="page-subtitle">Personal working space for the platform build — roadmap, evidence for teaching choices, decisions in flight, notes</p>
 
   <!-- ─────────────────────────────────────────────
        HOME / THIS WEEK
@@ -64,14 +72,20 @@
     <div class="intro-card">
       <h4>What's Here</h4>
       <ul>
-        <li><strong>Current Phase</strong> — where Phase 1 stands and what's blocking</li>
-        <li><strong>Platform Roadmap</strong> — full 3-phase build (Brightspace API → custom data layer → reporting)</li>
+        <li><strong>Current Phase</strong> — Phase 0 wrapper work is largely proven; Phase 1 API connection runs in parallel</li>
+        <li><strong>Platform Roadmap</strong> — 4-phase build (HTML wrappers → Brightspace API → custom data layer → reporting)</li>
         <li><strong>Open Decisions</strong> — questions still in flight; resolved ones move to the team wiki's decision log</li>
-        <li><strong>Other Roadmaps</strong> — template for teammates' personal pages</li>
+        <li><strong>Research library</strong> — publications and references that back up instructional and platform strategy (for leadership, grant language, and design decisions)</li>
+        <li><strong>Program timeline · my tasks</strong> — your (M) items from the team master schedule (May–Feb), kept in sync with the shared plan</li>
+        <!-- <li><strong>Other Roadmaps</strong> — template for teammates' personal pages</li> -->
       </ul>
     </div>
 
-    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-14</em></p>
+    <div class="tip">
+      <strong>Wrapper win (May 2026):</strong> The <a href="https://github.com/mcreed-mlri/Brightspace-Courses" target="_blank" rel="noopener">Brightspace-Courses</a> repo now has a reusable <code>Course-Template/</code> package — shared <code>course-config.js</code>, <code>course-nav.js</code>, and <code>course-style.css</code> — that delivers calm in-course navigation inside Brightspace <em>without</em> any API. Next: deploy demo course 6698 and wire real progress (Phase 1).
+    </div>
+
+    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-20</em></p>
   </section>
 
   <!-- ─────────────────────────────────────────────
@@ -81,15 +95,89 @@
     <h2>Current Phase</h2>
 
     <div class="intro-card">
+      <h4>Phase 0 · In-Course HTML Wrappers <span class="status done">Largely Complete</span></h4>
+      <p style="margin-bottom: 0.5rem;"><strong>Now.</strong> Reusable LACE course package built: <code>Home.html</code>, dynamic nav, prev/next, course menu, local progress mock. Works inside Brightspace with clean-view URLs and Architecture B dual tracking (<code>deployMode: "local"</code> vs <code>"lms"</code>).</p>
+      <p style="margin-bottom: 0.75rem;"><strong>Remaining:</strong> finish demo course 6698 Content setup (one launch link, completion criteria, hide native TOC).</p>
+      <p style="margin-bottom: 0;"><a href="#marlie-phase-0">Phase 0 details &rarr;</a></p>
+    </div>
+
+    <div class="intro-card">
       <h4>Phase 1 · Connect to Brightspace <span class="status in-progress">In Progress</span></h4>
-      <p style="margin-bottom: 0.5rem;"><strong>Months 1–2.</strong> Working toward: OAuth API connection, pulling core learner data, displaying it in the custom frontend layer, and getting SSO working so learners have a single login.</p>
+      <p style="margin-bottom: 0.5rem;"><strong>Months 1–2.</strong> Working toward: OAuth API connection, pulling core learner data, displaying it in the custom frontend layer, and getting SSO working so learners have a single login. <em>Runs in parallel with wrapper deployment — the wrapper already proves learner UX without API.</em></p>
       <p style="margin-bottom: 0;"><a href="#marlie-phase-1">Phase 1 details and task checklist &rarr;</a> &middot; <a href="#marlies-roadmap">Full roadmap &rarr;</a></p>
     </div>
 
     <h3>Open Questions Blocking Phase 1</h3>
     <p>The four open decisions live in their own section below. Resolved ones go to the <a href="index.html#decision-log">team wiki's decision log</a>.</p>
 
-    <p><a href="#open-decisions">See Open Decisions &rarr;</a></p>
+    <p><a href="#open-decisions">See Open Decisions &rarr;</a> &middot; <a href="#marlie-program-timeline">Program timeline (my tasks) &rarr;</a></p>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       PROGRAM TIMELINE — Marlie (M) track from team plan
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="marlie-program-timeline">
+    <div class="section-banner b-green"><span class="banner-dot"></span> Team plan &middot; Marlie's track</div>
+    <h2>Program timeline · my tasks</h2>
+
+    <p>Items from the shared <strong>May–February</strong> project schedule where you are tagged <strong>(M)</strong>. These line up with the technical phases in this workspace but follow the <em>program</em> calendar; adjust dates here if the master timeline moves.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Month</th><th>My deliverables (M)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>May</strong></td>
+            <td>
+              <ul style="margin: 0; padding-left: 1.25rem;">
+                <li>Accessibility policy for LMS</li>
+                <li><span class="status done" style="font-size: 0.75rem; vertical-align: middle;">Done</span> LACE course wrapper template (<code>Course-Template/</code> in Brightspace-Courses)</li>
+                <li><span class="status done" style="font-size: 0.75rem; vertical-align: middle;">Done</span> Architecture B dual tracking (<code>course-config.js</code> + Brightspace topic URLs)</li>
+                <li>Deploy wrapper to demo course 6698; finish Content setup checklist</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>June</strong></td>
+            <td>
+              <ul style="margin: 0; padding-left: 1.25rem;">
+                <li>External documentation re content creation — LMS guidance on content</li>
+                <li>Establish LMS policies</li>
+                <li>Establish user types</li>
+                <li>API connection between frontend and Brightspace</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>July</strong></td>
+            <td>
+              <ul style="margin: 0; padding-left: 1.25rem;">
+                <li>Create data layer</li>
+                <li>Develop email system, templates, and learner outreach (<em>M/O</em> — coordinate with O)</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>August</strong></td>
+            <td>
+              <ul style="margin: 0; padding-left: 1.25rem;">
+                <li>Program evaluation / analysis / predictors — build-out</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Sept–Feb</strong></td>
+            <td><span style="color: var(--muted);">TBA</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <strong>Wikis:</strong> LMS policies, user types, and content-guidance docs already surface on the <a href="index.html">team wiki</a> as they stabilize. Link resolved policies from here when useful. The accessibility policy line is still emerging — track questions under <a href="#open-decisions">Open Decisions</a> if ownership or scope needs a formal entry.
+    </div>
   </section>
 
   <!-- ─────────────────────────────────────────────
@@ -99,22 +187,65 @@
     <div class="section-banner b-teal"><span class="banner-dot"></span> Platform Roadmap &middot; Overview</div>
     <h2>Platform Roadmap</h2>
 
-    <p>MLRI's Brightspace + custom platform build is organized into three phases over approximately 5–6 months. The goal is to move from a basic Brightspace connection to a full custom data layer and reporting suite that supports MLRI's legal education mission.</p>
+    <p>The LACE Brightspace + custom platform build is organized into four phases. <strong>Phase 0 (wrapper)</strong> proved the in-course learner experience without API dependency. Phases 1–3 add Brightspace API connection, a custom data layer, and reporting over approximately 5–6 months.</p>
+
+    <div class="note">
+      <strong>Two tracks, one vision:</strong> The wrapper (Tier 1) and the LACE Hub (Tier 3) are separate deliverables. The wrapper works today inside Brightspace. Real cross-system progress and catalog filtering require Phase 1 OAuth — see <a href="https://github.com/mcreed-mlri/Brightspace-Courses/blob/main/docs/MVP-MVM-Requirements.md" target="_blank" rel="noopener">MVP/MVM Requirements</a> in Brightspace-Courses.
+    </div>
 
     <div class="showcase">
       <div class="showcase-header">
         <div class="showcase-tag">Roadmap · Marlie</div>
-        <h3 class="showcase-title">Platform Connection &amp; <em>Data Layer</em></h3>
-        <p class="showcase-subtitle">Three phases over 5–6 months — from Brightspace connection to a full custom data layer and reporting suite.</p>
+        <h3 class="showcase-title">Wrappers First, Then <em>Platform Connection</em></h3>
+        <p class="showcase-subtitle">Four phases — prove calm in-course UX first, then connect Brightspace API, custom data layer, and reporting.</p>
       </div>
 
       <div class="showcase-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#34d399"></span> Phase 0 &middot; Now</div>
         <div class="legend-item"><span class="legend-dot" style="background:#14b8a6"></span> Phase 1 &middot; Months 1–2</div>
         <div class="legend-item"><span class="legend-dot" style="background:#60a5fa"></span> Phase 2 &middot; Months 2–4</div>
         <div class="legend-item"><span class="legend-dot" style="background:#a78bfa"></span> Phase 3 &middot; Months 4–6</div>
       </div>
 
       <div class="showcase-timeline">
+
+        <div class="phase p5">
+          <div class="phase-label">
+            <div class="phase-num">Phase 0</div>
+            <div class="phase-name">In-Course HTML Wrappers</div>
+            <div class="phase-when">Now</div>
+          </div>
+          <div class="phase-content">
+            <div class="feature-cards">
+              <div class="feature-card card-green">
+                <div class="card-icon">&#128196;</div>
+                <div class="card-title">Course Template Package</div>
+                <div class="card-desc"><code>Home.html</code>, shared CSS/JS, topic boilerplate — single source in <code>course-config.js</code></div>
+                <div class="card-tags"><span class="tag">Brightspace-Courses</span><span class="tag">No API</span></div>
+              </div>
+              <div class="feature-card card-green">
+                <div class="card-icon">&#128736;</div>
+                <div class="card-title">Architecture B Tracking</div>
+                <div class="card-desc">Local dev via filenames; production via Brightspace topic URLs + iframe parent redirect</div>
+                <div class="card-tags"><span class="tag">deployMode</span><span class="tag">Completions</span></div>
+              </div>
+              <div class="feature-card card-green">
+                <div class="card-icon">&#127912;</div>
+                <div class="card-title">LACE In-Course UX</div>
+                <div class="card-desc">Course menu, prev/next, progress strip, clean-view URLs (<code>d2l_body_type=3</code>)</div>
+                <div class="card-tags"><span class="tag">Navigation</span><span class="tag">LACE theme</span></div>
+              </div>
+              <div class="feature-card card-green">
+                <div class="card-icon">&#128221;</div>
+                <div class="card-title">Course Creation SOP</div>
+                <div class="card-desc">Cheatsheet + admin guide for upload, Content topics, and rollover workflow</div>
+                <div class="card-tags"><span class="tag">Docs</span><span class="tag">Solo dev</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase-flow-arrow">&darr;</div>
 
         <div class="phase p1">
           <div class="phase-label">
@@ -243,12 +374,24 @@
           </tr>
         </thead>
         <tbody>
+          <tr><td>0</td><td><a href="#marlie-phase-0">In-Course HTML Wrappers</a></td><td>Now</td><td><span class="status done">Largely Complete</span></td></tr>
           <tr><td>1</td><td><a href="#marlie-phase-1">Connect to Brightspace</a></td><td>1–2</td><td><span class="status in-progress">In Progress</span></td></tr>
           <tr><td>2</td><td><a href="#marlie-phase-2">Own Data Layer</a></td><td>2–4</td><td><span class="status not-started">Not Started</span></td></tr>
           <tr><td>3</td><td><a href="#marlie-phase-3">Reporting &amp; Evaluation</a></td><td>4–6</td><td><span class="status not-started">Not Started</span></td></tr>
         </tbody>
       </table>
     </div>
+
+    <h3>Phase 0 · In-Course HTML Wrappers (Now)</h3>
+    <p>Prove calm, LACE-branded navigation inside Brightspace — no OAuth, no backend. Brightspace remains system of record for completions when learners visit official Content topic URLs.</p>
+    <p><strong>Key deliverables:</strong></p>
+    <ul>
+      <li>Reusable <code>Course-Template/</code> package with shared config, nav, and styles</li>
+      <li>Architecture B: <code>deployMode: "local"</code> for dev, <code>"lms"</code> for Brightspace topic URLs in production</li>
+      <li>Clean-view launch pattern: one student-facing web link → <code>Home.html?ou={id}&amp;d2l_body_type=3</code></li>
+      <li>Course creation cheatsheet and admin SOP for solo-developer workflow</li>
+    </ul>
+    <p><a href="#marlie-phase-0">Phase 0 details &rarr;</a></p>
 
     <h3>Phase 1 · Connect to Brightspace (Months 1–2)</h3>
     <p>Get a working, authenticated connection to the Brightspace API and surface core learner data in our custom frontend.</p>
@@ -273,7 +416,7 @@
     <p><a href="#marlie-phase-2">Phase 2 details &rarr;</a></p>
 
     <h3>Phase 3 · Reporting &amp; Evaluation (Months 4–6)</h3>
-    <p>Surface data to learners, managers, and the MLRI team through dashboards and evaluation tools.</p>
+    <p>Surface data to learners, managers, and the LACE team through dashboards and evaluation tools.</p>
     <p><strong>Key deliverables:</strong></p>
     <ul>
       <li>Learner dashboard: personal progress, completions, recommendations</li>
@@ -282,6 +425,13 @@
       <li>Population insights: who's completing, who isn't, and why — by learner segment</li>
     </ul>
     <p><a href="#marlie-phase-3">Phase 3 details &rarr;</a></p>
+
+    <h3>Three-Layer Architecture</h3>
+    <pre>Layer 1: LACE Learning Hub (lms-discovery) — discovery, search, paths, login
+    ↓ deep links + OAuth/API
+Layer 2: In-Course HTML Wrappers (Brightspace-Courses) — calm nav inside BS
+    ↓ hosted as BS Content topics
+Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
 
     <h3>System Stack — How the Layers Connect</h3>
 
@@ -292,10 +442,12 @@
         <div class="stack-box-full sb-learner">&#128100; Learner / Manager / Admin &mdash; Browser</div>
         <div class="v-connector">&#8597;</div>
         <div class="stack-row">
-          <div class="stack-box sb-frontend">&#128187; Your Frontend Layer<small>Discovery &middot; Progress &middot; Stats</small></div>
+          <div class="stack-box sb-frontend">&#128187; LACE Learning Hub<small>Discovery &middot; Catalog &middot; Resume</small></div>
           <div class="stack-arrow-center">&#10231;</div>
           <div class="stack-box sb-supabase">&#128451; Supabase<small>Custom events &middot; Feedback &middot; Users</small></div>
         </div>
+        <div class="v-connector">&#8597;</div>
+        <div class="stack-box-full" style="background: linear-gradient(135deg, rgba(5,150,105,0.15) 0%, rgba(5,150,105,0.05) 100%); border-color: #34d399;">&#128196; In-Course HTML Wrappers &mdash; <code>course-config.js</code> &middot; <code>course-nav.js</code> &middot; topic pages<small style="opacity:0.7;font-size:11px;display:block;margin-top:4px">Phase 0 &middot; works today without API</small></div>
         <div class="v-connector">&#8597;</div>
         <div class="stack-box-full sb-api">Brightspace REST API &mdash; OAuth 2.0</div>
         <div class="v-connector">&#8597;</div>
@@ -342,7 +494,83 @@
       </div>
     </div>
 
-    <p>For the full standalone version of this diagram, see <a href="mlri-architecture.html">MLRI Architecture &rarr;</a></p>
+    <p>For the full standalone version of this diagram, see <a href="mlri-architecture.html">LACE Architecture &rarr;</a></p>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       PHASE 0 — IN-COURSE HTML WRAPPERS
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="marlie-phase-0">
+    <div class="section-banner b-green"><span class="banner-dot"></span> Platform Roadmap &middot; Phase 0</div>
+    <h2>Phase 0 &middot; In-Course HTML Wrappers <span class="status done">Largely Complete</span></h2>
+
+    <p><strong>Timeline:</strong> Now (May 2026)</p>
+
+    <p>The goal of Phase 0 was to prove that learners can have a calm, LACE-branded experience <em>inside</em> Brightspace — without waiting for OAuth, Supabase, or the LACE Hub backend. That proof is in place via the <a href="https://github.com/mcreed-mlri/Brightspace-Courses" target="_blank" rel="noopener">Brightspace-Courses</a> repo.</p>
+
+    <div class="tip">
+      <strong>Core insight validated:</strong> Append <code>?ou={orgUnitId}&amp;d2l_body_type=3</code> to strip Brightspace chrome. Build our own navigation on top. Brightspace tracks completions when learners visit official Content topic URLs — the wrapper does not need to call the API directly.
+    </div>
+
+    <h3>What's Built</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Component</th><th>Location</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Course-Template/</code> package</td><td>Brightspace-Courses</td><td><span class="status done">Done</span></td></tr>
+          <tr><td><code>course-config.js</code> — single source of truth</td><td>Course-Template</td><td><span class="status done">Done</span></td></tr>
+          <tr><td><code>course-nav.js</code> — dynamic nav + progress engine</td><td>Course-Template</td><td><span class="status done">Done</span></td></tr>
+          <tr><td><code>course-style.css</code> — LACE design tokens</td><td>Course-Template</td><td><span class="status done">Done</span></td></tr>
+          <tr><td>Architecture B dual tracking (<code>file</code> vs <code>url</code>)</td><td>course-config.js + course-nav.js</td><td><span class="status done">Done</span></td></tr>
+          <tr><td>Iframe parent redirect for LMS completions</td><td>course-nav.js</td><td><span class="status done">Done</span></td></tr>
+          <tr><td>Interactive Elements demo pages</td><td>Interactive-Elements-Demo/</td><td><span class="status done">Done</span></td></tr>
+          <tr><td>Course creation cheatsheet + admin SOP</td><td>docs/ + Brightspace-Admin-Guide.md</td><td><span class="status done">Done</span></td></tr>
+          <tr><td>Demo course 6698 fully configured in BS</td><td>Brightspace Content</td><td><span class="status in-progress">In Progress</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Task Checklist — Remaining (Tier 1)</h3>
+
+    <h4>Deploy to Demo Course 6698</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled checked><span class="label">Build reusable Course-Template package locally</span></li>
+      <li><input type="checkbox" disabled checked><span class="label">Validate clean-view URLs (<code>d2l_body_type=3</code>)</span></li>
+      <li><input type="checkbox" disabled><span class="label">Upload full package to course 6698 via Manage Files</span></li>
+      <li><input type="checkbox" disabled><span class="label">Create Content topic per HTML page (Add from Manage Files)</span></li>
+      <li><input type="checkbox" disabled><span class="label">Copy Brightspace topic URLs into <code>course-config.js</code>; set <code>deployMode: "lms"</code></span></li>
+      <li><input type="checkbox" disabled><span class="label">Set completion criteria (Automatic: Visited) on each required topic</span></li>
+      <li><input type="checkbox" disabled><span class="label">Hide native Content TOC; expose one "Start Course" web link</span></li>
+      <li><input type="checkbox" disabled><span class="label">QA with learner test account — completions show in BS reports</span></li>
+    </ul>
+
+    <h4>What Phase 0 Does NOT Include</h4>
+    <ul>
+      <li>Real progress checkmarks from Brightspace API (mock via <code>localStorage</code> for now)</li>
+      <li>LACE Hub catalog filtering by enrollment</li>
+      <li>SSO or single login across Hub and Brightspace</li>
+    </ul>
+    <p>Those require Phase 1 (Minimum Viable Magic path). See <a href="https://github.com/mcreed-mlri/Brightspace-Courses/blob/main/docs/MVP-MVM-Requirements.md" target="_blank" rel="noopener">MVP/MVM Requirements</a>.</p>
+
+    <h3>Student Journey (MVP Fallback — Works Today)</h3>
+    <ol class="steps">
+      <li>Learner opens course in Brightspace</li>
+      <li>Sees one web link: "Start Course"</li>
+      <li>Link opens <code>Home.html</code> in clean view</li>
+      <li>Wrapper handles all in-course navigation via course menu + prev/next</li>
+      <li>Brightspace tracks topic visits silently in the background</li>
+    </ol>
+
+    <h3>Resources</h3>
+    <ul>
+      <li><a href="https://github.com/mcreed-mlri/Brightspace-Courses" target="_blank" rel="noopener">Brightspace-Courses repo</a></li>
+      <li><a href="https://github.com/mcreed-mlri/Brightspace-Courses/blob/main/docs/LACE-Brightspace-Plan.md" target="_blank" rel="noopener">LACE + Brightspace Architecture Plan</a></li>
+      <li><a href="https://github.com/mcreed-mlri/Brightspace-Courses/blob/main/docs/Course-Creation-Cheatsheet.md" target="_blank" rel="noopener">Course Creation Cheatsheet</a></li>
+      <li><a href="https://github.com/mcreed-mlri/Brightspace-Courses/blob/main/Brightspace-Admin-Guide.md" target="_blank" rel="noopener">Brightspace Admin Guide (SOP)</a></li>
+      <li><a href="#marlies-roadmap">Phase Overview</a></li>
+    </ul>
   </section>
 
   <!-- ─────────────────────────────────────────────
@@ -354,7 +582,11 @@
 
     <p><strong>Timeline:</strong> Months 1–2</p>
 
-    <p>The goal of Phase 1 is a working, authenticated connection to the Brightspace API and core learner data surfaced in our custom frontend. Everything in Phase 2 and 3 depends on this foundation being solid.</p>
+    <p>The goal of Phase 1 is a working, authenticated connection to the Brightspace API and core learner data surfaced in our custom frontend. Phase 0 proved the in-course UX without API — Phase 1 unlocks real progress in the LACE Hub and (optionally) wrapper checkmarks via a backend bridge.</p>
+
+    <div class="note">
+      <strong>MVM (Minimum Viable Magic):</strong> Smallest path to real progress = OAuth app + one progress endpoint for course 6698 + swap mock JS for <code>fetch()</code>. Full Hub catalog can stay on demo data until Tier 3.
+    </div>
 
     <h3>Task Checklist</h3>
 
@@ -391,9 +623,45 @@
     </ul>
 
     <h3>Notes &amp; Blockers</h3>
-    <blockquote>Use this section for notes as you work through Phase 1. Add dates when things happen.</blockquote>
+
+    <h4>Meeting recap — 2026-05-14 (Amanda)</h4>
     <ul>
-      <li><em>(Add notes here)</em></li>
+      <li><strong>Vanity URL / custom domain</strong> — hard deadline week of <strong>June 15–19, 2026</strong>. See <a href="#vanity-url">open decision</a></li>
+      <li><strong>Org Unit Editor cleanup</strong> — Amanda started; I need to finish reviewing. Confirm hierarchy is clean, remove placeholders, label anything archived/live/test/demo</li>
+      <li><strong>Custom HTML login page</strong> — Amanda walked through the upload/setup process. Build a sample before next meeting. See <a href="#custom-login">open decision</a></li>
+      <li><strong>Automated emails + Intelligent Agents</strong> — Amanda demoed templates, default email settings, weekly emails, Intelligent Agents. See <a href="index.html#glossary-intelligent-agents">glossary</a></li>
+      <li><strong>Community of Practice</strong> — different roles can have different access within the same space. Added as 4th option to <a href="#audience-routing">audience-routing decision</a></li>
+      <li><strong>Favicon + H5P URL</strong> — both changeable later, but H5P URL is soft-permanent (set carefully)</li>
+      <li><strong>Rep window may extend</strong> by another month (Amanda reaching out — availability + communication issues with senior trainers)</li>
+      <li><strong>Certificate vouchers available</strong> for team self-training. Useful for offloading specific Brightspace topics from live Amanda time</li>
+      <li><strong>Data Insights / Manager Dashboard</strong> — Amanda flagged these as needing 1–2 dedicated meetings of their own</li>
+    </ul>
+
+    <div class="tip">
+      <strong>Testing hack:</strong> change the email address on the <code>student_demo</code> account to your own email, then trigger workflows as that student to see what learners actually receive.
+    </div>
+
+    <h4>Action items — before next meeting</h4>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Finish Org Unit Editor cleanup review</span></li>
+      <li><input type="checkbox" disabled><span class="label">Build sample custom HTML login page</span></li>
+      <li><input type="checkbox" disabled><span class="label">Test the login page upload/setup process; document what's customizable vs. constrained</span></li>
+      <li><input type="checkbox" disabled><span class="label">Review automated email / template options</span></li>
+      <li><input type="checkbox" disabled><span class="label">Test learner emails via the <code>student_demo</code> email hack</span></li>
+      <li><input type="checkbox" disabled><span class="label">Clarify ownership of the June 15–19 vanity URL decision</span></li>
+      <li><input type="checkbox" disabled><span class="label">Clarify what "risk" means in the report about scheduling additional trainings</span></li>
+    </ul>
+
+    <h4>Questions to carry forward</h4>
+    <ul>
+      <li>What exactly needs to be finalized by June 15–19?</li>
+      <li>Who owns the vanity URL / custom domain decision?</li>
+      <li>What should the custom domain be?</li>
+      <li>Should we use a custom HTML login page from launch?</li>
+      <li>What learner emails should be customized before launch?</li>
+      <li>Which notifications should come from Brightspace vs. our frontend layer?</li>
+      <li>What are we using Community of Practice spaces for?</li>
+      <li>When should we schedule the Data Insights / Manager Dashboard sessions?</li>
     </ul>
 
     <h3>Resources</h3>
@@ -477,7 +745,7 @@
 
     <p><strong>Timeline:</strong> Months 4–6</p>
 
-    <p>Phase 3 is where the data from Phases 1 and 2 gets turned into something useful for learners, managers, and MLRI's program team. The equity and population insights work here is tied directly to MLRI's mission — understanding who is completing training and who isn't.</p>
+    <p>Phase 3 is where the data from Phases 1 and 2 gets turned into something useful for learners, managers, and the LACE program team. The equity and population insights work here is tied directly to LACE's mission — understanding who is completing training and who isn't.</p>
 
     <h3>Task Checklist</h3>
 
@@ -521,7 +789,7 @@
 
     <h3>Open Questions for Phase 3</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">What "learner segments" are meaningful for equity analysis at MLRI? (e.g., by office, practice area, years of experience?)</span></li>
+      <li><input type="checkbox" disabled><span class="label">What "learner segments" are meaningful for equity analysis in LACE? (e.g., by office, practice area, years of experience?)</span></li>
       <li><input type="checkbox" disabled><span class="label">Who has access to the Manager View? How is "manager" defined?</span></li>
       <li><input type="checkbox" disabled><span class="label">What does the stakeholder report need to include? (For funders, board, etc.)</span></li>
       <li><input type="checkbox" disabled><span class="label">How do we handle update notices on the learner dashboard? (See <a href="index.html#learner-updates">Learner Update Notices policy</a>)</span></li>
@@ -530,7 +798,38 @@
     <h3>Resources</h3>
     <ul>
       <li><a href="#marlies-roadmap">Phase Overview</a> — Full roadmap context</li>
+      <li><a href="#teaching-evidence">Research library</a> — Evidence for instructional and evaluation choices</li>
     </ul>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
+       TEACHING & EVIDENCE — research backing strategy
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="teaching-evidence">
+    <div class="section-banner b-amber"><span class="banner-dot"></span> Teaching &amp; Evidence</div>
+    <h2>Research library</h2>
+
+    <p>Place to park readings the team can use when explaining <em>why</em> we structure courses, assessments, and the learner experience a certain way — parallel to the technical roadmap but aimed at pedagogy and program strategy. Drop PDFs under <code>to-research/</code> while exploring; summarize takeaways here as you read so they are easy to reuse in wiki prose or stakeholder updates.</p>
+
+    <div class="intro-card">
+      <h4>Foundations Instructional Design Guide</h4>
+      <p style="margin-bottom: 0.5rem;"><strong>Source:</strong> Institute for the Advancement of the American Legal System (IAALS), University of Denver — shared by leadership for exploration.</p>
+      <p style="margin-bottom: 0.75rem;">Practical instructional-design framing for legal-education contexts: useful for aligning Brightspace course structure, sequencing, outcomes, and assessment with established design practice.</p>
+      <p style="margin-bottom: 0;"><strong>Open:</strong> <a href="https://iaals.du.edu/sites/default/files/documents/publications/foundations_instructional_design_guide.pdf" target="_blank" rel="noopener">Official PDF on iaals.du.edu</a> &middot; <strong>Local copy:</strong> <a href="to-research/foundations_instructional_design_guide.pdf">to-research/foundations_instructional_design_guide.pdf</a> &middot; <a href="https://iaals.du.edu/publications/foundations-instructional-design-guide" target="_blank" rel="noopener">IAALS publication page</a> (April 2021)</p>
+    </div>
+
+    <h4>Takeaways for LACE (draft)</h4>
+    <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 0.75rem;">Condensed from IAALS’s summary of the guide — tighten or replace with your own notes as you work through the PDF and toolkit.</p>
+    <ul>
+      <li><strong>Competency-grounded outcomes.</strong> The guide ties course design to IAALS <em>Model Learning Outcomes</em> developed with several law schools — a ready-made vocabulary for what “good” looks like beyond topic coverage.</li>
+      <li><strong>Evidence from practice.</strong> It draws on the large Foundations for Practice lawyer survey and workshops with diverse employers — useful language when explaining why certain skills or assessments matter to real-world practice, not only to us internally.</li>
+      <li><strong>Outcomes &rarr; assessment chain.</strong> The published workflow is: analyze course goals, define terms clearly, write learning objectives, operationalize them, then design assessments and observational/scoring rubrics — maps directly to Brightspace outcomes, rubrics, and completion criteria.</li>
+      <li><strong>Accessible on-ramp.</strong> Written for instructors who are not already steeped in standards-based instruction — helps justify incremental improvement (map what we already do, find gaps) rather than implying a full curriculum reboot.</li>
+    </ul>
+
+    <div class="tip">
+      <strong>To add another item:</strong> copy the card above, swap title + description, point the links at the authoritative URL and optional local mirror in <code>to-research/</code>. If something becomes team canon, consider moving a short summary to the <a href="index.html">team wiki</a> and keep the full citation here.
+    </div>
   </section>
 
   <!-- ─────────────────────────────────────────────
@@ -540,6 +839,33 @@
     <h2>Open Decisions</h2>
 
     <p>Questions in flight — not yet resolved. When one resolves, move it to the <a href="index.html#decision-log">team wiki's decision log</a> as a resolved entry.</p>
+
+    <h4 id="vanity-url">Vanity URL / Custom Domain <span class="status blocked">Urgent</span></h4>
+    <p><strong>Question:</strong> What should the custom domain be, and who owns the decision?</p>
+    <p><strong>Why it matters:</strong> This is the hardest deadline from the rep window — Amanda needs this finalized by <strong>week of June 15–19, 2026</strong>. It touches every learner-facing URL: links, login page, certificates. Hard to change after launch without breaking external references.</p>
+    <p><strong>Things to decide:</strong></p>
+    <ul>
+      <li>The actual domain string (e.g., <code>learn.lace.org</code>, <code>training.mlri.org</code>, etc.)</li>
+      <li>Who owns the decision — LACE leadership, MLRI leadership, or both</li>
+      <li>Whether the domain implies a future independent identity beyond MLRI</li>
+    </ul>
+    <p><strong>Deadline:</strong> June 15–19, 2026<br>
+    <strong>Status:</strong> Open &middot; Added 2026-05-14</p>
+
+    <h4 id="custom-login">Custom HTML Login Page Scope <span class="status proposed">Open</span></h4>
+    <p><strong>Question:</strong> What does the custom login page need to include, and how branded should it be?</p>
+    <p><strong>Why it matters:</strong> The login page is the first learner-facing moment — should feel like LACE, not generic Brightspace. Amanda walked through the upload/setup process; a sample needs to be built before next week's meeting to test what's customizable vs. constrained.</p>
+    <p><strong>Things to test/confirm:</strong></p>
+    <ul>
+      <li>Layout control — fully custom or within a Brightspace wrapper?</li>
+      <li>Branding (LACE / MLRI marks, color palette)</li>
+      <li>Support text / login instructions</li>
+      <li>Help and contact links</li>
+      <li>Mobile responsiveness</li>
+      <li>Whether the page needs to differentiate by user type</li>
+    </ul>
+    <p><strong>Next step:</strong> Build a sample custom HTML login page before next Brightspace meeting<br>
+    <strong>Status:</strong> Open &middot; Added 2026-05-14</p>
 
     <h4>Versioning Threshold <span class="status proposed">Open</span></h4>
     <p><strong>Question:</strong> When do we archive a course and create a new offering vs. updating the existing one in place? We need a clear line between "minor" and "major."</p>
@@ -576,31 +902,31 @@
     <p><strong>Status:</strong> Open &middot; Added 2026-05-13</p>
 
     <h4 id="audience-routing">Audience Routing — How to Split Content by User Type <span class="status proposed">Open</span></h4>
-    <p><strong>Question:</strong> When the same topic (e.g., Pre-Trial Skills) needs different content for Lawyers vs. Advocates vs. ?Paralegals — how do we route them in Brightspace? Options to explore: org-unit "containers," release conditions on shared content, or separate Course Offerings per audience.</p>
+    <p><strong>Question:</strong> When the same topic (e.g., Pre-Trial Skills) needs different content for Lawyers vs. Advocates vs. ?Paralegals vs. Community Members — how do we route them in Brightspace?</p>
     <p><strong>Why it matters:</strong> This is the Brightspace mechanic that enforces the <a href="index.html#user-types-matrix">User Types &amp; Access Matrix</a> — the unauthorized-practice-of-law guardrails. Wrong mechanic means either (a) non-lawyers see content that implies practice qualification, or (b) admin overhead balloons because every audience is a separate offering to maintain.</p>
     <p><strong>Options being considered:</strong></p>
     <ul>
+      <li><strong>Community of Practice space</strong> — Amanda surfaced this in the 2026-05-14 meeting. A Brightspace space where different users with different credentials/roles can have different access within the same container. May be the cleanest fit because it's built for exactly this use case</li>
       <li><strong>Org-unit containers</strong> — separate org units per audience type, content inherited or restricted accordingly. Brightspace-native, may need rep input on whether this fits the existing MLRI → MA → Training Area hierarchy</li>
       <li><strong>Release conditions</strong> — one offering, content modules gated by role/group. Most flexible, more complex to maintain</li>
       <li><strong>Separate offerings per audience</strong> — Lawyer Pre-Trial vs. Advocate Pre-Trial as distinct offerings. Simplest mental model, highest admin overhead, more chances for divergence</li>
     </ul>
-    <p><strong>Deadline:</strong> Decide before Pilot 2 (Oct 1) so audience access is configured correctly for non-MLRI users<br>
+    <p><strong>Deadline:</strong> Decide before Pilot 2 (Oct 1) so audience access is configured correctly for external users<br>
     <strong>Status:</strong> Open &middot; Added 2026-05-14<br>
-    <strong>See:</strong> <a href="index.html#user-types-matrix">User Types &amp; Access Matrix</a></p>
+    <strong>See:</strong> <a href="index.html#user-types-matrix">User Types &amp; Access Matrix</a>, <a href="index.html#glossary-community-of-practice">Community of Practice</a></p>
 
     <h4 id="discover-page-vs-custom-catalog">Discover Page vs. Custom Catalog <span class="status proposed">Open</span></h4>
     <p><strong>Question:</strong> Are we using Brightspace's built-in Discover page, our own custom frontend catalog, or both for learners to find courses?</p>
     <p><strong>Why it matters:</strong> This affects Phase 1 scope and the long-term UX of the platform. Running both requires keeping them in sync.</p>
-    <p><strong>Status:</strong> Open &middot; Added 2026-05-13</p>
+    <p><strong>Update (2026-05-20):</strong> Phase 0 wrapper success de-risks the learner <em>in-course</em> experience — learners can enter via Brightspace with one launch link even before the Hub is production-ready. The Discover vs. custom catalog question now mainly affects <em>discovery</em> (finding courses), not delivery (experiencing them). Organizing the Brightspace backend hierarchy cleanly (see team meeting notes) still matters for both paths.</p>
+    <p><strong>Status:</strong> Open &middot; Added 2026-05-13 &middot; Updated 2026-05-20</p>
 
     <div class="tip">
       When a decision resolves: copy the entry to the <a href="index.html#decision-log">team wiki's Decision Log</a> under "Resolved Decisions" with the date, what was decided, and why — then delete the open version here.
     </div>
   </section>
 
-  <!-- ─────────────────────────────────────────────
-       OTHER ROADMAPS — placeholder for teammates
-  ────────────────────────────────────────────── -->
+  <!-- OTHER ROADMAPS — teammate template (commented out; uncomment block + sidebar link when sharing)
   <section class="guide-section" id="other-roadmaps">
     <h2>Other Roadmaps</h2>
 
@@ -690,6 +1016,7 @@
       <strong>How to add a teammate:</strong> in the sidebar, add a new <code>section-label</code> (e.g., "<em>Name</em>'s Roadmap") above the "Other Roadmaps" group, plus sub-links for each phase. Then in the body, duplicate this <code>&lt;section class="guide-section"&gt;</code> with a new id (e.g., <code>id="alex-phase-1"</code>) for each phase, and copy the showcase panel above into a new overview section. Phase color palette cycles teal &rarr; blue &rarr; purple &rarr; amber &rarr; green &rarr; rose (classes <code>p1</code>–<code>p6</code> on the timeline, matching card classes <code>card-teal</code>–<code>card-rose</code>).
     </div>
   </section>
+  -->
 
 </main>
 

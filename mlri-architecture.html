@@ -4,17 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light">
-<title>MLRI Platform Architecture</title>
+<title>LACE Platform Architecture</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --navy: #0b1f3a;
-    --navy2: #132d52;
+    --navy: #0a1628;
+    --navy2: #111f38;
+    --surface: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.07);
+    --line: rgba(255,255,255,0.09);
     --teal: #0d9488;
-    --teal-light: #14b8a6;
-    --teal-glow: rgba(13,148,136,0.15);
+    --teal-light: #2dd4bf;
     --amber: #d97706;
     --amber-light: #fbbf24;
     --blue: #2563eb;
@@ -25,67 +27,112 @@
     --purple: #7c3aed;
     --purple-light: #a78bfa;
     --white: #ffffff;
-    --off: #f8fafc;
     --gray: #94a3b8;
-    --gray-d: #64748b;
+    --gray-bright: #cbd5e1;
   }
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--navy);
+    background-color: var(--navy);
+    background-image:
+      radial-gradient(ellipse 70% 45% at 15% -5%, rgba(45,212,191,0.14) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 40% at 95% 105%, rgba(167,139,250,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 30% at 50% 60%, rgba(96,165,250,0.06) 0%, transparent 60%);
     color: var(--white);
     min-height: 100vh;
     padding: 48px 24px 80px;
   }
 
+  .page-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+  }
+
   /* HEADER */
   .header {
     text-align: center;
-    margin-bottom: 56px;
+    margin-bottom: 48px;
+    padding: 2rem 1.5rem 2.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green-light), var(--teal-light), var(--blue-light), var(--purple-light));
   }
   .header-tag {
+    display: inline-block;
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    font-size: 10px;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--teal-light);
-    margin-bottom: 14px;
+    margin-bottom: 16px;
+    padding: 6px 14px;
+    background: rgba(45,212,191,0.1);
+    border: 1px solid rgba(45,212,191,0.25);
+    border-radius: 999px;
   }
   .header h1 {
     font-family: 'DM Sans', sans-serif;
-    font-size: clamp(24px, 4vw, 40px);
+    font-size: clamp(26px, 4vw, 42px);
     font-weight: 800;
     color: white;
-    line-height: 1.1;
-    margin-bottom: 12px;
+    line-height: 1.12;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
   }
-  .header h1 span { color: var(--teal-light); }
+  .header h1 span {
+    background: linear-gradient(135deg, var(--teal-light) 0%, var(--blue-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
   .header p {
     font-size: 15px;
-    color: var(--gray);
-    max-width: 520px;
+    color: var(--gray-bright);
+    max-width: 540px;
     margin: 0 auto;
+    line-height: 1.65;
   }
 
   /* PHASE LEGEND */
   .legend {
     display: flex;
     justify-content: center;
-    gap: 24px;
+    gap: 10px;
     flex-wrap: wrap;
-    margin-bottom: 48px;
+    margin-bottom: 40px;
   }
   .legend-item {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 12px;
-    color: var(--gray);
+    font-size: 11px;
+    color: var(--gray-bright);
     font-family: 'DM Mono', monospace;
+    padding: 8px 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .legend-item:hover {
+    background: var(--surface-hover);
+    border-color: rgba(255,255,255,0.14);
   }
   .legend-dot {
-    width: 10px; height: 10px;
+    width: 8px; height: 8px;
     border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
   }
 
   /* DIAGRAM WRAPPER */
@@ -121,9 +168,21 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
-    padding-right: 20px;
-    padding-top: 4px;
+    padding: 14px 16px;
+    margin-right: 8px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
+  .phase:hover .phase-label {
+    transform: translateX(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+  .p5 .phase-label { border-color: rgba(52,211,153,0.28); background: rgba(52,211,153,0.06); }
+  .p1 .phase-label { border-color: rgba(45,212,191,0.28); background: rgba(45,212,191,0.06); }
+  .p2 .phase-label { border-color: rgba(96,165,250,0.28); background: rgba(96,165,250,0.06); }
+  .p3 .phase-label { border-color: rgba(167,139,250,0.28); background: rgba(167,139,250,0.06); }
   .phase-num {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -147,19 +206,20 @@
   }
 
   .phase-content {
-    border-left: 2px solid rgba(255,255,255,0.08);
-    padding-left: 24px;
+    border-left: 2px solid rgba(255,255,255,0.1);
+    padding-left: 28px;
     padding-bottom: 32px;
     position: relative;
   }
   .phase-content::before {
     content: '';
     position: absolute;
-    left: -5px;
-    top: 16px;
-    width: 8px; height: 8px;
+    left: -6px;
+    top: 18px;
+    width: 10px; height: 10px;
     border-radius: 50%;
     border: 2px solid var(--navy);
+    z-index: 1;
   }
 
   /* phase colors */
@@ -175,6 +235,10 @@
   .p3 .phase-name { color: var(--purple-light); }
   .p3 .phase-content::before { background: var(--purple-light); box-shadow: 0 0 8px var(--purple-light); }
 
+  .p5 .phase-num { color: var(--green-light); }
+  .p5 .phase-name { color: var(--green-light); }
+  .p5 .phase-content::before { background: var(--green-light); box-shadow: 0 0 8px var(--green-light); }
+
   /* CARDS */
   .cards {
     display: flex;
@@ -184,20 +248,41 @@
   }
 
   .card {
-    border-radius: 10px;
-    padding: 16px 18px;
+    border-radius: 12px;
+    padding: 18px 18px 16px;
     min-width: 160px;
     flex: 1;
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.07);
-    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid var(--line);
+    backdrop-filter: blur(8px);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    border-radius: 12px 0 0 12px;
+    opacity: 0.85;
   }
   .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    border-color: rgba(255,255,255,0.14);
   }
-  .card-icon { font-size: 20px; margin-bottom: 8px; }
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
   .card-title {
     font-family: 'DM Sans', sans-serif;
     font-size: 13px;
@@ -207,8 +292,9 @@
   }
   .card-desc {
     font-size: 12px;
-    line-height: 1.5;
-    opacity: 0.7;
+    line-height: 1.55;
+    color: var(--gray-bright);
+    opacity: 0.88;
   }
   .card-tags {
     display: flex;
@@ -221,66 +307,100 @@
     font-size: 9px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    padding: 3px 7px;
-    border-radius: 3px;
-    opacity: 0.85;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid transparent;
   }
 
   /* Card themes */
   .card-teal {
-    background: linear-gradient(135deg, rgba(13,148,136,0.2) 0%, rgba(13,148,136,0.08) 100%);
+    background: linear-gradient(145deg, rgba(13,148,136,0.22) 0%, rgba(13,148,136,0.06) 100%);
   }
+  .card-teal::after { background: var(--teal-light); }
   .card-teal .card-title { color: var(--teal-light); }
-  .card-teal .tag { background: rgba(13,148,136,0.2); color: var(--teal-light); }
+  .card-teal .card-icon { background: rgba(45,212,191,0.15); border-color: rgba(45,212,191,0.25); }
+  .card-teal .tag { background: rgba(13,148,136,0.15); color: var(--teal-light); border-color: rgba(45,212,191,0.3); }
 
   .card-blue {
-    background: linear-gradient(135deg, rgba(37,99,235,0.2) 0%, rgba(37,99,235,0.08) 100%);
+    background: linear-gradient(145deg, rgba(37,99,235,0.22) 0%, rgba(37,99,235,0.06) 100%);
   }
+  .card-blue::after { background: var(--blue-light); }
   .card-blue .card-title { color: var(--blue-light); }
-  .card-blue .tag { background: rgba(37,99,235,0.2); color: var(--blue-light); }
+  .card-blue .card-icon { background: rgba(96,165,250,0.15); border-color: rgba(96,165,250,0.25); }
+  .card-blue .tag { background: rgba(37,99,235,0.15); color: var(--blue-light); border-color: rgba(96,165,250,0.3); }
 
   .card-purple {
-    background: linear-gradient(135deg, rgba(124,58,237,0.2) 0%, rgba(124,58,237,0.08) 100%);
+    background: linear-gradient(145deg, rgba(124,58,237,0.22) 0%, rgba(124,58,237,0.06) 100%);
   }
+  .card-purple::after { background: var(--purple-light); }
   .card-purple .card-title { color: var(--purple-light); }
-  .card-purple .tag { background: rgba(124,58,237,0.2); color: var(--purple-light); }
+  .card-purple .card-icon { background: rgba(167,139,250,0.15); border-color: rgba(167,139,250,0.25); }
+  .card-purple .tag { background: rgba(124,58,237,0.15); color: var(--purple-light); border-color: rgba(167,139,250,0.3); }
 
   .card-amber {
-    background: linear-gradient(135deg, rgba(217,119,6,0.2) 0%, rgba(217,119,6,0.08) 100%);
+    background: linear-gradient(145deg, rgba(217,119,6,0.22) 0%, rgba(217,119,6,0.06) 100%);
   }
+  .card-amber::after { background: var(--amber-light); }
   .card-amber .card-title { color: var(--amber-light); }
-  .card-amber .tag { background: rgba(217,119,6,0.2); color: var(--amber-light); }
+  .card-amber .card-icon { background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.25); }
+  .card-amber .tag { background: rgba(217,119,6,0.15); color: var(--amber-light); border-color: rgba(251,191,36,0.3); }
 
   .card-green {
-    background: linear-gradient(135deg, rgba(5,150,105,0.2) 0%, rgba(5,150,105,0.08) 100%);
+    background: linear-gradient(145deg, rgba(5,150,105,0.22) 0%, rgba(5,150,105,0.06) 100%);
   }
+  .card-green::after { background: var(--green-light); }
   .card-green .card-title { color: var(--green-light); }
-  .card-green .tag { background: rgba(5,150,105,0.2); color: var(--green-light); }
+  .card-green .card-icon { background: rgba(52,211,153,0.15); border-color: rgba(52,211,153,0.25); }
+  .card-green .tag { background: rgba(5,150,105,0.15); color: var(--green-light); border-color: rgba(52,211,153,0.3); }
 
   .card-rose {
-    background: linear-gradient(135deg, rgba(225,29,72,0.2) 0%, rgba(225,29,72,0.08) 100%);
+    background: linear-gradient(145deg, rgba(225,29,72,0.22) 0%, rgba(225,29,72,0.06) 100%);
   }
+  .card-rose::after { background: #fb7185; }
   .card-rose .card-title { color: #fb7185; }
-  .card-rose .tag { background: rgba(225,29,72,0.2); color: #fb7185; }
+  .card-rose .card-icon { background: rgba(251,113,133,0.12); border-color: rgba(251,113,133,0.25); }
+  .card-rose .tag { background: rgba(225,29,72,0.15); color: #fb7185; border-color: rgba(251,113,133,0.3); }
 
   /* FLOW ARROWS between sections */
   .flow-arrow {
     display: flex;
     align-items: center;
+    gap: 0;
     padding-left: 164px;
-    margin: -18px 0 -4px;
-    color: rgba(255,255,255,0.2);
-    font-size: 20px;
+    margin: -14px 0 0;
+    height: 28px;
+    color: rgba(255,255,255,0.35);
+    font-size: 14px;
+    font-family: 'DM Mono', monospace;
+  }
+  .flow-arrow::before {
+    content: '';
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.25));
+    margin-right: 10px;
+    border-radius: 1px;
   }
 
   /* LAYER DIAGRAM — the stack visual */
   .stack-diagram {
     max-width: 900px;
     margin: 48px auto 0;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
     padding: 32px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  .stack-diagram::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal-light), var(--blue-light), var(--amber-light));
+    opacity: 0.7;
   }
   .stack-diagram-title {
     font-family: 'DM Mono', monospace;
@@ -299,12 +419,18 @@
     margin-bottom: 8px;
   }
   .stack-box {
-    border-radius: 8px;
-    padding: 12px 16px;
+    border-radius: 10px;
+    padding: 14px 16px;
     text-align: center;
     font-size: 13px;
     font-weight: 500;
     font-family: 'DM Sans', sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .stack-box:hover,
+  .stack-box-full:hover {
+    transform: scale(1.01);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   }
   .stack-arrow-center {
     font-size: 18px;
@@ -345,11 +471,27 @@
     gap: 12px;
   }
   .flow-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 12px;
-    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px 20px 18px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
+  .flow-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+  }
+  .flow-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .fc-bs.flow-card::before { background: var(--amber-light); }
+  .fc-own.flow-card::before { background: var(--purple-light); }
+  .fc-out.flow-card::before { background: var(--teal-light); }
   .flow-card-label {
     font-family: 'DM Mono', monospace;
     font-size: 9px;
@@ -369,11 +511,11 @@
   }
   .flow-card ul li {
     font-size: 12px;
-    color: var(--gray);
-    padding: 4px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    padding-left: 14px;
+    color: var(--gray-bright);
+    padding: 6px 0 6px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
     position: relative;
+    line-height: 1.45;
   }
   .flow-card ul li:last-child { border-bottom: none; }
   .flow-card ul li::before {
@@ -403,13 +545,16 @@
 </head>
 <body>
 
+<div class="page-wrap">
+
 <div class="header">
-  <div class="header-tag">System Architecture · MLRI Learning Hub</div>
+  <div class="header-tag">System Architecture · LACE Learning Hub</div>
   <h1>What We're <span>Building</span></h1>
-  <p>Three phases over 5–6 months — from Brightspace connection to a full custom data layer and reporting suite.</p>
+  <p>Four phases — in-course HTML wrappers first, then Brightspace API connection, custom data layer, and reporting suite.</p>
 </div>
 
 <div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> Phase 0 · Now</div>
   <div class="legend-item"><div class="legend-dot" style="background:#14b8a6"></div> Phase 1 · Months 1–2</div>
   <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> Phase 2 · Months 2–4</div>
   <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Phase 3 · Months 4–6</div>
@@ -417,6 +562,44 @@
 
 <!-- PHASES -->
 <div class="diagram">
+
+  <div class="phase p5">
+    <div class="phase-label">
+      <div class="phase-num">Phase 0</div>
+      <div class="phase-name">In-Course HTML Wrappers</div>
+      <div class="phase-timeline">Now</div>
+    </div>
+    <div class="phase-content">
+      <div class="cards">
+        <div class="card card-green">
+          <div class="card-icon">📄</div>
+          <div class="card-title">Course Template Package</div>
+          <div class="card-desc">Shared config, nav, styles — single source in course-config.js</div>
+          <div class="card-tags"><span class="tag">Brightspace-Courses</span><span class="tag">No API</span></div>
+        </div>
+        <div class="card card-green">
+          <div class="card-icon">🔗</div>
+          <div class="card-title">Architecture B Tracking</div>
+          <div class="card-desc">Local dev via filenames; production via BS topic URLs</div>
+          <div class="card-tags"><span class="tag">Completions</span><span class="tag">deployMode</span></div>
+        </div>
+        <div class="card card-green">
+          <div class="card-icon">🧭</div>
+          <div class="card-title">Calm In-Course UX</div>
+          <div class="card-desc">Course menu, prev/next, clean-view URLs (d2l_body_type=3)</div>
+          <div class="card-tags"><span class="tag">Navigation</span><span class="tag">LACE theme</span></div>
+        </div>
+        <div class="card card-green">
+          <div class="card-icon">📋</div>
+          <div class="card-title">Course Creation SOP</div>
+          <div class="card-desc">Cheatsheet + admin guide for upload and Content setup</div>
+          <div class="card-tags"><span class="tag">Docs</span><span class="tag">Proven</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-arrow">↓</div>
 
   <div class="phase p1">
     <div class="phase-label">
@@ -539,10 +722,12 @@
   <div class="stack-box-full sb-learner">👤 Learner / Manager / Admin — Browser</div>
   <div class="v-connector">↕</div>
   <div class="stack-row">
-    <div class="stack-box sb-frontend">🖥️ Your Frontend Layer<br><small style="opacity:0.6;font-size:11px">Discovery · Progress · Stats</small></div>
+    <div class="stack-box sb-frontend">🖥️ LACE Learning Hub<br><small style="opacity:0.6;font-size:11px">Discovery · Catalog · Resume</small></div>
     <div class="stack-arrow-center">⟷</div>
     <div class="stack-box sb-supabase">🗄️ Supabase<br><small style="opacity:0.6;font-size:11px">Custom events · Feedback · Users</small></div>
   </div>
+  <div class="v-connector">↕</div>
+  <div class="stack-box-full" style="background: rgba(5,150,105,0.12); color: var(--green-light); border: 1px solid rgba(5,150,105,0.25); font-size: 12px;">📄 In-Course HTML Wrappers — course-config.js · course-nav.js · topic pages<br><small style="opacity:0.6;font-size:11px">Phase 0 · works today without API</small></div>
   <div class="v-connector">↕</div>
   <div class="stack-box-full sb-api">Brightspace REST API — OAuth 2.0</div>
   <div class="v-connector">↕</div>
@@ -588,6 +773,8 @@
     </ul>
   </div>
 </div>
+
+</div><!-- .page-wrap -->
 
 </body>
 </html>
