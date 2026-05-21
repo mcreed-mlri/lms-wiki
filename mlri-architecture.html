@@ -575,7 +575,7 @@
           <div class="card-icon">📄</div>
           <div class="card-title">Course Template Package</div>
           <div class="card-desc">Shared config, nav, styles — single source in course-config.js</div>
-          <div class="card-tags"><span class="tag">Brightspace-Courses</span><span class="tag">No API</span></div>
+          <div class="card-tags"><span class="tag">brightspace-courses</span><span class="tag">No API</span></div>
         </div>
         <div class="card card-green">
           <div class="card-icon">🔗</div>
@@ -772,6 +772,59 @@
       <li>Catalog gap analysis</li>
     </ul>
   </div>
+</div>
+
+<!-- LACE HUB DASHBOARD -->
+<div class="stack-diagram" style="margin-top: 48px;">
+  <div class="stack-diagram-title">LACE Hub — one app, role-based views</div>
+  <p style="text-align: center; font-size: 13px; color: var(--gray-bright); max-width: 640px; margin: 0 auto 24px; line-height: 1.6;">
+    Dashboards are built <strong style="color: #fff;">into LACE Hub</strong>, not as separate Brightspace, Supabase, or Monday products.
+    A single API layer merges Brightspace + Supabase; each user sees only their role's screens.
+  </p>
+
+  <div class="data-flows" style="grid-template-columns: repeat(2, 1fr); margin-top: 0;">
+    <div class="flow-card fc-out">
+      <div class="flow-card-label">Learner · Phase 1</div>
+      <h3>My Learning</h3>
+      <ul>
+        <li>Enrolled courses + completion %</li>
+        <li>Last visited · resume link</li>
+        <li>Own data only (API + RLS)</li>
+      </ul>
+    </div>
+    <div class="flow-card fc-own">
+      <div class="flow-card-label">Manager · Phase 3</div>
+      <h3>My Team</h3>
+      <ul>
+        <li>Team completion rates</li>
+        <li>Gaps · last active</li>
+        <li>Scoped — not org-wide by default</li>
+      </ul>
+    </div>
+    <div class="flow-card fc-bs">
+      <div class="flow-card-label">Program staff · Phase 3</div>
+      <h3>Program reporting</h3>
+      <ul>
+        <li>Cohort &amp; equity analysis</li>
+        <li>Content effectiveness</li>
+        <li>May not need BS super-admin</li>
+      </ul>
+    </div>
+    <div class="flow-card" style="border-color: rgba(255,255,255,0.12);">
+      <div class="flow-card-label" style="color: #94a3b8;">BS super-admin</div>
+      <h3>Ops / admin panel</h3>
+      <ul>
+        <li>API health · sync status</li>
+        <li>Integration config</li>
+        <li>Not the only dashboard users</li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="text-align: center; font-size: 12px; color: var(--gray); margin-top: 20px;">
+    Monday.com = build/ops tasks only · Wiki = policies &amp; decisions ·
+    <a href="marlana.html#lace-hub-dashboard" style="color: var(--teal-light);">Full plan in Marlie's workspace</a>
+  </p>
 </div>
 
 </div><!-- .page-wrap -->

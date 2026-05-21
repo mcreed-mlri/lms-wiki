@@ -1,13 +1,15 @@
-# LACE Brightspace + Build Wiki
+# MLRI Platform Wiki
 
-Static site for the LACE Brightspace platform build. Hand-coded HTML, no build step.
+Static site for the MLRI learning platform build. Hand-coded HTML, no build step.
+
+> **Workspace map:** See [`../README.md`](../README.md) for how this folder relates to the rest of `c:\dev`.
 
 ## What's in here
 
 | File | What it is | Audience |
 |---|---|---|
 | [`index.html`](index.html) | Team wiki — project status, org structure, compliance (user types), policies, decisions, glossary, quick tasks | Internal LACE staff (ED, program managers, admin) |
-| [`marlana.html`](marlana.html) | Marlie's workspace — platform build roadmap (3 phases), open decisions in flight, working notes | Marlie (sole technical lead); future technical hires |
+| [`marlana.html`](marlana.html) | Marlie's workspace — platform build roadmap, **LACE Hub dashboard plan** (Brightspace + Supabase, role-based views), open decisions, working notes | Marlie (sole technical lead); future technical hires |
 | [`brightspace-interactive-guide.html`](brightspace-interactive-guide.html) | Trainer-facing reference for Brightspace Creator+ / H5P features and built-in tools | Trainers, facilitators |
 | [`mlri-architecture.html`](mlri-architecture.html) | System architecture overview | Anyone needing the stack picture |
 | [`styles.css`](styles.css) | Shared visual language (navy sidebar, intro cards, tip/note callouts, step lists, tables) used by all four pages |  |
@@ -18,7 +20,8 @@ The four HTML files share the same look via `styles.css`. They each carry their 
 ### How the two wikis relate
 
 - `index.html` (Team Wiki) is what LACE staff read. It documents how things are organized and what's been decided.
-- `marlana.html` (Workspace) is Marlie's working space — the technical roadmap, open questions she's still resolving, and phase-level task tracking. Open decisions live here until they resolve, then move to the Team Wiki's Decision Log.
+- `marlana.html` (Workspace) is Marlie's working space — the technical roadmap, **unified LACE Hub dashboard plan** (`#lace-hub-dashboard`), open questions she's still resolving, and phase-level task tracking. Open decisions live here until they resolve, then move to the Team Wiki's Decision Log.
+- Detailed architecture drafts are edited in [`notes/LMS Roadmaps/`](../notes/LMS%20Roadmaps/) (Obsidian). Promote stable sections into this wiki; don't maintain parallel full copies elsewhere.
 
 ## Editing
 

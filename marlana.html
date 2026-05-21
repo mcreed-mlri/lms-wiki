@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marlie's Workspace — LACE Build</title>
+  <title>Marlie's Workspace — Platform Build</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -28,6 +28,7 @@
 
     <span class="section-label">Platform Roadmap</span>
     <a href="#marlies-roadmap">Overview</a>
+    <a href="#lace-hub-dashboard" class="sub">LACE Hub · dashboard plan</a>
     <a href="#marlie-phase-0" class="sub">Phase 0 · In-Course HTML Wrappers</a>
     <a href="#marlie-phase-1" class="sub">Phase 1 · Connect to Brightspace</a>
     <a href="#marlie-phase-2" class="sub">Phase 2 · Own Data Layer</a>
@@ -48,7 +49,7 @@
     <a href="index.html" class="external">Team Wiki</a>
     <a href="brightspace-interactive-guide.html" class="external">Brightspace Interactive Guide</a>
     <a href="mlri-architecture.html" class="external">LACE Architecture</a>
-    <a href="https://github.com/mcreed-mlri/Brightspace-Courses" class="external" target="_blank" rel="noopener">Brightspace-Courses repo</a>
+    <a href="https://github.com/mcreed-mlri/brightspace-course-demo" class="external" target="_blank" rel="noopener">brightspace-courses repo</a>
   </nav>
 </aside>
 
@@ -75,6 +76,7 @@
       <ul>
         <li><strong>Current Phase</strong> — Phase 0 wrapper work is largely proven; Phase 1 API connection runs in parallel</li>
         <li><strong>Platform Roadmap</strong> — 4-phase build (HTML wrappers → Brightspace API → custom data layer → reporting)</li>
+        <li><strong><a href="#lace-hub-dashboard">LACE Hub dashboard plan</a></strong> — one app, Brightspace + Supabase, role-based views (learner, manager, admin)</li>
         <li><strong>Open Decisions</strong> — questions still in flight; resolved ones move to the team wiki's decision log</li>
         <li><strong>Research library</strong> — publications and references that back up instructional and platform strategy (for leadership, grant language, and design decisions)</li>
         <li><strong>Program timeline · my tasks</strong> — your (M) items from the team master schedule (May–Feb), kept in sync with the shared plan</li>
@@ -83,7 +85,7 @@
     </div>
 
     <div class="tip">
-      <strong>Wrapper win (May 2026):</strong> The <a href="https://github.com/mcreed-mlri/Brightspace-Courses" target="_blank" rel="noopener">Brightspace-Courses</a> repo now has a reusable <code>Course-Template/</code> package — shared <code>course-config.js</code>, <code>course-nav.js</code>, and <code>course-style.css</code> — that delivers calm in-course navigation inside Brightspace <em>without</em> any API. Next: deploy demo course 6698 and wire real progress (Phase 1).
+      <strong>Wrapper win (May 2026):</strong> The <a href="https://github.com/mcreed-mlri/brightspace-course-demo" target="_blank" rel="noopener">brightspace-courses</a> repo now has a reusable <code>Course-Template/</code> package — shared <code>course-config.js</code>, <code>course-nav.js</code>, and <code>course-style.css</code> — that delivers calm in-course navigation inside Brightspace <em>without</em> any API. Next: deploy demo course 6698 and wire real progress (Phase 1).
     </div>
 
     <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-20</em></p>
@@ -134,7 +136,7 @@
             <td>
               <ul style="margin: 0; padding-left: 1.25rem;">
                 <li>Accessibility policy for LMS</li>
-                <li><span class="status done" style="font-size: 0.75rem; vertical-align: middle;">Done</span> LACE course wrapper template (<code>Course-Template/</code> in Brightspace-Courses)</li>
+                <li><span class="status done" style="font-size: 0.75rem; vertical-align: middle;">Done</span> Course wrapper template (<code>Course-Template/</code> in brightspace-courses)</li>
                 <li><span class="status done" style="font-size: 0.75rem; vertical-align: middle;">Done</span> Architecture B dual tracking (<code>course-config.js</code> + Brightspace topic URLs)</li>
                 <li>Deploy wrapper to demo course 6698; finish Content setup checklist</li>
               </ul>
@@ -191,8 +193,10 @@
     <p>The LACE Brightspace + custom platform build is organized into four phases. <strong>Phase 0 (wrapper)</strong> proved the in-course learner experience without API dependency. Phases 1–3 add Brightspace API connection, a custom data layer, and reporting over approximately 5–6 months.</p>
 
     <div class="note">
-      <strong>Two tracks, one vision:</strong> The wrapper (Tier 1) and the LACE Hub (Tier 3) are separate deliverables. The wrapper works today inside Brightspace. Real cross-system progress and catalog filtering require Phase 1 OAuth — see <a href="https://github.com/mcreed-mlri/Brightspace-Courses/blob/main/docs/MVP-MVM-Requirements.md" target="_blank" rel="noopener">MVP/MVM Requirements</a> in Brightspace-Courses.
+      <strong>Two tracks, one vision:</strong> The wrapper (Tier 1) and the LACE Hub (Tier 3) are separate deliverables. The wrapper works today inside Brightspace. Real cross-system progress and catalog filtering require Phase 1 OAuth — see <a href="#lace-hub-dashboard">MVP/MVM Requirements</a> (dashboard plan below).
     </div>
+
+    <p><strong>Dashboards live in LACE Hub</strong> — one product with role-based screens, not separate Brightspace, Supabase, or Monday views. Full plan: <a href="#lace-hub-dashboard">LACE Hub &middot; dashboard plan</a>.</p>
 
     <div class="showcase">
       <div class="showcase-header">
@@ -222,7 +226,7 @@
                 <div class="card-icon">&#128196;</div>
                 <div class="card-title">Course Template Package</div>
                 <div class="card-desc"><code>Home.html</code>, shared CSS/JS, topic boilerplate — single source in <code>course-config.js</code></div>
-                <div class="card-tags"><span class="tag">Brightspace-Courses</span><span class="tag">No API</span></div>
+                <div class="card-tags"><span class="tag">brightspace-courses</span><span class="tag">No API</span></div>
               </div>
               <div class="feature-card card-green">
                 <div class="card-icon">&#128736;</div>
@@ -395,12 +399,12 @@
     <p><a href="#marlie-phase-0">Phase 0 details &rarr;</a></p>
 
     <h3>Phase 1 · Connect to Brightspace (Months 1–2)</h3>
-    <p>Get a working, authenticated connection to the Brightspace API and surface core learner data in our custom frontend.</p>
+    <p>Get a working, authenticated connection to the Brightspace API and ship the <strong>learner</strong> view in <a href="#lace-hub-dashboard">LACE Hub</a> (my courses, progress, resume links).</p>
     <p><strong>Key deliverables:</strong></p>
     <ul>
       <li>Brightspace API OAuth 2.0 connection with token management</li>
       <li>Pull: enrollments, completions, grades, time-in-course</li>
-      <li>Display Brightspace data in the custom frontend discovery layer</li>
+      <li>API layer merges Brightspace data for <code>/me/dashboard</code> — one response per screen</li>
       <li>SSO so learners have a single login — no double sign-in</li>
     </ul>
     <p><a href="#marlie-phase-1">Phase 1 details &rarr;</a></p>
@@ -417,10 +421,10 @@
     <p><a href="#marlie-phase-2">Phase 2 details &rarr;</a></p>
 
     <h3>Phase 3 · Reporting &amp; Evaluation (Months 4–6)</h3>
-    <p>Surface data to learners, managers, and the LACE team through dashboards and evaluation tools.</p>
+    <p>Extend <a href="#lace-hub-dashboard">LACE Hub</a> with manager and program views — same app, role-gated nav (learner home ships in Phase 1).</p>
     <p><strong>Key deliverables:</strong></p>
     <ul>
-      <li>Learner dashboard: personal progress, completions, recommendations</li>
+      <li>Learner experience: recommendations, update notices, richer history (builds on Phase 1 home)</li>
       <li>Manager view: team completion rates, gaps, activity</li>
       <li>Program evaluation: cohort analysis, equity gaps, completion predictors</li>
       <li>Population insights: who's completing, who isn't, and why — by learner segment</li>
@@ -428,9 +432,9 @@
     <p><a href="#marlie-phase-3">Phase 3 details &rarr;</a></p>
 
     <h3>Three-Layer Architecture</h3>
-    <pre>Layer 1: LACE Learning Hub (lms-discovery) — discovery, search, paths, login
+    <pre>Layer 1: Learning Hub (learning-hub) — discovery, search, paths, login
     ↓ deep links + OAuth/API
-Layer 2: In-Course HTML Wrappers (Brightspace-Courses) — calm nav inside BS
+Layer 2: In-Course HTML Wrappers (brightspace-courses) — calm nav inside BS
     ↓ hosted as BS Content topics
 Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
 
@@ -499,6 +503,114 @@ Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
   </section>
 
   <!-- ─────────────────────────────────────────────
+       LACE HUB — UNIFIED DASHBOARD PLAN
+  ────────────────────────────────────────────── -->
+  <section class="guide-section" id="lace-hub-dashboard">
+    <div class="section-banner b-teal"><span class="banner-dot"></span> LACE Hub &middot; Dashboard Plan</div>
+    <h2>LACE Hub &middot; Unified Dashboard</h2>
+
+    <p>Build <strong>one web app</strong> (LACE Hub) where learners, managers, and program staff see progress and reporting. Brightspace stays the classroom (content + official completions). Supabase holds custom analytics and cached Brightspace snapshots. <strong>Monday.com</strong> stays separate — team task tracking only, not learner data.</p>
+
+    <div class="tip">
+      <strong>Not super-admin-only.</strong> Brightspace super-admins get the full <em>ops/admin</em> layer (API health, sync, integrations). Most users see only their role's slice — learners see <em>my</em> progress; managers see <em>my team</em> (Phase 3); program staff see cohort reporting without needing D2L super-admin.
+    </div>
+
+    <h3>Who sees what</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>LACE Hub access</th>
+            <th>Primary data source</th>
+            <th>Phase</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Learner</strong></td>
+            <td>My Learning — enrolled courses, completion %, resume links into Brightspace</td>
+            <td>Brightspace API (live read, then synced copy)</td>
+            <td><span class="status in-progress">Phase 1</span></td>
+          </tr>
+          <tr>
+            <td><strong>Manager</strong></td>
+            <td>Team view — completion rates, gaps, last active (scoped to their team)</td>
+            <td>Supabase rollups + Brightspace sync</td>
+            <td><span class="status not-started">Phase 3</span></td>
+          </tr>
+          <tr>
+            <td><strong>Program / LACE staff</strong></td>
+            <td>Program reporting — cohorts, content effectiveness, catalog gaps</td>
+            <td>Supabase + synced BS data</td>
+            <td><span class="status not-started">Phase 3</span></td>
+          </tr>
+          <tr>
+            <td><strong>Brightspace super-admin</strong></td>
+            <td>Admin panel — sync status, API config, feature flags, optional &ldquo;view as user&rdquo;</td>
+            <td>All sources + integration logs</td>
+            <td><span class="status in-progress">Phase 1+</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>See it all in one place (architecture)</h3>
+    <p>The browser talks to <strong>one backend</strong> (API layer or Supabase Edge Functions). That layer merges Brightspace + Supabase and returns a single JSON payload per screen — the UI does not call both systems separately.</p>
+    <pre>Browser (LACE Hub — one React/etc. app)
+        │
+        ▼
+API layer (OAuth session, role check, merge data)
+        │
+   ┌────┴────┐
+   ▼         ▼
+Brightspace   Supabase
+(enrollments,  (search, clicks, feedback,
+ completions)  synced BS snapshots, profiles)</pre>
+
+    <h4>What lives where</h4>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Data</th><th>System of record</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Enrollments, official completions, grades</td><td>Brightspace</td><td>Sync into Supabase for fast reporting (Phase 2+)</td></tr>
+          <tr><td>Last accessed, time in course</td><td>Brightspace</td><td>Cached for dashboards</td></tr>
+          <tr><td>Search, click paths, ratings, drop-off</td><td>Supabase only</td><td>Brightspace does not capture Hub UX</td></tr>
+          <tr><td>User role (<code>learner</code> / <code>manager</code> / <code>admin</code>)</td><td>Supabase <code>profiles</code></td><td>Map from Brightspace roles + LACE allowlist</td></tr>
+          <tr><td>Policies, glossary, decisions</td><td>This wiki</td><td>Link out — do not duplicate in the app</td></tr>
+          <tr><td>Build tasks, owners, due dates</td><td>Monday.com</td><td>Link items to wiki / staging URLs — not learner metrics</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Phased delivery (same app, more depth each phase)</h3>
+    <ul>
+      <li><strong><a href="#marlie-phase-1">Phase 1</a></strong> — OAuth + SSO; <code>/me/dashboard</code> learner home (my courses, completion %, last visited, deep link to Brightspace). Super-admin can test full pipe.</li>
+      <li><strong><a href="#marlie-phase-2">Phase 2</a></strong> — Supabase events (search, engagement, feedback); nightly/hourly Brightspace sync tables; learner view adds recent Hub activity.</li>
+      <li><strong><a href="#marlie-phase-3">Phase 3</a></strong> — Manager + program views; cohort/equity reporting; learner update notices banner (see <a href="index.html#learner-updates">wiki policy</a>).</li>
+    </ul>
+
+    <h3>Access control (decide early)</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Map Brightspace roles (Learner, Instructor, Admin, Super Admin) to LACE Hub permissions on login</span></li>
+      <li><input type="checkbox" disabled><span class="label">Supabase <code>profiles.lace_role</code> + row-level security — learners cannot query other users' rows</span></li>
+      <li><input type="checkbox" disabled><span class="label">Define &ldquo;manager&rdquo; — BS group membership vs manual team mapping table</span></li>
+      <li><input type="checkbox" disabled><span class="label">All Brightspace API calls server-side — never expose tokens to the browser</span></li>
+    </ul>
+
+    <h3>Open questions</h3>
+    <ul>
+      <li>Which LACE staff get program reporting without being Brightspace super-admins?</li>
+      <li>Sync cadence: live read only at first, or nightly sync from day one of Phase 2?</li>
+      <li>Minimum viable <code>/api/me/dashboard</code> response shape — align with <a href="#lace-hub-dashboard">MVP/MVM Requirements</a></li>
+    </ul>
+
+    <p><a href="mlri-architecture.html">LACE Architecture diagram &rarr;</a> &middot; <a href="#marlies-roadmap">Roadmap overview &rarr;</a></p>
+  </section>
+
+  <!-- ─────────────────────────────────────────────
        PHASE 0 — IN-COURSE HTML WRAPPERS
   ────────────────────────────────────────────── -->
   <section class="guide-section" id="marlie-phase-0">
@@ -507,7 +619,7 @@ Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
 
     <p><strong>Timeline:</strong> Now (May 2026)</p>
 
-    <p>The goal of Phase 0 was to prove that learners can have a calm, LACE-branded experience <em>inside</em> Brightspace — without waiting for OAuth, Supabase, or the LACE Hub backend. That proof is in place via the <a href="https://github.com/mcreed-mlri/Brightspace-Courses" target="_blank" rel="noopener">Brightspace-Courses</a> repo.</p>
+    <p>The goal of Phase 0 was to prove that learners can have a calm, branded experience <em>inside</em> Brightspace — without waiting for OAuth, Supabase, or the learning hub backend. That proof is in place via the <a href="https://github.com/mcreed-mlri/brightspace-course-demo" target="_blank" rel="noopener">brightspace-courses</a> repo.</p>
 
     <div class="tip">
       <strong>Core insight validated:</strong> Append <code>?ou={orgUnitId}&amp;d2l_body_type=3</code> to strip Brightspace chrome. Build our own navigation on top. Brightspace tracks completions when learners visit official Content topic URLs — the wrapper does not need to call the API directly.
@@ -520,7 +632,7 @@ Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
           <tr><th>Component</th><th>Location</th><th>Status</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>Course-Template/</code> package</td><td>Brightspace-Courses</td><td><span class="status done">Done</span></td></tr>
+          <tr><td><code>Course-Template/</code> package</td><td>brightspace-courses</td><td><span class="status done">Done</span></td></tr>
           <tr><td><code>course-config.js</code> — single source of truth</td><td>Course-Template</td><td><span class="status done">Done</span></td></tr>
           <tr><td><code>course-nav.js</code> — dynamic nav + progress engine</td><td>Course-Template</td><td><span class="status done">Done</span></td></tr>
           <tr><td><code>course-style.css</code> — LACE design tokens</td><td>Course-Template</td><td><span class="status done">Done</span></td></tr>
@@ -553,7 +665,7 @@ Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
       <li>LACE Hub catalog filtering by enrollment</li>
       <li>SSO or single login across Hub and Brightspace</li>
     </ul>
-    <p>Those require Phase 1 (Minimum Viable Magic path). See <a href="https://github.com/mcreed-mlri/Brightspace-Courses/blob/main/docs/MVP-MVM-Requirements.md" target="_blank" rel="noopener">MVP/MVM Requirements</a>.</p>
+    <p>Those require Phase 1 (Minimum Viable Magic path). See <a href="#lace-hub-dashboard">MVP/MVM Requirements</a>.</p>
 
     <h3>Student Journey (MVP Fallback — Works Today)</h3>
     <ol class="steps">
@@ -566,10 +678,10 @@ Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
 
     <h3>Resources</h3>
     <ul>
-      <li><a href="https://github.com/mcreed-mlri/Brightspace-Courses" target="_blank" rel="noopener">Brightspace-Courses repo</a></li>
-      <li><a href="https://github.com/mcreed-mlri/Brightspace-Courses/blob/main/docs/LACE-Brightspace-Plan.md" target="_blank" rel="noopener">LACE + Brightspace Architecture Plan</a></li>
-      <li><a href="https://github.com/mcreed-mlri/Brightspace-Courses/blob/main/docs/Course-Creation-Cheatsheet.md" target="_blank" rel="noopener">Course Creation Cheatsheet</a></li>
-      <li><a href="https://github.com/mcreed-mlri/Brightspace-Courses/blob/main/Brightspace-Admin-Guide.md" target="_blank" rel="noopener">Brightspace Admin Guide (SOP)</a></li>
+      <li><a href="https://github.com/mcreed-mlri/brightspace-course-demo" target="_blank" rel="noopener">brightspace-courses repo</a></li>
+      <li><a href="#marlies-roadmap">Architecture plan</a> (full draft in Obsidian <code>notes/LMS Roadmaps/</code>)</li>
+      <li><a href="https://github.com/mcreed-mlri/brightspace-course-demo/blob/main/docs/Course-Creation-Cheatsheet.md" target="_blank" rel="noopener">Course Creation Cheatsheet</a></li>
+      <li><a href="https://github.com/mcreed-mlri/brightspace-course-demo/blob/main/Brightspace-Admin-Guide.md" target="_blank" rel="noopener">Brightspace Admin Guide (SOP)</a></li>
       <li><a href="#marlies-roadmap">Phase Overview</a></li>
     </ul>
   </section>
@@ -583,7 +695,7 @@ Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
 
     <p><strong>Timeline:</strong> Months 1–2</p>
 
-    <p>The goal of Phase 1 is a working, authenticated connection to the Brightspace API and core learner data surfaced in our custom frontend. Phase 0 proved the in-course UX without API — Phase 1 unlocks real progress in the LACE Hub and (optionally) wrapper checkmarks via a backend bridge.</p>
+    <p>The goal of Phase 1 is a working, authenticated connection to the Brightspace API and the <strong>learner dashboard</strong> in LACE Hub — see <a href="#lace-hub-dashboard">dashboard plan</a>. Phase 0 proved the in-course UX without API — Phase 1 unlocks real progress in the Hub and (optionally) wrapper checkmarks via a backend bridge.</p>
 
     <div class="note">
       <strong>MVM (Minimum Viable Magic):</strong> Smallest path to real progress = OAuth app + one progress endpoint for course 6698 + swap mock JS for <code>fetch()</code>. Full Hub catalog can stay on demo data until Tier 3.
@@ -608,12 +720,13 @@ Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
       <li><input type="checkbox" disabled><span class="label">Last accessed — when someone was last active</span></li>
     </ul>
 
-    <h4>Display in Frontend</h4>
+    <h4>LACE Hub — learner dashboard (Phase 1 MVP)</h4>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">Wire Brightspace data into the custom discovery layer</span></li>
-      <li><input type="checkbox" disabled><span class="label">Learner can see their enrolled courses</span></li>
-      <li><input type="checkbox" disabled><span class="label">Learner can see their completion status</span></li>
-      <li><input type="checkbox" disabled><span class="label">Basic progress display working end-to-end</span></li>
+      <li><input type="checkbox" disabled><span class="label">API layer endpoint (e.g. <code>/api/me/dashboard</code>) merges Brightspace fields into one JSON response</span></li>
+      <li><input type="checkbox" disabled><span class="label">Learner role: enrolled courses, completion %, last visited</span></li>
+      <li><input type="checkbox" disabled><span class="label">Deep link into Brightspace / wrapper topic for &ldquo;continue learning&rdquo;</span></li>
+      <li><input type="checkbox" disabled><span class="label">Role check on every request — learners see only their own data</span></li>
+      <li><input type="checkbox" disabled><span class="label">Super-admin test path: verify API pipe before wider rollout</span></li>
     </ul>
 
     <h4>SSO / Auth</h4>
@@ -681,7 +794,7 @@ Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
 
     <p><strong>Timeline:</strong> Months 2–4</p>
 
-    <p>Brightspace tracks what happens inside its own courses — but it can't capture how learners interact with our custom frontend: what they search for, where they get lost, what content they rate highly. Phase 2 builds a Supabase (Postgres) database to capture exactly that.</p>
+    <p>Brightspace tracks what happens inside its own courses — but it can't capture how learners interact with our custom frontend: what they search for, where they get lost, what content they rate highly. Phase 2 builds a Supabase (Postgres) database to capture exactly that — and starts <strong>syncing</strong> Brightspace enrollments/completions so <a href="#lace-hub-dashboard">LACE Hub</a> reads mostly from one place for reporting speed.</p>
 
     <h3>Task Checklist</h3>
 
@@ -691,6 +804,8 @@ Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
       <li><input type="checkbox" disabled><span class="label">Define tables for: users, events, search logs, feedback</span></li>
       <li><input type="checkbox" disabled><span class="label">Connect frontend to Supabase</span></li>
       <li><input type="checkbox" disabled><span class="label">Set up row-level security so only appropriate data is accessible</span></li>
+      <li><input type="checkbox" disabled><span class="label">Sync tables for BS enrollments/completions (nightly or hourly job)</span></li>
+      <li><input type="checkbox" disabled><span class="label"><code>profiles</code> table with <code>lace_role</code> mapped from Brightspace roles</span></li>
     </ul>
 
     <h4>Search Tracking</h4>
@@ -746,14 +861,13 @@ Layer 3: Brightspace LMS — hosting, enrollments, completions, reports</pre>
 
     <p><strong>Timeline:</strong> Months 4–6</p>
 
-    <p>Phase 3 is where the data from Phases 1 and 2 gets turned into something useful for learners, managers, and the LACE program team. The equity and population insights work here is tied directly to LACE's mission — understanding who is completing training and who isn't.</p>
+    <p>Phase 3 extends <a href="#lace-hub-dashboard">LACE Hub</a> with manager and program reporting — same app, additional role-gated views. The equity and population insights work here is tied directly to LACE's mission — understanding who is completing training and who isn't.</p>
 
     <h3>Task Checklist</h3>
 
-    <h4>Learner Dashboard</h4>
+    <h4>Learner experience (extends Phase 1 home)</h4>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">Learner can see their enrolled courses and completion status</span></li>
-      <li><input type="checkbox" disabled><span class="label">Learner can see a history of what they've completed</span></li>
+      <li><input type="checkbox" disabled><span class="label">Completion history and richer progress timeline</span></li>
       <li><input type="checkbox" disabled><span class="label">Recommendations surfaced based on role or past activity</span></li>
       <li><input type="checkbox" disabled><span class="label">Mobile-friendly layout</span></li>
     </ul>
