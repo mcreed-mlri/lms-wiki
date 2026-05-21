@@ -8,19 +8,20 @@ Static site for the MLRI learning platform build. Hand-coded HTML, no build step
 
 | File | What it is | Audience |
 |---|---|---|
-| [`index.html`](index.html) | Team wiki — project status, org structure, compliance (user types), policies, decisions, glossary, quick tasks | Internal LACE staff (ED, program managers, admin) |
-| [`marlana.html`](marlana.html) | Marlie's workspace — platform build roadmap, **LACE Hub dashboard plan** (Brightspace + Supabase, role-based views), open decisions, working notes | Marlie (sole technical lead); future technical hires |
-| [`brightspace-interactive-guide.html`](brightspace-interactive-guide.html) | Trainer-facing reference for Brightspace Creator+ / H5P features and built-in tools | Trainers, facilitators |
+| [`index.html`](index.html) | Team wiki: project status, custom HTML course model, org structure, compliance, policies, decisions, glossary, quick tasks | Internal LACE staff (ED, program managers, admin) |
+| [`marlana.html`](marlana.html) | Marlie's workspace: executive scan for the wrapper, LACE Hub dashboard plan, data/reporting roadmap, open decisions | Marlie; future technical hires |
+| [`brightspace-interactive-guide.html`](brightspace-interactive-guide.html) | Secondary reference for optional Brightspace-native tools (Creator+, H5P, quizzes, discussions, assignments) when custom HTML is not the best fit | Marlie; admins evaluating native-tool options |
 | [`mlri-architecture.html`](mlri-architecture.html) | System architecture overview | Anyone needing the stack picture |
-| [`styles.css`](styles.css) | Shared visual language (navy sidebar, intro cards, tip/note callouts, step lists, tables) used by all four pages |  |
-| [`screenshots/`](screenshots) | Screenshot assets referenced from the trainer guide |  |
+| [`styles.css`](styles.css) | Shared visual language used by the HTML pages |  |
+| [`screenshots/`](screenshots) | Screenshot assets referenced from reference pages |  |
 
-The four HTML files share the same look via `styles.css`. They each carry their own sidebar markup and cross-link to the others under a "Related Docs" group at the bottom of the sidebar.
+The Team Wiki intentionally links only to core team references. Optional native-tool notes are kept secondary so the custom HTML course model stays clear.
 
 ### How the two wikis relate
 
 - `index.html` (Team Wiki) is what LACE staff read. It documents how things are organized and what's been decided.
-- `marlana.html` (Workspace) is Marlie's working space — the technical roadmap, **unified LACE Hub dashboard plan** (`#lace-hub-dashboard`), open questions she's still resolving, and phase-level task tracking. Open decisions live here until they resolve, then move to the Team Wiki's Decision Log.
+- `marlana.html` (Workspace) is Marlie's working space: technical roadmap, LACE Hub dashboard plan, open questions, and phase-level task tracking. Open decisions live here until they resolve, then move to the Team Wiki's Decision Log.
+- LACE course content is built as custom HTML files inside a shared wrapper. Brightspace provides LMS infrastructure: hosting, enrollment, access, completion records, notices, and reporting.
 - Detailed architecture drafts are edited in [`notes/LMS Roadmaps/`](../notes/LMS%20Roadmaps/) (Obsidian). Promote stable sections into this wiki; don't maintain parallel full copies elsewhere.
 
 ## Editing
@@ -31,29 +32,28 @@ All content is plain HTML. No build, no toolchain, no Python.
 - Each section is a `<section class="guide-section" id="...">` block. Add or edit sections in place.
 - The sidebar in each file is a flat `<nav>` near the top. When you add a new section, add a matching `<a href="#new-id">` link in the sidebar so it shows up.
 - Reusable components defined in `styles.css`:
-    - `.intro-card` — bordered panels for "what is X" context blocks
-    - `.tip` / `.note` — colored callouts (teal tip, amber note)
-    - `ol.steps` — numbered list with blue circle badges
-    - `ul.task-list` with `<input type="checkbox" disabled>` — checkbox-style to-do lists
-    - `.status` with modifiers `.in-progress`, `.not-started`, `.done`, `.proposed`, `.blocked` — colored status pills
-    - `.table-wrap` + `<table>` — striped tables with navy headers
-    - `<pre>` — dark code/diagram blocks
-    - `blockquote` — soft callout for asides
-- Status badges already styled (`.status.in-progress`, `.status.done`, etc.) — use these next to phase titles or decision headings.
+    - `.intro-card`: bordered panels for context blocks
+    - `.tip` / `.note`: colored callouts
+    - `ol.steps`: numbered task lists
+    - `ul.task-list` with `<input type="checkbox" disabled>`: checkbox-style to-do lists
+    - `.status` with modifiers `.in-progress`, `.not-started`, `.done`, `.proposed`, `.blocked`: status pills
+    - `.table-wrap` + `<table>`: striped tables with navy headers
+    - `<pre>`: dark code/diagram blocks
+    - `blockquote`: soft callout for asides
 
-## Previewing locally
+## Previewing Locally
 
 The site is fully static, so you can:
 
-- Double-click `index.html` to open it directly in a browser, **or**
+- Double-click `index.html` to open it directly in a browser, or
 - Serve the folder from any static server, e.g. `python -m http.server` and visit `http://localhost:8000/`.
 
 A static server is recommended over `file://` so the stylesheet and inter-file links resolve cleanly.
 
 ## Deployment
 
-GitHub Pages, via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). On push to `main`, the workflow copies the four HTML files plus `styles.css` (and `screenshots/`) into a Pages artifact and publishes it. No build step.
+GitHub Pages, via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). On push to `main`, the workflow copies the HTML files plus `styles.css` and `screenshots/` into a Pages artifact and publishes it. No build step.
 
-## Working notes (not deployed)
+## Working Notes
 
-- [`meeting.md`](meeting.md), [`screenshot-checklist.md`](screenshot-checklist.md) — local working notes, intentionally excluded from the deployed site.
+- [`screenshot-checklist.md`](screenshot-checklist.md): local working notes, intentionally excluded from the deployed site.

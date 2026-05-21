@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brightspace Interactive Features — Trainer Guide</title>
+  <title>Brightspace Native Tools Reference</title>
   <link rel="stylesheet" href="styles.css">
   <script src="sidebar.js"></script>
 </head>
@@ -14,12 +14,12 @@
 ══════════════════════════════════════════════════ -->
 <aside id="sidebar">
   <div id="sidebar-header">
-    <div class="brand">Trainer Reference Guide</div>
-    <h2>Brightspace Interactive Features</h2>
+    <div class="brand">Optional Tool Reference</div>
+    <h2>Brightspace Native Tools</h2>
   </div>
   <nav>
     <span class="section-label">Getting Started</span>
-    <a href="#intro">Introduction</a>
+    <a href="#intro">Executive Summary</a>
     <a href="#navigating">Navigating to the Editor</a>
 
     <span class="section-label">H5P Interactive Content</span>
@@ -43,7 +43,7 @@
     <a href="#quick-reference">Quick Reference Table</a>
 
     <span class="section-label">Related Docs</span>
-    <a href="index.html" class="external">Internal Build Wiki</a>
+    <a href="index.html" class="external">Team Wiki</a>
     <a href="mlri-architecture.html" class="external">LACE Architecture</a>
   </nav>
 </aside>
@@ -53,18 +53,35 @@
 ══════════════════════════════════════════════════ -->
 <main id="main">
 
-  <h1>Brightspace Interactive Features</h1>
-  <p class="page-subtitle">A step-by-step guide for trainers and facilitators building legal skills training modules</p>
+  <h1>Brightspace Native Tools Reference</h1>
+  <p class="page-subtitle">Optional Brightspace-native features to consider when custom HTML is not the best fit.</p>
 
   <!-- ─────────────────────────────────────────────
        1. INTRODUCTION
   ────────────────────────────────────────────── -->
   <section class="guide-section" id="intro">
-    <h2>Introduction</h2>
+    <h2>Executive Summary</h2>
 
-    <p>This guide is for trainers and facilitators who build and run training modules in Brightspace for legal aid staff, advocates, and community members, your organization's learning management system (LMS). Your organization uses Brightspace with the <strong>Creator+</strong> add-on, which unlocks a powerful set of interactive tools.</p>
+    <div class="note">
+      <strong>LACE's default course model is custom HTML.</strong> Brightspace hosts, enrolls, tracks, and reports. The tools below are optional Brightspace-native options, not the primary course-authoring model.
+    </div>
 
-    <p>You don't need a technical background to use any of these features. This guide walks you through each tool step by step, explains what it's for, and includes space for screenshots you'll add to make instructions even clearer for your team.</p>
+    <p>Use this page when deciding whether a native Brightspace feature is worth using for a specific activity: quizzes, surveys, discussions, assignments, checklists, email automation, or simple H5P interactions.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Need</th><th>Default</th><th>Consider Native Brightspace When</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Course pages and activities</td><td>Custom HTML</td><td>The interaction must be graded or tracked by Brightspace directly.</td></tr>
+          <tr><td>Knowledge checks</td><td>Custom HTML or lightweight quiz</td><td>You need LMS-gradebook scoring, attempts, or item-level reporting.</td></tr>
+          <tr><td>Reflection / feedback</td><td>Custom HTML or survey form</td><td>You need responses stored in Brightspace.</td></tr>
+          <tr><td>Discussion</td><td>Custom HTML prompt + team facilitation</td><td>You need Brightspace-hosted threaded discussion.</td></tr>
+          <tr><td>Completion records</td><td>Brightspace completion tracking</td><td>Always use the LMS record as the source of truth.</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <div class="intro-card">
       <h4>What Is Brightspace?</h4>
@@ -78,13 +95,13 @@
 
     <div class="intro-card">
       <h4>How Training Is Organized in Brightspace</h4>
-      <p>Brightspace organizes training into three levels:</p>
+      <p>For LACE's operating structure, use the Team Wiki hierarchy: Training Area, Program, Course Template, Course Offering, optional Section.</p>
       <ul>
         <li><strong>Training Modules</strong> — the top-level container for a topic (e.g., "Eviction Defense Fundamentals")</li>
         <li><strong>Units / Sections</strong> — chapters or topic groupings within the module</li>
         <li><strong>Content Items</strong> — the individual pieces: videos, readings, activities, and interactive exercises</li>
       </ul>
-      <p style="margin-bottom:0;">Think of it like a binder: the module is the binder, units are the tabbed sections, and content items are the pages inside.</p>
+      <p style="margin-bottom:0;">See the <a href="index.html#course-content-model">Course Content Model</a> for the source of truth.</p>
     </div>
 
     <div class="tip">
