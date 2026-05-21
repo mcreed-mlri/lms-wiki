@@ -12,9 +12,6 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════
-     SIDEBAR / TABLE OF CONTENTS
-══════════════════════════════════════════════════ -->
 <aside id="sidebar">
   <div id="sidebar-header">
     <div class="brand">Team Wiki</div>
@@ -22,83 +19,24 @@
   </div>
   <nav>
     <span class="section-label">Start Here</span>
-    <a href="#home">Home</a>
-    <a href="#project-status">Project Status</a>
+    <a href="#home">What Matters Now</a>
+    <a href="#legal-signoffs">Legal Sign-offs</a>
+    <a href="#project-status">Timeline</a>
 
-    <span class="section-label">Team</span>
-    <a href="#team-goal">Team Goal</a>
-
-    <span class="section-label">D2L org structure</span>
-    <a href="#org-hierarchy">Brightspace hierarchy</a>
-    <a href="#naming-conventions">Naming Conventions</a>
+    <span class="section-label">Brightspace Setup</span>
+    <a href="#org-hierarchy">Hierarchy</a>
+    <a href="#naming-conventions">Naming</a>
     <a href="#training-areas">Training Areas</a>
 
-    <span class="section-label">Compliance</span>
-    <a href="#user-types-matrix">User Types &amp; Access</a>
-
     <span class="section-label">Policies</span>
-    <a href="#versioning">Versioning &amp; Archiving</a>
-    <a href="#learner-updates">Learner Update Notices</a>
+    <a href="#versioning">Versioning</a>
+    <a href="#learner-updates">Learner Notices</a>
     <a href="#user-management">User Management</a>
 
-    <span class="section-label">Decisions</span>
-    <details class="nav-accordion">
-      <summary>Decision Log</summary>
-      <div class="nav-accordion-panel">
-        <a href="#decision-log">Overview</a>
-        <a href="#decision-training-area-layer">Training Area layer</a>
-        <a href="#decision-program-template-offering">Program → Template → Offering</a>
-        <a href="#decision-naming-archived">Naming &amp; archived offerings</a>
-      </div>
-    </details>
-
     <span class="section-label">Reference</span>
-    <details class="nav-accordion">
-      <summary>Glossary</summary>
-      <div class="nav-accordion-panel">
-        <a href="#glossary">Overview</a>
-        <span class="nav-accordion-stub">Brightspace terms</span>
-        <a href="#glossary-offering">Course Offering</a>
-        <a href="#glossary-template">Course Template</a>
-        <a href="#glossary-section">Section</a>
-        <a href="#glossary-program">Program</a>
-        <a href="#glossary-training-area">Training Area</a>
-        <a href="#glossary-org">Org (D2L)</a>
-        <a href="#glossary-discover">Discover</a>
-        <a href="#glossary-completion">Completion</a>
-        <a href="#glossary-enrollment">Enrollment</a>
-        <a href="#glossary-vanity-url">Vanity URL</a>
-        <a href="#glossary-community-of-practice">Community of Practice</a>
-        <a href="#glossary-intelligent-agents">Intelligent Agents</a>
-        <span class="nav-accordion-stub">LACE-specific</span>
-        <a href="#glossary-lace">LACE Project</a>
-        <a href="#glossary-evergreen">Evergreen Course</a>
-        <a href="#glossary-major-update">Major Update</a>
-        <a href="#glossary-minor-update">Minor Update</a>
-        <a href="#glossary-archived">Archived Offering</a>
-        <a href="#glossary-upl">UPL</a>
-      </div>
-    </details>
-    <details class="nav-accordion">
-      <summary>Quick Tasks</summary>
-      <div class="nav-accordion-panel">
-        <a href="#quick-tasks">Overview</a>
-        <span class="nav-accordion-stub">Course management</span>
-        <a href="#qt-create-offering">Create Course Offering</a>
-        <a href="#qt-archive-offering">Archive offering</a>
-        <a href="#qt-copy-offering">Copy between offerings</a>
-        <span class="nav-accordion-stub">User management</span>
-        <a href="#qt-add-user">Add a user</a>
-        <a href="#qt-enroll-user">Enroll in course</a>
-        <a href="#qt-deactivate-user">Deactivate user</a>
-        <span class="nav-accordion-stub">Content &amp; finding</span>
-        <a href="#qt-minor-edit">Minor edit (live)</a>
-        <a href="#qt-check-completion">Check completion</a>
-        <a href="#qt-find-course">Find course in org</a>
-        <a href="#qt-find-by-area">Find by area / program</a>
-        <a href="#qt-classlist">Who is enrolled</a>
-      </div>
-    </details>
+    <a href="#decision-log">Decision Log</a>
+    <a href="#glossary">Glossary</a>
+    <a href="#quick-tasks">Quick Tasks</a>
 
     <span class="section-label">Related Docs</span>
     <a href="marlana.html" class="external">Marlie's Workspace</a>
@@ -107,264 +45,193 @@
   </nav>
 </aside>
 
-<!-- ═══════════════════════════════════════════════
-     MAIN CONTENT
-══════════════════════════════════════════════════ -->
 <main id="main">
 
   <h1>Training Unit: LMS Platform</h1>
-  <p class="page-subtitle">How our <strong>D2L Brightspace</strong> site is set up: org units and hierarchy inside the LMS, policies, decisions, and glossary terms.</p>
+  <p class="page-subtitle">Fast reference for LACE's Brightspace setup, legal guardrails, and platform operating rules.</p>
 
-  <!-- ─────────────────────────────────────────────
-       HOME
-  ────────────────────────────────────────────── -->
   <section class="guide-section" id="home">
-    <h2>Home</h2>
+    <h2>What Matters Now</h2>
 
-    <div class="tip">
-      Use this wiki to look up how the platform is set up and what policies apply. Build status, roadmap, open decisions, and teaching-evidence notes live in <a href="marlana.html" class="external">Marlie's Workspace</a>.
-    </div>
-
-    <div class="intro-card">
-      <h4>What's Here</h4>
-      <ul>
-        <li><strong>Project Status</strong> — current phase</li>
-        <li><strong>D2L org structure</strong> — how org units nest in Brightspace; naming; training areas</li>
-        <li><strong>Compliance</strong> — user types &amp; access matrix (unauthorized practice of law guardrails)</li>
-        <li><strong>Policies</strong> — versioning, learner notices, user management</li>
-        <li><strong>Decisions</strong> — resolved decisions and why</li>
-        <li><strong>Reference</strong> — glossary and admin task recipes</li>
-      </ul>
-    </div>
-
-    <div class="intro-card">
-      <h4>Related</h4>
-      <ul>
-        <li><a href="marlana.html" class="external">Marlie's Workspace</a> &mdash; platform build roadmap, open decisions, research library, working notes</li>
-        <li><a href="brightspace-interactive-guide.html" class="external">Brightspace Interactive Guide</a> &mdash; trainer-facing reference for course-building tools</li>
-        <li><a href="mlri-architecture.html">LACE Architecture</a> — system architecture diagram</li>
-      </ul>
-    </div>
-
-    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-14</em></p>
-  </section>
-
-  <!-- ─────────────────────────────────────────────
-       PROJECT STATUS
-  ────────────────────────────────────────────── -->
-  <section class="guide-section" id="project-status">
-    <h2>Project Status</h2>
-
-
-    <h3>Critical Setup Deadline</h3>
     <div class="note">
-      <strong>Vanity URL and custom domain must be finalized week of June 15–19, 2026.</strong> This is the hardest deadline from the Brightspace rep window. The decision on what the custom domain should be (and who owns it) needs leadership input — this is the learner-facing brand that appears in every link, every login, every certificate. Other rep-window setup items (favicon, H5P URL) are changeable later, though the H5P URL should be treated as soft-permanent once set.
+      <strong>Hard deadline: June 15-19, 2026.</strong> Finalize the learner-facing custom domain / vanity URL. It appears in links, login screens, and certificates.
     </div>
 
-    <h3>LACE Project — Pilot &amp; Launch Milestones</h3>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Milestone</th><th>When</th><th>Who</th><th>What</th><th>Status</th></tr>
+          <tr><th>Item</th><th>Decision / Action</th><th>Owner</th><th>Status</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>LACE Pilot 1</strong></td>
+            <td><strong>Custom domain</strong></td>
+            <td>Choose the learner-facing URL and confirm who owns it.</td>
+            <td>Leadership</td>
+            <td><span class="status blocked">Urgent</span></td>
+          </tr>
+          <tr>
+            <td><strong>User access</strong></td>
+            <td>Approve who can access legal skills, substantive law, and certificates.</td>
+            <td>MLRI legal authority</td>
+            <td><span class="status proposed">Needs sign-off</span></td>
+          </tr>
+          <tr>
+            <td><strong>January launch</strong></td>
+            <td>Partial launch only: Foundations, Pre-Trial, Trial Skills.</td>
+            <td>LACE</td>
+            <td><span class="status not-started">Planned</span></td>
+          </tr>
+          <tr>
+            <td><strong>Technical roadmap</strong></td>
+            <td>Build details live in <a href="marlana.html">Marlie's Workspace</a>.</td>
+            <td>Marlie</td>
+            <td><span class="status in-progress">In progress</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="intro-card">
+      <h4>Use this page for</h4>
+      <ul>
+        <li>Current legal/compliance sign-offs</li>
+        <li>Brightspace naming and hierarchy rules</li>
+        <li>Versioning, notices, user management, and admin quick tasks</li>
+      </ul>
+    </div>
+
+    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-21</em></p>
+  </section>
+
+  <section class="guide-section" id="legal-signoffs">
+    <h2>Legal Sign-offs</h2>
+
+    <div class="note">
+      <strong>Core risk:</strong> non-lawyers must not receive access or completion language that suggests authority to practice law.
+    </div>
+
+    <h3>User Types &amp; Access Matrix <span class="status proposed">Needs sign-off</span></h3>
+    <div class="table-wrap" id="user-types-matrix">
+      <table>
+        <thead>
+          <tr><th>User Type</th><th>Access</th><th>Completion Language</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Licensed attorney</strong></td>
+            <td><em>TBD</em></td>
+            <td><em>TBD</em></td>
+            <td>Likely broadest access.</td>
+          </tr>
+          <tr>
+            <td><strong>Paralegal</strong></td>
+            <td><em>TBD</em></td>
+            <td><em>TBD</em></td>
+            <td>Confirm supervision requirements.</td>
+          </tr>
+          <tr>
+            <td><strong>Advocate</strong></td>
+            <td><em>TBD</em></td>
+            <td><em>TBD</em></td>
+            <td>Define permissible scope.</td>
+          </tr>
+          <tr>
+            <td><strong>Community member</strong></td>
+            <td><em>TBD</em></td>
+            <td><em>TBD</em></td>
+            <td>Highest UPL risk.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Approval Checklist</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Access rules approved for each user type</span></li>
+      <li><input type="checkbox" disabled><span class="label">Certificate/completion language approved</span></li>
+      <li><input type="checkbox" disabled><span class="label">Brightspace roles configured to enforce the matrix</span></li>
+      <li><input type="checkbox" disabled><span class="label">Decision recorded in the <a href="#decision-log">Decision Log</a></span></li>
+      <li><input type="checkbox" disabled><span class="label">Annual review owner assigned</span></li>
+    </ul>
+  </section>
+
+  <section class="guide-section" id="project-status">
+    <h2>Timeline</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Milestone</th><th>When</th><th>Audience</th><th>Content</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Pilot 1</strong></td>
             <td>September 2026</td>
             <td>Internal LACE cohort</td>
             <td>Pre-Trial Skills</td>
             <td><span class="status not-started">Not Started</span></td>
           </tr>
           <tr>
-            <td><strong>LACE Pilot 2</strong></td>
+            <td><strong>Pilot 2</strong></td>
             <td>October 2026</td>
-            <td>Broader legal aid community (internal + external)</td>
-            <td>Pre-Trial Skills (refined)</td>
+            <td>Broader legal aid community</td>
+            <td>Pre-Trial Skills, refined</td>
             <td><span class="status not-started">Not Started</span></td>
           </tr>
           <tr>
             <td><strong>Partial Public Launch</strong></td>
             <td>Mid-January 2027</td>
-            <td>Open to legal aid community</td>
-            <td>Foundations · Pre-Trial · Trial Skills</td>
+            <td>Legal aid community</td>
+            <td>Foundations, Pre-Trial, Trial Skills</td>
             <td><span class="status not-started">Not Started</span></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="note">
-      <strong>January is a partial launch.</strong> Only three units go live. Remaining content continues post-launch. 
+    <p><strong>Technical build:</strong> see <a href="marlana.html#current-phase">Current Phase</a>, <a href="marlana.html#lace-hub-dashboard">LACE Hub dashboard plan</a>, and <a href="mlri-architecture.html">LACE Architecture</a>.</p>
+  </section>
+
+  <section class="guide-section" id="org-hierarchy">
+    <h2>Brightspace Hierarchy</h2>
+
+    <div class="tip">
+      <strong>Rule:</strong> "Org" here means the Brightspace course structure, not MLRI's staff structure.
     </div>
 
-    <h3>Audiences in Scope</h3>
-    <p>Content is being designed for four audience types. The <a href="#user-types-matrix">User Types &amp; Access Matrix</a> defines what each can access — especially important for non-attorney audiences (unauthorized-practice-of-law guardrails).</p>
-    <ul>
-      <li><strong>Lawyers</strong> — licensed attorneys (internal and external legal aid community)</li>
-      <li><strong>Advocates</strong> — non-attorney advocates working within scope</li>
-      <li><strong>Paralegals</strong> — under review; whether and how they're included is open</li>
-      <li><strong>Community Members</strong> — non-licensed learners. Highest UPL risk; certificate language and content access need the most careful review</li>
-    </ul>
+    <pre>MLRI
+&#9492;&#9472;&#9472; Massachusetts
+    &#9500;&#9472;&#9472; Legal Skills
+    &#9474;   &#9492;&#9472;&#9472; Program
+    &#9474;       &#9492;&#9472;&#9472; Course Template
+    &#9474;           &#9500;&#9472;&#9472; Current Course Offering
+    &#9474;           &#9492;&#9472;&#9472; ARCHIVED: Old Course Offering V#
+    &#9492;&#9472;&#9472; Substantive Law
+        &#9492;&#9472;&#9472; Program
+            &#9492;&#9472;&#9472; Course Template
+                &#9492;&#9472;&#9472; Current Course Offering</pre>
 
-    <h3>Platform Build (technical foundation)</h3>
-    <p>Beneath the content rollout, a 4-phase technical build is in progress: in-course HTML wrappers (proven), then Brightspace API connection, custom data layer, and reporting. Phase-level detail is in <a href="marlana.html">Marlie's Workspace</a>.</p>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Phase</th><th>Focus</th><th>When</th><th>Status</th></tr>
+          <tr><th>Level</th><th>Use</th></tr>
         </thead>
         <tbody>
-          <tr><td>0</td><td>In-course HTML wrappers (LACE nav inside Brightspace)</td><td>Now</td><td><span class="status done">Largely Complete</span></td></tr>
-          <tr><td>1</td><td>Connect to Brightspace</td><td>Months 1–2</td><td><span class="status in-progress">In Progress</span></td></tr>
-          <tr><td>2</td><td>Own data layer (search, engagement, feedback)</td><td>Months 2–4</td><td><span class="status not-started">Not Started</span></td></tr>
-          <tr><td>3</td><td>Reporting &amp; evaluation (dashboards, equity analysis)</td><td>Months 4–6</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td><strong>MLRI</strong></td><td>Top Brightspace site.</td></tr>
+          <tr><td><strong>Massachusetts</strong></td><td>Current jurisdiction layer; leaves room for future expansion.</td></tr>
+          <tr><td><strong>Training Area</strong></td><td>Broad catalog category: Legal Skills or Substantive Law.</td></tr>
+          <tr><td><strong>Program</strong></td><td>Topic cluster, such as Housing Law or Intro to Legal Skills.</td></tr>
+          <tr><td><strong>Course Template</strong></td><td>Administrative container for all versions of a course.</td></tr>
+          <tr><td><strong>Course Offering</strong></td><td>Learner-facing course. Enroll learners here.</td></tr>
+          <tr><td><strong>Section</strong></td><td>Optional subdivision for cohorts or scheduled runs.</td></tr>
         </tbody>
       </table>
     </div>
-
   </section>
 
-  <!-- ─────────────────────────────────────────────
-       TEAM GOAL
-  ────────────────────────────────────────────── -->
-  <section class="guide-section" id="team-goal">
-    <h2>Team Goal</h2>
-
-    <p>The team-wide north star.</p>
-
-    <div class="pillar-grid">
-      <div class="pillar pillar-teal">
-        <div class="pillar-tag">Mission</div>
-        <h4>One-sentence north star</h4>
-        <p>Make LACE's legal aid training accessible, measurable, and equitable for every learner we serve.</p>
-      </div>
-      <div class="pillar pillar-blue">
-        <div class="pillar-tag">Shared Deliverables</div>
-        <h4>What we produce</h4>
-        <p>A connected Brightspace platform, interactive and up-to date content by industry experts, a custom data layer, learner + manager dashboards.</p>
-      </div>
-      <div class="pillar pillar-purple">
-        <div class="pillar-tag">Who We Serve</div>
-        <h4>Audiences</h4>
-        <p>Legal aid attorneys, advocates, paralegals, training program managers, partner-org learners, the leadership team, and community members.</p>
-      </div>
-      <div class="pillar pillar-amber">
-        <div class="pillar-tag">Success Looks Like</div>
-        <h4>The signals</h4>
-        <p>Completion equity across learners, fewer drop-offs, manager-usable reporting, faster content updates.</p>
-      </div>
-    </div>
-
-
-  <!-- ─────────────────────────────────────────────
-       D2L ORG HIERARCHY (Brightspace org units — not MLRI staff org)
-  ────────────────────────────────────────────── -->
-  <section class="guide-section" id="org-hierarchy">
-    <h2>D2L org hierarchy in Brightspace</h2>
-
-    <p><strong>D2L</strong> is the company behind <strong>Brightspace</strong>. In admin docs and the UI you will see <strong>Organization</strong> / <strong>Org unit</strong> &mdash; that means how courses and folders are nested <em>inside the LMS</em>, not MLRI's leadership or departmental structure.</p>
-
-    <p>This section is how LACE's <strong>content</strong> is arranged in Brightspace. Every course, program, and training area fits into this tree. Understanding it is the foundation for naming, versioning, user access, and reporting.</p>
-
-    <h3>The Brightspace hierarchy</h3>
-    <pre>MLRI
-&#9492;&#9472;&#9472; Massachusetts
-    &#9500;&#9472;&#9472; Legal Skills  (Training Area)
-    &#9474;   &#9500;&#9472;&#9472; Intro to Legal Skills  (Program)
-    &#9474;   &#9474;   &#9492;&#9472;&#9472; Legal Writing Template  (Course Template)
-    &#9474;   &#9474;       &#9500;&#9472;&#9472; ARCHIVED: Legal Writing V1  (Course Offering)
-    &#9474;   &#9474;       &#9492;&#9472;&#9472; Legal Writing V2  (Course Offering &mdash; current)
-    &#9474;   &#9492;&#9472;&#9472; Client Communication  (Program)
-    &#9474;       &#9492;&#9472;&#9472; ...
-    &#9492;&#9472;&#9472; Substantive Law  (Training Area)
-        &#9500;&#9472;&#9472; Housing Law  (Program)
-        &#9474;   &#9492;&#9472;&#9472; Eviction Defense Basics Template  (Course Template)
-        &#9474;       &#9492;&#9472;&#9472; Eviction Defense Basics  (Course Offering &mdash; current)
-        &#9492;&#9472;&#9472; Benefits Law  (Program)
-            &#9492;&#9472;&#9472; ...</pre>
-
-    <h3>What Each Level Means</h3>
-
-    <h4>MLRI</h4>
-    <p>The <strong>root org unit</strong> in MLRI's Brightspace site (the top of the D2L org tree). Everything else nests under this node. The name happens to be MLRI &mdash; it is still a <em>platform</em> container, not a diagram of MLRI internal teams.</p>
-
-    <h4>Massachusetts</h4>
-    <p>The current state/jurisdiction level. This layer exists to leave room for future expansion — other states, regions, partner organizations, or business units could be added here later without restructuring everything else.</p>
-
-    <h4>Training Area</h4>
-    <p>Broad content categories that help learners navigate and discover courses. Currently:</p>
-    <ul>
-      <li><strong>Legal Skills</strong> — Skills applicable across all practice areas</li>
-      <li><strong>Substantive Law</strong> — Area-specific legal content</li>
-    </ul>
-    <p>See <a href="#training-areas">Training Areas</a> for full definitions.</p>
-
-    <h4>Program</h4>
-    <p>Groups related learning experiences together. A Program is a named curriculum or topic cluster, like <em>Housing Law</em> or <em>Intro to Legal Skills</em>. Learners may take multiple Course Offerings within a Program over time.</p>
-
-    <h4>Course Template</h4>
-    <p>A container that holds all versions of a course. For example, <strong>Legal Writing Template</strong> holds Legal Writing V1, V2, and any future revisions. Templates are not learner-facing — learners enroll in Course Offerings, not templates. Templates exist to keep version history organized.</p>
-
-    <h4>Course Offering</h4>
-    <p>The actual learner-facing course. This is where content, assessments, discussions, completion tracking, and activities live. When you enroll a learner, you enroll them in an Offering.</p>
-
-    <h4>Section <em>(optional)</em></h4>
-    <p>A subdivision of a Course Offering. May be useful for different cohorts, organizations, or scheduled runs of the same course. Not required for every course — especially self-paced evergreen content.</p>
-
-    <h3>Why this Brightspace layout</h3>
-    <p>The key design decision here is supporting <strong>evergreen content</strong> — courses that stay live and get updated over time rather than being run once and archived. The hierarchy gives us:</p>
-    <ul>
-      <li>A clean place for multiple versions of a course to coexist (Course Template)</li>
-      <li>A named home for related courses to be discovered together (Program)</li>
-      <li>Room to grow into other jurisdictions or partner orgs without restructuring (Massachusetts layer)</li>
-      <li>Separation between what learners see (Offerings) and how we manage versions (Templates)</li>
-    </ul>
-  </section>
-
-  <!-- ─────────────────────────────────────────────
-       NAMING CONVENTIONS
-  ────────────────────────────────────────────── -->
   <section class="guide-section" id="naming-conventions">
-    <h2>Naming Conventions</h2>
+    <h2>Naming</h2>
 
-    <p>Consistent naming keeps the Brightspace backend clean as the catalog grows. These rules apply to everything we create in Brightspace.</p>
-
-    <h3>The Rules</h3>
-
-    <h4>Course Templates</h4>
-    <p>Use the course name followed by <strong>"Template"</strong>.</p>
-    <pre>Legal Writing Template
-Eviction Defense Basics Template
-Client Intake Template</pre>
-    <p>Templates are not learner-facing, so the name is purely administrative. The word "Template" makes it immediately obvious this is a container, not an enrollable course.</p>
-
-    <h4>Current Course Offerings</h4>
-    <p>Use a clean, readable name — no version number in the title unless needed for clarity. The "current" offering is just the clean name.</p>
-    <pre>Legal Writing
-Eviction Defense Basics
-Client Intake Fundamentals</pre>
-    <blockquote><strong>Why no version number on the current offering?</strong> Learners see this name. "Legal Writing" reads better than "Legal Writing V2." The version is tracked inside the template container.</blockquote>
-
-    <h4>Archived Course Offerings</h4>
-    <p>Prefix with <strong>"ARCHIVED:"</strong> and include the version number.</p>
-    <pre>ARCHIVED: Legal Writing V1
-ARCHIVED: Eviction Defense Basics V1</pre>
-    <p>Archived offerings should also be <strong>hidden</strong> from learners so they don't accidentally enroll. The ARCHIVED prefix makes them easy to spot in admin views.</p>
-
-    <h4>Programs</h4>
-    <p>Plain descriptive name — no special prefix. Should be clear to a learner browsing a catalog.</p>
-    <pre>Intro to Legal Skills
-Housing Law
-Benefits Law
-Client Communication</pre>
-
-    <h4>Training Areas</h4>
-    <p>Broad, stable category names. We currently have two:</p>
-    <pre>Legal Skills
-Substantive Law</pre>
-    <p>See <a href="#training-areas">Training Areas</a> for what belongs in each.</p>
-
-    <h3>Quick Reference</h3>
     <div class="table-wrap">
       <table>
         <thead>
@@ -372,573 +239,276 @@ Substantive Law</pre>
         </thead>
         <tbody>
           <tr><td>Course Template</td><td><code>[Name] Template</code></td><td><code>Legal Writing Template</code></td></tr>
-          <tr><td>Current Offering</td><td>Clean name, no prefix</td><td><code>Legal Writing</code></td></tr>
+          <tr><td>Current Offering</td><td>Clean learner-facing name</td><td><code>Legal Writing</code></td></tr>
           <tr><td>Archived Offering</td><td><code>ARCHIVED: [Name] V#</code></td><td><code>ARCHIVED: Legal Writing V1</code></td></tr>
-          <tr><td>Program</td><td>Plain descriptive name</td><td><code>Housing Law</code></td></tr>
+          <tr><td>Program</td><td>Plain topic name</td><td><code>Housing Law</code></td></tr>
           <tr><td>Training Area</td><td>Broad category</td><td><code>Legal Skills</code></td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>When to Increment the Version Number</h3>
-    <p>The version number (V1, V2) tracks major revisions — not minor edits. See <a href="#versioning">Versioning &amp; Archiving</a> for the full policy on when to create a new version vs. editing in place.</p>
+    <p><strong>Version numbers track major revisions only.</strong> Typos, links, formatting, and wording fixes do not create a new version.</p>
   </section>
 
-  <!-- ─────────────────────────────────────────────
-       TRAINING AREAS
-  ────────────────────────────────────────────── -->
   <section class="guide-section" id="training-areas">
     <h2>Training Areas</h2>
 
-    <p>Training Areas are the top-level content categories in the LACE Brightspace catalog. They sit below the Massachusetts level and above Programs. Every Program belongs to a Training Area.</p>
-
-    <p>Training Areas serve two purposes:</p>
-    <ol>
-      <li><strong>Learner navigation</strong> — They help attorneys find relevant courses when browsing the catalog or using the Discover page.</li>
-      <li><strong>Administrative organization</strong> — They group related Programs for reporting and management.</li>
-    </ol>
-
-    <h3>Current Training Areas</h3>
-
-    <h4>Legal Skills</h4>
-    <p>Courses that teach skills applicable across all practice areas — skills every attorney needs regardless of what kind of law they practice.</p>
-    <p><strong>What belongs here:</strong></p>
-    <ul>
-      <li>Legal writing</li>
-      <li>Client communication and intake</li>
-      <li>Legal research methods</li>
-      <li>Courtroom and advocacy skills</li>
-      <li>Document drafting</li>
-      <li>Professional responsibility and ethics</li>
-      <li>Case management workflows</li>
-    </ul>
-    <p><strong>What does NOT belong here:</strong></p>
-    <ul>
-      <li>Anything specific to a substantive area of law (housing, benefits, immigration, etc.) — those go in Substantive Law</li>
-    </ul>
-
-    <h4>Substantive Law</h4>
-    <p>Courses about specific areas of law — the rules, statutes, regulations, and procedures for a particular legal topic.</p>
-    <p><strong>What belongs here:</strong></p>
-    <ul>
-      <li>Housing law (eviction defense, landlord-tenant)</li>
-      <li>Benefits law (SNAP, MassHealth, SSI, etc.)</li>
-      <li>Immigration</li>
-      <li>Family law</li>
-      <li>Consumer protection</li>
-      <li>Any other area-specific legal content</li>
-    </ul>
-    <p><strong>What does NOT belong here:</strong></p>
-    <ul>
-      <li>General legal skills that would apply in any practice area — those go in Legal Skills</li>
-    </ul>
-
-    <h3>The "When in doubt" rule</h3>
-    <p>Ask: <em>Is this course useful to an attorney who doesn't practice in this specific area?</em></p>
-    <ul>
-      <li><strong>Yes</strong> &rarr; Legal Skills</li>
-      <li><strong>No, it's specific to a practice area</strong> &rarr; Substantive Law</li>
-    </ul>
-
-    <h3>Future Training Areas</h3>
-    <p>The Training Area layer was designed to grow. Future additions might include:</p>
-    <ul>
-      <li><strong>Organizational</strong> — internal LACE/MLRI policies, onboarding, HR-adjacent training</li>
-      <li><strong>Technology</strong> — tools, systems, software training for staff</li>
-      <li><strong>Partner Organizations</strong> — training shared with outside partners or coalitions</li>
-    </ul>
-    <p>Adding a new Training Area is a significant decision. It changes catalog navigation and affects how learners find content. Document the decision in the <a href="#decision-log">Decision Log</a> before creating a new one in Brightspace.</p>
-  </section>
-
-  <!-- ─────────────────────────────────────────────
-       USER TYPES & ACCESS MATRIX  (compliance critical)
-  ────────────────────────────────────────────── -->
-  <section class="guide-section" id="user-types-matrix">
-    <h2>User Types &amp; Access Matrix <span class="status proposed">Awaiting Sign-off</span></h2>
-
-    <div class="note">
-      <strong>Compliance critical.</strong> Wrong access decisions risk unauthorized practice of law (UPL): a non-attorney completing training that implies they're qualified to practice. This page must be reviewed and signed off by MLRI legal authority (ED, supervising attorney, or counsel) before pilot launch.
-    </div>
-
-    <p>This matrix is the single source of truth for who can access what training and what their completion record says. It exists because "user type" is actually three separate questions that get confused into one:</p>
-    <ol>
-      <li><strong>Brightspace role</strong> — what they can DO in the platform (Learner, Course Admin, etc.)</li>
-      <li><strong>License status</strong> — who they ARE (licensed attorney, paralegal, advocate, community member)</li>
-      <li><strong>Content access</strong> — which programs and training areas they can SEE and MARK COMPLETE</li>
-    </ol>
-
-    <p>The risk is in column 3. A community member completing "How to file an emergency motion" with a certificate reading "qualified to file motions" creates a paper trail of someone holding themselves out as competent to practice law — even if MLRI never intended to imply that.</p>
-
-    <h3>The Matrix</h3>
-    <p><em>To be filled in with MLRI legal authority. Sample rows below; edit during sign-off meeting.</em></p>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>License Status</th><th>Brightspace Role</th><th>Can Access</th><th>Completion Record Language</th><th>Notes</th></tr>
+          <tr><th>Area</th><th>Use For</th><th>Do Not Use For</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Licensed Attorney</strong></td>
-            <td><em>TBD</em></td>
-            <td><em>TBD &mdash; e.g., all Legal Skills + Substantive Law</em></td>
-            <td><em>TBD &mdash; e.g., "Completed [course] on [date]"</em></td>
-            <td><em>TBD</em></td>
+            <td><strong>Legal Skills</strong></td>
+            <td>Writing, research, client communication, advocacy, ethics, case workflows.</td>
+            <td>Area-specific law.</td>
           </tr>
           <tr>
-            <td><strong>Paralegal</strong></td>
-            <td><em>TBD</em></td>
-            <td><em>TBD</em></td>
-            <td><em>TBD</em></td>
-            <td><em>TBD &mdash; supervising attorney requirement?</em></td>
-          </tr>
-          <tr>
-            <td><strong>Advocate (non-attorney)</strong></td>
-            <td><em>TBD</em></td>
-            <td><em>TBD &mdash; likely Legal Skills only, limited Substantive Law</em></td>
-            <td><em>TBD</em></td>
-            <td><em>TBD &mdash; scope of permissible work</em></td>
-          </tr>
-          <tr>
-            <td><strong>Community Member</strong></td>
-            <td><em>TBD</em></td>
-            <td><em>TBD &mdash; likely education-only content, no practice procedures</em></td>
-            <td><em>TBD</em></td>
-            <td><em>TBD &mdash; clearest UPL risk; review certificate language carefully</em></td>
+            <td><strong>Substantive Law</strong></td>
+            <td>Housing, benefits, immigration, family law, consumer law, other practice areas.</td>
+            <td>General skills that apply across practice areas.</td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <div class="tip">
+      <strong>When in doubt:</strong> if it helps any attorney, use Legal Skills. If it depends on a specific practice area, use Substantive Law.
+    </div>
 
-    <h3>Sign-off Checklist</h3>
-    <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">Matrix rows reviewed and filled in with MLRI legal authority</span></li>
-      <li><input type="checkbox" disabled><span class="label">Certificate language reviewed and approved (default and any per-role variants)</span></li>
-      <li><input type="checkbox" disabled><span class="label">Decision recorded in the <a href="#decision-log">Decision Log</a> with date and signatories</span></li>
-      <li><input type="checkbox" disabled><span class="label">Brightspace roles and permissions configured to enforce the matrix</span></li>
-      <li><input type="checkbox" disabled><span class="label">Re-review scheduled annually or any time a new user type is added</span></li>
-    </ul>
+    <p>Adding a new Training Area changes catalog navigation. Record that decision in the <a href="#decision-log">Decision Log</a>.</p>
   </section>
 
-  <!-- ─────────────────────────────────────────────
-       VERSIONING & ARCHIVING
-  ────────────────────────────────────────────── -->
   <section class="guide-section" id="versioning">
-    <h2>Versioning &amp; Archiving Policy</h2>
+    <h2>Versioning</h2>
 
-    <p>Because LACE courses are evergreen — meaning learners may revisit them over time and content may change as laws or best practices evolve — we need a clear policy for when to update a course in place vs. when to create a new version.</p>
-
-    <div class="note">
-      <strong>This policy is not fully decided yet.</strong> The threshold between "minor" and "major" updates is still an open question. The framework below reflects our working understanding. When this is finalized, update this page and mark the decision in the <a href="#decision-log">Decision Log</a>.
-    </div>
-
-    <h3>The Core Distinction</h3>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Update Type</th><th>What to do</th></tr>
+          <tr><th>Change</th><th>Action</th><th>Examples</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Minor</strong></td><td>Edit the existing live course</td></tr>
-          <tr><td><strong>Major</strong></td><td>Create a new Course Offering, archive the old one</td></tr>
+          <tr>
+            <td><strong>Minor</strong></td>
+            <td>Edit the live Course Offering.</td>
+            <td>Typos, broken links, formatting, clarified wording.</td>
+          </tr>
+          <tr>
+            <td><strong>Major</strong></td>
+            <td>Create a new Offering; archive the old one.</td>
+            <td>Law change, major rewrite, new required content, new completion rules.</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
-    <h3>Minor Updates — Edit in Place</h3>
-    <p>A minor update is a change that <strong>does not affect the learning outcome or require learners to retake the course</strong>.</p>
-    <p><strong>Examples of minor updates:</strong></p>
-    <ul>
-      <li>Fixing typos or grammatical errors</li>
-      <li>Updating broken links</li>
-      <li>Refreshing examples without changing the substance</li>
-      <li>Clarifying confusing wording</li>
-      <li>Adding a note or callout for context</li>
-      <li>Updating formatting or visuals</li>
-    </ul>
-    <p><strong>What to do:</strong> Make the edit directly in the live Course Offering. No version increment, no archive needed.</p>
-
-    <h3>Major Updates — Create a New Version</h3>
-    <p>A major update is a change that <strong>meaningfully affects what the course teaches</strong> — either because the law changed, the instructional approach changed, or the content was substantially replaced.</p>
-    <p><strong>Examples of major updates:</strong></p>
-    <ul>
-      <li>A law, regulation, or court decision changes what attorneys need to know</li>
-      <li>Substantial content replacement (more than ~30–40% of a module rewritten)</li>
-      <li>New required material added that all learners should complete</li>
-      <li>New assessments or completion requirements</li>
-      <li>A fundamentally different teaching approach for the same topic</li>
-    </ul>
-    <p><strong>What to do:</strong></p>
-    <ol class="steps">
-      <li>Create a <strong>new Course Offering</strong> under the same Course Template</li>
-      <li>Name it with a clean title (current version gets the clean name, old gets <code>ARCHIVED:</code> prefix)</li>
-      <li><strong>Hide the old offering</strong> from learners so they can't accidentally enroll</li>
-      <li>Decide whether existing enrolled learners need to take the new version (see <a href="#learner-updates">Learner Update Notices</a>)</li>
-    </ol>
-
-    <h3>Archiving Checklist</h3>
-    <p>When creating a new version:</p>
+    <h3>Archive Checklist</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">New offering created under the correct Course Template</span></li>
-      <li><input type="checkbox" disabled><span class="label">Old offering renamed: <code>ARCHIVED: [Name] V#</code></span></li>
-      <li><input type="checkbox" disabled><span class="label">Old offering hidden from learner view</span></li>
-      <li><input type="checkbox" disabled><span class="label">New offering is the clean current name</span></li>
-      <li><input type="checkbox" disabled><span class="label">Decision documented in the <a href="#decision-log">Decision Log</a> (what changed and why)</span></li>
-      <li><input type="checkbox" disabled><span class="label">Learner notification decision made (see <a href="#learner-updates">Learner Update Notices</a>)</span></li>
+      <li><input type="checkbox" disabled><span class="label">New offering created under the same Course Template</span></li>
+      <li><input type="checkbox" disabled><span class="label">Old offering renamed <code>ARCHIVED: [Name] V#</code></span></li>
+      <li><input type="checkbox" disabled><span class="label">Old offering hidden from learners</span></li>
+      <li><input type="checkbox" disabled><span class="label">Learner notice decision made</span></li>
+      <li><input type="checkbox" disabled><span class="label">Decision recorded in the <a href="#decision-log">Decision Log</a></span></li>
     </ul>
 
-    <h3>Why We Don't Delete Old Versions</h3>
-    <p>Archived offerings are kept (hidden, not deleted) for several reasons:</p>
-    <ul>
-      <li>Learners who completed the old version have a completion record tied to that offering</li>
-      <li>Compliance or grant reporting may require evidence of what content existed at a point in time</li>
-      <li>It lets us compare old and new content if questions arise</li>
-    </ul>
+    <p><strong>Do not delete old versions.</strong> Completion history and reporting may depend on them.</p>
   </section>
 
-  <!-- ─────────────────────────────────────────────
-       LEARNER UPDATE NOTICES
-  ────────────────────────────────────────────── -->
   <section class="guide-section" id="learner-updates">
-    <h2>Learner Update Notices Policy</h2>
+    <h2>Learner Notices</h2>
 
-    <p>When LACE makes a major update to a course, some enrolled learners may need to know — especially if the change involves a law or regulation that affects their practice. This policy covers how we decide who needs to know, what we tell them, and how we reach them.</p>
-
-    <div class="note">
-      <strong>This policy is not fully decided yet.</strong> The notification mechanism is still an open question. Brightspace email may not be reliable enough for important legal updates. The custom frontend dashboard is the likely long-term solution, but it's not built yet (Phase 3). Document the final decision in the <a href="#decision-log">Decision Log</a>.
-    </div>
-
-    <h3>Step 1 — Decide Who Needs to Know</h3>
-    <p>Not every update requires notifying enrolled learners. Use this framework:</p>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Scenario</th><th>Action</th></tr>
+          <tr><th>Scenario</th><th>Notify?</th><th>Message</th></tr>
         </thead>
         <tbody>
-          <tr><td>Minor update (typo, link fix, wording)</td><td>No notification needed</td></tr>
-          <tr><td>Major update — law or regulation changed</td><td><strong>Notify affected learners</strong></td></tr>
-          <tr><td>Major update — instructional overhaul</td><td>Notify if completion of new version should be required</td></tr>
-          <tr><td>New offering added, old archived</td><td>Notify only if learners need to retake</td></tr>
+          <tr><td>Minor edit</td><td>No</td><td>No notice.</td></tr>
+          <tr><td>Law or regulation changed</td><td>Yes</td><td>Explain what changed and whether review is required.</td></tr>
+          <tr><td>Major instructional overhaul</td><td>Maybe</td><td>Notify if learners should review or retake.</td></tr>
+          <tr><td>Old offering archived</td><td>Maybe</td><td>Notify only if learners must use the new version.</td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>Step 2 — Decide What Action to Ask For</h3>
-    <p>When notifying learners, be clear about what (if anything) they need to do:</p>
+    <h3>Notice Levels</h3>
     <ul>
-      <li><strong>No action required</strong> — "We updated this course. Your completion record is unchanged."</li>
-      <li><strong>Recommended review</strong> — "The law changed in this area. We recommend reviewing the updated content."</li>
-      <li><strong>Required retake</strong> — "This course has been substantially revised. Please complete the new version by [date]."</li>
+      <li><strong>No action:</strong> completion record is unchanged.</li>
+      <li><strong>Recommended review:</strong> learner should review updated content.</li>
+      <li><strong>Required retake:</strong> learner must complete the new version by a stated date.</li>
     </ul>
-    <p>Avoid vague notices. If the change is important enough to notify about, be specific.</p>
 
-    <h3>Step 3 — How to Reach Learners</h3>
-
-    <h4>Option A: Brightspace Email (current only option)</h4>
-    <p>Brightspace can send email notifications to enrolled learners. Limitations:</p>
-    <ul>
-      <li>Email deliverability is not guaranteed</li>
-      <li>Many attorneys use shared or monitored inboxes</li>
-      <li>No confirmation that the learner saw the message</li>
-      <li><strong>Not recommended for critical legal updates on its own</strong></li>
-    </ul>
-    <p><strong>Use for:</strong> Low-stakes notices, reminders, optional recommendations.</p>
-
-    <h4>Option B: Custom Frontend Dashboard (future — Phase 3)</h4>
-    <p>The long-term solution is a notification or banner in the learner's custom dashboard that appears when they log in. This is much more visible than email and confirms the learner actually saw it.</p>
-    <p><strong>Use for:</strong> All important legal update notices, required retakes.</p>
-    <p><strong>Status:</strong> Not built yet. This is a Phase 3 deliverable. Until Phase 3 is complete, email is the only available channel.</p>
-
-    <h4>Option C: Direct Outreach</h4>
-    <p>For critical updates affecting a small, known group — a practice area team, a cohort — direct outreach by the training team (email, Slack, a meeting) may be the most reliable option.</p>
-
-    <h3>Documenting Notifications</h3>
-    <p>When you send a learner notification, record it in the <a href="#decision-log">Decision Log</a>:</p>
-    <ul>
-      <li>What course was updated</li>
-      <li>Why it was a major update</li>
-      <li>Who was notified and how</li>
-      <li>What action was requested</li>
-      <li>Date sent</li>
-    </ul>
+    <p><strong>For now:</strong> Brightspace email is the available channel. Critical updates may also need direct team outreach. Future dashboard banners are tracked in <a href="marlana.html#lace-hub-dashboard">LACE Hub</a>.</p>
   </section>
 
-  <!-- ─────────────────────────────────────────────
-       USER MANAGEMENT
-  ────────────────────────────────────────────── -->
   <section class="guide-section" id="user-management">
     <h2>User Management</h2>
 
-    <p>This page covers how users are added, managed, and removed in Brightspace — and what roles mean for LACE. For who can access what content (and the unauthorized-practice-of-law guardrails), see <a href="#user-types-matrix">User Types &amp; Access</a>.</p>
-
-    <div class="note">
-      <strong>Fill this in as you learn it.</strong> Some details here (specific role names, your org's exact onboarding process) will depend on how MLRI's Brightspace instance is configured. Update this page as you establish those processes.
-    </div>
-
-    <h3>Roles in Brightspace</h3>
-    <p>Brightspace uses roles to control what a user can see and do. The standard roles relevant to LACE are:</p>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Role</th><th>What they can do</th></tr>
+          <tr><th>Role</th><th>Use</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Learner</strong></td><td>Enroll in and complete courses. No admin access.</td></tr>
-          <tr><td><strong>Instructor / Course Author</strong></td><td>Create and edit course content. May not be needed for all staff.</td></tr>
-          <tr><td><strong>Course Administrator</strong></td><td>Manage enrollments, sections, and course settings for assigned courses.</td></tr>
-          <tr><td><strong>Org Administrator</strong></td><td>Full access to the Brightspace org — user management, course creation, system settings.</td></tr>
+          <tr><td><strong>Learner</strong></td><td>Takes courses. No admin access.</td></tr>
+          <tr><td><strong>Instructor / Course Author</strong></td><td>Creates or edits course content.</td></tr>
+          <tr><td><strong>Course Administrator</strong></td><td>Manages enrollments, sections, and course settings.</td></tr>
+          <tr><td><strong>Org Administrator</strong></td><td>Full Brightspace access. Use sparingly.</td></tr>
         </tbody>
       </table>
     </div>
-    <blockquote><strong>Who at MLRI has Org Administrator access?</strong> Document this here once established.</blockquote>
 
-    <h3>Onboarding a New User</h3>
-    <ol class="steps">
-      <li><strong>Confirm their role</strong> — What do they need to do in Brightspace? (Just take courses? Create content? Manage enrollments?)</li>
-      <li><strong>Create their account</strong> — [Add the steps for your org's process here — self-registration, bulk import, or manual creation]</li>
-      <li><strong>Assign the correct role</strong> — Match the role to what they need (see table above)</li>
-      <li><strong>Enroll them in relevant courses</strong> — If they're a Learner, enroll them in their required or recommended courses</li>
-      <li><strong>Send a welcome message</strong> — [Note if your org has a standard onboarding email or welcome course]</li>
-    </ol>
-
-    <h3>Offboarding a User</h3>
-    <p>When someone leaves MLRI or no longer needs Brightspace access:</p>
-    <ol class="steps">
-      <li><strong>Preserve their completion records</strong> — Do NOT delete the account if they have completion history. Completion data is tied to the account.</li>
-      <li><strong>Deactivate, don't delete</strong> — Deactivate the account so they can no longer log in, but their records remain</li>
-      <li><strong>Remove from active course enrollments</strong> — Unenroll from courses they won't complete</li>
-      <li><strong>Document the date</strong> — Note when access was removed and why</li>
-    </ol>
-    <blockquote><strong>Why not delete?</strong> Deleting a user account removes their completion history, which may be needed for reporting, compliance, or if the attorney later rejoins.</blockquote>
-
-    <h3>Bulk Enrollment</h3>
-    <p>For onboarding a cohort or a new practice area team, Brightspace supports bulk enrollment via CSV import.</p>
-    <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label"><em>Document the process here once your org establishes it</em></span></li>
+    <h3>Rules</h3>
+    <ul>
+      <li><strong>Assign least privilege.</strong> Give the role needed for the job.</li>
+      <li><strong>Enroll learners in Course Offerings.</strong> Do not enroll them in templates.</li>
+      <li><strong>Deactivate, do not delete.</strong> Deleting can remove completion history.</li>
+      <li><strong>Document offboarding.</strong> Record date and reason.</li>
     </ul>
 
-    <h3>Open Questions</h3>
+    <h3>Open Items</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">Does MLRI use self-registration, or are all accounts created by an admin?</span></li>
-      <li><input type="checkbox" disabled><span class="label">Is there a standard onboarding course new users should complete first?</span></li>
-      <li><input type="checkbox" disabled><span class="label">Who is responsible for offboarding when someone leaves?</span></li>
+      <li><input type="checkbox" disabled><span class="label">Confirm self-registration vs. admin-created accounts</span></li>
+      <li><input type="checkbox" disabled><span class="label">Confirm standard onboarding course or message</span></li>
+      <li><input type="checkbox" disabled><span class="label">Assign offboarding owner</span></li>
     </ul>
   </section>
 
-  <!-- ─────────────────────────────────────────────
-       DECISION LOG  (resolved below — open items tracked in Marlie's Workspace)
-  ────────────────────────────────────────────── -->
   <section class="guide-section" id="decision-log">
     <h2>Decision Log</h2>
 
-    <p>Every significant decision about how we build and run the LACE Brightspace system lives here — what was decided, when, and <strong>why</strong>. The "why" is the most important part. It prevents future-you from second-guessing choices that were made for good reasons.</p>
+    <p><strong>Open decisions</strong> live in <a href="marlana.html#open-decisions">Marlie's Workspace</a>. Resolved decisions live here.</p>
 
-    <p><strong>Open decisions in flight</strong> are tracked in <a href="marlana.html#open-decisions">Marlie's Workspace</a>. When a question resolves, record it here.</p>
-
-    <h3>Resolved Decisions</h3>
-
-    <h4 id="decision-training-area-layer">Use Training Area as a new hierarchy layer <span class="status done">Resolved</span></h4>
-    <p><strong>Decision:</strong> Add a <strong>Training Area</strong> layer between Massachusetts and Program in the Brightspace hierarchy.</p>
-    <p><strong>Why:</strong> Without it, the catalog would be a flat list of Programs with no navigational grouping. As the catalog grows, learners and admins would have no way to quickly filter or browse by content type.</p>
-    <p><strong>What we decided:</strong> Start with two Training Areas: <strong>Legal Skills</strong> and <strong>Substantive Law</strong>.</p>
-    <p><strong>Resolved:</strong> 2026-05-13 &middot; <a href="#training-areas">See Training Areas</a></p>
-
-    <h4 id="decision-program-template-offering">Use Program &rarr; Course Template &rarr; Course Offering structure <span class="status done">Resolved</span></h4>
-    <p><strong>Decision:</strong> Organize content as: Program &rarr; Course Template &rarr; Course Offering (with optional Section).</p>
-    <p><strong>Why:</strong> This structure supports evergreen courses by giving each "course family" a container (Template) that holds all versions. It also separates the learner-facing name (Offering) from the administrative container (Template), keeping the catalog clean while preserving version history.</p>
-    <p><strong>Resolved:</strong> 2026-05-13 &middot; <a href="#org-hierarchy">See D2L org hierarchy</a></p>
-
-    <h4 id="decision-naming-archived">Naming convention for templates and archived offerings <span class="status done">Resolved</span></h4>
-    <p><strong>Decision:</strong> Templates use <code>[Name] Template</code>. Archived offerings use <code>ARCHIVED: [Name] V#</code>. Current offerings use a clean name with no prefix or version number visible to learners.</p>
-    <p><strong>Why:</strong> Makes administrative views scannable. The ARCHIVED prefix is immediately visible in dropdown lists and search. The clean name for current offerings keeps the learner experience tidy.</p>
-    <p><strong>Resolved:</strong> 2026-05-13 &middot; <a href="#naming-conventions">See Naming Conventions</a></p>
-
-    <div class="tip">
-      To record a new resolved decision: copy one of the entries above, fill in what was decided, why, and today's date. To raise a new open question for the team to discuss, use your usual team channel — and add or link it under <a href="marlana.html#open-decisions">Open Decisions</a> in Marlie's Workspace so it does not get lost.
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Decision</th><th>Resolved</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr id="decision-training-area-layer">
+            <td>Add Training Area between Massachusetts and Program.</td>
+            <td>2026-05-13</td>
+            <td>Gives learners and admins a clean catalog grouping.</td>
+          </tr>
+          <tr id="decision-program-template-offering">
+            <td>Use Program &rarr; Course Template &rarr; Course Offering.</td>
+            <td>2026-05-13</td>
+            <td>Supports evergreen courses and version history.</td>
+          </tr>
+          <tr id="decision-naming-archived">
+            <td>Use clean current names and <code>ARCHIVED: [Name] V#</code> for old offerings.</td>
+            <td>2026-05-13</td>
+            <td>Keeps learner names clean and admin views scannable.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <!-- ─────────────────────────────────────────────
-       GLOSSARY
-  ────────────────────────────────────────────── -->
   <section class="guide-section" id="glossary">
     <h2>Glossary</h2>
 
-    <p>Key terms used in Brightspace and in this wiki. When someone on the team uses one of these terms, this is what they mean in the LACE platform.</p>
-
-    <h3 id="glossary-brightspace-terms">Brightspace Terms</h3>
-
-    <h4 id="glossary-offering">Course Offering</h4>
-    <p>The actual learner-facing course — where content, assessments, discussions, completion tracking, and learning activities live. When you enroll a learner, you enroll them in an Offering. A Course Template may contain multiple Offerings (different versions over time).</p>
-    <p><strong>In LACE:</strong> This is what attorneys see and interact with. Name it cleanly — no internal jargon or version numbers visible to learners.</p>
-
-    <h4 id="glossary-template">Course Template</h4>
-    <p>An organizational container that holds all versions of a course. Templates are not learner-facing — learners don't enroll in templates, they enroll in Offerings inside a template. Templates exist to keep version history organized without cluttering the main catalog.</p>
-    <p><strong>In LACE:</strong> Named <code>[Course Name] Template</code> (e.g., <em>Legal Writing Template</em>). Contains the current Offering and any ARCHIVED versions.</p>
-
-    <h4 id="glossary-section">Section</h4>
-    <p>An optional subdivision of a Course Offering. Can be used for different cohorts, scheduled runs, or organizations taking the same course. Not required — especially for self-paced evergreen content.</p>
-    <p><strong>In LACE:</strong> Whether to use Sections vs. separate Offerings for cohorts is still an open decision.</p>
-
-    <h4 id="glossary-program">Program</h4>
-    <p>A named grouping of related Course Templates. For example, <em>Housing Law</em> is a Program that contains multiple course templates related to housing and eviction law.</p>
-    <p><strong>In LACE:</strong> Programs live inside Training Areas. A learner might be "in the Housing Law program," meaning they're working through courses in that cluster.</p>
-
-    <h4 id="glossary-training-area">Training Area</h4>
-    <p>A broad content category that groups related Programs. Currently: <strong>Legal Skills</strong> and <strong>Substantive Law</strong>. Helps learners navigate the catalog.</p>
-    <p><strong>In LACE:</strong> The layer below Massachusetts in the hierarchy, above Programs. See <a href="#training-areas">Training Areas</a> for full definitions.</p>
-
-    <h4 id="glossary-org">Org (Organization &mdash; D2L term)</h4>
-    <p>In Brightspace, <strong>Organization</strong> is D2L's word for the top-level <strong>tenant</strong> (the whole site). Everything lives under that Org. At MLRI, that top-level org unit is named MLRI. Do not read "Org" here as MLRI's internal HR or management structure.</p>
-
-    <h4 id="glossary-discover">Discover</h4>
-    <p>Brightspace's built-in course catalog/discovery page. Learners can browse and self-enroll in courses through Discover. Whether LACE uses the built-in Discover page or a custom frontend catalog is an open decision.</p>
-
-    <h4 id="glossary-completion">Completion</h4>
-    <p>A record in Brightspace that a learner has finished a course (or met whatever completion criteria were set). Completions are tied to the Course Offering and the learner account — this is why we deactivate accounts rather than deleting them.</p>
-
-    <h4 id="glossary-enrollment">Enrollment</h4>
-    <p>The connection between a learner account and a Course Offering. A learner can be enrolled manually by an admin, bulk-imported via CSV, or self-enrolled through Discover.</p>
-
-    <h4 id="glossary-vanity-url">Vanity URL / Custom Domain</h4>
-    <p>The custom web address learners use to reach the Brightspace site (e.g., <code>learn.example.org</code> instead of a generic D2L URL). Must be finalized during the rep setup window — week of June 15–19, 2026 for LACE — because it touches every learner-facing link, login screen, and certificate.</p>
-
-    <h4 id="glossary-community-of-practice">Community of Practice</h4>
-    <p>A Brightspace space (course or course-like) that can grant different access to different users based on credentials or role. Potentially useful for shared resources, role-specific materials, or discussion spaces where lawyers, advocates, and community members see different content within the same container.</p>
-
-    <h4 id="glossary-intelligent-agents">Intelligent Agents</h4>
-    <p>Brightspace's automation tool for triggering actions (such as emails) based on learner activity, completion, inactivity, or missing work. Used together with email templates to handle reminders, nudges, and completion notifications without manual intervention.</p>
-
-    <h3 id="glossary-lace-terms">LACE-Specific Terms</h3>
-
-    <h4 id="glossary-lace">LACE Project</h4>
-    <p><strong>Legal Aid and Community Education</strong> — the training unit running this learning platform. LACE leads instruction in advocacy skills and key areas of law for the statewide legal aid community.</p>
-
-    <h4>LACE Pilots</h4>
-    <p>Two pilot rollouts feeding into the partial public launch in mid-January 2027: <strong>Pilot 1</strong> in September 2026 with an internal cohort (Pre-Trial Skills); <strong>Pilot 2</strong> in October 2026 with the broader legal aid community (internal + external lawyers).</p>
-
-    <h4 id="glossary-evergreen">Evergreen Course</h4>
-    <p>A course designed to stay live and be updated over time, rather than being run once and closed. Most LACE courses are evergreen — attorneys may revisit them as the law changes or as they need a refresher.</p>
-
-    <h4 id="glossary-major-update">Major Update</h4>
-    <p>A change to a course that meaningfully affects what it teaches — typically triggered by a law change, substantial content replacement, or new completion requirements. Requires creating a new Course Offering and archiving the old one. See <a href="#versioning">Versioning &amp; Archiving</a>.</p>
-
-    <h4 id="glossary-minor-update">Minor Update</h4>
-    <p>A change to a course that does not affect the learning outcome — typo fixes, broken links, refreshed examples. Can be made directly in the live Offering without creating a new version.</p>
-
-    <h4 id="glossary-archived">Archived Offering</h4>
-    <p>A Course Offering that has been superseded by a newer version. Named <code>ARCHIVED: [Name] V#</code> and hidden from learners. Preserved so completion records remain intact.</p>
-
-    <h4 id="glossary-upl">Unauthorized Practice of Law (UPL)</h4>
-    <p>Non-licensed individuals holding themselves out as qualified to practice law. A compliance concern for any training platform serving non-attorneys. See <a href="#user-types-matrix">User Types &amp; Access Matrix</a> for how LACE prevents UPL risk through role-based access and certificate language.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Term</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr id="glossary-offering"><td><strong>Course Offering</strong></td><td>Learner-facing course. Enroll learners here.</td></tr>
+          <tr id="glossary-template"><td><strong>Course Template</strong></td><td>Container for current and archived versions of a course.</td></tr>
+          <tr id="glossary-section"><td><strong>Section</strong></td><td>Optional cohort or scheduled-run subdivision inside an Offering.</td></tr>
+          <tr id="glossary-program"><td><strong>Program</strong></td><td>Group of related Course Templates.</td></tr>
+          <tr id="glossary-training-area"><td><strong>Training Area</strong></td><td>Broad catalog category: Legal Skills or Substantive Law.</td></tr>
+          <tr id="glossary-org"><td><strong>Org</strong></td><td>D2L term for the Brightspace site/container, not MLRI's staff org chart.</td></tr>
+          <tr id="glossary-discover"><td><strong>Discover</strong></td><td>Brightspace's built-in catalog/self-enrollment page.</td></tr>
+          <tr id="glossary-completion"><td><strong>Completion</strong></td><td>Brightspace record that a learner finished a Course Offering.</td></tr>
+          <tr id="glossary-enrollment"><td><strong>Enrollment</strong></td><td>Connection between a learner and a Course Offering.</td></tr>
+          <tr id="glossary-vanity-url"><td><strong>Vanity URL</strong></td><td>Custom learner-facing Brightspace web address.</td></tr>
+          <tr id="glossary-community-of-practice"><td><strong>Community of Practice</strong></td><td>Shared space with role-based access; under review for audience routing.</td></tr>
+          <tr id="glossary-intelligent-agents"><td><strong>Intelligent Agents</strong></td><td>Brightspace automation for emails and learner activity triggers.</td></tr>
+          <tr id="glossary-evergreen"><td><strong>Evergreen Course</strong></td><td>Course that stays live and is updated over time.</td></tr>
+          <tr id="glossary-major-update"><td><strong>Major Update</strong></td><td>Change that affects what the course teaches; requires a new version.</td></tr>
+          <tr id="glossary-minor-update"><td><strong>Minor Update</strong></td><td>Change that does not affect learning outcomes; edit in place.</td></tr>
+          <tr id="glossary-archived"><td><strong>Archived Offering</strong></td><td>Old hidden Offering kept for records.</td></tr>
+          <tr id="glossary-upl"><td><strong>UPL</strong></td><td>Unauthorized practice of law; key risk for non-lawyer access and certificates.</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
-  <!-- ─────────────────────────────────────────────
-       QUICK TASKS
-  ────────────────────────────────────────────── -->
   <section class="guide-section" id="quick-tasks">
     <h2>Quick Tasks</h2>
 
-    <p>Fast answers for common Brightspace admin tasks. No background reading required.</p>
-
-    <h3 id="qt-course-management">Course Management</h3>
-
-    <h4 id="qt-create-offering">Create a new Course Offering</h4>
+    <h3 id="qt-create-offering">Create Course Offering</h3>
     <ol class="steps">
-      <li>Go to <strong>Admin Tools</strong> &rarr; <strong>Course Management</strong></li>
-      <li>Click <strong>Create a Course</strong></li>
-      <li>Set the <strong>Template</strong> to the correct Course Template (e.g., <em>Legal Writing Template</em>)</li>
-      <li>Name it following the <a href="#naming-conventions">naming conventions</a></li>
-      <li>Set the correct <strong>Program</strong> and <strong>Training Area</strong></li>
-      <li>Set availability dates if applicable</li>
+      <li>Admin Tools &rarr; Course Management &rarr; Create a Course</li>
+      <li>Select the correct Course Template</li>
+      <li>Name it using <a href="#naming-conventions">Naming</a></li>
+      <li>Set Program, Training Area, and dates</li>
       <li>Save</li>
     </ol>
 
-    <h4 id="qt-archive-offering">Archive an old Course Offering</h4>
+    <h3 id="qt-archive-offering">Archive Offering</h3>
     <ol class="steps">
-      <li>Go to the Course Offering you want to archive</li>
-      <li>Rename it: <code>ARCHIVED: [Name] V#</code></li>
-      <li>Go to <strong>Course Settings</strong> &rarr; set <strong>Active</strong> to <strong>Inactive</strong> (or set an end date in the past)</li>
-      <li>Hide it from the Discover page / catalog</li>
-      <li>Record the archival in the <a href="#decision-log">Decision Log</a></li>
+      <li>Rename old Offering: <code>ARCHIVED: [Name] V#</code></li>
+      <li>Set Active to Inactive, or set an end date in the past</li>
+      <li>Hide from Discover/catalog</li>
+      <li>Record in the <a href="#decision-log">Decision Log</a></li>
     </ol>
 
-    <h4 id="qt-copy-offering">Copy content from one Offering to another</h4>
-    <p>Used when creating a new version from an existing course:</p>
+    <h3 id="qt-copy-offering">Copy Between Offerings</h3>
     <ol class="steps">
-      <li>Open the new (destination) Course Offering</li>
-      <li>Go to <strong>Course Tools</strong> &rarr; <strong>Import / Export / Copy Components</strong></li>
-      <li>Choose <strong>Copy Components from Another Org Unit</strong></li>
-      <li>Select the source course</li>
-      <li>Choose which components to copy (modules, assessments, etc.)</li>
-      <li>Review and complete the copy</li>
+      <li>Open destination Offering</li>
+      <li>Course Tools &rarr; Import / Export / Copy Components</li>
+      <li>Choose source course and components</li>
+      <li>Review and complete copy</li>
     </ol>
 
-    <h3 id="qt-user-management">User Management</h3>
-
-    <h4 id="qt-add-user">Add a single user</h4>
+    <h3 id="qt-add-user">Add User</h3>
     <ol class="steps">
-      <li>Go to <strong>Admin Tools</strong> &rarr; <strong>Users</strong></li>
-      <li>Search for the person — they may already have an account</li>
-      <li>If not, click <strong>Create a User</strong></li>
-      <li>Fill in name, email, username</li>
-      <li>Assign the correct <strong>Role</strong> (Learner, Instructor, etc.)</li>
+      <li>Admin Tools &rarr; Users</li>
+      <li>Search first</li>
+      <li>Create user if needed</li>
+      <li>Assign role</li>
       <li>Save</li>
     </ol>
 
-    <h4 id="qt-enroll-user">Enroll a user in a course</h4>
+    <h3 id="qt-enroll-user">Enroll User</h3>
     <ol class="steps">
-      <li>Go to the Course Offering</li>
-      <li>Go to <strong>Classlist</strong></li>
-      <li>Click <strong>Add Participants</strong> &rarr; <strong>Add Existing Users</strong></li>
-      <li>Search for the user</li>
-      <li>Assign their role in the course (usually Learner)</li>
+      <li>Open Course Offering</li>
+      <li>Classlist &rarr; Add Participants &rarr; Add Existing Users</li>
+      <li>Search user</li>
+      <li>Assign course role</li>
       <li>Enroll</li>
     </ol>
 
-    <h4 id="qt-deactivate-user">Deactivate a user (when someone leaves)</h4>
+    <h3 id="qt-deactivate-user">Deactivate User</h3>
     <ol class="steps">
-      <li>Go to <strong>Admin Tools</strong> &rarr; <strong>Users</strong></li>
-      <li>Find the user</li>
-      <li>Open their profile</li>
-      <li>Set <strong>Is Active</strong> to <strong>No</strong> (do NOT delete — this preserves completion records)</li>
-      <li>Note the date and reason</li>
+      <li>Admin Tools &rarr; Users</li>
+      <li>Open user profile</li>
+      <li>Set Is Active to No</li>
+      <li>Record date and reason</li>
     </ol>
 
-    <h3 id="qt-content-updates">Content Updates</h3>
-
-    <h4 id="qt-minor-edit">Make a minor edit to a live course</h4>
+    <h3 id="qt-minor-edit">Minor Live Edit</h3>
     <ol class="steps">
-      <li>Go to the Course Offering</li>
-      <li>Open the module or topic to edit</li>
-      <li>Make your change</li>
-      <li>Save — the change is live immediately</li>
-    </ol>
-    <p>No versioning or notification needed for minor edits (typos, links, wording). See <a href="#versioning">Versioning &amp; Archiving</a> for what counts as minor vs. major.</p>
-
-    <h4 id="qt-check-completion">Check if a learner completed a course</h4>
-    <ol class="steps">
-      <li>Go to the Course Offering</li>
-      <li>Go to <strong>Grades</strong> or <strong>Progress</strong></li>
-      <li>Search for the learner by name</li>
-      <li>View their completion status and date</li>
+      <li>Open Course Offering</li>
+      <li>Edit module or topic</li>
+      <li>Save</li>
     </ol>
 
-    <h3 id="qt-finding">Finding Things</h3>
+    <h3 id="qt-check-completion">Check Completion</h3>
+    <p>Open Course Offering &rarr; Grades or Progress &rarr; search learner.</p>
 
-    <h4 id="qt-find-course">Find a course in the Brightspace org</h4>
-    <p><strong>Admin Tools</strong> &rarr; <strong>Course Management</strong> &rarr; search by name or course code</p>
+    <h3 id="qt-find-course">Find Course</h3>
+    <p>Admin Tools &rarr; Course Management &rarr; search by name or course code.</p>
 
-    <h4 id="qt-find-by-area">Find all courses in a Training Area or Program</h4>
-    <p><strong>Admin Tools</strong> &rarr; <strong>Course Management</strong> &rarr; filter by Org Unit Path</p>
+    <h3 id="qt-find-by-area">Find by Area / Program</h3>
+    <p>Admin Tools &rarr; Course Management &rarr; filter by Org Unit Path.</p>
 
-    <h4 id="qt-classlist">See who is enrolled in a course</h4>
-    <p>Open the Course Offering &rarr; <strong>Classlist</strong></p>
-
-    <div class="tip">
-      Add steps here as you learn them. Date your additions so you know when things were written.
-    </div>
+    <h3 id="qt-classlist">Who Is Enrolled</h3>
+    <p>Open Course Offering &rarr; Classlist.</p>
   </section>
 
 </main>
@@ -950,16 +520,6 @@ Substantive Law</pre>
       .map(a => document.querySelector(a.getAttribute('href')))
       .filter(Boolean);
 
-    function openAccordionForHash() {
-      const raw = window.location.hash.slice(1);
-      if (!raw) return;
-      document.querySelectorAll('#sidebar details.nav-accordion').forEach(function (d) {
-        if (d.querySelector('.nav-accordion-panel a[href="#' + raw + '"]')) {
-          d.open = true;
-        }
-      });
-    }
-
     function onScroll() {
       let current = targets[0];
       for (const t of targets) {
@@ -969,20 +529,10 @@ Substantive Law</pre>
       links.forEach(a => {
         a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
       });
-      document.querySelectorAll('#sidebar details.nav-accordion').forEach(function (d) {
-        if (d.querySelector('.nav-accordion-panel a.active')) d.open = true;
-      });
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('hashchange', function () {
-      openAccordionForHash();
-      onScroll();
-    });
-    document.addEventListener('DOMContentLoaded', function () {
-      openAccordionForHash();
-      onScroll();
-    });
+    document.addEventListener('DOMContentLoaded', onScroll);
   })();
 </script>
 
