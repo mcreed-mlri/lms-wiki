@@ -71,9 +71,15 @@
           </tr>
           <tr>
             <td><strong>User access</strong></td>
-            <td>Approve who can access legal skills, substantive law, and certificates.</td>
+            <td>Approve learner types, user attributes, Learning Groups, and certificate language.</td>
             <td>MLRI legal authority</td>
             <td><span class="status proposed">Needs sign-off</span></td>
+          </tr>
+          <tr>
+            <td><strong>Completion tracking</strong></td>
+            <td>Define what counts as completion, especially for video-based courses.</td>
+            <td>LACE / D2L</td>
+            <td><span class="status proposed">Needs decision</span></td>
           </tr>
           <tr>
             <td><strong>January launch</strong></td>
@@ -401,6 +407,7 @@
         <tbody>
           <tr><td><strong>Learner</strong></td><td>Takes courses. No admin access.</td></tr>
           <tr><td><strong>Instructor / Course Author</strong></td><td>Creates or edits course content.</td></tr>
+          <tr><td><strong>Manager</strong></td><td>Optional reporting role for people who need to monitor assigned learner progress.</td></tr>
           <tr><td><strong>Course Administrator</strong></td><td>Manages enrollments, sections, and course settings.</td></tr>
           <tr><td><strong>Org Administrator</strong></td><td>Full Brightspace access. Use sparingly.</td></tr>
         </tbody>
@@ -410,6 +417,9 @@
     <h3>Rules</h3>
     <ul>
       <li><strong>Assign least privilege.</strong> Give the role needed for the job.</li>
+      <li><strong>Plan attributes before automation.</strong> User Attributes can drive Learning Groups, enrollments, due dates, and reporting.</li>
+      <li><strong>Use Learning Groups deliberately.</strong> Decide which groups are automatic and which require manual control.</li>
+      <li><strong>Use Manager access only where reporting is needed.</strong> A learner cannot have two direct managers, though higher-level manager relationships are possible.</li>
       <li><strong>Enroll learners in Course Offerings.</strong> Do not enroll them in templates.</li>
       <li><strong>Deactivate, do not delete.</strong> Deleting can remove completion history.</li>
       <li><strong>Document offboarding.</strong> Record date and reason.</li>
@@ -418,6 +428,9 @@
     <h3>Open Items</h3>
     <ul class="task-list">
       <li><input type="checkbox" disabled><span class="label">Confirm self-registration vs. admin-created accounts</span></li>
+      <li><input type="checkbox" disabled><span class="label">Confirm final User Attributes before using them for Learning Groups or reporting</span></li>
+      <li><input type="checkbox" disabled><span class="label">Confirm automatic vs. manual Learning Group rules</span></li>
+      <li><input type="checkbox" disabled><span class="label">Confirm manager-role assignments for progress reporting</span></li>
       <li><input type="checkbox" disabled><span class="label">Confirm standard onboarding course or message</span></li>
       <li><input type="checkbox" disabled><span class="label">Assign offboarding owner</span></li>
     </ul>
@@ -475,6 +488,9 @@
           <tr id="glossary-vanity-url"><td><strong>Vanity URL</strong></td><td>Custom learner-facing Brightspace web address.</td></tr>
           <tr id="glossary-community-of-practice"><td><strong>Community of Practice</strong></td><td>Shared space with role-based access; under review for audience routing.</td></tr>
           <tr id="glossary-intelligent-agents"><td><strong>Intelligent Agents</strong></td><td>Brightspace automation for emails and learner activity triggers.</td></tr>
+          <tr id="glossary-user-attributes"><td><strong>User Attributes</strong></td><td>Brightspace profile metadata that can support Learning Groups, automation, access, and reports; current planning limit is 10 attributes.</td></tr>
+          <tr id="glossary-learning-groups"><td><strong>Learning Groups</strong></td><td>Brightspace groups that can be managed manually or automatically from User Attributes, with possible due dates and reporting implications.</td></tr>
+          <tr id="glossary-manager-dashboard"><td><strong>Manager Dashboard</strong></td><td>Optional Brightspace reporting view for users with manager access.</td></tr>
           <tr id="glossary-evergreen"><td><strong>Evergreen Course</strong></td><td>Course that stays live and is updated over time.</td></tr>
           <tr id="glossary-major-update"><td><strong>Major Update</strong></td><td>Change that affects what the course teaches; requires a new version.</td></tr>
           <tr id="glossary-minor-update"><td><strong>Minor Update</strong></td><td>Change that does not affect learning outcomes; edit in place.</td></tr>

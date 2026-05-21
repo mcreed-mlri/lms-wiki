@@ -81,9 +81,15 @@
           </tr>
           <tr>
             <td><strong>LACE Hub dashboards</strong></td>
-            <td>One app with role-based learner, manager, program, and admin views.</td>
-            <td>Ship learner home first; expand reporting later.</td>
+            <td>One app with role-based learner, manager, program, and admin views; Brightspace Manager Dashboard is optional.</td>
+            <td>Ship learner home first; define manager access and reporting scope before expansion.</td>
             <td><span class="status in-progress">Planned</span></td>
+          </tr>
+          <tr>
+            <td><strong>Attributes and groups</strong></td>
+            <td>User Attributes and Learning Groups will shape access, due dates, automation, and reports.</td>
+            <td>Freeze a clean attributes/groups plan before relying on automation.</td>
+            <td><span class="status proposed">Needs Decisions</span></td>
           </tr>
           <tr>
             <td><strong>Open decisions</strong></td>
@@ -111,7 +117,7 @@
             <td><strong>Phase 0: Wrapper</strong></td>
             <td>Prove the in-course learner experience without API dependency.</td>
             <td>Template package, LACE nav, clean-view URLs, local/LMS tracking mode.</td>
-            <td>Finish demo course setup and completion rules.</td>
+            <td>Finish demo course setup and decide completion rules; video page visits are not enough by themselves.</td>
           </tr>
           <tr>
             <td><strong>Phase 1: API</strong></td>
@@ -318,6 +324,7 @@
       <li><strong>Custom HTML login page:</strong> Brightspace supports upload/setup; build a sample before the next meeting.</li>
       <li><strong>Intelligent Agents:</strong> useful for email reminders and learner activity triggers.</li>
       <li><strong>Community of Practice:</strong> possible mechanism for role-specific access in one shared space.</li>
+      <li><strong>May 21 D2L note:</strong> User Attributes, Learning Groups, manager access, and completion criteria should be planned together because they drive automation and reporting.</li>
     </ul>
   </section>
 
@@ -351,7 +358,7 @@
         </thead>
         <tbody>
           <tr><td><strong>Learner</strong></td><td>What changed? What should I review or retake?</td><td>Dashboard notices and next actions.</td></tr>
-          <tr><td><strong>Manager</strong></td><td>Who is complete, stuck, overdue, or needs support?</td><td>Team dashboard.</td></tr>
+          <tr><td><strong>Manager</strong></td><td>Who is complete, stuck, overdue, or needs support? Who has manager access?</td><td>Team dashboard; Brightspace manager role required.</td></tr>
           <tr><td><strong>Program</strong></td><td>Where are learners dropping off? Which content works?</td><td>Course and cohort reporting.</td></tr>
           <tr><td><strong>Equity / population insights</strong></td><td>Who is completing training, and who is not?</td><td>Evaluation and stakeholder reporting.</td></tr>
         </tbody>
@@ -427,6 +434,18 @@
             <td><strong>Sections vs. separate Offerings</strong></td>
             <td>How should cohorts, orgs, or scheduled runs be separated?</td>
             <td>Affects enrollment management, reporting, and admin overhead.</td>
+            <td><span class="status proposed">Open</span></td>
+          </tr>
+          <tr id="user-attributes-learning-groups">
+            <td><strong>User Attributes and Learning Groups</strong></td>
+            <td>Which attributes and groups are official, and which groups should be automatic vs. manual?</td>
+            <td>Drives enrollment, due dates, access, manager reporting, and future dashboard data quality.</td>
+            <td><span class="status proposed">Open</span></td>
+          </tr>
+          <tr id="completion-definition">
+            <td><strong>Completion definition</strong></td>
+            <td>For videos, is completion a visit, watched video, check-in, quiz, reflection, or manual mark-complete?</td>
+            <td>Brightspace may track visits/time, but that is not the same as verified video completion.</td>
             <td><span class="status proposed">Open</span></td>
           </tr>
           <tr id="audience-routing">
