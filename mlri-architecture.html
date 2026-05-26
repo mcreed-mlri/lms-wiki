@@ -227,6 +227,107 @@
     box-shadow: 0 0 10px var(--amber-light);
   }
 
+  /* SIMPLE CURRENT FLOW */
+  .simple-flow-panel {
+    max-width: 900px;
+    margin: 0 auto 42px;
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.11);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 20px 44px rgba(0,0,0,0.18);
+  }
+  .simple-flow-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 10px;
+  }
+  .simple-flow-panel h2 {
+    font-size: 19px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .simple-flow-panel p {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--gray-bright);
+    max-width: 760px;
+  }
+  .simple-flow {
+    display: grid;
+    grid-template-columns: 1fr 46px 1fr 46px 1fr;
+    gap: 8px;
+    align-items: stretch;
+    margin-top: 22px;
+  }
+  .simple-flow-node {
+    min-height: 150px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(10,22,40,0.54);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .simple-flow-node strong {
+    display: block;
+    font-size: 15px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    color: white;
+  }
+  .simple-flow-node span {
+    display: block;
+    color: var(--gray-bright);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .simple-flow-node small {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .simple-flow-node.source {
+    border-color: rgba(251,191,36,0.28);
+    background: rgba(217,119,6,0.12);
+  }
+  .simple-flow-node.source small { color: var(--amber-light); }
+  .simple-flow-node.app {
+    border-color: rgba(96,165,250,0.28);
+    background: rgba(37,99,235,0.12);
+  }
+  .simple-flow-node.app small { color: var(--blue-light); }
+  .simple-flow-node.data {
+    border-color: rgba(167,139,250,0.28);
+    background: rgba(124,58,237,0.12);
+  }
+  .simple-flow-node.data small { color: var(--purple-light); }
+  .simple-flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.48);
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+  }
+  .simple-flow-note {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(52,211,153,0.22);
+    background: rgba(5,150,105,0.1);
+    color: var(--gray-bright);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
   /* DIAGRAM WRAPPER */
   .diagram {
     max-width: 900px;
@@ -633,6 +734,8 @@
     .data-flows { grid-template-columns: 1fr; }
     .stack-row { grid-template-columns: 1fr auto 1fr; }
     .proof-grid { grid-template-columns: 1fr; }
+    .simple-flow { grid-template-columns: 1fr; }
+    .simple-flow-arrow { min-height: 26px; transform: rotate(90deg); }
     .proof-step::after {
       content: '↓';
       right: 50%;
@@ -649,7 +752,7 @@
 <div class="header">
   <div class="header-tag">System Architecture · LACE Learning Hub</div>
   <h1>What We're <span>Building</span></h1>
-  <p>The wrapper is built, Supabase is connected, and Brightspace OAuth is working. The next proof point is one course metadata read, then a first catalog sync.</p>
+  <p>The wrapper is built, Supabase is connected, and Brightspace OAuth is working. The current proof point shows one Brightspace course flowing into the Learning Hub and Supabase.</p>
 </div>
 
 <div class="legend">
@@ -660,10 +763,10 @@
 </div>
 
 <div class="proof-panel">
-  <div class="proof-kicker">Current proof path · May 25, 2026</div>
+  <div class="proof-kicker">Current proof path · May 26, 2026</div>
   <h2>What is real now</h2>
   <p>
-    The architecture has moved from planning to a working local integration spike. The Learning Hub can read Supabase, complete Brightspace OAuth, call <code>whoami</code>, and is ready to test one known course offering.
+    The architecture has moved from planning to a working local integration spike. The Learning Hub can read Supabase, complete Brightspace OAuth, call <code>whoami</code>, read one known Brightspace course, inspect its content outline, and sync that course into Supabase.
   </p>
   <div class="proof-grid">
     <div class="proof-step">
@@ -687,10 +790,46 @@
       <span>OAuth consent completes and <code>whoami</code> returns the authorized user.</span>
     </div>
     <div class="proof-step proof-next">
-      <div class="proof-status">Next</div>
+      <div class="proof-status">Working</div>
       <strong>Course metadata</strong>
-      <span>Need one safe course offering Org Unit ID to test the catalog read.</span>
+      <span>Course <code>6703</code> syncs into Supabase as Eviction Defense: The First 48 Hours.</span>
     </div>
+  </div>
+</div>
+
+<div class="simple-flow-panel">
+  <div class="simple-flow-kicker">Current integration diagram</div>
+  <h2>Simple flow: Brightspace to Learning Hub to Supabase</h2>
+  <p>
+    Brightspace remains the course system of record. The Learning Hub reads selected Brightspace data through secure server-side API routes, then stores the pieces we need for the custom hub experience in Supabase.
+  </p>
+  <div class="simple-flow">
+    <div class="simple-flow-node source">
+      <div>
+        <strong>Brightspace</strong>
+        <span>Courses, modules, topics, enrollments, completion rules, and learner activity that Brightspace already manages.</span>
+      </div>
+      <small>System of record</small>
+    </div>
+    <div class="simple-flow-arrow">&rarr;</div>
+    <div class="simple-flow-node app">
+      <div>
+        <strong>Learning Hub</strong>
+        <span>Our custom front end and API layer. It authenticates, requests approved Brightspace data, and presents learner, manager, and admin views.</span>
+      </div>
+      <small>Experience layer</small>
+    </div>
+    <div class="simple-flow-arrow">&rarr;</div>
+    <div class="simple-flow-node data">
+      <div>
+        <strong>Supabase</strong>
+        <span>Stores the Learning Hub data we control, such as synced catalog records, search behavior, feedback, and future reporting support.</span>
+      </div>
+      <small>Custom data layer</small>
+    </div>
+  </div>
+  <div class="simple-flow-note">
+    Current proof: OAuth works, Brightspace course/content reads work, and the course <strong>Eviction Defense: The First 48 Hours</strong> has been synced into Supabase.
   </div>
 </div>
 
