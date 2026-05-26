@@ -215,6 +215,10 @@
       <strong>Validated insight:</strong> append <code>?ou={orgUnitId}&amp;d2l_body_type=3</code> to use Brightspace clean view, then layer LACE navigation and design on top.
     </div>
 
+    <div class="note">
+      <strong>Course Builder cleanup rule:</strong> Manage Files stores the actual files; Course Builder/Content stores the outline nodes that point to them. If a file is deleted from Manage Files, remove or replace the matching Course Builder node too, or Brightspace may keep a broken topic in the course outline and API response.
+    </div>
+
     <div class="table-wrap">
       <table>
         <thead>
