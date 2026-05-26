@@ -75,14 +75,14 @@
           </tr>
           <tr>
             <td><strong>Brightspace API</strong></td>
-            <td>Phase 1 target: OAuth, core learner data, SSO, API-backed dashboard.</td>
-            <td>Confirm API auth path and minimum dashboard response.</td>
+            <td>OAuth 2.0 app is registered; Learning Hub can complete OAuth and call Brightspace <code>whoami</code>.</td>
+            <td>Test one known course offering Org Unit ID, then map course metadata into Supabase.</td>
             <td><span class="status in-progress">In Progress</span></td>
           </tr>
           <tr>
             <td><strong>LACE Hub dashboards</strong></td>
-            <td>One app with role-based learner, manager, program, and admin views; Brightspace Manager Dashboard is optional.</td>
-            <td>Ship learner home first; define manager access and reporting scope before expansion.</td>
+            <td>One app with role-based views; admin page now shows live Supabase and Brightspace connection status.</td>
+            <td>Keep admin diagnostics minimal while wiring the first catalog sync route.</td>
             <td><span class="status in-progress">Planned</span></td>
           </tr>
           <tr>
@@ -101,7 +101,7 @@
       </table>
     </div>
 
-    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-21</em></p>
+    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-25</em></p>
   </section>
 
   <section class="guide-section" id="current-phase">
@@ -122,8 +122,8 @@
           <tr>
             <td><strong>Phase 1: API</strong></td>
             <td>Connect Brightspace to the custom frontend.</td>
-            <td>OAuth/SSO planning, learner dashboard target, API response shape.</td>
-            <td>Auth, data access, and domain/login decisions.</td>
+            <td>Supabase health route, Brightspace OAuth, <code>whoami</code>, and admin integration status are working locally.</td>
+            <td>Need one safe course Org Unit ID to test metadata read and first sync.</td>
           </tr>
         </tbody>
       </table>
@@ -186,7 +186,7 @@
         <tbody>
           <tr><td><strong>0</strong></td><td><a href="#marlie-phase-0">In-course HTML wrappers</a></td><td>Now</td><td>Custom HTML course experience inside Brightspace.</td></tr>
           <tr><td><strong>1</strong></td><td><a href="#marlie-phase-1">Connect to Brightspace</a></td><td>Months 1-2</td><td>OAuth, SSO, learner dashboard, core Brightspace data.</td></tr>
-          <tr><td><strong>2</strong></td><td><a href="#marlie-phase-2">Own data layer</a></td><td>Months 2-4</td><td>Supabase events, search, engagement, feedback, synced LMS data.</td></tr>
+          <tr><td><strong>2</strong></td><td><a href="#marlie-phase-2">Own data layer</a></td><td>Months 2-4</td><td>Supabase is connected for catalog proof; events, search, engagement, feedback, and synced LMS data come next.</td></tr>
           <tr><td><strong>3</strong></td><td><a href="#marlie-phase-3">Reporting and evaluation</a></td><td>Months 4-6</td><td>Manager/program dashboards, equity analysis, update notices.</td></tr>
         </tbody>
       </table>
@@ -201,8 +201,8 @@
         <tbody>
           <tr><td><strong>Brightspace</strong></td><td>Courses, enrollments, completions, grades, access, email triggers.</td><td>LMS records.</td></tr>
           <tr><td><strong>Custom HTML wrapper</strong></td><td>LACE learner experience inside a Brightspace Course Offering.</td><td>Course files and <code>course-config.js</code>.</td></tr>
-          <tr><td><strong>LACE Hub</strong></td><td>Frontend dashboards and course discovery/resume experience.</td><td>API response per role/view.</td></tr>
-          <tr><td><strong>Supabase</strong></td><td>Search, engagement, feedback, reporting cache, synced LMS data.</td><td>Custom data layer.</td></tr>
+          <tr><td><strong>LACE Hub</strong></td><td>Frontend dashboards, course discovery/resume experience, and live integration diagnostics.</td><td>API response per role/view.</td></tr>
+          <tr><td><strong>Supabase</strong></td><td>Search, engagement, feedback, reporting cache, synced LMS data; initial <code>learning_items</code> table is live.</td><td>Custom data layer.</td></tr>
         </tbody>
       </table>
     </div>
@@ -303,20 +303,34 @@
   <section class="guide-section" id="marlie-phase-1">
     <h2>Phase 1: Connect to Brightspace <span class="status in-progress">In Progress</span></h2>
 
+    <div class="tip">
+      <strong>Connection spike checkpoint:</strong> Supabase is connected, Brightspace OAuth works, and the Learning Hub can call <code>whoami</code>. Next proof point is one known course offering metadata read.
+    </div>
+
     <div class="table-wrap">
       <table>
         <thead>
           <tr><th>Work</th><th>Done When</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>OAuth / API auth</strong></td><td>App can authenticate to Brightspace and safely manage tokens.</td></tr>
-          <tr><td><strong>Core data pull</strong></td><td>Enrollments, completions, grades, and course metadata are readable.</td></tr>
+          <tr><td><strong>OAuth / API auth</strong></td><td><span class="status done">Working locally</span> OAuth app registered; callback stores short-lived tokens in secure HTTP-only local cookies.</td></tr>
+          <tr><td><strong>Core data pull</strong></td><td><span class="status in-progress">Partial</span> <code>whoami</code> works; course metadata route is ready for one safe Org Unit ID.</td></tr>
+          <tr><td><strong>Supabase catalog proof</strong></td><td><span class="status done">Working locally</span> <code>learning_items</code> table is readable through the Learning Hub API and rendered on the admin page.</td></tr>
           <tr><td><strong>Learner dashboard</strong></td><td><code>/api/me/dashboard</code> powers learner home with progress and resume links.</td></tr>
           <tr><td><strong>SSO / login</strong></td><td>Learner has a coherent login path across Brightspace and Hub.</td></tr>
           <tr><td><strong>Wrapper bridge</strong></td><td>Optional API-backed progress/checkmarks can be layered onto the wrapper later.</td></tr>
         </tbody>
       </table>
     </div>
+
+    <h3>Live Spike Routes</h3>
+    <ul>
+      <li><code>GET /api/health/supabase/</code> returns the test <code>learning_items</code> row.</li>
+      <li><code>GET /api/health/brightspace/</code> reports Brightspace OAuth configuration status.</li>
+      <li><code>GET /api/auth/brightspace/start</code> begins the OAuth consent flow.</li>
+      <li><code>GET /api/health/brightspace/whoami</code> confirms the authorized Brightspace user.</li>
+      <li><code>GET /api/health/brightspace/course?orgUnitId=...</code> is ready for a known test course offering.</li>
+    </ul>
 
     <h3>Brightspace Meeting Notes</h3>
     <ul>
