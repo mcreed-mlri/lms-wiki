@@ -135,6 +135,98 @@
     box-shadow: 0 0 8px currentColor;
   }
 
+  /* CURRENT PROOF PATH */
+  .proof-panel {
+    max-width: 900px;
+    margin: 0 auto 42px;
+    background: rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.11);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 20px 44px rgba(0,0,0,0.22);
+  }
+  .proof-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 10px;
+  }
+  .proof-panel h2 {
+    font-size: 19px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .proof-panel p {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--gray-bright);
+    max-width: 760px;
+  }
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .proof-step {
+    min-height: 120px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(10,22,40,0.55);
+    padding: 14px;
+    position: relative;
+  }
+  .proof-step::after {
+    content: '→';
+    position: absolute;
+    right: -12px;
+    top: 42px;
+    color: rgba(255,255,255,0.38);
+    font-family: 'DM Mono', monospace;
+  }
+  .proof-step:last-child::after { display: none; }
+  .proof-step strong {
+    display: block;
+    color: white;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .proof-step span {
+    display: block;
+    color: var(--gray-bright);
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .proof-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green-light);
+  }
+  .proof-status::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green-light);
+    box-shadow: 0 0 10px var(--green-light);
+  }
+  .proof-next .proof-status {
+    color: var(--amber-light);
+  }
+  .proof-next .proof-status::before {
+    background: var(--amber-light);
+    box-shadow: 0 0 10px var(--amber-light);
+  }
+
   /* DIAGRAM WRAPPER */
   .diagram {
     max-width: 900px;
@@ -540,6 +632,13 @@
     .flow-arrow { padding-left: 114px; }
     .data-flows { grid-template-columns: 1fr; }
     .stack-row { grid-template-columns: 1fr auto 1fr; }
+    .proof-grid { grid-template-columns: 1fr; }
+    .proof-step::after {
+      content: '↓';
+      right: 50%;
+      top: auto;
+      bottom: -16px;
+    }
   }
 </style>
 </head>
@@ -550,14 +649,49 @@
 <div class="header">
   <div class="header-tag">System Architecture · LACE Learning Hub</div>
   <h1>What We're <span>Building</span></h1>
-  <p>Four phases — in-course HTML wrappers first, then Brightspace API connection, custom data layer, and reporting suite.</p>
+  <p>The wrapper is built, Supabase is connected, and Brightspace OAuth is working. The next proof point is one course metadata read, then a first catalog sync.</p>
 </div>
 
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> Phase 0 · Now</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#14b8a6"></div> Phase 1 · Months 1–2</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> Phase 2 · Months 2–4</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Phase 3 · Months 4–6</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> Phase 0 · Built</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#14b8a6"></div> Phase 1 · Working spike</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> Phase 2 · Next 1–3 weeks</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Phase 3 · June–July</div>
+</div>
+
+<div class="proof-panel">
+  <div class="proof-kicker">Current proof path · May 25, 2026</div>
+  <h2>What is real now</h2>
+  <p>
+    The architecture has moved from planning to a working local integration spike. The Learning Hub can read Supabase, complete Brightspace OAuth, call <code>whoami</code>, and is ready to test one known course offering.
+  </p>
+  <div class="proof-grid">
+    <div class="proof-step">
+      <div class="proof-status">Working</div>
+      <strong>LACE Hub UI</strong>
+      <span>Admin page shows live integration status instead of mock cards.</span>
+    </div>
+    <div class="proof-step">
+      <div class="proof-status">Working</div>
+      <strong>Next.js API routes</strong>
+      <span>Server routes handle Supabase reads and Brightspace OAuth/token checks.</span>
+    </div>
+    <div class="proof-step">
+      <div class="proof-status">Working</div>
+      <strong>Supabase</strong>
+      <span><code>learning_items</code> exists and returns the test Brightspace course row.</span>
+    </div>
+    <div class="proof-step">
+      <div class="proof-status">Working</div>
+      <strong>Brightspace OAuth</strong>
+      <span>OAuth consent completes and <code>whoami</code> returns the authorized user.</span>
+    </div>
+    <div class="proof-step proof-next">
+      <div class="proof-status">Next</div>
+      <strong>Course metadata</strong>
+      <span>Need one safe course offering Org Unit ID to test the catalog read.</span>
+    </div>
+  </div>
 </div>
 
 <!-- PHASES -->
@@ -567,7 +701,7 @@
     <div class="phase-label">
       <div class="phase-num">Phase 0</div>
       <div class="phase-name">In-Course HTML Wrappers</div>
-      <div class="phase-timeline">Now</div>
+      <div class="phase-timeline">Built</div>
     </div>
     <div class="phase-content">
       <div class="cards">
@@ -605,33 +739,33 @@
     <div class="phase-label">
       <div class="phase-num">Phase 1</div>
       <div class="phase-name">Connect to Brightspace</div>
-      <div class="phase-timeline">Months 1–2</div>
+      <div class="phase-timeline">Working spike</div>
     </div>
     <div class="phase-content">
       <div class="cards">
         <div class="card card-teal">
           <div class="card-icon">🔌</div>
           <div class="card-title">Brightspace API Auth</div>
-          <div class="card-desc">OAuth connection, token management, sandbox testing</div>
-          <div class="card-tags"><span class="tag">OAuth 2.0</span><span class="tag">API</span></div>
+          <div class="card-desc">OAuth connection works locally; whoami endpoint confirmed</div>
+          <div class="card-tags"><span class="tag">OAuth 2.0</span><span class="tag">Working</span></div>
         </div>
         <div class="card card-teal">
           <div class="card-icon">📊</div>
           <div class="card-title">Pull Core Data</div>
-          <div class="card-desc">Enrollments, completions, grades, time-in-course</div>
-          <div class="card-tags"><span class="tag">BS API</span><span class="tag">Read-only</span></div>
+          <div class="card-desc">Start with course metadata; defer learner records until permissions are clear</div>
+          <div class="card-tags"><span class="tag">Catalog</span><span class="tag">Read-only</span></div>
         </div>
         <div class="card card-teal">
           <div class="card-icon">🖥️</div>
           <div class="card-title">Display in Frontend</div>
-          <div class="card-desc">Surface BS data in your custom discovery layer</div>
-          <div class="card-tags"><span class="tag">Frontend</span><span class="tag">React</span></div>
+          <div class="card-desc">Admin diagnostics are live; catalog display follows first metadata sync</div>
+          <div class="card-tags"><span class="tag">Frontend</span><span class="tag">Live status</span></div>
         </div>
         <div class="card card-teal">
           <div class="card-icon">🔑</div>
           <div class="card-title">SSO / Auth</div>
-          <div class="card-desc">Single login — no double sign-in for learners</div>
-          <div class="card-tags"><span class="tag">SSO</span><span class="tag">Identity</span></div>
+          <div class="card-desc">OAuth works for the spike; production login model still needs Brightspace guidance</div>
+          <div class="card-tags"><span class="tag">SSO</span><span class="tag">Decision</span></div>
         </div>
       </div>
     </div>
@@ -643,15 +777,15 @@
     <div class="phase-label">
       <div class="phase-num">Phase 2</div>
       <div class="phase-name">Your Own Data Layer</div>
-      <div class="phase-timeline">Months 2–4</div>
+      <div class="phase-timeline">Next 1–3 weeks</div>
     </div>
     <div class="phase-content">
       <div class="cards">
         <div class="card card-blue">
           <div class="card-icon">🗄️</div>
           <div class="card-title">Supabase Backend</div>
-          <div class="card-desc">Postgres DB for custom data BS can't capture</div>
-          <div class="card-tags"><span class="tag">Supabase</span><span class="tag">Postgres</span></div>
+          <div class="card-desc">Project and learning_items table are live; first sync route is next</div>
+          <div class="card-tags"><span class="tag">Supabase</span><span class="tag">Connected</span></div>
         </div>
         <div class="card card-blue">
           <div class="card-icon">🔍</div>
@@ -681,7 +815,7 @@
     <div class="phase-label">
       <div class="phase-num">Phase 3</div>
       <div class="phase-name">Reporting & Evaluation</div>
-      <div class="phase-timeline">Months 4–6</div>
+      <div class="phase-timeline">June–July</div>
     </div>
     <div class="phase-content">
       <div class="cards">
@@ -738,23 +872,23 @@
 <div class="data-flows">
   <div class="flow-card fc-bs">
     <div class="flow-card-label">From Brightspace API</div>
-    <h3>What BS gives you</h3>
+    <h3>What BS gives you next</h3>
     <ul>
-      <li>Enrollment status</li>
-      <li>Course completions</li>
-      <li>Quiz / assessment scores</li>
-      <li>Time in course</li>
-      <li>Last accessed</li>
-      <li>Grade data</li>
+      <li>Course offering metadata</li>
+      <li>Module / topic structure</li>
+      <li>Stable learner-facing URLs</li>
+      <li>Later: enrollment status</li>
+      <li>Later: completions</li>
+      <li>Later: grade data</li>
     </ul>
   </div>
   <div class="flow-card fc-own">
     <div class="flow-card-label">Your Own Data (Supabase)</div>
     <h3>What you capture</h3>
     <ul>
+      <li>Catalog cache in learning_items</li>
       <li>Search queries + results</li>
       <li>Click paths & navigation</li>
-      <li>Time on page (your layer)</li>
       <li>Content ratings / flags</li>
       <li>Learning path choices</li>
       <li>Drop-off points</li>
@@ -762,15 +896,49 @@
   </div>
   <div class="flow-card fc-out">
     <div class="flow-card-label">Outputs / Reporting</div>
-    <h3>What you surface</h3>
+    <h3>What you surface first</h3>
     <ul>
-      <li>Learner progress dashboards</li>
-      <li>Manager team views</li>
-      <li>Program completion rates</li>
-      <li>Cohort equity analysis</li>
-      <li>Content effectiveness</li>
-      <li>Catalog gap analysis</li>
+      <li>Admin connection health</li>
+      <li>Synced learning item preview</li>
+      <li>Catalog discovery cards</li>
+      <li>Later: learner progress dashboards</li>
+      <li>Later: manager team views</li>
+      <li>Later: program completion rates</li>
     </ul>
+  </div>
+</div>
+
+<!-- WEDNESDAY PREP -->
+<div class="stack-diagram" style="margin-top: 48px;">
+  <div class="stack-diagram-title">Wednesday Brightspace session — questions to unlock the next proof</div>
+  <div class="data-flows" style="grid-template-columns: repeat(3, 1fr); margin-top: 0;">
+    <div class="flow-card fc-bs">
+      <div class="flow-card-label">Need from Brightspace</div>
+      <h3>One safe test course</h3>
+      <ul>
+        <li>Course offering Org Unit ID</li>
+        <li>Correct LMS API version</li>
+        <li>Permission needed to see course offerings</li>
+      </ul>
+    </div>
+    <div class="flow-card fc-own">
+      <div class="flow-card-label">Need to confirm</div>
+      <h3>Metadata endpoints</h3>
+      <ul>
+        <li>Course title / description</li>
+        <li>Visibility and start/end dates</li>
+        <li>Module and topic structure</li>
+      </ul>
+    </div>
+    <div class="flow-card fc-out">
+      <div class="flow-card-label">Decision</div>
+      <h3>Production auth model</h3>
+      <ul>
+        <li>3-legged OAuth for admin sync?</li>
+        <li>Server-to-server option?</li>
+        <li>What not to pull in v1?</li>
+      </ul>
+    </div>
   </div>
 </div>
 
