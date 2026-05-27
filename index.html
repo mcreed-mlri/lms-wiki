@@ -40,6 +40,7 @@
     <a href="#quick-tasks">Quick Tasks</a>
 
     <span class="section-label">Related Docs</span>
+    <a href="june-2026-priority-tasks.html" class="external">June Priority Tasks</a>
     <a href="marlana.html" class="external">Marlie's Workspace</a>
     <a href="mlri-architecture.html" class="external">LACE Architecture</a>
   </nav>
@@ -95,7 +96,7 @@
           </tr>
           <tr>
             <td><strong>Technical roadmap</strong></td>
-            <td>Build details live in <a href="marlana.html">Marlie's Workspace</a>.</td>
+            <td>June hardening tasks live in <a href="june-2026-priority-tasks.html">June Priority Tasks</a>; build details live in <a href="marlana.html">Marlie's Workspace</a>.</td>
             <td>Marlie</td>
             <td><span class="status in-progress">In progress</span></td>
           </tr>
@@ -109,11 +110,11 @@
         <li>Current legal/compliance sign-offs</li>
         <li>How LACE course content is built and hosted</li>
         <li>Brightspace naming and hierarchy rules</li>
-        <li>Versioning, notices, user management, and admin quick tasks</li>
+        <li>Versioning, notices, user management, June priorities, and admin quick tasks</li>
       </ul>
     </div>
 
-    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-21</em></p>
+    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-27</em></p>
   </section>
 
   <section class="guide-section" id="legal-signoffs">
@@ -122,6 +123,8 @@
     <div class="note">
       <strong>Core risk:</strong> non-lawyers must not receive access or completion language that suggests authority to practice law.
     </div>
+
+    <p><strong>Routing input:</strong> audience rules should account for LegalServer fields where available, especially Zip Code and Legal Problem Code from the Coordinated Intake Handbook.</p>
 
     <h3>User Types &amp; Access Matrix <span class="status proposed">Needs sign-off</span></h3>
     <div class="table-wrap" id="user-types-matrix">
@@ -161,6 +164,7 @@
     <h3>Approval Checklist</h3>
     <ul class="task-list">
       <li><input type="checkbox" disabled><span class="label">Access rules approved for each user type</span></li>
+      <li><input type="checkbox" disabled><span class="label">LegalServer Zip Code / Legal Problem Code routing reviewed for lawyers, advocates, and paralegals</span></li>
       <li><input type="checkbox" disabled><span class="label">Certificate/completion language approved</span></li>
       <li><input type="checkbox" disabled><span class="label">Brightspace roles configured to enforce the matrix</span></li>
       <li><input type="checkbox" disabled><span class="label">Decision recorded in the <a href="#decision-log">Decision Log</a></span></li>
@@ -247,7 +251,10 @@
       <li><strong>Default:</strong> build course content as custom HTML files.</li>
       <li><strong>Use Brightspace-native tools only when they solve a specific need:</strong> quizzes, assignments, discussions, surveys, email automation, or LMS-tracked activities.</li>
       <li><strong>Do not treat Creator+ / H5P as the course authoring model.</strong> Those features are optional references, not the foundation.</li>
+      <li><strong>Avoid sub-modules.</strong> Use document templates, accordions, and tabs instead; top-level modules should match the course schedule.</li>
     </ul>
+
+    <p><strong>Completion rule:</strong> a video visit is insufficient for completion. Use at least one verification action such as a check-in, quiz, reflection, or manual mark-complete.</p>
 
     <p>Technical implementation details live in <a href="marlana.html#marlie-phase-0">Phase 0: In-Course HTML Wrappers</a>. Optional Brightspace-native feature notes remain in <a href="brightspace-interactive-guide.html">Brightspace Native Tools Reference</a>.</p>
   </section>
@@ -424,11 +431,19 @@
     <ul>
       <li><strong>Assign least privilege.</strong> Give the role needed for the job.</li>
       <li><strong>Plan attributes before automation.</strong> User Attributes can drive Learning Groups, enrollments, due dates, and reporting.</li>
+      <li><strong>Confirm automation source.</strong> Decide which User Attributes come from SIS/LegalServer and which stay manual before freezing Learning Groups.</li>
       <li><strong>Use Learning Groups deliberately.</strong> Decide which groups are automatic and which require manual control.</li>
       <li><strong>Use Manager access only where reporting is needed.</strong> A learner cannot have two direct managers, though higher-level manager relationships are possible.</li>
       <li><strong>Enroll learners in Course Offerings.</strong> Do not enroll them in templates.</li>
-      <li><strong>Deactivate, do not delete.</strong> Deleting can remove completion history.</li>
+      <li><strong>Archive, do not delete.</strong> Deleting can remove completion history or break reporting assumptions.</li>
       <li><strong>Document offboarding.</strong> Record date and reason.</li>
+    </ul>
+
+    <h3>Terminology Updates</h3>
+    <ul>
+      <li><strong>Use Archive instead of Delete</strong> for Course Offering and Template operations.</li>
+      <li><strong>Use View Archive / Archived Org Units</strong> in SOPs instead of Recycle Bin language.</li>
+      <li><strong>Use Export instead of Archive</strong> for Data Purge actions.</li>
     </ul>
 
     <h3>Open Items</h3>
@@ -494,6 +509,7 @@
           <tr id="glossary-vanity-url"><td><strong>Vanity URL</strong></td><td>Custom learner-facing Brightspace web address.</td></tr>
           <tr id="glossary-community-of-practice"><td><strong>Community of Practice</strong></td><td>Shared space with role-based access; under review for audience routing.</td></tr>
           <tr id="glossary-intelligent-agents"><td><strong>Intelligent Agents</strong></td><td>Brightspace automation for emails and learner activity triggers.</td></tr>
+          <tr id="glossary-lti-13"><td><strong>LTI 1.3</strong></td><td>Learning Tools Interoperability standard to review for tool-readiness workflows, LTI Asset Processor support, and anonymous marking needs.</td></tr>
           <tr id="glossary-user-attributes"><td><strong>User Attributes</strong></td><td>Brightspace profile metadata that can support Learning Groups, automation, access, and reports; current planning limit is 10 attributes.</td></tr>
           <tr id="glossary-learning-groups"><td><strong>Learning Groups</strong></td><td>Brightspace groups that can be managed manually or automatically from User Attributes, with possible due dates and reporting implications.</td></tr>
           <tr id="glossary-manager-dashboard"><td><strong>Manager Dashboard</strong></td><td>Optional Brightspace reporting view for users with manager access.</td></tr>
@@ -501,6 +517,8 @@
           <tr id="glossary-major-update"><td><strong>Major Update</strong></td><td>Change that affects what the course teaches; requires a new version.</td></tr>
           <tr id="glossary-minor-update"><td><strong>Minor Update</strong></td><td>Change that does not affect learning outcomes; edit in place.</td></tr>
           <tr id="glossary-archived"><td><strong>Archived Offering</strong></td><td>Old hidden Offering kept for records.</td></tr>
+          <tr id="glossary-view-archive"><td><strong>View Archive</strong></td><td>Brightspace archive area formerly described in some notes as Recycle Bin; use current Archive terminology in SOPs.</td></tr>
+          <tr id="glossary-data-purge-export"><td><strong>Data Purge Export</strong></td><td>Data Purge terminology now uses Export instead of Archive for purge output locations.</td></tr>
           <tr id="glossary-upl"><td><strong>UPL</strong></td><td>Unauthorized practice of law; key risk for non-lawyer access and certificates.</td></tr>
         </tbody>
       </table>

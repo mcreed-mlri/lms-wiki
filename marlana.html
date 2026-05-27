@@ -36,6 +36,7 @@
     <a href="#open-decisions">Open Decisions</a>
 
     <span class="section-label">Related Docs</span>
+    <a href="june-2026-priority-tasks.html" class="external">June Priority Tasks</a>
     <a href="index.html" class="external">Team Wiki</a>
     <a href="brightspace-interactive-guide.html" class="external">Brightspace Native Tools Reference</a>
     <a href="mlri-architecture.html" class="external">LACE Architecture</a>
@@ -76,13 +77,13 @@
           <tr>
             <td><strong>Brightspace API</strong></td>
             <td>OAuth 2.0 app is registered; Learning Hub can complete OAuth and call Brightspace <code>whoami</code>.</td>
-            <td>Test one known course offering Org Unit ID, then map course metadata into Supabase.</td>
+            <td>Use Course Offering <code>6703</code> to validate metadata sync into <code>learning_items</code>, then confirm production auth model.</td>
             <td><span class="status in-progress">In Progress</span></td>
           </tr>
           <tr>
             <td><strong>LACE Hub dashboards</strong></td>
             <td>One app with role-based views; admin page now shows live Supabase and Brightspace connection status.</td>
-            <td>Keep admin diagnostics minimal while wiring the first catalog sync route.</td>
+            <td>Keep admin diagnostics minimal while wiring the production catalog sync route.</td>
             <td><span class="status in-progress">Planned</span></td>
           </tr>
           <tr>
@@ -101,7 +102,7 @@
       </table>
     </div>
 
-    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-25</em></p>
+    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-27</em></p>
   </section>
 
   <section class="guide-section" id="current-phase">
@@ -123,7 +124,7 @@
             <td><strong>Phase 1: API</strong></td>
             <td>Connect Brightspace to the custom frontend.</td>
             <td>Supabase health route, Brightspace OAuth, <code>whoami</code>, and admin integration status are working locally.</td>
-            <td>Need one safe course Org Unit ID to test metadata read and first sync.</td>
+            <td>Course <code>6703</code> is the metadata test target; harden production auth, API version, scopes, and sync route.</td>
           </tr>
         </tbody>
       </table>
@@ -148,7 +149,7 @@
           </tr>
           <tr>
             <td><strong>June 2026</strong></td>
-            <td>LMS policies, user types, content creation guidance, Brightspace API connection.</td>
+            <td>Vanity URL, production auth hardening, Course 6703 metadata sync, attributes/groups freeze, accessibility policy, and completion criteria.</td>
             <td><span class="status in-progress">In progress</span></td>
           </tr>
           <tr>
@@ -202,7 +203,7 @@
           <tr><td><strong>Brightspace</strong></td><td>Courses, enrollments, completions, grades, access, email triggers.</td><td>LMS records.</td></tr>
           <tr><td><strong>Custom HTML wrapper</strong></td><td>LACE learner experience inside a Brightspace Course Offering.</td><td>Course files and <code>course-config.js</code>.</td></tr>
           <tr><td><strong>LACE Hub</strong></td><td>Frontend dashboards, course discovery/resume experience, and live integration diagnostics.</td><td>API response per role/view.</td></tr>
-          <tr><td><strong>Supabase</strong></td><td>Search, engagement, feedback, reporting cache, synced LMS data; initial <code>learning_items</code> table is live.</td><td>Custom data layer.</td></tr>
+          <tr><td><strong>Supabase</strong></td><td>Search, engagement, feedback, synced LMS data, and Hub-owned records in the <code>learning_items</code> schema.</td><td>Custom data layer.</td></tr>
         </tbody>
       </table>
     </div>
@@ -212,11 +213,11 @@
     <h2>Phase 0: In-Course HTML Wrappers <span class="status done">Largely Complete</span></h2>
 
     <div class="tip">
-      <strong>Validated insight:</strong> append <code>?ou={orgUnitId}&amp;d2l_body_type=3</code> to use Brightspace clean view, then layer LACE navigation and design on top.
+      <strong>Clean View breakthrough:</strong> append <code>?ou={orgUnitId}&amp;d2l_body_type=3</code> to Brightspace topic URLs. This is the gold-standard wrapper pattern: Brightspace keeps hosting, access, and tracking, while standard navigation chrome drops away so LACE navigation and styling can own the viewport.
     </div>
 
     <div class="note">
-      <strong>Course Builder cleanup rule:</strong> Manage Files stores the actual files; Course Builder/Content stores the outline nodes that point to them. If a file is deleted from Manage Files, remove or replace the matching Course Builder node too, or Brightspace may keep a broken topic in the course outline and API response.
+      <strong>Course Builder cleanup rule:</strong> Manage Files stores the actual files; Course Builder/Content stores the outline nodes that point to them. If a file is deleted from Manage Files, remove or replace the matching Course Builder node too, or Valence API outline responses may keep returning broken topics that the LACE Hub discovery layer cannot safely load.
     </div>
 
     <div class="table-wrap">
@@ -230,7 +231,7 @@
           <tr><td><strong><code>course-config.js</code></strong></td><td>Single source for title, modules, topics, file paths, LMS URLs, and deploy mode.</td></tr>
           <tr><td><strong><code>course-nav.js</code></strong></td><td>Course menu, previous/next, topic state, and navigation behavior.</td></tr>
           <tr><td><strong><code>course-style.css</code></strong></td><td>Shared LACE visual system for course pages.</td></tr>
-          <tr><td><strong>Architecture B tracking</strong></td><td>Local dev uses files; LMS production uses official Brightspace topic URLs so Brightspace can track visits/completions.</td></tr>
+          <tr><td><strong>Architecture B tracking</strong></td><td>Local dev uses files; LMS production uses official Brightspace topic URLs so Brightspace records each trackable learning chunk as an official visit/completion for compliance and CLE reports.</td></tr>
         </tbody>
       </table>
     </div>
@@ -248,9 +249,9 @@
     <ol class="steps">
       <li>Learner opens Brightspace Course Offering.</li>
       <li>Learner clicks the LACE launch link.</li>
-      <li>Custom HTML wrapper opens in clean Brightspace view.</li>
+      <li>Custom HTML wrapper opens in clean Brightspace view using <code>d2l_body_type=3</code>.</li>
       <li>Learner moves through LACE navigation.</li>
-      <li>Brightspace records official topic visits/completions.</li>
+      <li>Brightspace records official topic visits/completions, which can flow into Jurisdictional CLE reporting.</li>
     </ol>
 
     <p><strong>Not Phase 0:</strong> OAuth, API-backed checkmarks, cross-course dashboard data, manager reporting, or custom catalog sync. Those start in Phase 1 and Phase 2.</p>
@@ -285,8 +286,8 @@
         </thead>
         <tbody>
           <tr><td>Enrollments, completions, grades</td><td>Brightspace API</td><td>Learner home, reporting, completion records.</td></tr>
-          <tr><td>Last accessed / time in course</td><td>Brightspace, cached in Supabase</td><td>Dashboard speed and reporting.</td></tr>
-          <tr><td>Search, clicks, ratings, feedback</td><td>LACE Hub / Supabase</td><td>Content improvement and evaluation.</td></tr>
+          <tr><td>Last accessed / time in course</td><td>Brightspace, stored in Supabase for Hub views</td><td>Dashboard speed and reporting.</td></tr>
+          <tr><td>Search, clicks, ratings, feedback</td><td>LACE Hub / Supabase</td><td>Content improvement, evaluation, and content-gap detection.</td></tr>
           <tr><td>Role and audience rules</td><td>Brightspace roles + LACE policy</td><td>UPL guardrails and view permissions.</td></tr>
         </tbody>
       </table>
@@ -294,6 +295,7 @@
 
     <h3>MVP API Shape</h3>
     <p>Minimum Phase 1 target: one endpoint, such as <code>/api/me/dashboard</code>, returns the learner's identity, enrolled courses, completion status, last activity, and Brightspace deep links.</p>
+    <p><strong>Production link rule:</strong> dashboard and wrapper links should point to official Brightspace topic URLs, not local files, so learner activity remains visible to Brightspace compliance and CLE reporting.</p>
 
     <h3>Dashboard Open Questions</h3>
     <ul class="task-list">
@@ -308,7 +310,7 @@
     <h2>Phase 1: Connect to Brightspace <span class="status in-progress">In Progress</span></h2>
 
     <div class="tip">
-      <strong>Connection spike checkpoint:</strong> Supabase is connected, Brightspace OAuth works, and the Learning Hub can call <code>whoami</code>. Next proof point is one known course offering metadata read.
+      <strong>Phase 1 auth model:</strong> confirm production data-harvesting auth with Brightspace. Recommended direction is OAuth 2.0 Server-to-Server for background catalog sync, but June hardening must verify whether Brightspace expects that or 3-legged OAuth in admin context.
     </div>
 
     <div class="table-wrap">
@@ -317,8 +319,8 @@
           <tr><th>Work</th><th>Done When</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>OAuth / API auth</strong></td><td><span class="status done">Working locally</span> OAuth app registered; callback stores short-lived tokens in secure HTTP-only local cookies.</td></tr>
-          <tr><td><strong>Core data pull</strong></td><td><span class="status in-progress">Partial</span> <code>whoami</code> works; course metadata route is ready for one safe Org Unit ID.</td></tr>
+          <tr><td><strong>OAuth / API auth</strong></td><td><span class="status in-progress">Hardening</span> Register production OAuth app, verify required <code>core:*:*</code> scopes, and confirm 3-legged OAuth vs. headless Server-to-Server for catalog sync.</td></tr>
+          <tr><td><strong>Core data pull</strong></td><td><span class="status in-progress">Partial</span> <code>whoami</code> works; course metadata route should validate Course Offering <code>6703</code>.</td></tr>
           <tr><td><strong>Supabase catalog proof</strong></td><td><span class="status done">Working locally</span> <code>learning_items</code> table is readable through the Learning Hub API and rendered on the admin page.</td></tr>
           <tr><td><strong>Learner dashboard</strong></td><td><code>/api/me/dashboard</code> powers learner home with progress and resume links.</td></tr>
           <tr><td><strong>SSO / login</strong></td><td>Learner has a coherent login path across Brightspace and Hub.</td></tr>
@@ -333,12 +335,15 @@
       <li><code>GET /api/health/brightspace/</code> reports Brightspace OAuth configuration status.</li>
       <li><code>GET /api/auth/brightspace/start</code> begins the OAuth consent flow.</li>
       <li><code>GET /api/health/brightspace/whoami</code> confirms the authorized Brightspace user.</li>
-      <li><code>GET /api/health/brightspace/course?orgUnitId=...</code> is ready for a known test course offering.</li>
+      <li><code>GET /api/health/brightspace/course?orgUnitId=6703</code> validates Eviction Defense course metadata.</li>
+      <li><code>GET /api/me/dashboard</code> should return learner identity, role permissions, enrollment status, completion %, and Brightspace resume links.</li>
     </ul>
 
     <h3>Brightspace Meeting Notes</h3>
     <ul>
       <li><strong>Vanity URL / custom domain:</strong> hard deadline week of June 15-19, 2026.</li>
+      <li><strong>API version verification:</strong> confirm the LMS API version required to view all Course Offerings.</li>
+      <li><strong>LTI 1.3 readiness:</strong> review LTI Asset Processor and LTI 1.3 standards for anonymous marking and tool-readiness workflows.</li>
       <li><strong>Custom HTML login page:</strong> Brightspace supports upload/setup; build a sample before the next meeting.</li>
       <li><strong>Intelligent Agents:</strong> useful for email reminders and learner activity triggers.</li>
       <li><strong>Community of Practice:</strong> possible mechanism for role-specific access in one shared space.</li>
@@ -349,7 +354,7 @@
   <section class="guide-section" id="marlie-phase-2">
     <h2>Phase 2: Own Data Layer <span class="status not-started">Not Started</span></h2>
 
-    <p>Brightspace tracks LMS activity. It does not capture everything LACE needs from the custom frontend: search behavior, learner friction, feedback, and content signals.</p>
+    <p>Brightspace remains the system of record for compliance data: enrollments, visits, completions, certificates, and CLE reporting. Supabase is the LACE experience layer for search queries, click paths, UX feedback, reporting tables/views, and content-improvement signals.</p>
 
     <div class="table-wrap">
       <table>
@@ -357,8 +362,8 @@
           <tr><th>Build</th><th>Captures</th><th>Used For</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Supabase backend</strong></td><td>Synced Brightspace data plus LACE-native events.</td><td>Fast dashboard reads and reporting.</td></tr>
-          <tr><td><strong>Search tracking</strong></td><td>Queries, no-result searches, clicked results.</td><td>Catalog improvement and content gaps.</td></tr>
+          <tr><td><strong>Supabase backend</strong></td><td>Synced Brightspace data plus LACE-native events.</td><td>Fast dashboard reads, reporting, and a clean split from compliance records.</td></tr>
+          <tr><td><strong>Search tracking</strong></td><td>Queries, no-result searches, clicked results.</td><td>Catalog improvement and content gaps, such as repeated searches for topics with no useful result.</td></tr>
           <tr><td><strong>Engagement events</strong></td><td>Resume clicks, resource views, activity paths.</td><td>Drop-off and learner support signals.</td></tr>
           <tr><td><strong>Feedback</strong></td><td>Ratings, comments, survey responses.</td><td>Course iteration and grant/program evidence.</td></tr>
         </tbody>
@@ -427,8 +432,14 @@
           <tr id="vanity-url">
             <td><strong>Vanity URL / custom domain</strong></td>
             <td>What should the learner-facing domain be, and who owns it?</td>
-            <td>Hard deadline week of June 15-19, 2026; affects links, login, and certificates.</td>
+            <td>Most urgent June task: hard deadline week of June 15-19, 2026; appears in links, login screens, and certificates, so it anchors the professional branded experience.</td>
             <td><span class="status blocked">Urgent</span></td>
+          </tr>
+          <tr id="phase-1-auth-model">
+            <td><strong>Phase 1 auth model</strong></td>
+            <td>What identity should background Brightspace catalog sync use?</td>
+            <td>Recommended direction is OAuth 2.0 Server-to-Server, but June hardening must confirm whether production should use that headless client or 3-legged OAuth in admin context.</td>
+            <td><span class="status in-progress">Confirm with D2L</span></td>
           </tr>
           <tr id="custom-login">
             <td><strong>Custom HTML login page</strong></td>
@@ -439,8 +450,8 @@
           <tr>
             <td><strong>Versioning threshold</strong></td>
             <td>When do we create a new Offering vs. edit in place?</td>
-            <td>Controls catalog cleanliness, retake requirements, and learner notices.</td>
-            <td><span class="status proposed">Open</span></td>
+            <td>Rule: minor updates such as typos and formatting are edited in place; major updates such as changes in law or completion rules require a new Course Offering to preserve completion history and support accurate learner notices.</td>
+            <td><span class="status done">Guidance set</span></td>
           </tr>
           <tr>
             <td><strong>Learner update notices</strong></td>
@@ -457,7 +468,7 @@
           <tr id="user-attributes-learning-groups">
             <td><strong>User Attributes and Learning Groups</strong></td>
             <td>Which attributes and groups are official, and which groups should be automatic vs. manual?</td>
-            <td>Drives enrollment, due dates, access, manager reporting, and future dashboard data quality.</td>
+            <td>Map User Types and LegalServer fields such as Zip Code and Legal Problem Code to Brightspace User Attributes, then use those attributes to drive Learning Group membership.</td>
             <td><span class="status proposed">Open</span></td>
           </tr>
           <tr id="completion-definition">
@@ -469,8 +480,8 @@
           <tr id="audience-routing">
             <td><strong>Audience routing</strong></td>
             <td>How do Lawyers, Advocates, Paralegals, and Community Members see different content?</td>
-            <td>Enforces UPL guardrails from the <a href="index.html#user-types-matrix">User Types &amp; Access Matrix</a>.</td>
-            <td><span class="status proposed">Open</span></td>
+            <td>Primary UPL control: route access through the <a href="index.html#user-types-matrix">User Types &amp; Access Matrix</a>, LegalServer-derived fields, Brightspace User Attributes, and Learning Groups.</td>
+            <td><span class="status in-progress">Pattern identified</span></td>
           </tr>
           <tr id="discover-page-vs-custom-catalog">
             <td><strong>Discover vs. custom catalog</strong></td>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LACE June 2026 Priority Tasks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="sidebar.js?v=20260521-page-search"></script>
+</head>
+<body>
+
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <div class="brand">June Tasks</div>
+    <h2>LACE Learning Hub</h2>
+  </div>
+  <nav>
+    <span class="section-label">Start Here</span>
+    <a href="#home">Priority Scan</a>
+    <a href="#critical-milestones">Critical Milestones</a>
+    <a href="#technical-development">Technical Tasks</a>
+
+    <span class="section-label">Governance</span>
+    <a href="#policy-governance">Policy Tasks</a>
+    <a href="#content-id">Content &amp; ID</a>
+    <a href="#open-decisions">Open Decisions</a>
+
+    <span class="section-label">Operations</span>
+    <a href="#intelligent-agents">Agent Recipes</a>
+    <a href="#task-summary">Task Summary</a>
+
+    <span class="section-label">Related Docs</span>
+    <a href="index.html" class="external">Team Wiki</a>
+    <a href="marlana.html" class="external">Marlie's Workspace</a>
+    <a href="mlri-architecture.html" class="external">LACE Architecture</a>
+  </nav>
+</aside>
+
+<main id="main">
+
+  <h1>LACE Learning Hub: Priority Task List</h1>
+  <p class="page-subtitle">June 2026 technical and pedagogical roadmap for moving from the local integration spike to production hardening, automated routing, and accessible content.</p>
+
+  <section class="guide-section" id="home">
+    <h2>Priority Scan</h2>
+
+    <div class="note">
+      <strong>Urgent deadline: June 15-19, 2026.</strong> Finalize the learner-facing vanity URL / custom domain and confirm ownership. This is required before login configuration, deep links, and certificate generation can be hardened.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Priority</th><th>June Focus</th><th>Why It Matters</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Production hardening</strong></td><td>Auth model, OAuth registration, API versions, route checks.</td><td>Moves the Hub from local spike to reliable production integration.</td></tr>
+          <tr><td><strong>Routing policy</strong></td><td>User Attributes, Learning Groups, LegalServer Zip Code and Legal Problem Code logic.</td><td>Creates the automation foundation for enrollment, reporting, and UPL guardrails.</td></tr>
+          <tr><td><strong>Accessible content</strong></td><td>Wrapper deployment, completion criteria, axe DevTools checks, Lato 19px standard.</td><td>Keeps custom HTML usable, compliant, and trackable.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="guide-section" id="critical-milestones">
+    <h2>Critical Milestones</h2>
+
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label"><strong>Vanity URL / custom domain:</strong> finalize domain and ownership by June 15-19, 2026.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Production login model:</strong> confirm whether production data harvesting uses 3-legged OAuth in admin context or a headless OAuth 2.0 Server-to-Server client.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>LTI 1.3 readiness:</strong> incorporate LTI 1.3 and LTI Asset Processor standards from the March 2026 release notes for anonymous marking and tool-readiness workflows.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Attributes/groups freeze:</strong> finalize User Attributes and Learning Groups before relying on enrollment automation or manager reporting.</span></li>
+    </ul>
+  </section>
+
+  <section class="guide-section" id="technical-development">
+    <h2>Technical Development</h2>
+
+    <h3>API Connection &amp; Data Mapping</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Use Course Offering Org Unit ID <code>6703</code> for Eviction Defense metadata sync testing.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Map title, description, start date, and end date into the Supabase <code>learning_items</code> table.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Confirm the LMS API version needed to view all Course Offerings from the Wednesday Brightspace session requirements.</span></li>
+    </ul>
+
+    <h3>Supabase Development</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Wire the production catalog sync route to populate <code>learning_items</code>.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Use <code>learning_items</code> terminology in docs and code instead of generic catalog-cache wording.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Keep admin diagnostics minimal and focused on the live data pipe.</span></li>
+    </ul>
+
+    <h3>Health Diagnostics &amp; Endpoint Paths</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Harden <code>GET /api/health/brightspace/whoami</code> for production identity confirmation.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Harden <code>GET /api/health/brightspace/course?orgUnitId=6703</code> for course data validation.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Finalize <code>/api/me/dashboard</code> with learner identity, role permissions, enrollment status, completion %, and Brightspace resume links.</span></li>
+    </ul>
+
+    <h3>OAuth Configuration</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Register the production OAuth 2.0 app in Manage Extensibility.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Verify required <code>core:*:*</code> scopes for the approved API routes.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Store short-lived tokens in secure, HTTP-only cookies.</span></li>
+    </ul>
+  </section>
+
+  <section class="guide-section" id="policy-governance">
+    <h2>Policy &amp; Governance</h2>
+
+    <h3>Access and Audience Routing</h3>
+    <ul>
+      <li><strong>LegalServer logic:</strong> use Zip Code and Legal Problem Code fields from the Coordinated Intake Handbook to support audience routing for lawyers, advocates, and paralegals.</li>
+      <li><strong>UPL guardrails:</strong> apply the User Types &amp; Access Matrix before opening content to non-lawyer audiences.</li>
+    </ul>
+
+    <h3>Accessibility Policy</h3>
+    <ul>
+      <li>Finalize the accessibility draft with axe DevTools checks for color contrast and alt text.</li>
+      <li>Enforce the Brightspace default Lato font at 19px for custom HTML course content.</li>
+    </ul>
+
+    <h3>March 2026 Terminology Alignment</h3>
+    <ul>
+      <li>Update internal SOPs for the renamed <strong>View Archive</strong> button and <strong>Archived Org Units</strong> page title.</li>
+      <li>Use <strong>Archive</strong> instead of <strong>Delete</strong> for course/offering/template operations.</li>
+      <li>Use <strong>Export</strong> instead of <strong>Archive</strong> for Data Purge actions, including references formerly named <code>d2l.Tools.DataPurge.ArchiveLocation</code>.</li>
+    </ul>
+  </section>
+
+  <section class="guide-section" id="content-id">
+    <h2>Content &amp; Instructional Design</h2>
+
+    <h3>Course Wrapper Deployment</h3>
+    <ol class="steps">
+      <li>Deploy the HTML wrapper template to Demo Course <code>6698</code>.</li>
+      <li>Apply <code>d2l_body_type=3</code> to course URLs so custom LACE navigation sits over Brightspace clean view.</li>
+      <li>Update <code>course-config.js</code> for LMS production deploy mode.</li>
+    </ol>
+
+    <h3>Instructional Design SOP</h3>
+    <ul>
+      <li><strong>No sub-modules:</strong> use Brightspace document templates, accordions, and tabs instead. Sub-modules make navigation cumbersome.</li>
+      <li><strong>Schedule alignment:</strong> top-level modules should match the course schedule exactly.</li>
+    </ul>
+
+    <h3>Completion Criteria</h3>
+    <p>A video visit is not enough for completion. Required completion should include at least one verification action: check-in, quiz, reflection, or manual mark-complete.</p>
+
+    <h3>HTML Template Management: Version 3.0</h3>
+    <p>Update <code>_assets/css/custom.css</code> so Brightspace Media Library videos display correctly inside wrappers.</p>
+    <pre><code>.video-wrapper iframe[src*="/d2l/wcs/mp/mediaplayer.d2l"] {
+  position: relative;
+  min-width: 100%;
+  margin: auto;
+  display: block;
+}
+
+.video-wrapper iframe[src*="/d2l/wcs/mp/mediaplayer.d2l"]:not([style]) {
+  max-width: 100%;
+  min-height: 340px;
+}
+
+.embed-responsive:has(iframe[src*="/d2l/wcs/mp/mediaplayer.d2l"])::before {
+  display: none;
+}</code></pre>
+  </section>
+
+  <section class="guide-section" id="open-decisions">
+    <h2>Operational Open Decisions</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Decision Item</th><th>Core Question</th><th>Project Impact</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>User Attributes &amp; Groups</strong></td><td>Which attributes are automated via SIS/LegalServer vs. manual?</td><td>Prerequisite for June automation and reporting.</td></tr>
+          <tr><td><strong>Custom Login Branding</strong></td><td>How instructional should the custom HTML login page be?</td><td>First learner-facing touchpoint; affects UX.</td></tr>
+          <tr><td><strong>Cohort Management</strong></td><td>Use Sections or separate Offerings for regional cohorts?</td><td>High impact on enrollment and admin overhead.</td></tr>
+          <tr><td><strong>Catalog Discovery</strong></td><td>Route via LACE Hub, Brightspace Discover, or both?</td><td>Controls discovery path and sync complexity.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="guide-section" id="intelligent-agents">
+    <h2>Intelligent Agent Recipes</h2>
+
+    <h3>Engagement Triggers</h3>
+    <ul>
+      <li><strong>Login activity:</strong> monitor users who have or have not logged in within a specific window.</li>
+      <li><strong>Course activity:</strong> use Pulse and web activity triggers. Pulse engagement now logs immediately, so both app and browser access can be monitored.</li>
+    </ul>
+
+    <h3>Replacement Strings</h3>
+    <p>Some strings translate based on organization/course locale settings, including English, Spanish, Hmong, Somali, and Karen.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Replacement String</th><th>Description</th><th>Usage Location</th><th>Translated?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>{InitiatingUserFirstName}</code></td><td>First name of the learner</td><td>Email body</td><td>No</td></tr>
+          <tr><td><code>{OrgUnitName}</code></td><td>Name of the Course Offering</td><td>Email body</td><td>No</td></tr>
+          <tr><td><code>{OrgUnitId}</code></td><td>Required for functional quicklinks</td><td>Subject/body</td><td>No</td></tr>
+          <tr><td><code>{LastCourseAccessDate}</code></td><td>Last date learner accessed course</td><td>Subject/body</td><td>Yes</td></tr>
+          <tr><td><code>{LoginPath}</code></td><td>Address for the site login</td><td>Email body</td><td>No</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="guide-section" id="task-summary">
+    <h2>Task Summary</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>June Tasks</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Technical</strong></td><td>Production OAuth app, Course 6703 metadata sync, <code>/api/me/dashboard</code>, HTML v3.0 video CSS.</td></tr>
+          <tr><td><strong>Policy &amp; Governance</strong></td><td>Vanity URL, LegalServer-based audience routing, archive/export terminology, attributes/groups freeze.</td></tr>
+          <tr><td><strong>Content &amp; ID</strong></td><td>Wrapper deployment to Demo Course 6698, no sub-modules SOP, completion criteria, Intelligent Agent recipes.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  (function () {
+    const links = document.querySelectorAll('#sidebar nav a[href^="#"]:not(.external)');
+    const sections = Array.from(links).map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+
+    function setActive() {
+      let current = sections[0];
+      sections.forEach(section => {
+        if (section.getBoundingClientRect().top <= 140) {
+          current = section;
+        }
+      });
+
+      links.forEach(link => {
+        link.classList.toggle('active', current && link.getAttribute('href') === '#' + current.id);
+      });
+    }
+
+    setActive();
+    window.addEventListener('scroll', setActive, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

@@ -752,7 +752,7 @@
 <div class="header">
   <div class="header-tag">System Architecture · LACE Learning Hub</div>
   <h1>What We're <span>Building</span></h1>
-  <p>The wrapper is built, Supabase is connected, and Brightspace OAuth is working. The current proof point shows one Brightspace course flowing into the Learning Hub and Supabase.</p>
+  <p>The wrapper is built, Supabase is connected, and Brightspace OAuth is working. June hardening turns the local spike into a production path: Course 6703 metadata sync, production OAuth registration, dashboard routes, and routing policy.</p>
 </div>
 
 <div class="legend">
@@ -787,12 +787,12 @@
     <div class="proof-step">
       <div class="proof-status">Working</div>
       <strong>Brightspace OAuth</strong>
-      <span>OAuth consent completes and <code>whoami</code> returns the authorized user.</span>
+      <span>OAuth consent completes and <code>whoami</code> returns the authorized user; production auth model still needs final D2L confirmation.</span>
     </div>
     <div class="proof-step proof-next">
       <div class="proof-status">Working</div>
       <strong>Course metadata</strong>
-      <span>Course <code>6703</code> syncs into Supabase as Eviction Defense: The First 48 Hours.</span>
+      <span>Course <code>6703</code> is the June validation target for metadata sync into <code>learning_items</code>.</span>
     </div>
   </div>
 </div>
@@ -829,7 +829,7 @@
     </div>
   </div>
   <div class="simple-flow-note">
-    Current proof: OAuth works, Brightspace course/content reads work, and the course <strong>Eviction Defense: The First 48 Hours</strong> has been synced into Supabase.
+    Current proof: OAuth works and Brightspace course/content reads work. June validation focuses on syncing Course <code>6703</code> metadata into <code>learning_items</code> with production-ready terminology and route hardening.
   </div>
 </div>
 
@@ -885,14 +885,14 @@
         <div class="card card-teal">
           <div class="card-icon">🔌</div>
           <div class="card-title">Brightspace API Auth</div>
-          <div class="card-desc">OAuth connection works locally; whoami endpoint confirmed</div>
-          <div class="card-tags"><span class="tag">OAuth 2.0</span><span class="tag">Working</span></div>
+          <div class="card-desc">OAuth connection works locally; production app, scopes, and sync auth model need hardening</div>
+          <div class="card-tags"><span class="tag">OAuth 2.0</span><span class="tag">June</span></div>
         </div>
         <div class="card card-teal">
           <div class="card-icon">📊</div>
           <div class="card-title">Pull Core Data</div>
-          <div class="card-desc">Start with course metadata; defer learner records until permissions are clear</div>
-          <div class="card-tags"><span class="tag">Catalog</span><span class="tag">Read-only</span></div>
+          <div class="card-desc">Validate Course 6703 metadata and confirm LMS API version for Course Offerings</div>
+          <div class="card-tags"><span class="tag">6703</span><span class="tag">learning_items</span></div>
         </div>
         <div class="card card-teal">
           <div class="card-icon">🖥️</div>
@@ -903,8 +903,8 @@
         <div class="card card-teal">
           <div class="card-icon">🔑</div>
           <div class="card-title">SSO / Auth</div>
-          <div class="card-desc">OAuth works for the spike; production login model still needs Brightspace guidance</div>
-          <div class="card-tags"><span class="tag">SSO</span><span class="tag">Decision</span></div>
+          <div class="card-desc">Confirm 3-legged OAuth vs. headless Server-to-Server for production data harvesting</div>
+          <div class="card-tags"><span class="tag">SSO</span><span class="tag">D2L decision</span></div>
         </div>
       </div>
     </div>
@@ -923,7 +923,7 @@
         <div class="card card-blue">
           <div class="card-icon">🗄️</div>
           <div class="card-title">Supabase Backend</div>
-          <div class="card-desc">Project and learning_items table are live; first sync route is next</div>
+          <div class="card-desc">Project and learning_items table are live; production catalog sync route is next</div>
           <div class="card-tags"><span class="tag">Supabase</span><span class="tag">Connected</span></div>
         </div>
         <div class="card card-blue">
@@ -1025,7 +1025,7 @@
     <div class="flow-card-label">Your Own Data (Supabase)</div>
     <h3>What you capture</h3>
     <ul>
-      <li>Catalog cache in learning_items</li>
+      <li>Catalog records in learning_items</li>
       <li>Search queries + results</li>
       <li>Click paths & navigation</li>
       <li>Content ratings / flags</li>
