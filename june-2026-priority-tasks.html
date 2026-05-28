@@ -61,7 +61,7 @@
           <tr><th>Priority</th><th>June Focus</th><th>Why It Matters</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Production hardening</strong></td><td>Auth model, OAuth registration, API versions, route checks.</td><td>Moves the Hub from local spike to reliable production integration.</td></tr>
+          <tr><td><strong>Production hardening</strong></td><td>Service User setup, OAuth registration, JWKS URL, API versions, route checks.</td><td>Moves the Hub from local spike to reliable production integration without depending on a personal admin account.</td></tr>
           <tr><td><strong>Routing policy</strong></td><td>User Attributes, Learning Groups, LegalServer Zip Code and Legal Problem Code logic.</td><td>Creates the automation foundation for enrollment, reporting, and UPL guardrails.</td></tr>
           <tr><td><strong>Accessible content</strong></td><td>Wrapper deployment, completion criteria, axe DevTools checks, Lato 19px standard.</td><td>Keeps custom HTML usable, compliant, and trackable.</td></tr>
         </tbody>
@@ -75,6 +75,7 @@
     <ul class="task-list">
       <li><input type="checkbox" disabled><span class="label"><strong>Vanity URL / custom domain:</strong> finalize domain and ownership by June 15-19, 2026.</span></li>
       <li><input type="checkbox" disabled><span class="label"><strong>Production login model:</strong> confirm whether production data harvesting uses 3-legged OAuth in admin context or a headless OAuth 2.0 Server-to-Server client.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Service User:</strong> create the non-human Brightspace account, assign a least-privilege role, and enroll it in the Org Units needed for catalog sync before coding against the production flow.</span></li>
       <li><input type="checkbox" disabled><span class="label"><strong>LTI 1.3 readiness:</strong> incorporate LTI 1.3 and LTI Asset Processor standards from the March 2026 release notes for anonymous marking and tool-readiness workflows.</span></li>
       <li><input type="checkbox" disabled><span class="label"><strong>Attributes/groups freeze:</strong> finalize User Attributes and Learning Groups before relying on enrollment automation or manager reporting.</span></li>
     </ul>
@@ -106,9 +107,32 @@
 
     <h3>OAuth Configuration</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">Register the production OAuth 2.0 app in Manage Extensibility.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Create a dedicated Brightspace Service User; do not use a personal admin account for integration sync.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Create a least-privilege role such as <code>Hub Sync Service</code> with read access to course content and user identity; add Brightspace Data Sets access only if bulk reporting is needed later.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Enroll the Service User in the Org Units it needs to see for catalog sync.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Register the production OAuth 2.0 app in Manage Extensibility using Client Credentials if available.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Associate the registered app with the Service User.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Host an HTTPS JWKS URL for the public signing keys Brightspace uses to verify JWT client assertions.</span></li>
       <li><input type="checkbox" disabled><span class="label">Verify required <code>core:*:*</code> scopes for the approved API routes.</span></li>
       <li><input type="checkbox" disabled><span class="label">Store short-lived tokens in secure, HTTP-only cookies.</span></li>
+    </ul>
+
+    <h3>Server-to-Server Implementation</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Implement JWT client assertions with <code>alg</code>, <code>aud</code>, and <code>kid</code> in the header.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Include <code>iss</code>, <code>sub</code>, <code>iat</code>, <code>exp</code>, and one-time <code>jti</code> values in the JWT payload.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Keep assertion expiration short, ideally 60 seconds or less.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Request access tokens from <code>https://auth.brightspace.com/core/connect/token</code> with <code>grant_type=client_credentials</code>.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Use <code>Authorization: Bearer {token}</code> for API requests, over HTTPS only.</span></li>
+    </ul>
+
+    <h3>Security Checklist</h3>
+    <ul>
+      <li>Never store private keys or Client IDs in public repositories.</li>
+      <li>Use Next.js/Supabase environment variables for secrets.</li>
+      <li>Do not use refresh tokens with Client Credentials; request fresh access tokens with each valid assertion.</li>
+      <li>Rotate JWKS keys periodically.</li>
+      <li>Confirm the sync job points at the correct LMS API versions, such as LP <code>1.47</code> or later where required.</li>
     </ul>
   </section>
 
@@ -227,7 +251,7 @@
           <tr><th>Category</th><th>June Tasks</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Technical</strong></td><td>Production OAuth app, Course 6703 metadata sync, <code>/api/me/dashboard</code>, HTML v3.0 video CSS.</td></tr>
+          <tr><td><strong>Technical</strong></td><td>Service User setup, production OAuth/JWKS flow, Course 6703 metadata sync, <code>/api/me/dashboard</code>, HTML v3.0 video CSS.</td></tr>
           <tr><td><strong>Policy &amp; Governance</strong></td><td>Vanity URL, LegalServer-based audience routing, archive/export terminology, attributes/groups freeze.</td></tr>
           <tr><td><strong>Content &amp; ID</strong></td><td>Wrapper deployment to Demo Course 6698, no sub-modules SOP, completion criteria, Intelligent Agent recipes.</td></tr>
         </tbody>

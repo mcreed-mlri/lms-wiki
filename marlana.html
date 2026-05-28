@@ -61,7 +61,7 @@
     </div>
 
     <div class="note">
-      <strong>June execution checklist:</strong> see <a href="june-2026-priority-tasks.html">LACE Learning Hub: June 2026 Priority Tasks</a> for the production-hardening roadmap, including Course 6703 metadata sync, OAuth/LTI decisions, attributes/groups freeze, accessibility, and completion criteria.
+      <strong>June execution checklist:</strong> see <a href="june-2026-priority-tasks.html">LACE Learning Hub: June 2026 Priority Tasks</a> for the production-hardening roadmap, including Service User setup, Course 6703 metadata sync, OAuth/JWKS decisions, attributes/groups freeze, accessibility, and completion criteria.
     </div>
 
     <div class="table-wrap">
@@ -85,7 +85,7 @@
           <tr>
             <td><strong>Brightspace API</strong></td>
             <td>OAuth 2.0 app is registered; Learning Hub can complete OAuth and call Brightspace <code>whoami</code>.</td>
-            <td>Use Course Offering <code>6703</code> to validate metadata sync into <code>learning_items</code>, then confirm production auth model.</td>
+            <td>Create the Service User path, then use Course Offering <code>6703</code> to validate metadata sync into <code>learning_items</code>.</td>
             <td><span class="status in-progress">In Progress</span></td>
           </tr>
           <tr>
@@ -132,7 +132,7 @@
             <td><strong>Phase 1: API</strong></td>
             <td>Connect Brightspace to the custom frontend.</td>
             <td>Supabase health route, Brightspace OAuth, <code>whoami</code>, and admin integration status are working locally.</td>
-            <td>Course <code>6703</code> is the metadata test target; harden production auth, API version, scopes, and sync route.</td>
+            <td>Create the Brightspace Service User, least-privilege role, OAuth Client Credentials registration, JWKS URL, scopes, API version, and sync route.</td>
           </tr>
         </tbody>
       </table>
@@ -318,7 +318,7 @@
     <h2>Phase 1: Connect to Brightspace <span class="status in-progress">In Progress</span></h2>
 
     <div class="tip">
-      <strong>Phase 1 auth model:</strong> confirm production data-harvesting auth with Brightspace. Recommended direction is OAuth 2.0 Server-to-Server for background catalog sync, but June hardening must verify whether Brightspace expects that or 3-legged OAuth in admin context.
+      <strong>Phase 1 auth model:</strong> build toward a non-human Service User for background catalog sync. Brightspace admin setup comes first: Service User, least-privilege role, Org Unit enrollment, OAuth Client Credentials registration, JWKS URL, and scopes.
     </div>
 
     <div class="table-wrap">
@@ -327,7 +327,7 @@
           <tr><th>Work</th><th>Done When</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>OAuth / API auth</strong></td><td><span class="status in-progress">Hardening</span> Register production OAuth app, verify required <code>core:*:*</code> scopes, and confirm 3-legged OAuth vs. headless Server-to-Server for catalog sync.</td></tr>
+          <tr><td><strong>OAuth / API auth</strong></td><td><span class="status in-progress">Hardening</span> Create Service User, assign least-privilege role, enroll required Org Units, register Client Credentials app, host JWKS URL, and verify the minimum required scopes.</td></tr>
           <tr><td><strong>Core data pull</strong></td><td><span class="status in-progress">Partial</span> <code>whoami</code> works; course metadata route should validate Course Offering <code>6703</code>.</td></tr>
           <tr><td><strong>Supabase catalog proof</strong></td><td><span class="status done">Working locally</span> <code>learning_items</code> table is readable through the Learning Hub API and rendered on the admin page.</td></tr>
           <tr><td><strong>Learner dashboard</strong></td><td><code>/api/me/dashboard</code> powers learner home with progress and resume links.</td></tr>
@@ -346,6 +346,16 @@
       <li><code>GET /api/health/brightspace/course?orgUnitId=6703</code> validates Eviction Defense course metadata.</li>
       <li><code>GET /api/me/dashboard</code> should return learner identity, role permissions, enrollment status, completion %, and Brightspace resume links.</li>
     </ul>
+
+    <h3>Service User Production Path</h3>
+    <ol class="steps">
+      <li>Create the non-human Brightspace Service User. Do not bind production sync to a personal admin account.</li>
+      <li>Create a least-privilege role such as <code>Hub Sync Service</code> with read-only metadata permissions.</li>
+      <li>Enroll the Service User in the Org Units it needs for catalog sync.</li>
+      <li>Register the production OAuth app in Manage Extensibility using Client Credentials if available.</li>
+      <li>Associate the app with the Service User and publish an HTTPS JWKS URL for JWT assertion verification.</li>
+      <li>Implement the Next.js token request with short-lived JWT client assertions and <code>grant_type=client_credentials</code>.</li>
+    </ol>
 
     <h3>Brightspace Meeting Notes</h3>
     <ul>
@@ -446,8 +456,8 @@
           <tr id="phase-1-auth-model">
             <td><strong>Phase 1 auth model</strong></td>
             <td>What identity should background Brightspace catalog sync use?</td>
-            <td>Recommended direction is OAuth 2.0 Server-to-Server, but June hardening must confirm whether production should use that headless client or 3-legged OAuth in admin context.</td>
-            <td><span class="status in-progress">Confirm with D2L</span></td>
+            <td>Use a dedicated Service User with a least-privilege role and Client Credentials registration if supported, so sync is not tied to a personal admin password or refresh token.</td>
+            <td><span class="status in-progress">Configure this week</span></td>
           </tr>
           <tr id="custom-login">
             <td><strong>Custom HTML login page</strong></td>
