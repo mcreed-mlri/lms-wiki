@@ -53,6 +53,35 @@
     position: relative;
   }
 
+  /* BACK LINK */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-bright);
+    text-decoration: none;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .back-link:hover,
+  .back-link:focus-visible {
+    background: var(--surface-hover);
+    border-color: rgba(45,212,191,0.35);
+    color: var(--teal-light);
+    transform: translateX(-2px);
+    outline: none;
+  }
+  .back-link .arrow { transition: transform 0.2s; }
+  .back-link:hover .arrow { transform: translateX(-2px); }
+
   /* HEADER */
   .header {
     text-align: center;
@@ -759,6 +788,8 @@
 <body>
 
 <div class="page-wrap">
+
+<a href="index.html" class="back-link"><span class="arrow" aria-hidden="true">&larr;</span> Team Wiki</a>
 
 <div class="header">
   <div class="header-tag">System Architecture · LACE Learning Hub</div>
