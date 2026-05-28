@@ -1,6 +1,12 @@
 (function () {
   'use strict';
 
+  if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function () { /* ignore */ });
+    });
+  }
+
   var STORAGE_KEY = 'lace-wiki-sidebar-collapsed';
 
   try {

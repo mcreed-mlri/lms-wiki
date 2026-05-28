@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Full-bleed background; launcher applies its own mask shape -->
+  <rect width="512" height="512" fill="#1E3A5F"/>
+  <!-- Artwork stays inside the inner 80% safe zone -->
+  <rect x="106" y="334" width="300" height="58" rx="8" fill="#FFFFFF"/>
+  <rect x="106" y="334" width="18" height="58" fill="#2C6FAC"/>
+  <line x1="140" y1="363" x2="392" y2="363" stroke="#D0D7E2" stroke-width="2"/>
+  <rect x="126" y="254" width="260" height="58" rx="8" fill="#FFFFFF"/>
+  <rect x="368" y="254" width="18" height="58" fill="#2A8F82"/>
+  <line x1="140" y1="283" x2="360" y2="283" stroke="#D0D7E2" stroke-width="2"/>
+  <g transform="rotate(-6 256 215)">
+    <rect x="152" y="176" width="208" height="58" rx="8" fill="#FFFFFF"/>
+    <rect x="152" y="176" width="18" height="58" fill="#B06A00"/>
+    <line x1="180" y1="205" x2="352" y2="205" stroke="#D0D7E2" stroke-width="2"/>
+    <rect x="314" y="176" width="12" height="46" fill="#9B2335"/>
+  </g>
+</svg>

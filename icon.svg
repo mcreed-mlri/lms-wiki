@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#1E3A5F"/>
+  <!-- Bottom book -->
+  <rect x="96" y="334" width="320" height="58" rx="8" fill="#FFFFFF"/>
+  <rect x="96" y="334" width="18" height="58" fill="#2C6FAC"/>
+  <line x1="130" y1="363" x2="402" y2="363" stroke="#D0D7E2" stroke-width="2"/>
+  <!-- Middle book -->
+  <rect x="118" y="254" width="276" height="58" rx="8" fill="#FFFFFF"/>
+  <rect x="376" y="254" width="18" height="58" fill="#2A8F82"/>
+  <line x1="132" y1="283" x2="368" y2="283" stroke="#D0D7E2" stroke-width="2"/>
+  <!-- Top book, slightly tilted -->
+  <g transform="rotate(-6 256 215)">
+    <rect x="148" y="176" width="216" height="58" rx="8" fill="#FFFFFF"/>
+    <rect x="148" y="176" width="18" height="58" fill="#B06A00"/>
+    <line x1="178" y1="205" x2="356" y2="205" stroke="#D0D7E2" stroke-width="2"/>
+    <!-- Bookmark -->
+    <rect x="318" y="176" width="12" height="46" fill="#9B2335"/>
+  </g>
+</svg>
