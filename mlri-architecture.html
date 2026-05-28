@@ -829,7 +829,7 @@
     <div class="proof-step">
       <div class="proof-status">Working</div>
       <strong>Brightspace OAuth</strong>
-      <span>OAuth consent completes and <code>whoami</code> returns the authorized user; production auth model still needs final D2L confirmation.</span>
+      <span>OAuth consent completes and <code>whoami</code> returns the authorized user; production sync should move to a Service User/headless OAuth path.</span>
     </div>
     <div class="proof-step proof-next">
       <div class="proof-status">Working</div>
@@ -927,7 +927,7 @@
         <div class="card card-teal">
           <div class="card-icon">🔌</div>
           <div class="card-title">Brightspace API Auth</div>
-          <div class="card-desc">OAuth connection works locally; production app, scopes, and sync auth model need hardening</div>
+          <div class="card-desc">3-legged OAuth works locally; production sync hardens around Service User/headless OAuth</div>
           <div class="card-tags"><span class="tag">OAuth 2.0</span><span class="tag">June</span></div>
         </div>
         <div class="card card-teal">
@@ -945,8 +945,8 @@
         <div class="card card-teal">
           <div class="card-icon">🔑</div>
           <div class="card-title">SSO / Auth</div>
-          <div class="card-desc">Confirm 3-legged OAuth vs. headless Server-to-Server for production data harvesting</div>
-          <div class="card-tags"><span class="tag">SSO</span><span class="tag">D2L decision</span></div>
+          <div class="card-desc">Use 3-legged OAuth for user context and Service User/headless OAuth for data harvesting</div>
+          <div class="card-tags"><span class="tag">SSO</span><span class="tag">Service User</span></div>
         </div>
       </div>
     </div>
@@ -1115,8 +1115,8 @@
       <div class="flow-card-label">Decision</div>
       <h3>Production auth model</h3>
       <ul>
-        <li>3-legged OAuth for admin sync?</li>
-        <li>Server-to-server option?</li>
+        <li>Service User role and Org Unit enrollment</li>
+        <li>Headless/server-to-server OAuth app + JWKS URL</li>
         <li>What not to pull in v1?</li>
       </ul>
     </div>

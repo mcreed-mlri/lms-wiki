@@ -63,7 +63,7 @@
     </div>
 
     <div class="tip">
-      <strong>June roadmap:</strong> use <a href="june-2026-priority-tasks.html">LACE Learning Hub: June 2026 Priority Tasks</a> for the current production-hardening checklist, including Course 6703 sync, OAuth setup, routing policy, accessibility, and Intelligent Agent recipes.
+      <strong>June roadmap:</strong> use <a href="june-2026-priority-tasks.html">LACE Learning Hub: June 2026 Priority Tasks</a> for the current production-hardening checklist, including Course 6703 sync, Service User auth, LTI 1.3 readiness, routing policy, accessibility, and Intelligent Agent recipes.
     </div>
 
     <div class="table-wrap">
@@ -441,6 +441,7 @@
       <li><strong>Plan attributes before automation.</strong> User Attributes can drive Learning Groups, enrollments, due dates, and reporting.</li>
       <li><strong>Confirm automation source.</strong> Decide which User Attributes come from SIS/LegalServer and which stay manual before freezing Learning Groups.</li>
       <li><strong>Use Learning Groups deliberately.</strong> Decide which groups are automatic and which require manual control.</li>
+      <li><strong>Separate auth patterns.</strong> Use logged-in OAuth for user-context work; use a Service User/headless OAuth path for administrative sync and data harvesting.</li>
       <li><strong>Use Manager access only where reporting is needed.</strong> A learner cannot have two direct managers, though higher-level manager relationships are possible.</li>
       <li><strong>Enroll learners in Course Offerings.</strong> Do not enroll them in templates.</li>
       <li><strong>Archive, do not delete.</strong> Deleting can remove completion history or break reporting assumptions.</li>
@@ -517,7 +518,10 @@
           <tr id="glossary-vanity-url"><td><strong>Vanity URL</strong></td><td>Custom learner-facing Brightspace web address.</td></tr>
           <tr id="glossary-community-of-practice"><td><strong>Community of Practice</strong></td><td>Shared space with role-based access; under review for audience routing.</td></tr>
           <tr id="glossary-intelligent-agents"><td><strong>Intelligent Agents</strong></td><td>Brightspace automation for emails and learner activity triggers.</td></tr>
-          <tr id="glossary-lti-13"><td><strong>LTI 1.3</strong></td><td>Learning Tools Interoperability standard to review for tool-readiness workflows, LTI Asset Processor support, and anonymous marking needs.</td></tr>
+          <tr id="glossary-lti-13"><td><strong>LTI 1.3</strong></td><td>Learning Tools Interoperability standard for third-party tool integrations, including anonymous marking workflows and proactive tool readiness via Context Copy Notice.</td></tr>
+          <tr id="glossary-lti-asset-processor"><td><strong>LTI Asset Processor</strong></td><td>LTI service extension used for workflows such as sharing anonymous assignment status with supported third-party tools.</td></tr>
+          <tr id="glossary-context-copy-notice"><td><strong>Context Copy Notice</strong></td><td>LTI 1.3 readiness signal that lets tools discover service endpoints before first launch in copied or destination courses.</td></tr>
+          <tr id="glossary-service-user"><td><strong>Service User</strong></td><td>Dedicated non-human Brightspace account for headless/server-to-server integration work such as catalog sync or administrative data harvesting.</td></tr>
           <tr id="glossary-user-attributes"><td><strong>User Attributes</strong></td><td>Brightspace profile metadata that can support Learning Groups, automation, access, and reports; current planning limit is 10 attributes.</td></tr>
           <tr id="glossary-learning-groups"><td><strong>Learning Groups</strong></td><td>Brightspace groups that can be managed manually or automatically from User Attributes, with possible due dates and reporting implications.</td></tr>
           <tr id="glossary-manager-dashboard"><td><strong>Manager Dashboard</strong></td><td>Optional Brightspace reporting view for users with manager access.</td></tr>

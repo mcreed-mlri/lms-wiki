@@ -61,7 +61,7 @@
     </div>
 
     <div class="note">
-      <strong>June execution checklist:</strong> see <a href="june-2026-priority-tasks.html">LACE Learning Hub: June 2026 Priority Tasks</a> for the production-hardening roadmap, including Service User setup, Course 6703 metadata sync, OAuth/JWKS decisions, attributes/groups freeze, accessibility, and completion criteria.
+      <strong>June execution checklist:</strong> see <a href="june-2026-priority-tasks.html">LACE Learning Hub: June 2026 Priority Tasks</a> for the production-hardening roadmap, including Service User setup, Course 6703 metadata sync, OAuth/JWKS implementation, LTI 1.3 readiness, attributes/groups freeze, accessibility, and completion criteria.
     </div>
 
     <div class="table-wrap">
@@ -318,7 +318,7 @@
     <h2>Phase 1: Connect to Brightspace <span class="status in-progress">In Progress</span></h2>
 
     <div class="tip">
-      <strong>Phase 1 auth model:</strong> build toward a non-human Service User for background catalog sync. Brightspace admin setup comes first: Service User, least-privilege role, Org Unit enrollment, OAuth Client Credentials registration, JWKS URL, and scopes.
+      <strong>Phase 1 auth model:</strong> use 3-legged OAuth for logged-in user context and a non-human Service User / headless OAuth path for administrative data harvesting and background catalog sync. Brightspace admin setup comes first: Service User, least-privilege role, Org Unit enrollment, OAuth registration, JWKS URL, and scopes.
     </div>
 
     <div class="table-wrap">
@@ -327,7 +327,7 @@
           <tr><th>Work</th><th>Done When</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>OAuth / API auth</strong></td><td><span class="status in-progress">Hardening</span> Create Service User, assign least-privilege role, enroll required Org Units, register Client Credentials app, host JWKS URL, and verify the minimum required scopes.</td></tr>
+          <tr><td><strong>OAuth / API auth</strong></td><td><span class="status in-progress">Hardening</span> Create Service User, assign least-privilege role, enroll required Org Units, register headless/server-to-server app, host JWKS URL, and verify the minimum required scopes.</td></tr>
           <tr><td><strong>Core data pull</strong></td><td><span class="status in-progress">Partial</span> <code>whoami</code> works; course metadata route should validate Course Offering <code>6703</code>.</td></tr>
           <tr><td><strong>Supabase catalog proof</strong></td><td><span class="status done">Working locally</span> <code>learning_items</code> table is readable through the Learning Hub API and rendered on the admin page.</td></tr>
           <tr><td><strong>Learner dashboard</strong></td><td><code>/api/me/dashboard</code> powers learner home with progress and resume links.</td></tr>
@@ -362,6 +362,9 @@
       <li><strong>Vanity URL / custom domain:</strong> hard deadline week of June 15-19, 2026.</li>
       <li><strong>API version verification:</strong> confirm the LMS API version required to view all Course Offerings.</li>
       <li><strong>LTI 1.3 readiness:</strong> review LTI Asset Processor and LTI 1.3 standards for anonymous marking and tool-readiness workflows.</li>
+      <li><strong>Anonymous marking:</strong> Brightspace can share anonymous assignment status with LTI tools through the LTI Asset Processor; confirm <code>d2l.Tools.System.Features.AnonymousMarking</code> before depending on it.</li>
+      <li><strong>Context Copy Notice:</strong> LTI tools can receive service endpoints before first launch in copied/destination courses, which helps tool-readiness workflows.</li>
+      <li><strong>New reporting data sets:</strong> Brightspace Email Log BDS and Intelligent Agent Objects BDS may support future email and automation audit reporting.</li>
       <li><strong>Custom HTML login page:</strong> Brightspace supports upload/setup; build a sample before the next meeting.</li>
       <li><strong>Intelligent Agents:</strong> useful for email reminders and learner activity triggers.</li>
       <li><strong>Community of Practice:</strong> possible mechanism for role-specific access in one shared space.</li>
@@ -456,8 +459,8 @@
           <tr id="phase-1-auth-model">
             <td><strong>Phase 1 auth model</strong></td>
             <td>What identity should background Brightspace catalog sync use?</td>
-            <td>Use a dedicated Service User with a least-privilege role and Client Credentials registration if supported, so sync is not tied to a personal admin password or refresh token.</td>
-            <td><span class="status in-progress">Configure this week</span></td>
+            <td>Use a dedicated Service User with a least-privilege role and headless/server-to-server OAuth for administrative data harvesting; keep 3-legged OAuth for logged-in user-context calls.</td>
+            <td><span class="status in-progress">Pattern clarified</span></td>
           </tr>
           <tr id="custom-login">
             <td><strong>Custom HTML login page</strong></td>

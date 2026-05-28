@@ -61,7 +61,7 @@
           <tr><th>Priority</th><th>June Focus</th><th>Why It Matters</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Production hardening</strong></td><td>Service User setup, OAuth registration, JWKS URL, API versions, route checks.</td><td>Moves the Hub from local spike to reliable production integration without depending on a personal admin account.</td></tr>
+          <tr><td><strong>Production hardening</strong></td><td>Service User setup, headless OAuth registration, JWKS URL, API versions, route checks.</td><td>Moves the Hub from local spike to reliable production integration without depending on a personal admin account.</td></tr>
           <tr><td><strong>Routing policy</strong></td><td>User Attributes, Learning Groups, LegalServer Zip Code and Legal Problem Code logic.</td><td>Creates the automation foundation for enrollment, reporting, and UPL guardrails.</td></tr>
           <tr><td><strong>Accessible content</strong></td><td>Wrapper deployment, completion criteria, axe DevTools checks, Lato 19px standard.</td><td>Keeps custom HTML usable, compliant, and trackable.</td></tr>
         </tbody>
@@ -74,9 +74,9 @@
 
     <ul class="task-list">
       <li><input type="checkbox" disabled><span class="label"><strong>Vanity URL / custom domain:</strong> finalize domain and ownership by June 15-19, 2026.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Production login model:</strong> confirm whether production data harvesting uses 3-legged OAuth in admin context or a headless OAuth 2.0 Server-to-Server client.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Production login model:</strong> use 3-legged OAuth for user-context calls and headless/server-to-server OAuth with a Service User for administrative data harvesting and background sync.</span></li>
       <li><input type="checkbox" disabled><span class="label"><strong>Service User:</strong> create the non-human Brightspace account, assign a least-privilege role, and enroll it in the Org Units needed for catalog sync before coding against the production flow.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>LTI 1.3 readiness:</strong> incorporate LTI 1.3 and LTI Asset Processor standards from the March 2026 release notes for anonymous marking and tool-readiness workflows.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>LTI 1.3 readiness:</strong> incorporate LTI Asset Processor support, anonymous marking readiness, and Context Copy Notice workflows from the March 2026 release notes.</span></li>
       <li><input type="checkbox" disabled><span class="label"><strong>Attributes/groups freeze:</strong> finalize User Attributes and Learning Groups before relying on enrollment automation or manager reporting.</span></li>
     </ul>
   </section>
@@ -110,7 +110,7 @@
       <li><input type="checkbox" disabled><span class="label">Create a dedicated Brightspace Service User; do not use a personal admin account for integration sync.</span></li>
       <li><input type="checkbox" disabled><span class="label">Create a least-privilege role such as <code>Hub Sync Service</code> with read access to course content and user identity; add Brightspace Data Sets access only if bulk reporting is needed later.</span></li>
       <li><input type="checkbox" disabled><span class="label">Enroll the Service User in the Org Units it needs to see for catalog sync.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Register the production OAuth 2.0 app in Manage Extensibility using Client Credentials if available.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Register the production OAuth 2.0 app in Manage Extensibility using the headless/server-to-server pattern for data harvesting.</span></li>
       <li><input type="checkbox" disabled><span class="label">Associate the registered app with the Service User.</span></li>
       <li><input type="checkbox" disabled><span class="label">Host an HTTPS JWKS URL for the public signing keys Brightspace uses to verify JWT client assertions.</span></li>
       <li><input type="checkbox" disabled><span class="label">Verify required <code>core:*:*</code> scopes for the approved API routes.</span></li>
@@ -134,6 +134,14 @@
       <li>Rotate JWKS keys periodically.</li>
       <li>Confirm the sync job points at the correct LMS API versions, such as LP <code>1.47</code> or later where required.</li>
     </ul>
+
+    <h3>LTI 1.3 Readiness</h3>
+    <ul>
+      <li><strong>Anonymous marking:</strong> confirm <code>d2l.Tools.System.Features.AnonymousMarking</code> is enabled before relying on anonymous assignment evaluation workflows in third-party tools.</li>
+      <li><strong>LTI Asset Processor:</strong> track tool support for hiding student names when Brightspace shares the anonymous-marking status.</li>
+      <li><strong>Context Copy Notice:</strong> use this as a readiness signal for tools that need service endpoints before first launch in copied or newly created courses.</li>
+      <li><strong>Respondus transition:</strong> note the LTI 1.3 configuration variable <code>d2l.3rdParty.Respondus.LockdownLTI13LinkId</code> if Respondus becomes part of assessment workflows.</li>
+    </ul>
   </section>
 
   <section class="guide-section" id="policy-governance">
@@ -156,6 +164,12 @@
       <li>Update internal SOPs for the renamed <strong>View Archive</strong> button and <strong>Archived Org Units</strong> page title.</li>
       <li>Use <strong>Archive</strong> instead of <strong>Delete</strong> for course/offering/template operations.</li>
       <li>Use <strong>Export</strong> instead of <strong>Archive</strong> for Data Purge actions, including references formerly named <code>d2l.Tools.DataPurge.ArchiveLocation</code>.</li>
+    </ul>
+
+    <h3>New Reporting Data Sets</h3>
+    <ul>
+      <li><strong>Brightspace Email Log BDS:</strong> captures email IDs, sender/recipient details, and subject lines for Brightspace emails sent since January 2024.</li>
+      <li><strong>Intelligent Agent Objects BDS:</strong> includes improved schedule data for hourly and one-time run agents, which can support automation audit trails.</li>
     </ul>
   </section>
 
@@ -251,7 +265,7 @@
           <tr><th>Category</th><th>June Tasks</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Technical</strong></td><td>Service User setup, production OAuth/JWKS flow, Course 6703 metadata sync, <code>/api/me/dashboard</code>, HTML v3.0 video CSS.</td></tr>
+          <tr><td><strong>Technical</strong></td><td>Service User setup, production OAuth/JWKS flow, LTI 1.3 readiness, Course 6703 metadata sync, <code>/api/me/dashboard</code>, HTML v3.0 video CSS.</td></tr>
           <tr><td><strong>Policy &amp; Governance</strong></td><td>Vanity URL, LegalServer-based audience routing, archive/export terminology, attributes/groups freeze.</td></tr>
           <tr><td><strong>Content &amp; ID</strong></td><td>Wrapper deployment to Demo Course 6698, no sub-modules SOP, completion criteria, Intelligent Agent recipes.</td></tr>
         </tbody>
