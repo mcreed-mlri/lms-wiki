@@ -421,6 +421,7 @@ body.page-interactive-guide #sidebar nav a.external::after {
 #main {
   margin-left: var(--sidebar-w);
   flex: 1;
+  min-width: 0;
   padding: 2.5rem 2.75rem 4rem;
   max-width: 900px;
   transition: margin-left 0.25s ease;
@@ -487,6 +488,201 @@ body.page-marlana table tr:hover td {
 
 /* ── Section spacing ─────────────────────────── */
 .guide-section { margin-bottom: 3.5rem; }
+
+.app-home {
+  margin-bottom: 4rem;
+}
+
+.app-home h2 {
+  margin-bottom: 1rem;
+}
+
+.home-kicker,
+.home-label {
+  display: block;
+  color: var(--muted);
+  font-family: 'DM Mono', 'Consolas', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+.home-priority {
+  align-items: flex-start;
+  background: #FFFFFF;
+  border: 1px solid rgba(155, 35, 53, 0.22);
+  border-left: 4px solid var(--red);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(30, 58, 95, 0.08);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin: 0 0 1.25rem;
+  padding: 1.2rem 1.35rem;
+}
+
+.home-priority h3 {
+  color: var(--navy);
+  font-size: 1.14rem;
+  line-height: 1.35;
+  margin: 0 0 0.4rem;
+}
+
+.home-priority > div {
+  min-width: 0;
+}
+
+.home-priority p,
+.home-link-card span:last-child,
+.home-phase p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.home-grid,
+.home-dashboard,
+.home-ref-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.home-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1.25rem 0;
+}
+
+.home-link-card,
+.home-panel,
+.home-quick-ref {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 2px 14px rgba(30, 58, 95, 0.06);
+}
+
+.home-link-card {
+  color: var(--text);
+  display: block;
+  min-height: 9.25rem;
+  padding: 1rem;
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.home-link-card:hover {
+  border-color: rgba(44, 111, 172, 0.45);
+  box-shadow: 0 8px 22px rgba(30, 58, 95, 0.1);
+  transform: translateY(-1px);
+}
+
+.home-link-card strong {
+  color: var(--navy);
+  display: block;
+  font-size: 1rem;
+  line-height: 1.35;
+  margin-bottom: 0.45rem;
+}
+
+.home-dashboard {
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+  margin: 1.25rem 0;
+}
+
+.home-panel,
+.home-quick-ref {
+  padding: 1.15rem 1.25rem;
+}
+
+.home-panel h3,
+.home-quick-ref h3 {
+  color: var(--navy);
+  font-size: 1rem;
+  margin: 0 0 0.85rem;
+}
+
+.home-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.home-checklist li {
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  padding: 0.85rem 0;
+}
+
+.home-checklist li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.home-checklist li:last-child {
+  padding-bottom: 0;
+}
+
+.home-checklist .status {
+  margin: 0 0.35rem 0.25rem 0;
+}
+
+.home-phase {
+  border-top: 1px solid var(--border);
+  padding: 0.85rem 0 0;
+}
+
+.home-phase:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.home-phase + .home-phase {
+  margin-top: 0.9rem;
+}
+
+.home-phase strong {
+  color: var(--navy);
+  display: block;
+  font-size: 0.96rem;
+  line-height: 1.4;
+  margin-bottom: 0.35rem;
+}
+
+.home-quick-ref {
+  margin-top: 1.25rem;
+}
+
+.home-ref-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.home-ref-grid a {
+  background: #F7F9FC;
+  border: 1px solid rgba(208, 215, 226, 0.8);
+  border-radius: 6px;
+  color: var(--blue);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.35;
+  padding: 0.7rem 0.8rem;
+  text-decoration: none;
+}
+
+.home-ref-grid a:hover {
+  background: #EDF4FB;
+  border-color: rgba(44, 111, 172, 0.35);
+}
+
+.last-updated {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 1.5rem;
+}
 
 .guide-section + .guide-section {
   border-top: 1px solid var(--border);
@@ -1066,9 +1262,10 @@ tr:nth-child(even) td { background: #F0F3F8; }
   }
 
   html.sidebar-collapsed #sidebar {
-    transform: translateX(-100%);
-    width: min(var(--sidebar-w), 88vw);
-    min-width: min(var(--sidebar-w), 88vw);
+    display: none;
+    transform: none;
+    width: 0;
+    min-width: 0;
     pointer-events: none;
   }
 
@@ -1085,8 +1282,49 @@ tr:nth-child(even) td { background: #F0F3F8; }
     left: calc(min(var(--sidebar-w), 88vw) - (var(--sidebar-toggle-size) / 2));
   }
 
-  #main { margin-left: 0; padding: 1.25rem 1rem; max-width: 100%; }
+  #main {
+    margin-left: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding: 3.25rem 1rem 1.25rem;
+    width: 100%;
+  }
   body { flex-direction: column; }
+
+  h1 {
+    font-size: 1.55rem;
+    line-height: 1.18;
+    overflow-wrap: anywhere;
+  }
+
+  .page-subtitle {
+    font-size: 0.98rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .home-priority {
+    display: block;
+    padding: 1rem;
+  }
+
+  .home-priority h3 {
+    font-size: 1.05rem;
+    overflow-wrap: anywhere;
+  }
+
+  .home-priority .status {
+    margin: 0.8rem 0 0;
+  }
+
+  .home-grid,
+  .home-dashboard,
+  .home-ref-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-link-card {
+    min-height: 0;
+  }
 }
 
 /* ═══════════════════════════════════════════════

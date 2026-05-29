@@ -23,7 +23,7 @@
   </div>
   <nav>
     <span class="section-label">Start Here</span>
-    <a href="#home">What Matters Now</a>
+    <a href="#home">Home</a>
     <a href="#legal-signoffs">Legal Sign-offs</a>
     <a href="#project-status">Timeline</a>
 
@@ -53,76 +53,100 @@
 <main id="main">
 
   <h1>Training Unit: LMS Platform</h1>
-  <p class="page-subtitle">Fast reference for LACE's Brightspace setup, legal guardrails, and platform operating rules.</p>
+  <p class="page-subtitle">Home base for the LACE Team Wiki and related platform reference pages.</p>
 
-  <section class="guide-section" id="home">
-    <h2>What Matters Now</h2>
+  <section class="guide-section app-home" id="home">
+    <div class="home-kicker">Wiki Home</div>
+    <h2>Start Here</h2>
 
-    <div class="note">
-      <strong>Hard deadline: June 15-19, 2026.</strong> Finalize the learner-facing custom domain / vanity URL. It appears in links, login screens, and certificates.
+    <div class="home-priority">
+      <div>
+        <span class="home-label">Team Wiki</span>
+        <h3>Use this page for the shared operating reference.</h3>
+        <p>Legal sign-offs, Brightspace setup rules, course content model, naming, versioning, learner notices, decisions, glossary, and admin quick tasks all live here.</p>
+      </div>
+      <span class="status in-progress">Primary</span>
     </div>
 
-    <div class="tip">
-      <strong>June roadmap:</strong> use <a href="june-2026-priority-tasks.html">LACE Learning Hub: June 2026 Priority Tasks</a> for the current production-hardening checklist, including Course 6703 sync, Service User auth, LTI 1.3 readiness, routing policy, accessibility, and Intelligent Agent recipes.
+    <div class="home-grid">
+      <a class="home-link-card" href="#legal-signoffs">
+        <span class="home-label">This wiki</span>
+        <strong>Team Operating Reference</strong>
+        <span>Project status, legal guardrails, Brightspace hierarchy, policies, decisions, glossary, and quick tasks.</span>
+      </a>
+      <a class="home-link-card" href="june-2026-priority-tasks.html">
+        <span class="home-label">Current worklist</span>
+        <strong>June Priority Tasks</strong>
+        <span>Production hardening, routing policy, accessibility, completion criteria, and Intelligent Agent recipes.</span>
+      </a>
+      <a class="home-link-card" href="marlana.html">
+        <span class="home-label">Build workspace</span>
+        <strong>Marlie's Workspace</strong>
+        <span>LACE Hub dashboard plan, data/reporting roadmap, open decisions, and phase-level tracking.</span>
+      </a>
+      <a class="home-link-card" href="mlri-architecture.html">
+        <span class="home-label">System map</span>
+        <strong>LACE Architecture</strong>
+        <span>How the learning hub, Brightspace, content, integrations, and reporting pieces fit together.</span>
+      </a>
+      <a class="home-link-card" href="brightspace-interactive-guide.html">
+        <span class="home-label">Optional tools</span>
+        <strong>Brightspace Interactive Guide</strong>
+        <span>Reference notes for native Brightspace tools when custom HTML is not the best fit.</span>
+      </a>
     </div>
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Item</th><th>Decision / Action</th><th>Owner</th><th>Status</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Custom domain</strong></td>
-            <td>Choose the learner-facing URL and confirm who owns it.</td>
-            <td>Leadership</td>
-            <td><span class="status blocked">Urgent</span></td>
-          </tr>
-          <tr>
-            <td><strong>User access</strong></td>
-            <td>Approve learner types, user attributes, Learning Groups, and certificate language.</td>
-            <td>MLRI legal authority</td>
-            <td><span class="status proposed">Needs sign-off</span></td>
-          </tr>
-          <tr>
-            <td><strong>Completion tracking</strong></td>
-            <td>Define what counts as completion, especially for video-based courses.</td>
-            <td>LACE / D2L</td>
-            <td><span class="status proposed">Needs decision</span></td>
-          </tr>
-          <tr>
-            <td><strong>Faculty outreach materials</strong></td>
-            <td>Draft outreach materials plus a one-pager explaining who LACE is and what we are building.</td>
-            <td>Olivia</td>
-            <td><span class="status in-progress">Due June 2026</span></td>
-          </tr>
-          <tr>
-            <td><strong>January launch</strong></td>
-            <td>Partial launch only: Foundations, Pre-Trial, Trial Skills.</td>
-            <td>LACE</td>
-            <td><span class="status not-started">Planned</span></td>
-          </tr>
-          <tr>
-            <td><strong>Technical roadmap</strong></td>
-            <td>June hardening tasks live in <a href="june-2026-priority-tasks.html">June Priority Tasks</a>; build details live in <a href="marlana.html">Marlie's Workspace</a>.</td>
-            <td>Marlie</td>
-            <td><span class="status in-progress">In progress</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="home-dashboard">
+      <div class="home-panel">
+        <h3>What Matters Now</h3>
+        <ul class="home-checklist">
+          <li>
+            <span class="status blocked">Urgent</span>
+            <strong>Custom domain:</strong> finalize the learner-facing URL by June 15-19, 2026.
+          </li>
+          <li>
+            <span class="status proposed">Needs sign-off</span>
+            <strong>User access:</strong> approve learner types, user attributes, Learning Groups, and certificate language.
+          </li>
+          <li>
+            <span class="status proposed">Needs decision</span>
+            <strong>Completion tracking:</strong> define what counts as completion, especially for video-based courses.
+          </li>
+          <li>
+            <span class="status in-progress">Due June 2026</span>
+            <strong>Faculty outreach:</strong> draft outreach materials and the one-pager explaining who LACE is and what is being built.
+          </li>
+        </ul>
+      </div>
+
+      <div class="home-panel">
+        <h3>Current Phase</h3>
+        <div class="home-phase">
+          <span class="home-label">Now</span>
+          <strong>June production hardening</strong>
+          <p>Course 6703 sync, Service User auth, LTI 1.3 readiness, routing policy, accessibility, and Intelligent Agent recipes.</p>
+        </div>
+        <div class="home-phase">
+          <span class="home-label">Next launch marker</span>
+          <strong>Partial public launch in mid-January 2027</strong>
+          <p>Foundations, Pre-Trial, and Trial Skills only.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="intro-card">
-      <h4>Use this page for</h4>
-      <ul>
-        <li>Current legal/compliance sign-offs</li>
-        <li>How LACE course content is built and hosted</li>
-        <li>Brightspace naming and hierarchy rules</li>
-        <li>Versioning, notices, user management, June priorities, and admin quick tasks</li>
-      </ul>
+    <div class="home-quick-ref">
+      <h3>Jump Into The Wiki</h3>
+      <div class="home-ref-grid">
+        <a href="#legal-signoffs">Legal and compliance sign-offs</a>
+        <a href="#course-content-model">Course content model</a>
+        <a href="#org-hierarchy">Brightspace hierarchy</a>
+        <a href="#versioning">Versioning and notices</a>
+        <a href="#decision-log">Decision log</a>
+        <a href="#quick-tasks">Admin quick tasks</a>
+      </div>
     </div>
 
-    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-27</em></p>
+    <p class="last-updated"><em>Last updated: 2026-05-27</em></p>
   </section>
 
   <section class="guide-section" id="legal-signoffs">

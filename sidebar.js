@@ -201,6 +201,10 @@
       syncUi();
     }
 
+    if (isMobile()) {
+      document.documentElement.classList.add('sidebar-collapsed');
+    }
+
     btn.addEventListener('click', function () {
       setCollapsed(!isCollapsed());
     });
