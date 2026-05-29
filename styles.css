@@ -17,6 +17,43 @@
   --note-border: #B06A00;
   --sidebar-w: 260px;
   --sidebar-toggle-size: 2rem;
+
+  /* ── Design scale ──────────────────────────────
+     Consistent radii, elevation, spacing, and motion
+     so components share one visual rhythm. */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  /* Navy-tinted elevation ramp */
+  --shadow-sm: 0 1px 2px rgba(30, 58, 95, 0.06), 0 2px 6px rgba(30, 58, 95, 0.05);
+  --shadow-md: 0 4px 12px rgba(30, 58, 95, 0.08), 0 2px 4px rgba(30, 58, 95, 0.04);
+  --shadow-lg: 0 12px 28px rgba(30, 58, 95, 0.12), 0 4px 10px rgba(30, 58, 95, 0.06);
+  --shadow-xl: 0 24px 56px rgba(15, 23, 42, 0.18), 0 8px 20px rgba(30, 58, 95, 0.10);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* Motion + focus */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast: 0.15s;
+  --dur: 0.25s;
+  --dur-slow: 0.45s;
+  --focus-ring: 0 0 0 3px rgba(44, 111, 172, 0.4);
+  --focus-color: var(--blue);
+
+  /* Per-page accent — overridden by .page-* themes; drives the
+     reading-progress bar, scroll-to-top button, and reveal accents. */
+  --accent: var(--blue);
+  --accent-2: var(--teal);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,6 +67,111 @@ body {
   color: var(--text);
   display: flex;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Reading progress bar (injected by sidebar.js) ──── */
+#reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 200;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 10px rgba(44, 111, 172, 0.45);
+  transition: width 0.12s linear;
+  pointer-events: none;
+}
+
+/* ── Scroll-to-top button (injected by sidebar.js) ──── */
+#scroll-top {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 120;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(12px) scale(0.92);
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), background var(--dur-fast) var(--ease);
+}
+
+#scroll-top.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+#scroll-top:hover {
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.08);
+}
+
+#scroll-top:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-lg), var(--focus-ring);
+}
+
+@media print {
+  #reading-progress, #scroll-top { display: none !important; }
+}
+
+/* ── Section reveal (gated; only active when JS opts in) ──
+   When sidebar.js adds .reveal-ready to <html>, sections start
+   hidden and animate in. Without JS or with reduced motion they
+   stay fully visible. */
+html.reveal-ready .guide-section {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+  will-change: opacity, transform;
+}
+
+html.reveal-ready .guide-section.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Global focus-visible ────────────────────────── */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+.home-link-card:focus-visible,
+input:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* ── Reduced-motion: neutralize all motion ────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html.reveal-ready .guide-section {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  #reading-progress { display: none; }
 }
 
 /* ── Sidebar ─────────────────────────────────── */
@@ -435,6 +577,11 @@ html.sidebar-collapsed #main {
   letter-spacing: -0.02em;
 }
 
+/* Per-page accents drive the progress bar, scroll-top button, and reveals */
+body.page-marlana          { --accent: #0d9488; --accent-2: #60a5fa; --focus-color: #0d9488; --focus-ring: 0 0 0 3px rgba(13, 148, 136, 0.4); }
+body.page-interactive-guide { --accent: #0f766e; --accent-2: #5eead4; --focus-color: #0f766e; --focus-ring: 0 0 0 3px rgba(20, 184, 166, 0.4); }
+body.page-landing          { --accent: #B06A00; --accent-2: #2C6FAC; --focus-color: #B06A00; --focus-ring: 0 0 0 3px rgba(176, 106, 0, 0.38); }
+
 /* Marlie's workspace — main content (teal accent, separate from team wiki) */
 body.page-marlana {
   background: #f0f7f6;
@@ -484,6 +631,182 @@ body.page-marlana table th {
 
 body.page-marlana table tr:hover td {
   background: rgba(45, 212, 191, 0.06);
+}
+
+/* ── Landing / platform home theme ───────────────
+   Distinct from the navy wiki and teal sibling pages:
+   a deep indigo sidebar with a warm amber + blue accent
+   so the front door reads as its own surface. */
+body.page-landing {
+  background: #f4f5fb;
+  background-image:
+    radial-gradient(ellipse 60% 42% at 100% 0%, rgba(176, 106, 0, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 42% at 0% 100%, rgba(44, 111, 172, 0.09) 0%, transparent 55%);
+}
+
+body.page-landing #sidebar {
+  background: linear-gradient(180deg, #2b2455 0%, #1b1738 100%);
+}
+
+body.page-landing #sidebar-header {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+body.page-landing #sidebar-header .brand {
+  color: #f6c87a;
+}
+
+body.page-landing #sidebar-header h2 {
+  color: #c9c4e8;
+}
+
+body.page-landing #sidebar nav .section-label {
+  color: #9a93c9;
+}
+
+body.page-landing #sidebar nav a {
+  color: #d8d4ef;
+}
+
+body.page-landing #sidebar nav a:hover,
+body.page-landing #sidebar nav a.active {
+  background: rgba(246, 200, 122, 0.16);
+  color: #ffffff;
+}
+
+body.page-landing #sidebar nav a.external::after {
+  color: #f6c87a;
+}
+
+body.page-landing .sidebar-toggle {
+  background: #2b2455;
+}
+
+body.page-landing .sidebar-toggle:hover {
+  background: #3a3170;
+}
+
+body.page-landing .sidebar-toggle:focus-visible {
+  outline-color: #f6c87a;
+}
+
+body.page-landing #main h1 {
+  color: #1b1738;
+  font-size: clamp(2rem, 1.4rem + 3vw, 2.9rem);
+}
+
+body.page-landing #main .page-subtitle {
+  border-bottom-color: rgba(176, 106, 0, 0.22);
+  color: #524d70;
+}
+
+body.page-landing #main h2::after {
+  background: linear-gradient(90deg, #B06A00, #2C6FAC);
+}
+
+body.page-landing #main a {
+  color: #2C6FAC;
+}
+
+/* ── Landing hero (light, restrained) ─────────────
+   Lives on the normal page background — a kicker, headline,
+   subtitle, and a thin divider. No dark slab. */
+.home-hero {
+  padding: 0.5rem 0 1.75rem;
+  margin: 0 0 1.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.home-hero .hero-kicker {
+  display: inline-block;
+  font-family: 'DM Mono', 'Consolas', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
+  padding: 0.3rem 0.75rem;
+  background: rgba(176, 106, 0, 0.08);
+  border: 1px solid rgba(176, 106, 0, 0.25);
+  border-radius: var(--radius-pill);
+  margin-bottom: 1rem;
+}
+
+body.page-landing .home-hero h1 {
+  color: #1b1738;
+  font-size: clamp(1.9rem, 1.35rem + 2.6vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.75rem;
+}
+
+.home-hero h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--amber) 0%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.home-hero .hero-sub {
+  color: var(--muted);
+  font-size: clamp(0.98rem, 0.94rem + 0.4vw, 1.1rem);
+  line-height: 1.65;
+  max-width: 62ch;
+  margin: 0 0 1.25rem;
+}
+
+.home-hero .hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  font-family: 'DM Mono', 'Consolas', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+.home-hero .hero-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.home-hero .hero-meta span::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--amber);
+}
+
+.home-hero .hero-meta span + span::before { background: var(--blue); }
+
+/* Spotlight the "What Matters Now" panel at the top */
+body.page-landing .home-spotlight {
+  border-left: 4px solid var(--red);
+}
+
+body.page-landing .home-nav-heading {
+  color: var(--navy);
+  font-size: 1.15rem;
+  margin: 2rem 0 0.25rem;
+}
+
+body.page-landing .home-nav-sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0 0 1rem;
+}
+
+body.page-landing .home-link-card {
+  border-top: 3px solid #B06A00;
+}
+
+@media (min-width: 801px) {
+  body.page-landing .home-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 /* ── Section spacing ─────────────────────────── */
@@ -561,29 +884,73 @@ body.page-marlana table tr:hover td {
 .home-quick-ref {
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  box-shadow: 0 2px 14px rgba(30, 58, 95, 0.06);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
 }
 
 .home-link-card {
+  position: relative;
   color: var(--text);
   display: block;
-  min-height: 9.25rem;
-  padding: 1rem;
+  min-height: 9.75rem;
+  padding: 1.15rem 1.2rem 1.2rem;
   text-decoration: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  overflow: hidden;
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+/* Top accent strip that grows on hover */
+.home-link-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur) var(--ease);
+}
+
+/* Hover arrow affordance */
+.home-link-card::after {
+  content: '\2192';
+  position: absolute;
+  right: 1.1rem;
+  bottom: 1rem;
+  font-size: 1.05rem;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 
 .home-link-card:hover {
-  border-color: rgba(44, 111, 172, 0.45);
-  box-shadow: 0 8px 22px rgba(30, 58, 95, 0.1);
-  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+
+.home-link-card:hover::before { transform: scaleX(1); }
+.home-link-card:hover::after { opacity: 1; transform: translateX(0); }
+
+.home-link-card .card-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: var(--radius-md);
+  font-size: 1.2rem;
+  line-height: 1;
+  margin-bottom: 0.7rem;
+  background: color-mix(in srgb, var(--accent) 12%, var(--white));
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
 }
 
 .home-link-card strong {
   color: var(--navy);
   display: block;
-  font-size: 1rem;
+  font-size: 1.02rem;
   line-height: 1.35;
   margin-bottom: 0.45rem;
 }
@@ -691,24 +1058,27 @@ body.page-marlana table tr:hover td {
 
 /* ── Typography ──────────────────────────────── */
 h1 {
-  font-size: 1.85rem;
+  font-size: clamp(1.55rem, 1.1rem + 2.2vw, 2.35rem);
   font-weight: 800;
   color: var(--navy);
-  line-height: 1.2;
+  line-height: 1.12;
+  letter-spacing: -0.022em;
   margin-bottom: 0.5rem;
+  overflow-wrap: anywhere;
 }
 
 .page-subtitle {
-  font-size: 1.02rem;
+  font-size: clamp(0.98rem, 0.94rem + 0.3vw, 1.08rem);
   color: var(--muted);
   margin-bottom: 2rem;
   border-bottom: 1px solid var(--border);
   padding-bottom: 1.25rem;
   line-height: 1.65;
+  max-width: 70ch;
 }
 
 h2 {
-  font-size: 1.4rem;
+  font-size: clamp(1.3rem, 1.15rem + 0.8vw, 1.55rem);
   font-weight: 700;
   color: var(--navy);
   margin-bottom: 0.75rem;
@@ -716,24 +1086,29 @@ h2 {
   border-bottom: none;
   display: block;
   position: relative;
+  letter-spacing: -0.012em;
+  scroll-margin-top: 1.5rem;
 }
 
 h2::after {
   content: '';
   display: block;
-  width: 3rem;
-  height: 3px;
-  margin-top: 0.4rem;
-  border-radius: 2px;
+  width: 3.25rem;
+  height: 4px;
+  margin-top: 0.45rem;
+  border-radius: var(--radius-pill);
   background: linear-gradient(90deg, var(--blue), var(--teal));
 }
 
 h3 {
-  font-size: 1.1rem;
+  font-size: clamp(1.05rem, 1rem + 0.3vw, 1.18rem);
   font-weight: 700;
   color: var(--blue);
   margin: 1.75rem 0 0.6rem;
+  scroll-margin-top: 1.5rem;
 }
+
+section[id], [id].guide-section { scroll-margin-top: 1.5rem; }
 
 h4 {
   font-size: 0.95rem;
@@ -892,46 +1267,66 @@ ul.task-list li.done span.label {
 }
 
 /* ── Callouts ─────────────────────────────────── */
-.tip, .note {
-  border-left: 4px solid;
-  border-radius: 0 6px 6px 0;
-  padding: 0.85rem 1rem;
+.tip, .note, .warning, .danger {
+  --callout-accent: var(--teal);
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--callout-accent) 28%, transparent);
+  border-left: 4px solid var(--callout-accent);
+  border-radius: var(--radius-md);
+  padding: 0.95rem 1.1rem 0.95rem 2.9rem;
   margin: 1.25rem 0;
   font-size: 0.9rem;
   line-height: 1.6;
+  box-shadow: var(--shadow-sm);
 }
+
+/* Leading icon chip, color-matched to the callout accent */
+.tip::before, .note::before, .warning::before, .danger::before {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.85rem;
+  width: 1.45rem;
+  height: 1.45rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  background: color-mix(in srgb, var(--callout-accent) 18%, transparent);
+  color: var(--callout-accent);
+}
+
+/* The label after the icon (kept inline so existing markup is unchanged) */
+.tip > strong:first-child,
+.note > strong:first-child,
+.warning > strong:first-child,
+.danger > strong:first-child { color: var(--callout-accent); }
 
 .tip {
-  background: var(--tip-bg);
-  border-color: var(--tip-border);
+  --callout-accent: var(--tip-border);
+  background: linear-gradient(135deg, var(--tip-bg) 0%, color-mix(in srgb, var(--tip-bg) 55%, var(--white)) 100%);
 }
-
-.tip::before {
-  content: "Tip  ";
-  font-weight: 700;
-  color: var(--teal);
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  display: block;
-  margin-bottom: 0.25rem;
-}
+.tip::before { content: "i"; font-style: italic; font-family: Georgia, 'Times New Roman', serif; }
 
 .note {
-  background: var(--note-bg);
-  border-color: var(--note-border);
+  --callout-accent: var(--note-border);
+  background: linear-gradient(135deg, var(--note-bg) 0%, color-mix(in srgb, var(--note-bg) 55%, var(--white)) 100%);
 }
+.note::before { content: "\270E"; }
 
-.note::before {
-  content: "Note  ";
-  font-weight: 700;
-  color: var(--amber);
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  display: block;
-  margin-bottom: 0.25rem;
+.warning {
+  --callout-accent: #B06A00;
+  background: linear-gradient(135deg, #FEF3E0 0%, #FFF9F0 100%);
 }
+.warning::before { content: "!"; }
+
+.danger {
+  --callout-accent: var(--red);
+  background: linear-gradient(135deg, #FBEAEC 0%, #FDF4F5 100%);
+}
+.danger::before { content: "\26A0"; font-size: 0.78rem; }
 
 /* ── Screenshot placeholders ─────────────────── */
 .screenshot {
@@ -970,7 +1365,15 @@ ul.task-list li.done span.label {
 .screenshot.sm { min-height: 200px; }
 
 /* ── Tables ──────────────────────────────────── */
-.table-wrap { overflow-x: auto; margin: 1rem 0 1.5rem; }
+.table-wrap {
+  overflow: auto;
+  max-height: 32rem;
+  margin: 1rem 0 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  background: var(--white);
+}
 
 table {
   width: 100%;
@@ -979,21 +1382,39 @@ table {
 }
 
 th {
-  background: var(--navy);
+  background: linear-gradient(180deg, #244873 0%, var(--navy) 100%);
   color: #fff;
   text-align: left;
-  padding: 0.6rem 0.85rem;
+  padding: 0.7rem 0.9rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.12);
 }
 
+th:first-child { border-top-left-radius: var(--radius-lg); }
+th:last-child  { border-top-right-radius: var(--radius-lg); }
+
 td {
-  padding: 0.55rem 0.85rem;
+  padding: 0.6rem 0.9rem;
   border-bottom: 1px solid var(--border);
   vertical-align: top;
   line-height: 1.5;
 }
 
-tr:nth-child(even) td { background: #F0F3F8; }
+tbody tr:last-child td { border-bottom: none; }
+
+tr:nth-child(even) td { background: #F4F7FB; }
+
+tbody tr {
+  transition: background var(--dur-fast) var(--ease);
+}
+
+tbody tr:hover td {
+  background: color-mix(in srgb, var(--blue) 8%, var(--white));
+}
 
 /* ── Feature badge ───────────────────────────── */
 .badge {
@@ -1004,32 +1425,51 @@ tr:nth-child(even) td { background: #F0F3F8; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 0.18em 0.55em;
-  border-radius: 3px;
+  padding: 0.2em 0.7em;
+  border-radius: var(--radius-pill);
   margin-left: 0.5rem;
   vertical-align: middle;
   position: relative;
   top: -1px;
+  box-shadow: var(--shadow-sm);
 }
 
-/* ── Status badge (phases, decisions, etc.) ──── */
+/* ── Status badge (phases, decisions, etc.) ────
+   Pill style with a leading dot and a soft tonal fill,
+   color-coded by state. */
 .status {
-  display: inline-block;
+  --status-color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.22em 0.6em;
-  border-radius: 3px;
+  letter-spacing: 0.05em;
+  padding: 0.26em 0.7em 0.26em 0.6em;
+  border-radius: var(--radius-pill);
   vertical-align: middle;
   margin-left: 0.4rem;
+  color: var(--status-color);
+  background: color-mix(in srgb, var(--status-color) 14%, var(--white));
+  border: 1px solid color-mix(in srgb, var(--status-color) 32%, transparent);
 }
 
-.status.in-progress { background: var(--amber); color: #fff; }
-.status.not-started { background: var(--ph-border); color: var(--navy); }
-.status.done        { background: var(--teal); color: #fff; }
-.status.proposed    { background: #6F86A8; color: #fff; }
-.status.blocked     { background: var(--red); color: #fff; }
+.status::before {
+  content: '';
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--status-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--status-color) 22%, transparent);
+  flex: none;
+}
+
+.status.in-progress { --status-color: #9A5B00; }
+.status.not-started { --status-color: #5A6478; }
+.status.done        { --status-color: #1F7A6E; }
+.status.proposed    { --status-color: #5A6F94; }
+.status.blocked     { --status-color: var(--red); }
 
 /* ── Reference sections (index): scan-friendly layout ──
    Overrides global uppercase h4 for long titles + clearer blocks */
@@ -1177,9 +1617,10 @@ tr:nth-child(even) td { background: #F0F3F8; }
 .intro-card {
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-lg);
+  padding: 1.3rem 1.6rem;
   margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .intro-card h4 { margin-top: 0; }
@@ -1199,16 +1640,16 @@ tr:nth-child(even) td { background: #F0F3F8; }
   background: var(--white);
   border: 1px solid var(--border);
   border-left: 3px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   padding: 1.15rem 1.3rem;
   margin: 0;
-  box-shadow: 0 2px 12px rgba(30, 58, 95, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 
 .pillar:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(30, 58, 95, 0.1);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
 }
 
 .pillar-teal   { border-left-color: #14b8a6; }
@@ -1291,14 +1732,7 @@ tr:nth-child(even) td { background: #F0F3F8; }
   }
   body { flex-direction: column; }
 
-  h1 {
-    font-size: 1.55rem;
-    line-height: 1.18;
-    overflow-wrap: anywhere;
-  }
-
   .page-subtitle {
-    font-size: 0.98rem;
     margin-bottom: 1.75rem;
   }
 

@@ -8,7 +8,8 @@ Static site for the MLRI learning platform build. Hand-coded HTML, no build step
 
 | File | What it is | Audience |
 |---|---|---|
-| [`index.html`](index.html) | Team wiki: project status, custom HTML course model, org structure, compliance, policies, decisions, glossary, quick tasks | Internal LACE staff (ED, program managers, admin) |
+| [`index.html`](index.html) | Platform home: landing hub that links to every reference page, plus the current status/phase dashboard | Anyone arriving at the site |
+| [`team-wiki.html`](team-wiki.html) | Team wiki: project status, custom HTML course model, org structure, compliance, policies, decisions, glossary, quick tasks | Internal LACE staff (ED, program managers, admin) |
 | [`june-2026-priority-tasks.html`](june-2026-priority-tasks.html) | June 2026 priority task list: production hardening, routing policy, accessibility, completion criteria, and Intelligent Agent recipes | LACE implementation team |
 | [`marlana.html`](marlana.html) | Marlie's workspace: executive scan for the wrapper, LACE Hub dashboard plan, data/reporting roadmap, open decisions | Marlie; future technical hires |
 | [`brightspace-interactive-guide.html`](brightspace-interactive-guide.html) | Secondary reference for optional Brightspace-native tools (Creator+, H5P, quizzes, discussions, assignments) when custom HTML is not the best fit | Marlie; admins evaluating native-tool options |
@@ -20,7 +21,8 @@ The Team Wiki intentionally links only to core team references. Optional native-
 
 ### How the two wikis relate
 
-- `index.html` (Team Wiki) is what LACE staff read. It documents how things are organized and what's been decided.
+- `index.html` is the platform home: a landing hub that links to every page and surfaces the current status/phase dashboard. It is the GitHub Pages front page.
+- `team-wiki.html` (Team Wiki) is what LACE staff read. It documents how things are organized and what's been decided.
 - `june-2026-priority-tasks.html` is the short-term execution list for June 2026 hardening work.
 - `marlana.html` (Workspace) is Marlie's working space: technical roadmap, LACE Hub dashboard plan, open questions, and phase-level task tracking. Open decisions live here until they resolve, then move to the Team Wiki's Decision Log.
 - LACE course content is built as custom HTML files inside a shared wrapper. Brightspace provides LMS infrastructure: hosting, enrollment, access, completion records, notices, and reporting.

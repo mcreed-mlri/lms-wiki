@@ -222,6 +222,64 @@
     });
 
     syncUi();
+    initMotion();
+  }
+
+  /* ── Reading progress, scroll-to-top, and section reveal ──
+     All motion is skipped when the user prefers reduced motion. */
+  function initMotion() {
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Reading progress bar
+    var progress = document.createElement('div');
+    progress.id = 'reading-progress';
+    document.body.appendChild(progress);
+
+    // Scroll-to-top button
+    var toTop = document.createElement('button');
+    toTop.type = 'button';
+    toTop.id = 'scroll-top';
+    toTop.setAttribute('aria-label', 'Scroll to top');
+    toTop.title = 'Back to top';
+    toTop.innerHTML = '↑';
+    document.body.appendChild(toTop);
+
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+    });
+
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        var doc = document.documentElement;
+        var scrollTop = window.pageYOffset || doc.scrollTop;
+        var max = (doc.scrollHeight - doc.clientHeight) || 1;
+        var pct = Math.min(100, Math.max(0, (scrollTop / max) * 100));
+        progress.style.width = pct + '%';
+        toTop.classList.toggle('is-visible', scrollTop > 400);
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
+
+    // Section reveal on scroll
+    var sections = Array.prototype.slice.call(document.querySelectorAll('.guide-section'));
+    if (!prefersReduced && sections.length && 'IntersectionObserver' in window) {
+      document.documentElement.classList.add('reveal-ready');
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      sections.forEach(function (section) { observer.observe(section); });
+    }
   }
 
   if (document.readyState === 'loading') {

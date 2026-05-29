@@ -26,6 +26,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/
+          cp team-wiki.html _site/
           cp june-2026-priority-tasks.html _site/
           cp marlana.html _site/
           cp brightspace-interactive-guide.html _site/

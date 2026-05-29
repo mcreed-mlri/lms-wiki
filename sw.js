@@ -1,15 +1,16 @@
 // Bump CACHE_VERSION whenever shell assets change so old caches get cleared.
-const CACHE_VERSION = 'lace-wiki-v1-20260528';
+const CACHE_VERSION = 'lace-wiki-v2-20260529-redesign';
 
 const PRECACHE_URLS = [
   './',
   './index.html',
+  './team-wiki.html',
   './june-2026-priority-tasks.html',
   './marlana.html',
   './brightspace-interactive-guide.html',
   './mlri-architecture.html',
   './styles.css',
-  './sidebar.js?v=20260521-page-search',
+  './sidebar.js?v=20260529-redesign',
   './favicon.svg',
   './icon.svg',
   './icon-maskable.svg',
