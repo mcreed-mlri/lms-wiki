@@ -1,0 +1,28 @@
+name: Check links
+
+# Catches broken internal links and missing #anchor targets across the wiki
+# on every push / PR. Runs offline (external URLs are skipped) so it never
+# fails because someone else's site is down.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Link & anchor check
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --offline --include-fragments --no-progress "*.html"
+          fail: true

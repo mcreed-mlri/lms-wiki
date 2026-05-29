@@ -72,6 +72,31 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* ── Skip-to-content link (keyboard / screen-reader) ──
+   Hidden until focused, then slides into the top-left. */
+.skip-link {
+  position: fixed;
+  top: 0.65rem;
+  left: 0.65rem;
+  z-index: 300;
+  padding: 0.55rem 1rem;
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform var(--dur) var(--ease);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: none;
+  box-shadow: var(--shadow-lg), var(--focus-ring);
+}
+
 /* ── Reading progress bar (injected by sidebar.js) ──── */
 #reading-progress {
   position: fixed;
