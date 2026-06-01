@@ -38,6 +38,8 @@ jobs:
           cp icon-maskable.svg _site/
           cp manifest.webmanifest _site/
           cp sw.js _site/
+          sed -i "s/__BUILD_VERSION__/${GITHUB_SHA}/g" _site/sw.js
+          sed -i "s/sidebar.js?v=[^\"]*/sidebar.js?v=${GITHUB_SHA}/g" _site/*.html
           if [ -d screenshots ]; then cp -r screenshots _site/; fi
 
       - name: Configure Pages

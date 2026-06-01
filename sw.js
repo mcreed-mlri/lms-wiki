@@ -1,5 +1,7 @@
-// Bump CACHE_VERSION whenever shell assets change so old caches get cleared.
-const CACHE_VERSION = 'lace-wiki-v2-20260529-redesign';
+// GitHub Actions replaces __BUILD_VERSION__ with the commit SHA during deploy.
+// Local/file previews keep the fallback value.
+const BUILD_VERSION = '__BUILD_VERSION__';
+const CACHE_VERSION = `lace-wiki-${BUILD_VERSION}`;
 
 const PRECACHE_URLS = [
   './',
@@ -10,7 +12,7 @@ const PRECACHE_URLS = [
   './brightspace-interactive-guide.html',
   './mlri-architecture.html',
   './styles.css',
-  './sidebar.js?v=20260529-redesign',
+  `./sidebar.js?v=${BUILD_VERSION}`,
   './favicon.svg',
   './icon.svg',
   './icon-maskable.svg',

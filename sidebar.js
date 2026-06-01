@@ -5,6 +5,13 @@
     window.addEventListener('load', function () {
       navigator.serviceWorker.register('sw.js').catch(function () { /* ignore */ });
     });
+
+    var refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
   }
 
   var STORAGE_KEY = 'lace-wiki-sidebar-collapsed';

@@ -68,6 +68,10 @@ A static server is recommended over `file://` so the stylesheet and inter-file l
 
 GitHub Pages, via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). On push to `main`, the workflow copies the HTML files plus `styles.css` and `screenshots/` into a Pages artifact and publishes it. No build step.
 
+### PWA Updates
+
+The deployed service worker cache is versioned with the Git commit SHA during the Pages workflow. The workflow also stamps the deployed `sidebar.js` asset URL with the same SHA. Each push to `main` creates a new cache name, clears old caches on activation, and the app reloads once when the new service worker takes control. In practice, installed PWA users should see updates after the Pages deployment completes and the app is reopened or refreshed.
+
 ## Working Notes
 
 - [`screenshot-checklist.md`](screenshot-checklist.md): local working notes, intentionally excluded from the deployed site.
