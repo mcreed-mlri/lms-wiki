@@ -2,6 +2,8 @@
 
 Static site for the MLRI learning platform build. Hand-coded HTML, no build step.
 
+This is the stable project memory: current status, open decisions, waiting items, architecture, operating rules, glossary, and team-facing explanations. Fast notes and weekly planning live in `../notes/`.
+
 > **Workspace map:** See [`../README.md`](../README.md) for how this folder relates to the rest of `c:\dev`.
 
 ## What's in here
@@ -19,14 +21,22 @@ Static site for the MLRI learning platform build. Hand-coded HTML, no build step
 
 The Team Wiki intentionally links only to core team references. Optional native-tool notes are kept secondary so the custom HTML course model stays clear.
 
-### How the two wikis relate
+### How the Wiki and Obsidian Relate
 
 - `index.html` is the platform home: a landing hub that links to every page and surfaces the current status/phase dashboard. It is the GitHub Pages front page.
 - `team-wiki.html` (Team Wiki) is what LACE staff read. It documents how things are organized and what's been decided.
 - `june-2026-priority-tasks.html` is the short-term execution list for June 2026 hardening work.
 - `marlana.html` (Workspace) is Marlie's working space: technical roadmap, LACE Hub dashboard plan, open questions, and phase-level task tracking. Open decisions live here until they resolve, then move to the Team Wiki's Decision Log.
 - LACE course content is built as custom HTML files inside a shared wrapper. Brightspace provides LMS infrastructure: hosting, enrollment, access, completion records, notices, and reporting.
-- Detailed architecture drafts are edited in [`notes/LMS Roadmaps/`](../notes/LMS%20Roadmaps/) (Obsidian). Promote stable sections into this wiki; don't maintain parallel full copies elsewhere.
+- Obsidian notes in [`../notes/`](../notes/) are the workbench for priorities, meetings, drafts, and scratch thinking. Promote stable sections into this wiki; don't maintain parallel full copies elsewhere.
+
+### Canonical Wiki Homes
+
+- Current project status and phase roadmap: `index.html` and `marlana.html`
+- Waiting items and open decisions: `marlana.html`
+- Resolved decisions, glossary, SOPs, and team-facing rules: `team-wiki.html`
+- June execution tasks: `june-2026-priority-tasks.html`
+- System architecture: `mlri-architecture.html`
 
 ## Editing
 

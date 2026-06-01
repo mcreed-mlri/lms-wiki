@@ -38,6 +38,7 @@
   <nav>
     <span class="section-label">Overview</span>
     <a href="#home">Overview</a>
+    <a href="#project-north-star">North Star</a>
     <a href="#legal-signoffs">Legal Sign-offs</a>
     <a href="#project-status">Timeline</a>
 
@@ -96,6 +97,35 @@
     </div>
 
     <p class="last-updated"><em>Last updated: 2026-05-27</em></p>
+  </section>
+
+  <section class="guide-section" id="project-north-star">
+    <h2>Project North Star</h2>
+
+    <div class="tip">
+      <strong>Purpose:</strong> LACE strengthens legal aid by strengthening learning. The project should expand access to high-quality, practical, evidence-informed training for advocates across Massachusetts.
+    </div>
+
+    <p>MLRI is building a shared learning infrastructure for the legal aid community. Brightspace provides the LMS foundation; the LACE frontend and course model should make training easier to discover, navigate, revisit, and use in real practice.</p>
+
+    <h3>Learning Model</h3>
+    <ul>
+      <li>Practical, skills-based legal training.</li>
+      <li>Short multimedia learning experiences.</li>
+      <li>Self-paced and asynchronous participation.</li>
+      <li>Evidence-informed adult learning approaches.</li>
+      <li>Shared resources that attorneys and advocates can use in practice.</li>
+      <li>Long-term, readily available access to legal knowledge and practice tools.</li>
+    </ul>
+
+    <h3>Initial Pilot Topics</h3>
+    <ul>
+      <li>Legal Foundations.</li>
+      <li>Pre-Trial Skills.</li>
+      <li>Trial Skills.</li>
+    </ul>
+
+    <p><strong>Design implication:</strong> the platform should feel accessible, practice-centered, trustworthy, and built for legal aid work, not like a generic corporate LMS.</p>
   </section>
 
   <section class="guide-section" id="legal-signoffs">
@@ -488,7 +518,7 @@
           <tr id="glossary-discover"><td><strong>Discover</strong></td><td>Brightspace's built-in catalog/self-enrollment page.</td></tr>
           <tr id="glossary-completion"><td><strong>Completion</strong></td><td>Brightspace record that a learner finished a Course Offering.</td></tr>
           <tr id="glossary-enrollment"><td><strong>Enrollment</strong></td><td>Connection between a learner and a Course Offering.</td></tr>
-          <tr id="glossary-vanity-url"><td><strong>Vanity URL</strong></td><td>Custom learner-facing Brightspace web address.</td></tr>
+          <tr id="glossary-vanity-url"><td><strong>Vanity URL</strong></td><td>Custom learner-facing Brightspace web address. D2L needs the desired URL before providing DNS records; SSL can be D2L-managed through AWS Certificate Manager or supplied by MLRI as an existing wildcard certificate.</td></tr>
           <tr id="glossary-community-of-practice"><td><strong>Community of Practice</strong></td><td>Shared space with role-based access; under review for audience routing.</td></tr>
           <tr id="glossary-intelligent-agents"><td><strong>Intelligent Agents</strong></td><td>Brightspace automation for emails and learner activity triggers.</td></tr>
           <tr id="glossary-lti-13"><td><strong>LTI 1.3</strong></td><td>Learning Tools Interoperability standard for third-party tool integrations, including anonymous marking workflows and proactive tool readiness via Context Copy Notice.</td></tr>
