@@ -44,6 +44,7 @@
 
     <span class="section-label">Brightspace Setup</span>
     <a href="#course-content-model">Course Content Model</a>
+    <a href="#solo-course-workflow">Solo Course Workflow</a>
     <a href="#org-hierarchy">Hierarchy</a>
     <a href="#brightspace-map">Mind Map</a>
     <a href="#naming-conventions">Naming</a>
@@ -90,6 +91,7 @@
       <div class="home-ref-grid">
         <a href="#legal-signoffs">Legal and compliance sign-offs</a>
         <a href="#course-content-model">Course content model</a>
+        <a href="#solo-course-workflow">Solo course workflow</a>
         <a href="#org-hierarchy">Brightspace hierarchy</a>
         <a href="#versioning">Versioning and notices</a>
         <a href="#decision-log">Decision log</a>
@@ -271,6 +273,85 @@
     <p>Technical implementation details live in <a href="marlana.html#marlie-phase-0">Phase 0: In-Course HTML Wrappers</a>. Optional Brightspace-native feature notes remain in <a href="brightspace-interactive-guide.html">Brightspace Native Tools Reference</a>.</p>
   </section>
 
+  <section class="guide-section" id="solo-course-workflow">
+    <h2>Solo Course Workflow</h2>
+
+    <div class="tip">
+      <strong>Operating model:</strong> one central course owner builds, uploads, and maintains a curated evergreen catalog. Brightspace is the deployment, access, tracking, and records layer; local Git is the source of truth.
+    </div>
+
+    <div class="solo-flow" aria-label="Solo Brightspace course workflow">
+      <div class="flow-step">
+        <span class="flow-num">1</span>
+        <h3>Build Locally</h3>
+        <p>Write course HTML, scripts, styles, and assets in the local repo. Test the course before anything touches Brightspace.</p>
+        <strong>Storage: Local IDE / Git</strong>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">2</span>
+        <h3>Version Shared Wrapper</h3>
+        <p>Keep LACE navigation, shared CSS, config loaders, logos, and brand assets in versioned shared folders.</p>
+        <strong>Storage: Organization / Public Files</strong>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">3</span>
+        <h3>Upload Course Content</h3>
+        <p>Upload course-specific pages, images, downloads, and media into the Course Offering's Manage Files area.</p>
+        <strong>Storage: Course Manage Files</strong>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">4</span>
+        <h3>Create Trackable Topics</h3>
+        <p>Create Content or Course Builder nodes that point to each learner-trackable HTML file.</p>
+        <strong>Storage: Brightspace Content</strong>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">5</span>
+        <h3>Sync Metadata</h3>
+        <p>Use the Brightspace API to cache course title, description, Org Unit ID, status, audience, and launch URLs.</p>
+        <strong>Storage: Supabase learning_items</strong>
+      </div>
+      <div class="flow-step optional">
+        <span class="flow-num">6</span>
+        <h3>Reuse Later</h3>
+        <p>Use the LOR only after repeated legal chunks become painful to maintain manually.</p>
+        <strong>Storage: LOR, Phase 2+</strong>
+      </div>
+    </div>
+
+    <h3>Working Procedure</h3>
+    <ol class="steps">
+      <li><strong>Draft the course locally.</strong> Create one folder per course, keep each legal micro-module as a discrete HTML file, and use the Brightspace/LACE content style rule of Lato at 19px.</li>
+      <li><strong>Commit before upload.</strong> Treat Git as the personal history and rollback point. Brightspace should receive finished files, not become the editing workspace.</li>
+      <li><strong>Keep shared infrastructure versioned.</strong> Use shared wrapper paths such as <code>lace-wrapper/v1/course-nav.js</code> and <code>lace-wrapper/v1/course-style.css</code>. Do not casually overwrite one global file that every live course depends on.</li>
+      <li><strong>Upload course-specific content to Manage Files.</strong> Keep predictable folders such as <code>pages</code>, <code>images</code>, <code>downloads</code>, and <code>media</code> inside the Course Offering.</li>
+      <li><strong>Create official Brightspace topics.</strong> Every page that should count for progress, completion, reporting, or resume links should exist as a real Content topic.</li>
+      <li><strong>Clean up both layers when removing content.</strong> If a file is deleted from Manage Files, remove or replace the matching Content/Course Builder topic too.</li>
+      <li><strong>Sync only approved metadata to Supabase.</strong> Store the Course Offering Org Unit ID, course title, description, status, category, audience, and Brightspace launch/resume URL in <code>learning_items</code>.</li>
+      <li><strong>Use clean-view launch links.</strong> Append <code>d2l_body_type=3</code> to Brightspace topic links so LACE navigation can own the learner viewport while Brightspace still records activity.</li>
+    </ol>
+
+    <div class="note">
+      <strong>Implementation ask for D2L:</strong> "Please show the minimum repeatable workflow for one central admin creating evergreen self-paced legal trainings using custom HTML. I do not need a university-scale instructor workflow. I need source-controlled local HTML, shared wrapper assets, course-level files, Content topics for tracking, and API-readable metadata."
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Stage</th><th>Action</th><th>Storage Location</th><th>Rule</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Build</strong></td><td>Write and test HTML, JS, CSS, images, and downloads.</td><td>Local IDE / Git</td><td>Source of truth.</td></tr>
+          <tr><td><strong>System</strong></td><td>Host versioned LACE wrapper logic and brand assets.</td><td>Organization / Public Files</td><td>Version before changing live courses.</td></tr>
+          <tr><td><strong>Content</strong></td><td>Host course-specific module files.</td><td>Manage Files, Course Offering level</td><td>One offering owns its content files.</td></tr>
+          <tr><td><strong>Tracking</strong></td><td>Create learner-visible nodes for pages and activities.</td><td>Content / Course Builder</td><td>Trackable pages need official topics.</td></tr>
+          <tr><td><strong>Sync</strong></td><td>Cache metadata and launch URLs.</td><td>Supabase <code>learning_items</code></td><td>Fast Hub discovery; Brightspace remains record source.</td></tr>
+          <tr><td><strong>Reusable</strong></td><td>Store repeated legal chunks.</td><td>LOR, optional Phase 2</td><td>Use only when reuse creates real savings.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <section class="guide-section" id="org-hierarchy">
     <h2>Brightspace Hierarchy</h2>
 
@@ -311,8 +392,8 @@
       <h3>Brightspace Mind Map</h3>
 
       <figure class="reference-figure">
-        <a href="Brightspace%20Mind%20Map.png">
-          <img src="Brightspace%20Mind%20Map.png" alt="Mind map of the Brightspace platform structure across organizational hierarchy, content and file management, users and permissions, developer and integration tools, and course design." loading="lazy">
+        <a href="brightspace-mind-map.png">
+          <img src="brightspace-mind-map.png" alt="Mind map of the Brightspace platform structure across organizational hierarchy, content and file management, users and permissions, developer and integration tools, and course design.">
         </a>
         <figcaption>Click the map to open the full-size version.</figcaption>
       </figure>

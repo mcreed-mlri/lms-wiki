@@ -13,6 +13,7 @@ const PRECACHE_URLS = [
   './mlri-architecture.html',
   './styles.css',
   `./sidebar.js?v=${BUILD_VERSION}`,
+  './brightspace-mind-map.png',
   './favicon.svg',
   './icon.svg',
   './icon-maskable.svg',

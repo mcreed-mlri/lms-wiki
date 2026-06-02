@@ -1070,6 +1070,92 @@ body.page-landing .home-link-card {
   border-color: rgba(44, 111, 172, 0.35);
 }
 
+.solo-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin: 1.25rem 0 1.75rem;
+}
+
+.flow-step {
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--teal);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  min-height: 13rem;
+  padding: 1rem 1rem 1.05rem;
+}
+
+.flow-step::after {
+  content: '\2192';
+  position: absolute;
+  top: 50%;
+  right: -0.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--blue);
+  font-weight: 800;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.flow-step:nth-child(3)::after,
+.flow-step:last-child::after {
+  content: none;
+}
+
+.flow-step.optional {
+  border-top-color: var(--amber);
+}
+
+.flow-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--teal) 14%, var(--white));
+  color: var(--teal);
+  font-family: 'DM Mono', 'Consolas', monospace;
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-bottom: 0.65rem;
+}
+
+.flow-step.optional .flow-num {
+  background: color-mix(in srgb, var(--amber) 14%, var(--white));
+  color: var(--amber);
+}
+
+.flow-step h3 {
+  color: var(--navy);
+  font-size: 1rem;
+  line-height: 1.35;
+  margin: 0 0 0.45rem;
+}
+
+.flow-step p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin-bottom: 0.85rem;
+}
+
+.flow-step strong {
+  display: block;
+  color: var(--text);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
 .last-updated {
   color: var(--muted);
   font-size: 0.85rem;
@@ -1737,6 +1823,8 @@ tbody tr:hover td {
   #sidebar-backdrop { display: none !important; }
   #main { margin-left: 0; padding: 1rem; max-width: 100%; }
   .screenshot { min-height: 200px; }
+  .solo-flow { grid-template-columns: 1fr; }
+  .flow-step::after { content: none; }
   h2 { page-break-after: avoid; }
   h3 { page-break-after: avoid; }
 }
@@ -1805,12 +1893,21 @@ tbody tr:hover td {
 
   .home-grid,
   .home-dashboard,
-  .home-ref-grid {
+  .home-ref-grid,
+  .solo-flow {
     grid-template-columns: 1fr;
   }
 
   .home-link-card {
     min-height: 0;
+  }
+
+  .flow-step {
+    min-height: 0;
+  }
+
+  .flow-step::after {
+    content: none;
   }
 }
 
