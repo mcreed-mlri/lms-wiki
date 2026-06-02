@@ -45,6 +45,7 @@
     <span class="section-label">Brightspace Setup</span>
     <a href="#course-content-model">Course Content Model</a>
     <a href="#org-hierarchy">Hierarchy</a>
+    <a href="#brightspace-map">Mind Map</a>
     <a href="#naming-conventions">Naming</a>
     <a href="#training-areas">Training Areas</a>
 
@@ -96,7 +97,7 @@
       </div>
     </div>
 
-    <p class="last-updated"><em>Last updated: 2026-05-27</em></p>
+    <p class="last-updated"><em>Last updated: 2026-06-02</em></p>
   </section>
 
   <section class="guide-section" id="project-north-star">
@@ -305,6 +306,66 @@
         </tbody>
       </table>
     </div>
+
+    <section class="subsection" id="brightspace-map">
+      <h3>Brightspace Mind Map</h3>
+
+      <figure class="reference-figure">
+        <a href="Brightspace%20Mind%20Map.png">
+          <img src="Brightspace%20Mind%20Map.png" alt="Mind map of the Brightspace platform structure across organizational hierarchy, content and file management, users and permissions, developer and integration tools, and course design." loading="lazy">
+        </a>
+        <figcaption>Click the map to open the full-size version.</figcaption>
+      </figure>
+
+      <div class="note">
+        <strong>Sanity check:</strong> the map is directionally correct and useful for team orientation. The main adjustment is vocabulary: Brightspace's official default org unit types are Organization, Department, Semester, Course Template, Course Offering, Group, and Section. LACE labels such as Training Area and Program are planning/catalog labels that may be implemented as Departments, custom org unit types, or Hub-side categories.
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Map Area</th><th>How to Read It</th><th>Team Translation</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Organizational Hierarchy</strong></td>
+              <td>Where Brightspace places courses in the site tree.</td>
+              <td>Use this for setup, reporting, and enrollment boundaries; do not confuse it with MLRI's staff org chart.</td>
+            </tr>
+            <tr>
+              <td><strong>Course Template</strong></td>
+              <td>Reusable parent/library for related Course Offerings.</td>
+              <td>Keep shared setup or copied components here; learners should normally be enrolled in Course Offerings, not Templates.</td>
+            </tr>
+            <tr>
+              <td><strong>Course Offering</strong></td>
+              <td>The active learner environment.</td>
+              <td>This is the real course run: enrollments, content visits, completions, grades, and learner progress live here.</td>
+            </tr>
+            <tr>
+              <td><strong>Content &amp; File Management</strong></td>
+              <td>Manage Files stores files; Content/Course Builder stores the outline nodes that point to them.</td>
+              <td>When retiring a page, clean up both the stored file and the Content/Course Builder topic that references it.</td>
+            </tr>
+            <tr>
+              <td><strong>Users &amp; Permissions</strong></td>
+              <td>Roles control what a person can do; enrollments and classlists connect people to Course Offerings.</td>
+              <td>User Attributes and Learning Groups are useful for routing, automation, and reporting but need a controlled naming plan.</td>
+            </tr>
+            <tr>
+              <td><strong>Developer &amp; Integration Layer</strong></td>
+              <td>Manage Extensibility, OAuth 2.0, scopes, LTI, and Valence/API tools are integration plumbing.</td>
+              <td>Use this layer for LACE Hub sync, external tools, service-user access, and approved API reads.</td>
+            </tr>
+            <tr>
+              <td><strong>Course Design &amp; Navigation</strong></td>
+              <td>Tools that shape the learner path and automate activity-based nudges.</td>
+              <td>For LACE, custom HTML remains the default; use Visual TOC, Creator+, Intelligent Agents, and Release Conditions only when they solve a specific need.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </section>
 
   <section class="guide-section" id="naming-conventions">
@@ -510,17 +571,30 @@
         </thead>
         <tbody>
           <tr id="glossary-offering"><td><strong>Course Offering</strong></td><td>Learner-facing course. Enroll learners here.</td></tr>
-          <tr id="glossary-template"><td><strong>Course Template</strong></td><td>Container for current and archived versions of a course.</td></tr>
+          <tr id="glossary-template"><td><strong>Course Template</strong></td><td>Reusable parent/library for related Course Offerings. It can hold shared setup or copied components, but settings do not automatically inherit into every Offering.</td></tr>
           <tr id="glossary-section"><td><strong>Section</strong></td><td>Optional cohort or scheduled-run subdivision inside an Offering.</td></tr>
-          <tr id="glossary-program"><td><strong>Program</strong></td><td>Group of related Course Templates.</td></tr>
-          <tr id="glossary-training-area"><td><strong>Training Area</strong></td><td>Broad catalog category: Legal Skills or Substantive Law.</td></tr>
-          <tr id="glossary-org"><td><strong>Org</strong></td><td>D2L term for the Brightspace site/container, not MLRI's staff org chart.</td></tr>
+          <tr id="glossary-program"><td><strong>Program</strong></td><td>LACE planning label for a group of related Course Templates; implementation may be a Department/custom org unit or a Hub catalog category.</td></tr>
+          <tr id="glossary-training-area"><td><strong>Training Area</strong></td><td>LACE planning label for broad catalog categories such as Legal Skills or Substantive Law.</td></tr>
+          <tr id="glossary-org"><td><strong>Org</strong></td><td>D2L term for the top Brightspace site/container, not MLRI's staff org chart.</td></tr>
+          <tr id="glossary-org-unit"><td><strong>Org Unit</strong></td><td>Brightspace structure object such as Organization, Department, Semester, Course Template, Course Offering, Group, or Section.</td></tr>
+          <tr id="glossary-department"><td><strong>Department</strong></td><td>Default Brightspace org unit type that can sit above Course Templates; may be the closest official match for some LACE Training Area or Program labels.</td></tr>
+          <tr id="glossary-semester"><td><strong>Semester</strong></td><td>Default Brightspace org unit type often used to group time-based Course Offerings; LACE may not need a visible semester layer for evergreen courses.</td></tr>
+          <tr id="glossary-group"><td><strong>Group</strong></td><td>Brightspace subdivision used for learner grouping; Sections are a special course-related grouping concept.</td></tr>
           <tr id="glossary-discover"><td><strong>Discover</strong></td><td>Brightspace's built-in catalog/self-enrollment page.</td></tr>
+          <tr id="glossary-manage-files"><td><strong>Manage Files</strong></td><td>Brightspace storage area for course files such as HTML, CSS, images, and documents.</td></tr>
+          <tr id="glossary-course-builder"><td><strong>Course Builder / Content</strong></td><td>Brightspace course outline layer made of modules and topics. Topics can point to files stored in Manage Files.</td></tr>
+          <tr id="glossary-module"><td><strong>Module</strong></td><td>Content outline container used to organize topics inside a Course Offering.</td></tr>
+          <tr id="glossary-topic"><td><strong>Topic</strong></td><td>Individual Content item such as a page, file, activity, link, quiz, or assignment.</td></tr>
           <tr id="glossary-completion"><td><strong>Completion</strong></td><td>Brightspace record that a learner finished a Course Offering.</td></tr>
           <tr id="glossary-enrollment"><td><strong>Enrollment</strong></td><td>Connection between a learner and a Course Offering.</td></tr>
           <tr id="glossary-vanity-url"><td><strong>Vanity URL</strong></td><td>Custom learner-facing Brightspace web address. D2L needs the desired URL before providing DNS records; SSL can be D2L-managed through AWS Certificate Manager or supplied by MLRI as an existing wildcard certificate.</td></tr>
           <tr id="glossary-community-of-practice"><td><strong>Community of Practice</strong></td><td>Shared space with role-based access; under review for audience routing.</td></tr>
           <tr id="glossary-intelligent-agents"><td><strong>Intelligent Agents</strong></td><td>Brightspace automation for emails and learner activity triggers.</td></tr>
+          <tr id="glossary-release-conditions"><td><strong>Release Conditions</strong></td><td>Brightspace rules that show content or trigger activity only after a learner meets specific conditions.</td></tr>
+          <tr id="glossary-manage-extensibility"><td><strong>Manage Extensibility</strong></td><td>Brightspace admin area for registering and managing integrations, OAuth applications, and related API access.</td></tr>
+          <tr id="glossary-oauth-scopes"><td><strong>OAuth Scopes</strong></td><td>Permission boundaries that define which Brightspace API routes an approved integration may access.</td></tr>
+          <tr id="glossary-valence"><td><strong>Valence</strong></td><td>D2L's Brightspace API framework used by external applications and SDKs.</td></tr>
+          <tr id="glossary-integrationhub"><td><strong>IntegrationHub</strong></td><td>Brightspace tool-deployment/integration area; use exact setup language from D2L when configuring a specific tool.</td></tr>
           <tr id="glossary-lti-13"><td><strong>LTI 1.3</strong></td><td>Learning Tools Interoperability standard for third-party tool integrations, including anonymous marking workflows and proactive tool readiness via Context Copy Notice.</td></tr>
           <tr id="glossary-lti-asset-processor"><td><strong>LTI Asset Processor</strong></td><td>LTI service extension used for workflows such as sharing anonymous assignment status with supported third-party tools.</td></tr>
           <tr id="glossary-context-copy-notice"><td><strong>Context Copy Notice</strong></td><td>LTI 1.3 readiness signal that lets tools discover service endpoints before first launch in copied or destination courses.</td></tr>

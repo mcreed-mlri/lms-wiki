@@ -1389,6 +1389,34 @@ ul.task-list li.done span.label {
 /* Smaller placeholder for secondary screenshots */
 .screenshot.sm { min-height: 200px; }
 
+.reference-figure {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  margin: 1.25rem 0 1.5rem;
+  overflow: hidden;
+}
+
+.reference-figure a {
+  display: block;
+  background: #0B0D0F;
+}
+
+.reference-figure img {
+  display: block;
+  width: 100%;
+  max-height: 46rem;
+  object-fit: contain;
+}
+
+.reference-figure figcaption {
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  padding: 0.75rem 0.95rem;
+}
+
 /* ── Tables ──────────────────────────────────── */
 .table-wrap {
   overflow: auto;
