@@ -31,6 +31,7 @@ jobs:
           cp marlana.html _site/
           cp brightspace-interactive-guide.html _site/
           cp brightspace-map.html _site/
+          cp user-attributes.html _site/
           cp mlri-architecture.html _site/
           cp styles.css _site/
           cp sidebar.js _site/
