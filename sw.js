@@ -11,6 +11,7 @@ const PRECACHE_URLS = [
   './marlana.html',
   './brightspace-interactive-guide.html',
   './brightspace-map.html',
+  './user-attributes.html',
   './mlri-architecture.html',
   './styles.css',
   `./sidebar.js?v=${BUILD_VERSION}`,

@@ -16,6 +16,7 @@ This is the stable project memory: current status, open decisions, waiting items
 | [`marlana.html`](marlana.html) | Marlie's workspace: executive scan for the wrapper, LACE Hub dashboard plan, data/reporting roadmap, open decisions | Marlie; future technical hires |
 | [`brightspace-interactive-guide.html`](brightspace-interactive-guide.html) | Secondary reference for optional Brightspace-native tools (Creator+, H5P, quizzes, discussions, assignments) when custom HTML is not the best fit | Marlie; admins evaluating native-tool options |
 | [`brightspace-map.html`](brightspace-map.html) | Interactive, expandable map of the Brightspace platform structure (hierarchy, content, users, integrations, course design); replaces the old static mind-map image | Anyone orienting to how Brightspace is organized |
+| [`user-attributes.html`](user-attributes.html) | Planning guide for Brightspace User Attributes, access routing, Learning Groups, Manager Dashboard, UPL acknowledgement, bar records, and jurisdiction metadata | Marlie; admins configuring user metadata |
 | [`mlri-architecture.html`](mlri-architecture.html) | System architecture overview | Anyone needing the stack picture |
 | [`styles.css`](styles.css) | Shared visual language used by the HTML pages |  |
 | [`screenshots/`](screenshots) | Screenshot assets referenced from reference pages |  |

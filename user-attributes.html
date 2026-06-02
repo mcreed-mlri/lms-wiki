@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brightspace User Attributes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1E3A5F">
+  <meta name="description" content="LACE planning guide for Brightspace User Attributes: access routing, Learning Groups, Manager Dashboard, UPL acknowledgement, bar information, and jurisdiction-specific training rules.">
+  <link rel="canonical" href="https://mcreed-mlri.github.io/lms-wiki/user-attributes.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LACE Platform Wiki">
+  <meta property="og:title" content="Brightspace User Attributes">
+  <meta property="og:description" content="LACE planning guide for Brightspace User Attributes and access-routing metadata.">
+  <meta property="og:url" content="https://mcreed-mlri.github.io/lms-wiki/user-attributes.html">
+  <meta property="og:image" content="https://mcreed-mlri.github.io/lms-wiki/icon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Brightspace User Attributes">
+  <meta name="twitter:description" content="LACE planning guide for Brightspace User Attributes and access-routing metadata.">
+  <meta name="twitter:image" content="https://mcreed-mlri.github.io/lms-wiki/icon.svg">
+  <script src="sidebar.js?v=20260529-redesign"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <div class="brand">Access &amp; Routing</div>
+    <h2>User Attributes</h2>
+  </div>
+  <nav>
+    <span class="section-label">Planning</span>
+    <a href="#overview">Overview</a>
+    <a href="#recommendation">Recommendation</a>
+    <a href="#attribute-set">Proposed Attribute Set</a>
+    <a href="#rename-defaults">Rename Defaults</a>
+    <a href="#multi-value-budget">Multi-Value Budget</a>
+    <a href="#upl-bar">UPL &amp; Bar Records</a>
+    <a href="#upload-process">Upload Process</a>
+    <a href="#d2l-questions">D2L Questions</a>
+
+    <span class="section-label">Related Docs</span>
+    <a href="index.html" class="external">Home</a>
+    <a href="team-wiki.html" class="external">Team Wiki</a>
+    <a href="brightspace-map.html" class="external">Brightspace Map</a>
+    <a href="marlana.html" class="external">Marlie's Workspace</a>
+  </nav>
+</aside>
+
+<main id="main">
+
+  <h1>Brightspace User Attributes</h1>
+  <p class="page-subtitle">Planning notes for the attributes that will drive access, Learning Groups, Manager Dashboard, reporting, UPL guardrails, and jurisdiction-specific course routing.</p>
+
+  <section class="guide-section" id="overview">
+    <h2>Overview</h2>
+
+    <div class="tip">
+      <strong>Working rule:</strong> User Attributes should describe who the learner is for routing and reporting. They should not become a messy duplicate HR database.
+    </div>
+
+    <p>Brightspace User Attributes can support Learning Groups, Manager Dashboard, bulk reporting, and automated enrollment rules. D2L's default labels are corporate or university-flavored, so LACE should rename and constrain them around our access matrix, legal-aid audience, jurisdictions, and UPL risk.</p>
+
+    <div class="note">
+      <strong>D2L constraints to remember:</strong> Brightspace supports up to 50 total attributes. Current planning note from implementation: no more than 10 attributes should be multi-value. Attribute values should stay short, and uploads are managed through Brightspace CSV import after users already exist.
+    </div>
+  </section>
+
+  <section class="guide-section" id="recommendation">
+    <h2>Recommendation</h2>
+
+    <p>Your proposed changes are right:</p>
+    <ul>
+      <li><strong>State should become <code>jurisdiction</code>.</strong> The platform may expand beyond Massachusetts, and jurisdiction is the legally meaningful concept.</li>
+      <li><strong>Role Type should become <code>user_type</code>.</strong> This should map to the LACE access matrix, not a generic job title.</li>
+      <li><strong>Hired Date should become <code>onboarding_date</code>.</strong> Many users will be outside MLRI, so "hired" is misleading.</li>
+      <li><strong>Bar number belongs in the model, but use it carefully.</strong> It may support attorney verification, certificates, and CLE reporting, but it should not be the only source of professional-status truth.</li>
+      <li><strong>UPL acknowledgement should be tracked.</strong> For non-lawyers, store the actual acknowledgement in a durable records system and mirror a date/status into Brightspace for routing/reporting.</li>
+    </ul>
+
+    <div class="warning">
+      <strong>Do not use free-text role labels for access control.</strong> A person's title can be "advocate," "paralegal," "case handler," or "coordinator," but the access decision needs a controlled <code>user_type</code> from the access matrix.
+    </div>
+  </section>
+
+  <section class="guide-section" id="attribute-set">
+    <h2>Proposed Attribute Set</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Attribute</th><th>Type</th><th>Multi-Value?</th><th>Use</th><th>Advice</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>LMS Username</strong></td><td>Username</td><td>No</td><td>Required Brightspace user key.</td><td>Keep as D2L-required identifier.</td></tr>
+          <tr><td><strong><code>user_type</code></strong></td><td>Text</td><td>No</td><td>Access matrix category.</td><td>Use controlled values only, such as attorney, non-lawyer advocate, manager, faculty, admin, external partner.</td></tr>
+          <tr><td><strong><code>jurisdiction</code></strong></td><td>Text</td><td>Yes</td><td>State/legal jurisdiction routing.</td><td>Use codes such as <code>MA</code>, <code>CT</code>, <code>RI</code>. Multi-value because a user may work across states.</td></tr>
+          <tr><td><strong><code>organization_name</code></strong></td><td>Text</td><td>No</td><td>Primary organization affiliation.</td><td>Rename from Company Name. Keep a controlled spelling list where possible.</td></tr>
+          <tr><td><strong><code>organization_type</code></strong></td><td>Text</td><td>No</td><td>Broad affiliation type.</td><td>Examples: MLRI, legal aid org, partner org, volunteer, funder, court/community partner.</td></tr>
+          <tr><td><strong><code>practice_area</code></strong></td><td>Text</td><td>Yes</td><td>Course discovery and Learning Group routing.</td><td>Use controlled values such as housing, benefits, family, immigration, consumer, elder, general skills.</td></tr>
+          <tr><td><strong><code>onboarding_date</code></strong></td><td>Date</td><td>No</td><td>When the person entered the LACE learning system.</td><td>Rename from Hired Date. Use <code>YYYY-MM-DD</code>.</td></tr>
+          <tr><td><strong><code>manager</code></strong></td><td>Username</td><td>No</td><td>Manager Dashboard reporting structure.</td><td>Use only if Manager Dashboard is part of the workflow.</td></tr>
+          <tr><td><strong><code>affiliated_org_units</code></strong></td><td>Org Unit Code</td><td>Yes</td><td>Restricts manager course assignment scope.</td><td>Reserved D2L meaning. Do not use as a generic organization field.</td></tr>
+          <tr><td><strong><code>bar_number</code></strong></td><td>Text</td><td>No</td><td>Attorney identification for verification/reporting.</td><td>Use for attorneys only. If multi-state practice becomes common, store detailed bar records outside Brightspace.</td></tr>
+          <tr><td><strong><code>bar_jurisdiction</code></strong></td><td>Text</td><td>Yes</td><td>Jurisdiction where the bar number/admission applies.</td><td>Optional. Use only if certificates or reporting need it.</td></tr>
+          <tr><td><strong><code>upl_acknowledged_date</code></strong></td><td>Date</td><td>No</td><td>Date a non-lawyer acknowledged UPL limits.</td><td>Better than a bare yes/no because it records when the acknowledgement happened.</td></tr>
+          <tr><td><strong><code>access_status</code></strong></td><td>Text</td><td>No</td><td>Whether the person is approved, pending, suspended, or inactive.</td><td>Useful for routing and audit reviews. Keep values tightly controlled.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Recommended Phase 1 set:</strong> start with <code>user_type</code>, <code>jurisdiction</code>, <code>organization_name</code>, <code>organization_type</code>, <code>practice_area</code>, <code>onboarding_date</code>, <code>bar_number</code>, <code>upl_acknowledged_date</code>, and <code>access_status</code>. Add <code>manager</code> and <code>affiliated_org_units</code> only when Manager Dashboard is actively being configured.</p>
+  </section>
+
+  <section class="guide-section" id="rename-defaults">
+    <h2>Rename Defaults</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>D2L Default / Current Label</th><th>LACE Label</th><th>Decision</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>State</strong></td><td><code>jurisdiction</code></td><td>Rename. This is about legal jurisdiction, not mailing address.</td></tr>
+          <tr><td><strong>Role Type</strong></td><td><code>user_type</code></td><td>Rename. Values should come from the LACE access matrix.</td></tr>
+          <tr><td><strong>Employee Role</strong></td><td><code>job_title</code> or omit</td><td>Do not use for access control. Use only if display/reporting needs job title.</td></tr>
+          <tr><td><strong>Hired Date</strong></td><td><code>onboarding_date</code></td><td>Rename. Users may be outside MLRI or not employees.</td></tr>
+          <tr><td><strong>Company Name</strong></td><td><code>organization_name</code></td><td>Rename. Better for legal aid partners and external users.</td></tr>
+          <tr><td><strong>Company Employee ID</strong></td><td><code>external_user_id</code> or omit</td><td>Use only if LegalServer/HR/source-system mapping requires it.</td></tr>
+          <tr><td><strong>Department / Division / Region / Location</strong></td><td>Usually omit</td><td>Do not keep unless Learning Groups or Manager Dashboard truly need them.</td></tr>
+          <tr><td><strong>Affiliated Org Units</strong></td><td>Keep D2L name</td><td>Reserved for Manager Dashboard course assignment scope.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="guide-section" id="multi-value-budget">
+    <h2>Multi-Value Budget</h2>
+
+    <p>Because multi-value attributes are limited, reserve them for fields where multiple values are expected and operationally useful.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Attribute</th><th>Why Multi-Value?</th><th>Keep?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>jurisdiction</code></td><td>A learner may work across multiple states.</td><td><strong>Yes</strong></td></tr>
+          <tr><td><code>practice_area</code></td><td>A learner may work in housing and benefits, or need cross-practice training.</td><td><strong>Yes</strong></td></tr>
+          <tr><td><code>bar_jurisdiction</code></td><td>An attorney may be admitted in more than one jurisdiction.</td><td>Maybe</td></tr>
+          <tr><td><code>affiliated_org_units</code></td><td>D2L reserved manager-course-assignment scope.</td><td>Only if using Manager Dashboard</td></tr>
+          <tr><td>Department / Division / Region / Location</td><td>Corporate hierarchy fields.</td><td><strong>No for Phase 1</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <strong>Multi-value rule:</strong> spend the multi-value budget on legal routing, not corporate hierarchy. For LACE, <code>jurisdiction</code> and <code>practice_area</code> matter much more than Department, Division, Region, or Location.
+    </div>
+  </section>
+
+  <section class="guide-section" id="upl-bar">
+    <h2>UPL &amp; Bar Records</h2>
+
+    <p>UPL and bar status are governance records, not just convenience fields. Brightspace can carry routing metadata, but the source of truth for signed acknowledgements should be a durable form/database record that can be audited.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Need</th><th>Recommended Handling</th><th>Brightspace Attribute</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Attorney identifier</td><td>Store bar number if needed for certificates, verification, or reporting.</td><td><code>bar_number</code></td></tr>
+          <tr><td>Admission state</td><td>Track only if it affects routing, certificates, or reporting.</td><td><code>bar_jurisdiction</code></td></tr>
+          <tr><td>Non-lawyer UPL acknowledgement</td><td>Collect a signed acknowledgement outside Brightspace, then mirror the date/status into Brightspace.</td><td><code>upl_acknowledged_date</code></td></tr>
+          <tr><td>Access decision</td><td>Use controlled access status values, not notes in free text.</td><td><code>access_status</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warning">
+      <strong>Legal guardrail:</strong> do not let <code>bar_number</code> alone decide course access. Pair it with <code>user_type</code>, <code>jurisdiction</code>, UPL acknowledgement where needed, and the LACE access matrix.
+    </div>
+  </section>
+
+  <section class="guide-section" id="upload-process">
+    <h2>Upload Process</h2>
+
+    <ol class="steps">
+      <li>Create or update the controlled value list for each attribute before upload.</li>
+      <li>Make sure each user already exists in Brightspace.</li>
+      <li>Download the Brightspace Bulk Attribute Upload template.</li>
+      <li>Populate only approved attributes. Empty cells can remove existing values, so treat blanks carefully.</li>
+      <li>Validate values before upload: user names, dates, controlled lists, and multi-value formatting.</li>
+      <li>Upload through the Bulk Attribute Upload tab.</li>
+      <li>Spot-check several users in Brightspace and confirm Learning Groups / Manager Dashboard behavior.</li>
+      <li>Record the upload date, file name, and who approved the value set.</li>
+    </ol>
+  </section>
+
+  <section class="guide-section" id="d2l-questions">
+    <h2>D2L Questions</h2>
+
+    <ul>
+      <li>Can D2L rename default attributes for our instance, or do custom attributes need to be created alongside defaults?</li>
+      <li>Please confirm the 50-attribute total limit and the maximum number of multi-value attributes for our configuration.</li>
+      <li>Which attributes can Learning Groups use for automatic enrollment, and are there limitations by type?</li>
+      <li>Does Manager Dashboard require <code>manager</code>, <code>team</code>, or <code>affiliated_org_units</code> for our intended reporting workflow?</li>
+      <li>Can <code>upl_acknowledged_date</code> and <code>access_status</code> be used in Learning Group rules, or do we need a different attribute type?</li>
+      <li>What is the safest CSV format for multi-value fields such as <code>jurisdiction</code> and <code>practice_area</code>?</li>
+      <li>Can Brightspace Data Sets export User Attribute Values for audit/reporting into Supabase?</li>
+    </ul>
+
+    <p class="last-updated"><em>Last updated: 2026-06-02</em></p>
+  </section>
+
+</main>
+
+</body>
+</html>
