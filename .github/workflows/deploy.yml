@@ -30,6 +30,7 @@ jobs:
           cp june-2026-priority-tasks.html _site/
           cp marlana.html _site/
           cp brightspace-interactive-guide.html _site/
+          cp brightspace-map.html _site/
           cp mlri-architecture.html _site/
           cp styles.css _site/
           cp sidebar.js _site/

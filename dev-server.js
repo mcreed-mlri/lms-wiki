@@ -56,6 +56,7 @@ server.listen(PORT, () => {
   console.log('Pages:');
   console.log(`  http://localhost:${PORT}/index.html`);
   console.log(`  http://localhost:${PORT}/brightspace-interactive-guide.html`);
+  console.log(`  http://localhost:${PORT}/brightspace-map.html`);
   console.log(`  http://localhost:${PORT}/mlri-architecture.html`);
   console.log('Press Ctrl+C to stop.');
 });

@@ -46,7 +46,7 @@
     <a href="#course-content-model">Course Content Model</a>
     <a href="#solo-course-workflow">Solo Course Workflow</a>
     <a href="#org-hierarchy">Hierarchy</a>
-    <a href="#brightspace-map">Mind Map</a>
+    <a href="#brightspace-map">Platform Map</a>
     <a href="#naming-conventions">Naming</a>
     <a href="#training-areas">Training Areas</a>
 
@@ -65,6 +65,7 @@
     <a href="june-2026-priority-tasks.html" class="external">June Priority Tasks</a>
     <a href="marlana.html" class="external">Marlie's Workspace</a>
     <a href="mlri-architecture.html" class="external">LACE Architecture</a>
+    <a href="brightspace-map.html" class="external">Brightspace Map</a>
   </nav>
 </aside>
 
@@ -350,6 +351,48 @@
         </tbody>
       </table>
     </div>
+
+    <h3>Growth Rule: One Course Family, Many Jurisdiction Offerings</h3>
+
+    <div class="warning">
+      <strong>Do not build one giant all-state course.</strong> As LACE expands, each state should have its own published Course Offering when law, procedure, forms, deadlines, or referral resources differ. Reuse shared source files where appropriate, but keep learner-facing legal guidance jurisdiction-specific.
+    </div>
+
+    <p>Think of each course as three layers:</p>
+    <ul>
+      <li><strong>Core concept layer:</strong> reusable learning that applies across states, such as client interviewing, issue spotting, trauma-informed practice, litigation skills, legal aid values, and general workflow concepts.</li>
+      <li><strong>State-specific law and procedure layer:</strong> statutes, court rules, deadlines, agency procedures, forms, local practice norms, referral resources, and certificate/CLE language.</li>
+      <li><strong>Local implementation layer:</strong> partner access rules, local contacts, office workflows, manager/reporting needs, and required completion rules.</li>
+    </ul>
+
+    <pre>courses/
+&#9492;&#9472;&#9472; eviction-defense/
+    &#9500;&#9472;&#9472; _shared/
+    &#9474;   &#9500;&#9472;&#9472; pages/
+    &#9474;   &#9492;&#9472;&#9472; downloads/
+    &#9500;&#9472;&#9472; ma/
+    &#9474;   &#9500;&#9472;&#9472; pages/
+    &#9474;   &#9492;&#9472;&#9472; course-config.js
+    &#9492;&#9472;&#9472; ct/
+        &#9500;&#9472;&#9472; pages/
+        &#9492;&#9472;&#9472; course-config.js</pre>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Concept</th><th>Use It For</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Course Family</strong></td><td>The broad training topic shared across jurisdictions.</td><td><code>eviction-defense</code></td></tr>
+          <tr><td><strong>Jurisdiction</strong></td><td>The state or legal system whose law/procedure controls the learner guidance.</td><td><code>MA</code>, <code>CT</code>, <code>RI</code></td></tr>
+          <tr><td><strong>Course Offering</strong></td><td>The learner-facing Brightspace course for one jurisdiction and version.</td><td><code>Eviction Defense Fundamentals - MA</code></td></tr>
+          <tr><td><strong>Shared Source</strong></td><td>Reusable explanations, skills pages, graphics, checklists, or activities that are not state-specific.</td><td><code>courses/eviction-defense/_shared/</code></td></tr>
+          <tr><td><strong>State Variant</strong></td><td>The state-specific source files, config, forms, deadlines, and local resources.</td><td><code>courses/eviction-defense/ma/</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Supabase metadata rule:</strong> include fields such as <code>course_family</code>, <code>jurisdiction</code>, <code>law_variant</code>, <code>audience</code>, and <code>brightspace_org_unit_id</code> in the catalog sync model so LACE can show the right course to the right learner as the platform expands.</p>
   </section>
 
   <section class="guide-section" id="org-hierarchy">
@@ -389,14 +432,77 @@
     </div>
 
     <section class="subsection" id="brightspace-map">
-      <h3>Brightspace Mind Map</h3>
+      <h3>Brightspace Platform Map</h3>
 
-      <figure class="reference-figure">
-        <a href="brightspace-mind-map.png">
-          <img src="brightspace-mind-map.png" alt="Mind map of the Brightspace platform structure across organizational hierarchy, content and file management, users and permissions, developer and integration tools, and course design.">
-        </a>
-        <figcaption>Click the map to open the full-size version.</figcaption>
-      </figure>
+      <p>The five branches below are a click-to-explore version of the Brightspace structure. Open a branch for a quick look, or use the full interactive map for the complete view with plain-language notes on every item.</p>
+
+      <div class="bs-tree bs-compact" id="bs-mini-tree">
+        <details class="bs-branch bs-c1">
+          <summary>
+            <span class="bs-caret" aria-hidden="true">&#8250;</span>
+            <span><span class="bs-title">Organizational Hierarchy</span></span>
+            <span class="bs-count">6 levels</span>
+          </summary>
+          <div class="bs-body">
+            <ul class="bs-leaves">
+              <li><strong>Org &rsaquo; Training Area &rsaquo; Program &rsaquo; Course Template &rsaquo; Course Offering &rsaquo; Section</strong> &mdash; where courses sit in the site tree.</li>
+            </ul>
+          </div>
+        </details>
+        <details class="bs-branch bs-c2">
+          <summary>
+            <span class="bs-caret" aria-hidden="true">&#8250;</span>
+            <span><span class="bs-title">Content &amp; File Management</span></span>
+            <span class="bs-count">5 items</span>
+          </summary>
+          <div class="bs-body">
+            <ul class="bs-leaves">
+              <li><strong>Storage Layer</strong> &mdash; Manage Files holds the files.</li>
+              <li><strong>Structure Layer</strong> &mdash; Course Builder, Modules, Topics, and HTML Templates form the outline that points at them.</li>
+            </ul>
+          </div>
+        </details>
+        <details class="bs-branch bs-c3">
+          <summary>
+            <span class="bs-caret" aria-hidden="true">&#8250;</span>
+            <span><span class="bs-title">Users &amp; Permissions</span></span>
+            <span class="bs-count">7 items</span>
+          </summary>
+          <div class="bs-body">
+            <ul class="bs-leaves">
+              <li><strong>Identity Management</strong> &mdash; User Attributes, Learning Groups, Classlist.</li>
+              <li><strong>Role Types</strong> &mdash; Learner, Instructor, Manager, Administrator.</li>
+            </ul>
+          </div>
+        </details>
+        <details class="bs-branch bs-c4">
+          <summary>
+            <span class="bs-caret" aria-hidden="true">&#8250;</span>
+            <span><span class="bs-title">Developer &amp; Integration Layer</span></span>
+            <span class="bs-count">6 items</span>
+          </summary>
+          <div class="bs-body">
+            <ul class="bs-leaves">
+              <li><strong>Extensibility</strong> &mdash; Manage Extensibility, OAuth 2.0, Authorization Scopes.</li>
+              <li><strong>Integration Tools</strong> &mdash; LTI Advantage, Integration Hub, Valence SDKs.</li>
+            </ul>
+          </div>
+        </details>
+        <details class="bs-branch bs-c5">
+          <summary>
+            <span class="bs-caret" aria-hidden="true">&#8250;</span>
+            <span><span class="bs-title">Course Design &amp; Navigation</span></span>
+            <span class="bs-count">4 items</span>
+          </summary>
+          <div class="bs-body">
+            <ul class="bs-leaves">
+              <li><strong>Visual TOC, Creator+, Intelligent Agents, Release Conditions</strong> &mdash; optional tools; custom HTML stays the default.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <p><a class="bs-cta" href="brightspace-map.html">Open the full interactive Brightspace map</a></p>
 
       <div class="note">
         <strong>Sanity check:</strong> the map is directionally correct and useful for team orientation. The main adjustment is vocabulary: Brightspace's official default org unit types are Organization, Department, Semester, Course Template, Course Offering, Group, and Section. LACE labels such as Training Area and Program are planning/catalog labels that may be implemented as Departments, custom org unit types, or Hub-side categories.

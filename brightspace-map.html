@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brightspace Platform Map</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1E3A5F">
+  <meta name="description" content="An interactive, expandable map of the Brightspace platform structure: organizational hierarchy, content and file management, users and permissions, developer and integration tools, and course design.">
+  <link rel="canonical" href="https://mcreed-mlri.github.io/lms-wiki/brightspace-map.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LACE Platform Wiki">
+  <meta property="og:title" content="Brightspace Platform Map">
+  <meta property="og:description" content="An interactive, expandable map of how Brightspace is structured — built to replace the dense static diagram.">
+  <meta property="og:url" content="https://mcreed-mlri.github.io/lms-wiki/brightspace-map.html">
+  <meta property="og:image" content="https://mcreed-mlri.github.io/lms-wiki/icon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Brightspace Platform Map">
+  <meta name="twitter:description" content="An interactive, expandable map of how Brightspace is structured.">
+  <meta name="twitter:image" content="https://mcreed-mlri.github.io/lms-wiki/icon.svg">
+  <script src="sidebar.js?v=20260529-redesign"></script>
+</head>
+<body class="page-brightspace-map">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ═══════════════════════════════════════════════
+     SIDEBAR / TABLE OF CONTENTS
+══════════════════════════════════════════════════ -->
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <div class="brand">Orientation</div>
+    <h2>Brightspace Platform Map</h2>
+  </div>
+  <nav>
+    <span class="section-label">The Five Branches</span>
+    <a href="#org-hierarchy">Organizational Hierarchy</a>
+    <a href="#content-files">Content &amp; File Management</a>
+    <a href="#users-permissions">Users &amp; Permissions</a>
+    <a href="#dev-integration">Developer &amp; Integration</a>
+    <a href="#course-design">Course Design &amp; Navigation</a>
+
+    <span class="section-label">Related Docs</span>
+    <a href="index.html" class="external">Home</a>
+    <a href="team-wiki.html" class="external">Team Wiki</a>
+    <a href="brightspace-interactive-guide.html" class="external">Native Tools Reference</a>
+    <a href="mlri-architecture.html" class="external">LACE Architecture</a>
+  </nav>
+</aside>
+
+<!-- ═══════════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════════════ -->
+<main id="main">
+
+  <h1>Brightspace Platform Map</h1>
+  <p class="page-subtitle">A friendlier, click-to-explore version of how Brightspace is put together. Open a branch to see what lives inside it — nothing here is required reading top to bottom.</p>
+
+  <section class="guide-section" id="overview">
+    <h2>How to Read This Map</h2>
+
+    <p>Brightspace has a lot of moving parts, but they group into <strong>five branches</strong>. Start collapsed, open only the branch you care about, and each item carries a one-line plain-language explanation. This is for orientation — the <a href="team-wiki.html#org-hierarchy">Team Wiki</a> remains the source of truth for LACE's actual setup and naming.</p>
+
+    <div class="tip">
+      <strong>One thing to keep straight:</strong> "Org" here means the Brightspace <em>course</em> structure — the site tree where courses live — not MLRI's staff org chart.
+    </div>
+
+    <div class="note">
+      <strong>Vocabulary note:</strong> Brightspace's official default org-unit types are Organization, Department, Semester, Course Template, Course Offering, Group, and Section. LACE labels such as <em>Training Area</em> and <em>Program</em> are planning/catalog labels that may be implemented as Departments, custom org-unit types, or Hub-side categories.
+    </div>
+
+    <div class="bs-tree-controls">
+      <button type="button" id="bs-expand-all">Expand all</button>
+      <button type="button" id="bs-collapse-all">Collapse all</button>
+    </div>
+
+    <!-- ── The interactive tree ─────────────────── -->
+    <div class="bs-tree" id="bs-full-tree">
+
+      <!-- Branch 1 -->
+      <details class="bs-branch bs-c1" id="org-hierarchy" open>
+        <summary>
+          <span class="bs-caret" aria-hidden="true">&#8250;</span>
+          <span>
+            <span class="bs-title">Organizational Hierarchy</span>
+            <span class="bs-gloss">Where Brightspace places courses in the site tree. Use it for setup, reporting, and enrollment boundaries.</span>
+          </span>
+          <span class="bs-count">6 levels</span>
+        </summary>
+        <div class="bs-body">
+          <ul class="bs-leaves">
+            <li><strong>Org</strong> &mdash; the top-level site instance (MLRI).</li>
+            <li><strong>Training Area</strong> &mdash; broad catalog category, e.g. Legal Skills or Substantive Law.</li>
+            <li><strong>Program</strong> &mdash; a group of related course templates, e.g. Housing Law.</li>
+            <li><strong>Course Template</strong> &mdash; the version container that holds all runs of a course.</li>
+            <li><strong>Course Offering</strong> &mdash; the active, learner-facing course; enroll learners here.</li>
+            <li><strong>Section</strong> &mdash; optional subdivision for cohorts or scheduled runs.</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Branch 2 -->
+      <details class="bs-branch bs-c2" id="content-files">
+        <summary>
+          <span class="bs-caret" aria-hidden="true">&#8250;</span>
+          <span>
+            <span class="bs-title">Content &amp; File Management</span>
+            <span class="bs-gloss">Manage Files stores the actual files; Content / Course Builder stores the outline nodes that point to them.</span>
+          </span>
+          <span class="bs-count">5 items</span>
+        </summary>
+        <div class="bs-body">
+          <ul class="bs-leaves">
+            <li><strong>Storage Layer</strong> &mdash; Manage Files, where the raw files actually live.</li>
+          </ul>
+          <details class="bs-group">
+            <summary>
+              <span class="bs-caret" aria-hidden="true">&#8250;</span>
+              <span class="bs-title">Structure Layer</span>
+              <span class="bs-gloss">the outline that points at stored files</span>
+            </summary>
+            <ul class="bs-leaves">
+              <li><strong>Course Builder</strong> &mdash; maps outline nodes to files.</li>
+              <li><strong>Modules</strong> &mdash; unit-level organization of the outline.</li>
+              <li><strong>Topics</strong> &mdash; the individual content items learners open.</li>
+              <li><strong>HTML Templates</strong> &mdash; responsive web design for custom pages (LACE's default course model).</li>
+            </ul>
+          </details>
+          <p class="bs-aside"><em>Retiring a page? Clean up both the stored file and the Content / Course Builder node that references it.</em></p>
+        </div>
+      </details>
+
+      <!-- Branch 3 -->
+      <details class="bs-branch bs-c3" id="users-permissions">
+        <summary>
+          <span class="bs-caret" aria-hidden="true">&#8250;</span>
+          <span>
+            <span class="bs-title">Users &amp; Permissions</span>
+            <span class="bs-gloss">Roles control what a person can do; enrollments and classlists connect people to Course Offerings.</span>
+          </span>
+          <span class="bs-count">7 items</span>
+        </summary>
+        <div class="bs-body">
+          <details class="bs-group">
+            <summary>
+              <span class="bs-caret" aria-hidden="true">&#8250;</span>
+              <span class="bs-title">Identity Management</span>
+              <span class="bs-gloss">who someone is and which courses they belong to</span>
+            </summary>
+            <ul class="bs-leaves">
+              <li><strong>User Attributes</strong> &mdash; profile metadata (useful for routing and reporting, with a controlled naming plan).</li>
+              <li><strong>Learning Groups</strong> &mdash; automation rules for grouping users.</li>
+              <li><strong>Classlist</strong> &mdash; the participants enrolled in a Course Offering.</li>
+            </ul>
+          </details>
+          <details class="bs-group">
+            <summary>
+              <span class="bs-caret" aria-hidden="true">&#8250;</span>
+              <span class="bs-title">Role Types</span>
+              <span class="bs-gloss">what each kind of user is allowed to do</span>
+            </summary>
+            <ul class="bs-leaves">
+              <li><strong>Learner</strong> &mdash; standard access; takes the training.</li>
+              <li><strong>Instructor</strong> &mdash; course authoring and content editing.</li>
+              <li><strong>Manager</strong> &mdash; progress reporting and oversight.</li>
+              <li><strong>Administrator</strong> &mdash; full org-level access.</li>
+            </ul>
+          </details>
+        </div>
+      </details>
+
+      <!-- Branch 4 -->
+      <details class="bs-branch bs-c4" id="dev-integration">
+        <summary>
+          <span class="bs-caret" aria-hidden="true">&#8250;</span>
+          <span>
+            <span class="bs-title">Developer &amp; Integration Layer</span>
+            <span class="bs-gloss">Integration plumbing &mdash; used for LACE Hub sync, external tools, service-user access, and approved API reads.</span>
+          </span>
+          <span class="bs-count">6 items</span>
+        </summary>
+        <div class="bs-body">
+          <details class="bs-group">
+            <summary>
+              <span class="bs-caret" aria-hidden="true">&#8250;</span>
+              <span class="bs-title">Extensibility</span>
+              <span class="bs-gloss">how external apps are registered and authorized</span>
+            </summary>
+            <ul class="bs-leaves">
+              <li><strong>Manage Extensibility</strong> &mdash; register apps that talk to Brightspace.</li>
+              <li><strong>OAuth 2.0</strong> &mdash; the security framework for that access.</li>
+              <li><strong>Authorization Scopes</strong> &mdash; the specific permissions an app is granted.</li>
+            </ul>
+          </details>
+          <details class="bs-group">
+            <summary>
+              <span class="bs-caret" aria-hidden="true">&#8250;</span>
+              <span class="bs-title">Integration Tools</span>
+              <span class="bs-gloss">the ways external tools and code connect in</span>
+            </summary>
+            <ul class="bs-leaves">
+              <li><strong>LTI Advantage</strong> &mdash; the standard for plugging in external tools.</li>
+              <li><strong>Integration Hub</strong> &mdash; deployment of those tools.</li>
+              <li><strong>Valence SDKs</strong> &mdash; API libraries (Java, Python) for custom code.</li>
+            </ul>
+          </details>
+        </div>
+      </details>
+
+      <!-- Branch 5 -->
+      <details class="bs-branch bs-c5" id="course-design">
+        <summary>
+          <span class="bs-caret" aria-hidden="true">&#8250;</span>
+          <span>
+            <span class="bs-title">Course Design &amp; Navigation</span>
+            <span class="bs-gloss">Tools that shape the learner path. For LACE, custom HTML stays the default &mdash; reach for these only when they solve a specific need.</span>
+          </span>
+          <span class="bs-count">4 items</span>
+        </summary>
+        <div class="bs-body">
+          <ul class="bs-leaves">
+            <li><strong>Visual Table of Contents (TOC)</strong> &mdash; a visual index of the course outline.</li>
+            <li><strong>Creator+</strong> &mdash; dynamic interactive elements (H5P and more). See the <a href="brightspace-interactive-guide.html">Native Tools Reference</a>.</li>
+            <li><strong>Intelligent Agents</strong> &mdash; activity-based automation and nudges.</li>
+            <li><strong>Release Conditions</strong> &mdash; staged content paths that unlock as learners progress.</li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+
+    <p class="last-updated"><em>This map replaces the earlier static diagram. For LACE's real-world translation of each branch, see the <a href="team-wiki.html#brightspace-map">Team Wiki reference table</a>.</em></p>
+  </section>
+
+</main>
+
+<script>
+  /* Expand / collapse all + scroll-spy. Progressive enhancement —
+     the tree is fully usable without this script. */
+  (function () {
+    var tree = document.getElementById('bs-full-tree');
+    if (tree) {
+      var nodes = Array.prototype.slice.call(tree.querySelectorAll('details'));
+      var expandBtn = document.getElementById('bs-expand-all');
+      var collapseBtn = document.getElementById('bs-collapse-all');
+      if (expandBtn) expandBtn.addEventListener('click', function () {
+        nodes.forEach(function (d) { d.open = true; });
+      });
+      if (collapseBtn) collapseBtn.addEventListener('click', function () {
+        nodes.forEach(function (d) { d.open = false; });
+      });
+    }
+
+    /* Open a branch when navigated to via its #anchor. */
+    function openHash() {
+      if (!window.location.hash) return;
+      var el = document.querySelector(window.location.hash);
+      if (el && el.tagName === 'DETAILS') el.open = true;
+    }
+    window.addEventListener('hashchange', openHash);
+    openHash();
+
+    /* Sidebar scroll-spy (matches brightspace-interactive-guide.html). */
+    var links = document.querySelectorAll('#sidebar nav a:not(.external)');
+    var targets = Array.prototype.slice.call(links)
+      .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+      .filter(Boolean);
+    if (!targets.length) return;
+
+    function onScroll() {
+      var current = targets[0];
+      targets.forEach(function (t) {
+        if (t.getBoundingClientRect().top <= 90) current = t;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+</body>
+</html>

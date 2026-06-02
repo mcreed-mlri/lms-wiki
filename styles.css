@@ -606,6 +606,7 @@ html.sidebar-collapsed #main {
 body.page-marlana          { --accent: #0d9488; --accent-2: #60a5fa; --focus-color: #0d9488; --focus-ring: 0 0 0 3px rgba(13, 148, 136, 0.4); }
 body.page-interactive-guide { --accent: #0f766e; --accent-2: #5eead4; --focus-color: #0f766e; --focus-ring: 0 0 0 3px rgba(20, 184, 166, 0.4); }
 body.page-landing          { --accent: #B06A00; --accent-2: #2C6FAC; --focus-color: #B06A00; --focus-ring: 0 0 0 3px rgba(176, 106, 0, 0.38); }
+body.page-brightspace-map  { --accent: #2C6FAC; --accent-2: #2A8F82; --focus-color: #2C6FAC; --focus-ring: 0 0 0 3px rgba(44, 111, 172, 0.4); }
 
 /* Marlie's workspace — main content (teal accent, separate from team wiki) */
 body.page-marlana {
@@ -1816,6 +1817,223 @@ tbody tr:hover td {
   line-height: 1.5;
 }
 
+/* ═══════════════════════════════════════════════
+   BRIGHTSPACE MAP — expandable tree
+   A calm, light alternative to the old static
+   mind-map image. Built from native <details> so it
+   works without JS, on the keyboard, and in print.
+══════════════════════════════════════════════════ */
+
+.bs-tree-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.25rem 0 1rem;
+}
+
+.bs-tree-controls button {
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 0.4rem 0.95rem;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.bs-tree-controls button:hover {
+  background: color-mix(in srgb, var(--blue) 8%, var(--white));
+  border-color: color-mix(in srgb, var(--blue) 40%, var(--border));
+}
+
+.bs-tree { margin: 0 0 1.5rem; }
+
+/* A branch = top-level <details>, rendered as a soft card. */
+.bs-branch {
+  --bs-accent: var(--blue);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--bs-accent);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 0.85rem;
+  transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.bs-branch[open] { box-shadow: var(--shadow-md); }
+.bs-branch:hover { box-shadow: var(--shadow-md); }
+
+.bs-branch > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 1rem 1.15rem;
+  user-select: none;
+}
+
+.bs-branch > summary::-webkit-details-marker { display: none; }
+
+/* Rotating disclosure caret (shared by branches and nested groups) */
+.bs-caret {
+  flex: none;
+  margin-top: 0.1rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--bs-accent);
+  transition: transform var(--dur) var(--ease);
+}
+
+details[open] > summary > .bs-caret { transform: rotate(90deg); }
+
+.bs-branch > summary .bs-title {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 1.02rem;
+  line-height: 1.35;
+}
+
+.bs-branch > summary .bs-gloss {
+  display: block;
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  margin-top: 0.15rem;
+}
+
+.bs-count {
+  margin-left: auto;
+  flex: none;
+  align-self: center;
+  font-family: 'DM Mono', 'Consolas', monospace;
+  font-size: 0.68rem;
+  color: var(--bs-accent);
+  background: color-mix(in srgb, var(--bs-accent) 12%, var(--white));
+  border: 1px solid color-mix(in srgb, var(--bs-accent) 28%, transparent);
+  border-radius: var(--radius-pill);
+  padding: 0.16rem 0.6rem;
+}
+
+.bs-branch > .bs-body {
+  padding: 0 1.15rem 0.6rem 2.45rem;
+}
+
+/* Nested group = sub-<details> with a connector rail */
+.bs-group {
+  margin: 0.2rem 0 0.4rem;
+  border-left: 2px solid color-mix(in srgb, var(--bs-accent) 30%, var(--border));
+  padding-left: 0.8rem;
+}
+
+.bs-group > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  padding: 0.4rem 0;
+  user-select: none;
+}
+
+.bs-group > summary::-webkit-details-marker { display: none; }
+
+.bs-group > summary .bs-caret { font-size: 0.95rem; align-self: center; margin-top: 0; }
+
+.bs-group > summary .bs-title {
+  font-weight: 700;
+  color: var(--blue);
+  font-size: 0.92rem;
+}
+
+.bs-group > summary .bs-gloss {
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+/* Leaf items */
+ul.bs-leaves {
+  list-style: none;
+  padding-left: 0.85rem;
+  margin: 0.25rem 0 0.6rem;
+}
+
+ul.bs-leaves li {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+ul.bs-leaves li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--bs-accent);
+  opacity: 0.5;
+}
+
+ul.bs-leaves li strong { color: var(--navy); }
+
+.bs-aside {
+  margin: 0.3rem 0 0.4rem;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* Per-branch accents */
+.bs-branch.bs-c1 { --bs-accent: #2C6FAC; }
+.bs-branch.bs-c2 { --bs-accent: #2A8F82; }
+.bs-branch.bs-c3 { --bs-accent: #7C5CBF; }
+.bs-branch.bs-c4 { --bs-accent: #B06A00; }
+.bs-branch.bs-c5 { --bs-accent: #C2506A; }
+
+/* Call-to-action link to the full map (used in the Team Wiki embed) */
+.bs-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  background: var(--blue);
+  border-radius: var(--radius-pill);
+  padding: 0.6rem 1.2rem;
+  text-decoration: none;
+  border-bottom: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), filter var(--dur-fast) var(--ease);
+}
+
+.bs-cta::after { content: '\2192'; font-weight: 700; }
+.bs-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  filter: brightness(1.05);
+  border-bottom: none;
+}
+
+/* Compact embed (Team Wiki) — a touch tighter */
+.bs-tree.bs-compact .bs-branch { margin-bottom: 0.6rem; }
+.bs-tree.bs-compact .bs-branch > summary { padding: 0.8rem 1rem; }
+.bs-tree.bs-compact .bs-branch > summary .bs-title { font-size: 0.95rem; }
+
+@media (max-width: 800px) {
+  .bs-branch > .bs-body { padding-left: 1.6rem; }
+}
+
 /* ── Print styles ────────────────────────────── */
 @media print {
   #sidebar { display: none !important; }
@@ -1827,6 +2045,11 @@ tbody tr:hover td {
   .flow-step::after { content: none; }
   h2 { page-break-after: avoid; }
   h3 { page-break-after: avoid; }
+  /* Force every tree node open so the full map prints. */
+  .bs-tree details:not([open]) > *:not(summary) { display: block !important; }
+  .bs-caret { display: none !important; }
+  .bs-tree-controls { display: none !important; }
+  .bs-branch { box-shadow: none; break-inside: avoid; }
 }
 
 /* ── Responsive ──────────────────────────────── */
