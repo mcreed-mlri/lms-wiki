@@ -41,131 +41,162 @@
       search.setAttribute('aria-label', 'Search this page');
       search.autocomplete = 'off';
 
-      var noResults = document.createElement('div');
-      noResults.className = 'sidebar-search-empty';
-      noResults.textContent = 'No matches';
-      noResults.hidden = true;
+      var searchStatus = document.createElement('div');
+      searchStatus.className = 'sidebar-search-empty';
+      searchStatus.textContent = 'Type to find on this page';
+      searchStatus.hidden = true;
 
       searchWrap.appendChild(search);
-      searchWrap.appendChild(noResults);
+      searchWrap.appendChild(searchStatus);
       header.insertAdjacentElement('afterend', searchWrap);
 
-      var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
-      var details = Array.prototype.slice.call(nav.querySelectorAll('details.nav-accordion'));
-      var labels = Array.prototype.slice.call(nav.querySelectorAll('.section-label'));
-      var lastMatches = [];
+      var pageMatches = [];
+      var activeMatchIndex = -1;
 
-      function textOf(el) {
-        return (el.textContent || '').toLowerCase();
+      function clearPageMatches() {
+        pageMatches.forEach(function (mark) {
+          var parent = mark.parentNode;
+          if (!parent) return;
+          parent.replaceChild(document.createTextNode(mark.textContent || ''), mark);
+          parent.normalize();
+        });
+        pageMatches = [];
+        activeMatchIndex = -1;
       }
 
-      function linkTarget(link) {
-        var rawHref = link.getAttribute('href') || '';
-        if (!rawHref || rawHref.charAt(0) === '#') return rawHref;
+      function acceptsTextNode(node) {
+        if (!node.nodeValue || !node.nodeValue.trim()) return false;
+        var parent = node.parentElement;
+        if (!parent) return false;
+        return !parent.closest('#sidebar, script, style, noscript, input, textarea, select, button, .page-search-mark');
+      }
 
-        try {
-          var url = new URL(rawHref, window.location.href);
-          if (url.origin === window.location.origin && url.pathname === window.location.pathname && url.hash) {
-            return url.hash;
+      function markTextNode(node, query) {
+        var text = node.nodeValue;
+        var lower = text.toLowerCase();
+        var q = query.toLowerCase();
+        var index = lower.indexOf(q);
+        if (index === -1) return;
+
+        var fragment = document.createDocumentFragment();
+        var cursor = 0;
+
+        while (index !== -1) {
+          if (index > cursor) {
+            fragment.appendChild(document.createTextNode(text.slice(cursor, index)));
           }
-        } catch (e) { /* ignore */ }
 
-        return rawHref;
+          var mark = document.createElement('mark');
+          mark.className = 'page-search-mark';
+          mark.textContent = text.slice(index, index + query.length);
+          fragment.appendChild(mark);
+          pageMatches.push(mark);
+
+          cursor = index + query.length;
+          index = lower.indexOf(q, cursor);
+        }
+
+        if (cursor < text.length) {
+          fragment.appendChild(document.createTextNode(text.slice(cursor)));
+        }
+
+        node.parentNode.replaceChild(fragment, node);
       }
 
-      function samePageLink(link) {
-        var rawHref = link.getAttribute('href') || '';
-        if (rawHref.charAt(0) === '#') return true;
+      function updateSearchStatus() {
+        var hasQuery = search.value.trim().length > 0;
+        if (!hasQuery) {
+          searchStatus.hidden = true;
+          searchStatus.textContent = '';
+          return;
+        }
 
-        try {
-          var url = new URL(rawHref, window.location.href);
-          return url.origin === window.location.origin && url.pathname === window.location.pathname && Boolean(url.hash);
-        } catch (e) {
-          return false;
+        searchStatus.hidden = false;
+        if (!pageMatches.length) {
+          searchStatus.textContent = 'No matches';
+        } else {
+          searchStatus.textContent = (activeMatchIndex + 1) + ' of ' + pageMatches.length + ' - Enter next';
         }
       }
 
-      function linkedSection(link) {
-        var target = linkTarget(link);
-        if (!target || target.charAt(0) !== '#') return null;
-        try {
-          return document.querySelector(target);
-        } catch (e) {
-          return null;
+      function activateMatch(index) {
+        if (!pageMatches.length) {
+          activeMatchIndex = -1;
+          updateSearchStatus();
+          return;
         }
-      }
 
-      function searchableText(link) {
-        var section = linkedSection(link);
-        var sectionText = section ? textOf(section) : '';
-        return [textOf(link), sectionText].join(' ');
-      }
-
-      function resultLabel(count, hasQuery) {
-        if (!hasQuery) return '';
-        if (count === 0) return 'No matches';
-        return count === 1 ? '1 match - press Enter' : count + ' matches - press Enter';
-      }
-
-      function hasVisibleItemAfter(label) {
-        var node = label.nextElementSibling;
-        while (node && !node.classList.contains('section-label')) {
-          if (!node.hidden) return true;
-          node = node.nextElementSibling;
+        if (activeMatchIndex >= 0 && pageMatches[activeMatchIndex]) {
+          pageMatches[activeMatchIndex].classList.remove('is-active');
         }
-        return false;
+
+        activeMatchIndex = (index + pageMatches.length) % pageMatches.length;
+        var active = pageMatches[activeMatchIndex];
+        active.classList.add('is-active');
+        active.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        updateSearchStatus();
       }
 
-      function filterSidebar() {
-        var q = search.value.trim().toLowerCase();
-        var hasQuery = q.length > 0;
-        var anyVisible = false;
-        var matchCount = 0;
-        lastMatches = [];
+      function findOnPage() {
+        var q = search.value.trim();
+        clearPageMatches();
 
-        links.forEach(function (link) {
-          var isSamePage = samePageLink(link);
-          var match = !hasQuery || (isSamePage && searchableText(link).indexOf(q) !== -1) || (!isSamePage && textOf(link).indexOf(q) !== -1);
-          link.hidden = !match;
-          if (match) {
-            anyVisible = true;
-            if (hasQuery) {
-              matchCount += 1;
-              lastMatches.push(link);
-            }
+        if (!q) {
+          updateSearchStatus();
+          return;
+        }
+
+        var main = document.getElementById('main') || document.body;
+        var walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (node) {
+            return acceptsTextNode(node) && node.nodeValue.toLowerCase().indexOf(q.toLowerCase()) !== -1
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_REJECT;
           }
         });
+        var nodes = [];
+        var node = walker.nextNode();
 
-        details.forEach(function (detail) {
-          var summary = detail.querySelector('summary');
-          var childLinks = Array.prototype.slice.call(detail.querySelectorAll('a'));
-          var summaryMatch = summary && textOf(summary).indexOf(q) !== -1;
-          var childMatch = childLinks.some(function (link) { return !link.hidden; });
-          var match = !hasQuery || summaryMatch || childMatch;
+        while (node) {
+          nodes.push(node);
+          node = walker.nextNode();
+        }
 
-          detail.hidden = !match;
-          if (hasQuery && match) detail.open = true;
-          if (match) anyVisible = true;
+        nodes.forEach(function (textNode) {
+          markTextNode(textNode, q);
         });
 
-        labels.forEach(function (label) {
-          label.hidden = hasQuery && !hasVisibleItemAfter(label);
-        });
-
-        noResults.textContent = resultLabel(matchCount, hasQuery);
-        noResults.hidden = !hasQuery;
+        if (pageMatches.length) {
+          activateMatch(0);
+        } else {
+          updateSearchStatus();
+        }
       }
 
-      search.addEventListener('input', filterSidebar);
+      function clearSearch() {
+        search.value = '';
+        clearPageMatches();
+        updateSearchStatus();
+      }
+
+      search.addEventListener('input', findOnPage);
       search.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
-          search.value = '';
-          filterSidebar();
+          clearSearch();
           search.blur();
         }
-        if (e.key === 'Enter' && lastMatches.length > 0) {
+        if (e.key === 'Enter' && pageMatches.length > 0) {
           e.preventDefault();
-          lastMatches[0].click();
+          activateMatch(activeMatchIndex + (e.shiftKey ? -1 : 1));
+        }
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {
+          e.preventDefault();
+          if (isCollapsed()) setCollapsed(false);
+          search.focus();
+          search.select();
         }
       });
     }

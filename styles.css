@@ -362,6 +362,19 @@ html.sidebar-collapsed #sidebar {
   padding: 0.45rem 0.1rem 0.1rem;
 }
 
+.page-search-mark {
+  background: #FFE58A;
+  color: #1B2430;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(160, 108, 0, 0.24);
+  padding: 0 0.08em;
+}
+
+.page-search-mark.is-active {
+  background: #FFB84D;
+  box-shadow: 0 0 0 2px rgba(124, 74, 0, 0.32);
+}
+
 #sidebar nav { padding: 0.75rem 0; }
 
 #sidebar nav .section-label {
