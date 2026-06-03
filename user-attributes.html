@@ -39,6 +39,8 @@
     <span class="section-label">Planning</span>
     <a href="#overview">Overview</a>
     <a href="#recommendation">Recommendation</a>
+    <a href="#discovery-access-flow">Discovery Access API Flow</a>
+    <a href="#attribute-access-map">Attribute Access Map</a>
     <a href="#attribute-set">Proposed Attribute Set</a>
     <a href="#rename-defaults">Rename Defaults</a>
     <a href="#multi-value-budget">Multi-Value Budget</a>
@@ -87,6 +89,67 @@
 
     <div class="warning">
       <strong>Do not use free-text role labels for access control.</strong> A person's title can be "advocate," "paralegal," "case handler," or "coordinator," but the access decision needs a controlled <code>user_type</code> from the access matrix.
+    </div>
+  </section>
+
+  <section class="guide-section" id="discovery-access-flow">
+    <h2>Discovery Access API Flow</h2>
+
+    <div class="warning">
+      <strong>Discovery rule:</strong> the Hub should never ask the browser to hide restricted courses after the fact. The API should return only the learning items the signed-in user is allowed to discover.
+    </div>
+
+    <ol class="steps">
+      <li><strong>Sign in:</strong> the learner authenticates through Brightspace OAuth, future SSO, or another approved identity provider.</li>
+      <li><strong>Resolve profile:</strong> the Hub matches the signed-in account to a stable learner record and loads controlled attributes such as <code>user_type</code>, <code>jurisdiction</code>, <code>access_status</code>, and UPL acknowledgement status.</li>
+      <li><strong>Build candidate catalog:</strong> the Hub loads active course, module, and path metadata from the discovery store. Brightspace remains the system of record for users, enrollments, course delivery, and launch access.</li>
+      <li><strong>Apply the access matrix server-side:</strong> the discovery API filters the candidate catalog against LACE eligibility rules before search ranking, facets, recommendations, paths, or launch URLs are returned.</li>
+      <li><strong>Render allowed results only:</strong> the frontend receives an already-filtered response. Audience facets remain browse filters, not security controls.</li>
+      <li><strong>Launch into Brightspace:</strong> Brightspace still enforces enrollment and delivery permissions when the learner opens an allowed course.</li>
+    </ol>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Owns</th><th>Access Responsibility</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Identity provider / Brightspace OAuth</strong></td><td>Authentication and account identity.</td><td>Confirms who is signed in.</td></tr>
+          <tr><td><strong>LACE profile service</strong></td><td>Controlled learner attributes.</td><td>Resolves <code>user_type</code>, status, jurisdiction, practice area, UPL acknowledgement, and bar metadata.</td></tr>
+          <tr><td><strong>Discovery API</strong></td><td>Searchable catalog metadata and ranking.</td><td>Filters out ineligible learning items before the response reaches the browser.</td></tr>
+          <tr><td><strong>Brightspace</strong></td><td>Courses, enrollments, delivery, progress, and completions.</td><td>Enforces final LMS enrollment and launch permissions.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <strong>Recommended data model:</strong> each learning item should carry eligibility metadata such as allowed user types, jurisdiction scope, UPL requirement, and attorney-only flag. The discovery endpoint should treat those fields as policy inputs, not as optional display labels.
+    </div>
+  </section>
+
+  <section class="guide-section" id="attribute-access-map">
+    <h2>Attribute Access Map</h2>
+
+    <p>These are the minimum user attributes that should participate in discovery access. They should come from controlled values, not free-text titles.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Attribute</th><th>Access Meaning</th><th>Discovery Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong><code>user_type</code></strong></td><td>Primary access matrix category: attorney, paralegal, <code>non_lawyer_advocate</code>, admin, or another approved type.</td><td>First gate for attorney-only, advocate-safe, admin-only, and public/partner content.</td></tr>
+          <tr><td><strong><code>access_status</code></strong></td><td>Whether the learner is approved, pending, suspended, or inactive.</td><td>Only approved users should receive discovery results. Pending, suspended, and inactive users should receive no catalog or a blocked-state response.</td></tr>
+          <tr><td><strong><code>jurisdiction</code></strong></td><td>State or legal jurisdiction where the learner works.</td><td>Routes state-specific content and prevents users from discovering courses outside their approved scope when jurisdiction matters.</td></tr>
+          <tr><td><strong><code>practice_area</code></strong></td><td>Topical area such as housing, benefits, family, immigration, ethics, or practice skills.</td><td>Supports recommendations and Learning Groups. It should refine access, not override the user type matrix.</td></tr>
+          <tr><td><strong><code>upl_acknowledged_date</code></strong></td><td>Date a non-lawyer acknowledged UPL boundaries.</td><td>Required before non-lawyer advocates can discover UPL-sensitive advocate training.</td></tr>
+          <tr><td><strong><code>bar_number</code> / <code>bar_jurisdiction</code></strong></td><td>Attorney verification and reporting metadata.</td><td>Useful for certificates and compliance, but never sufficient by itself to grant course discovery.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warning">
+      <strong>Policy note:</strong> audience labels such as "New attorneys" or "All staff" help users browse, but they are not the access control. Access should be calculated from the user attributes, the LACE access matrix, and item eligibility metadata.
     </div>
   </section>
 
@@ -218,7 +281,7 @@
       <li>Can Brightspace Data Sets export User Attribute Values for audit/reporting into Supabase?</li>
     </ul>
 
-    <p class="last-updated"><em>Last updated: 2026-06-02</em></p>
+    <p class="last-updated"><em>Last updated: 2026-06-03</em></p>
   </section>
 
 </main>
