@@ -38,6 +38,7 @@
   <nav>
     <span class="section-label">Overview</span>
     <a href="#home">Priority Scan</a>
+    <a href="#support-transition">Support Transition</a>
     <a href="#critical-milestones">Critical Milestones</a>
     <a href="#technical-development">Technical Tasks</a>
 
@@ -67,7 +68,7 @@
     <h2>Priority Scan</h2>
 
     <div class="warning">
-      <strong>Urgent deadline: June 15-19, 2026.</strong> Finalize the learner-facing vanity URL / custom domain and send it to D2L so they can provide DNS records. Prefer D2L-managed SSL renewal through AWS Certificate Manager unless MLRI IT requires using an existing wildcard certificate.
+      <strong>Urgent deadline: June 15-19, 2026.</strong> Treat this as the final implementation window for system-level setup that needs D2L back-end help: vanity URL, production authentication, User Attributes, hierarchy assumptions, and integration permissions.
     </div>
 
     <div class="table-wrap">
@@ -84,6 +85,26 @@
     </div>
   </section>
 
+  <section class="guide-section" id="support-transition">
+    <h2>June 19 Support Transition</h2>
+
+    <div class="tip">
+      <strong>Plain-English meaning:</strong> June 19, 2026 is not the product launch and it does not mean the fall pilot must be ready. It means the implementation period ends and LACE moves into standard support. After that, D2L help is more likely to come through help desk tickets, documentation, and community resources instead of a dedicated implementation manager who can shape architecture and do back-end setup with the team.
+    </div>
+
+    <p>The practical goal is to lock the foundation before the implementation team steps away. LACE can still build content, manage users, refine Supabase data, and polish the Hub later. The risky items are the ones tied to tenant-level configuration, identity, permissions, domains, and hierarchy because they can be slow, disruptive, or impossible for a Super Admin to change alone after the transition.</p>
+
+    <h3>Lock Before Standard Support</h3>
+    <ul>
+      <li><strong>Vanity URL:</strong> finalize the learner-facing domain and D2L-managed SSL path before launch links, SSO, bookmarks, and API callbacks depend on it.</li>
+      <li><strong>User Attributes:</strong> ask D2L to configure the custom attribute set, confirm the 50-attribute capacity, and verify which attributes can drive Learning Groups and Manager Dashboard reporting.</li>
+      <li><strong>Production auth model:</strong> confirm the split between user-context OAuth and Service User client credentials, including JWKS URL, scopes, Org Unit visibility, and troubleshooting path for insufficient-scope errors.</li>
+      <li><strong>Org hierarchy:</strong> audit the parent layers before automation relies on them; adding courses is easy later, but reshaping parent nodes can disturb reporting, affiliated org units, and routing assumptions.</li>
+      <li><strong>Completion logic:</strong> confirm whether native Brightspace video triggers are sufficient or whether LACE must rely on the custom Architecture B/Supabase tracking layer for stronger compliance evidence.</li>
+      <li><strong>Login and SSO:</strong> test the custom HTML login page constraints and resolve SSO deep-linking, target parameter, and learner return-path behavior while implementation support is still available.</li>
+    </ul>
+  </section>
+
   <section class="guide-section" id="critical-milestones">
     <h2>Critical Milestones</h2>
 
@@ -92,8 +113,11 @@
       <li><input type="checkbox" disabled><span class="label"><strong>Brightspace test site:</strong> ask D2L to launch the test instance early in June so API sync work happens outside the live catalog.</span></li>
       <li><input type="checkbox" disabled><span class="label"><strong>Production login model:</strong> use 3-legged OAuth for user-context calls and headless/server-to-server OAuth with a Service User for administrative data harvesting and background sync.</span></li>
       <li><input type="checkbox" disabled><span class="label"><strong>Service User:</strong> create the non-human Brightspace account, assign a least-privilege role, and enroll it in the Org Units needed for catalog sync before coding against the production flow.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>User Attribute configuration:</strong> provide D2L the final Attribute Name and Description table, request the custom set, and confirm Learning Groups/Manager Dashboard mapping.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Hierarchy audit:</strong> confirm the MLRI &gt; Massachusetts &gt; Training Area &gt; Program parent structure before routing and reports depend on it.</span></li>
       <li><input type="checkbox" disabled><span class="label"><strong>LTI 1.3 readiness:</strong> incorporate LTI Asset Processor support, anonymous marking readiness, and Context Copy Notice workflows from the March 2026 release notes.</span></li>
       <li><input type="checkbox" disabled><span class="label"><strong>Attributes/groups freeze:</strong> finalize User Attributes and Learning Groups before relying on enrollment automation or manager reporting.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Custom login test:</strong> upload a branded HTML login page sample and document any Brightspace constraints before the fall pilot build.</span></li>
     </ul>
   </section>
 
@@ -141,6 +165,22 @@
       <li><input type="checkbox" disabled><span class="label">Preferred path: let D2L manage the SSL certificate and renewals through AWS Certificate Manager; MLRI IT adds the D2L-provided validation DNS record.</span></li>
       <li><input type="checkbox" disabled><span class="label">Fallback path: use MLRI's existing wildcard certificate only if IT accepts sending D2L the certificate and private key and owning renewals.</span></li>
     </ul>
+
+    <h3>Implementation Exit Checklist</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Why D2L Help Matters Now</th><th>Target Window</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Vanity URL</strong></td><td>Requires DNS, SSL certificate binding, and stable learner-facing links.</td><td>June 15-19</td></tr>
+          <tr><td><strong>Attribute Mapping</strong></td><td>Custom attribute configuration affects Learning Groups, reporting, and the Manager Dashboard.</td><td>Before June 19</td></tr>
+          <tr><td><strong>API Permissions</strong></td><td>Service User scopes and Org Unit visibility are easiest to troubleshoot with implementation support.</td><td>Before June 19</td></tr>
+          <tr><td><strong>LTI 1.3 Readiness</strong></td><td>Tool discovery, Context Copy Notice, and anonymous-marking assumptions should be confirmed before course copies multiply.</td><td>Before pilot build</td></tr>
+          <tr><td><strong>SSO / Deep Links</strong></td><td>Target parameter and return-path behavior can break launch flows if deferred until after links are published.</td><td>Before pilot build</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3>Server-to-Server Implementation</h3>
     <ul class="task-list">
