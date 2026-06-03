@@ -13,6 +13,8 @@ const PRECACHE_URLS = [
   './brightspace-map.html',
   './user-attributes.html',
   './mlri-architecture.html',
+  './team/',
+  './team/index.html',
   './styles.css',
   `./sidebar.js?v=${BUILD_VERSION}`,
   './favicon.svg',

@@ -597,6 +597,38 @@ body.page-interactive-guide #sidebar nav a.external::after {
   color: #5a9e94;
 }
 
+/* Sidebar theme: Team wiki (deep aubergine — for the lawyers) */
+body.page-team #sidebar {
+  background: #2a1b24;
+  color: #e7d9df;
+}
+body.page-team #sidebar-header {
+  background: #3d2230;
+  border-bottom-color: rgba(217, 139, 176, 0.18);
+}
+body.page-team #sidebar-header .brand {
+  color: #d98bb0;
+}
+body.page-team #sidebar-header h2 {
+  color: #faf5f7;
+}
+body.page-team #sidebar nav .section-label {
+  color: #a07d8c;
+}
+body.page-team #sidebar nav a {
+  color: #d8c2cc;
+}
+body.page-team #sidebar nav a:hover {
+  color: #fdf2f7;
+}
+body.page-team #sidebar nav a.active {
+  background: rgba(217, 139, 176, 0.18);
+  border-left-color: #d98bb0;
+}
+body.page-team #sidebar nav a.external::after {
+  color: #a07d8c;
+}
+
 /* ── Main content ─────────────────────────────── */
 #main {
   margin-left: var(--sidebar-w);
@@ -620,6 +652,7 @@ body.page-marlana          { --accent: #0d9488; --accent-2: #60a5fa; --focus-col
 body.page-interactive-guide { --accent: #0f766e; --accent-2: #5eead4; --focus-color: #0f766e; --focus-ring: 0 0 0 3px rgba(20, 184, 166, 0.4); }
 body.page-landing          { --accent: #B06A00; --accent-2: #2C6FAC; --focus-color: #B06A00; --focus-ring: 0 0 0 3px rgba(176, 106, 0, 0.38); }
 body.page-brightspace-map  { --accent: #2C6FAC; --accent-2: #2A8F82; --focus-color: #2C6FAC; --focus-ring: 0 0 0 3px rgba(44, 111, 172, 0.4); }
+body.page-team             { --accent: #7A3B57; --accent-2: #A8702F; --focus-color: #7A3B57; --focus-ring: 0 0 0 3px rgba(122, 59, 87, 0.35); }
 
 /* Marlie's workspace — main content (teal accent, separate from team wiki) */
 body.page-marlana {
@@ -657,6 +690,36 @@ body.page-marlana #main a:hover {
 body.page-marlana .guide-section + .guide-section {
   border-top-color: rgba(13, 148, 136, 0.12);
 }
+
+/* Team wiki — for the lawyers (warm parchment + deep plum, walled off from the technical pages) */
+body.page-team {
+  background: #f7f3ee;
+  background-image:
+    radial-gradient(ellipse 70% 45% at 100% 0%, rgba(122, 59, 87, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 35% at 0% 100%, rgba(168, 112, 47, 0.06) 0%, transparent 50%);
+}
+body.page-team #main h1 { color: #3d1f2e; }
+body.page-team #main .page-subtitle {
+  border-bottom-color: rgba(122, 59, 87, 0.22);
+  color: #5a4a52;
+}
+body.page-team #main h2::after { background: linear-gradient(90deg, #7A3B57, #A8702F); }
+body.page-team .cat-eyebrow {
+  font-family: 'DM Mono', ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--accent);
+  margin: 3rem 0 0.25rem;
+  padding-top: 1.75rem;
+  border-top: 2px solid rgba(122, 59, 87, 0.18);
+}
+body.page-team .cat-eyebrow:first-of-type { margin-top: 1.5rem; }
+body.page-team #main h3 { color: #7A3B57; }
+body.page-team #main a { color: #7A3B57; }
+body.page-team #main a:hover { border-bottom-color: #7A3B57; }
+body.page-team .guide-section + .guide-section { border-top-color: rgba(122, 59, 87, 0.12); }
 
 body.page-marlana .intro-card {
   border-color: rgba(13, 148, 136, 0.2);

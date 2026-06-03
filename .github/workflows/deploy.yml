@@ -33,6 +33,8 @@ jobs:
           cp brightspace-map.html _site/
           cp user-attributes.html _site/
           cp mlri-architecture.html _site/
+          mkdir -p _site/team
+          cp team/index.html _site/team/
           cp styles.css _site/
           cp sidebar.js _site/
           cp favicon.svg _site/
@@ -41,7 +43,7 @@ jobs:
           cp manifest.webmanifest _site/
           cp sw.js _site/
           sed -i "s/__BUILD_VERSION__/${GITHUB_SHA}/g" _site/sw.js
-          sed -i "s/sidebar.js?v=[^\"]*/sidebar.js?v=${GITHUB_SHA}/g" _site/*.html
+          sed -i "s/sidebar.js?v=[^\"]*/sidebar.js?v=${GITHUB_SHA}/g" _site/*.html _site/team/*.html
           if [ -d screenshots ]; then cp -r screenshots _site/; fi
 
       - name: Configure Pages
