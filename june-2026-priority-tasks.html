@@ -77,7 +77,7 @@
           <tr><th>Priority</th><th>June Focus</th><th>Why It Matters</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Production hardening</strong></td><td>Service User setup, headless OAuth registration, JWKS URL, API versions, route checks.</td><td>Moves the Hub from local spike to reliable production integration without depending on a personal admin account.</td></tr>
+          <tr><td><strong>Production hardening</strong></td><td>Service User setup, headless OAuth registration, JWKS URL, API versions, route checks.</td><td>Moves the Learning Hub from local spike to reliable production integration without depending on a personal admin account.</td></tr>
           <tr><td><strong>Routing policy</strong></td><td>User Attributes, Learning Groups, LegalServer Zip Code and Legal Problem Code logic.</td><td>Creates the automation foundation for enrollment, reporting, and UPL guardrails.</td></tr>
           <tr><td><strong>Accessible content</strong></td><td>Wrapper deployment, completion criteria, axe DevTools checks, Lato 19px standard.</td><td>Keeps custom HTML usable, compliant, and trackable.</td></tr>
         </tbody>
@@ -92,7 +92,7 @@
       <strong>Plain-English meaning:</strong> June 19, 2026 is not the product launch and it does not mean the fall pilot must be ready. It means the implementation period ends and LACE moves into standard support. After that, D2L help is more likely to come through help desk tickets, documentation, and community resources instead of a dedicated implementation manager who can shape architecture and do back-end setup with the team.
     </div>
 
-    <p>The practical goal is to lock the foundation before the implementation team steps away. LACE can still build content, manage users, refine Supabase data, and polish the Hub later. The risky items are the ones tied to tenant-level configuration, identity, permissions, domains, and hierarchy because they can be slow, disruptive, or impossible for a Super Admin to change alone after the transition.</p>
+    <p>The practical goal is to lock the foundation before the implementation team steps away. LACE can still build content, manage users, refine Supabase data, and polish the Learning Hub later. The risky items are the ones tied to tenant-level configuration, identity, permissions, domains, and hierarchy because they can be slow, disruptive, or impossible for a Super Admin to change alone after the transition.</p>
 
     <h3>Lock Before Standard Support</h3>
     <ul>
@@ -148,7 +148,7 @@
     <h3>OAuth Configuration</h3>
     <ul class="task-list">
       <li><input type="checkbox" disabled><span class="label">Create a dedicated Brightspace Service User; do not use a personal admin account for integration sync.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Create a least-privilege role such as <code>Hub Sync Service</code> with read access to course content and user identity; add Brightspace Data Sets access only if bulk reporting is needed later.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Create a least-privilege role such as <code>Learning Hub Sync Service</code> with read access to course content and user identity; add Brightspace Data Sets access only if bulk reporting is needed later.</span></li>
       <li><input type="checkbox" disabled><span class="label">Enroll the Service User in the Org Units it needs to see for catalog sync.</span></li>
       <li><input type="checkbox" disabled><span class="label">Register the production OAuth 2.0 app in Manage Extensibility using the headless/server-to-server pattern for data harvesting.</span></li>
       <li><input type="checkbox" disabled><span class="label">Associate the registered app with the Service User.</span></li>
@@ -288,7 +288,7 @@
           <tr><td><strong>User Attributes &amp; Groups</strong></td><td>Which attributes are automated via SIS/LegalServer vs. manual?</td><td>Prerequisite for June automation and reporting.</td></tr>
           <tr><td><strong>Custom Login Branding</strong></td><td>How instructional should the custom HTML login page be?</td><td>First learner-facing touchpoint; affects UX.</td></tr>
           <tr><td><strong>Cohort Management</strong></td><td>Use Sections or separate Offerings for regional cohorts?</td><td>High impact on enrollment and admin overhead.</td></tr>
-          <tr><td><strong>Catalog Discovery</strong></td><td>Route via LACE Hub, Brightspace Discover, or both?</td><td>Controls discovery path and sync complexity.</td></tr>
+          <tr><td><strong>Catalog Discovery</strong></td><td>Route via LACE Learning Hub, Brightspace Discover, or both?</td><td>Controls discovery path and sync complexity.</td></tr>
         </tbody>
       </table>
     </div>

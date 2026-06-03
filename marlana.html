@@ -12,17 +12,17 @@
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#1E3A5F">
-  <meta name="description" content="Executive scan for the platform build: wrapper, Brightspace API, LACE Hub dashboards, data layer, reporting, and decisions in flight.">
+  <meta name="description" content="Executive scan for the platform build: wrapper, Brightspace API, LACE Learning Hub dashboards, data layer, reporting, and decisions in flight.">
   <link rel="canonical" href="https://mcreed-mlri.github.io/lms-wiki/marlana.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LACE Platform Wiki">
   <meta property="og:title" content="Marlie's Workspace">
-  <meta property="og:description" content="The technical source of truth behind the Team Wiki: wrapper, Brightspace API, LACE Hub dashboards, data layer, reporting, and open decisions.">
+  <meta property="og:description" content="The technical source of truth behind the Team Wiki: wrapper, Brightspace API, LACE Learning Hub dashboards, data layer, reporting, and open decisions.">
   <meta property="og:url" content="https://mcreed-mlri.github.io/lms-wiki/marlana.html">
   <meta property="og:image" content="https://mcreed-mlri.github.io/lms-wiki/icon.svg">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Marlie's Workspace">
-  <meta name="twitter:description" content="The technical source of truth behind the Team Wiki: wrapper, Brightspace API, LACE Hub dashboards, data layer, reporting, and open decisions.">
+  <meta name="twitter:description" content="The technical source of truth behind the Team Wiki: wrapper, Brightspace API, LACE Learning Hub dashboards, data layer, reporting, and open decisions.">
   <meta name="twitter:image" content="https://mcreed-mlri.github.io/lms-wiki/icon.svg">
   <script src="sidebar.js?v=20260529-redesign"></script>
 </head>
@@ -44,7 +44,7 @@
     <span class="section-label">Platform Build</span>
     <a href="#marlies-roadmap">Roadmap</a>
     <a href="#marlie-phase-0">Phase 0: Wrapper</a>
-    <a href="#lace-hub-dashboard">LACE Hub</a>
+    <a href="#lace-hub-dashboard">LACE Learning Hub</a>
     <a href="#marlie-phase-1">Phase 1: API</a>
     <a href="#marlie-phase-2">Phase 2: Data</a>
     <a href="#marlie-phase-3">Phase 3: Reporting</a>
@@ -67,7 +67,7 @@
 <main id="main">
 
   <h1>Marlie's Workspace</h1>
-  <p class="page-subtitle">Executive scan for the platform build: wrapper, Brightspace API, LACE Hub dashboards, data layer, reporting, and decisions in flight.</p>
+  <p class="page-subtitle">Executive scan for the platform build: wrapper, Brightspace API, LACE Learning Hub dashboards, data layer, reporting, and decisions in flight.</p>
 
   <section class="guide-section" id="home">
     <h2>Executive Scan</h2>
@@ -105,7 +105,7 @@
             <td><span class="status in-progress">In Progress</span></td>
           </tr>
           <tr>
-            <td><strong>LACE Hub dashboards</strong></td>
+            <td><strong>LACE Learning Hub dashboards</strong></td>
             <td>One app with role-based views; admin page now shows live Supabase and Brightspace connection status.</td>
             <td>Keep admin diagnostics minimal while wiring the production catalog sync route.</td>
             <td><span class="status in-progress">Planned</span></td>
@@ -200,7 +200,7 @@
     <h2>Platform Roadmap</h2>
 
     <div class="note">
-      <strong>Two tracks, one vision:</strong> the wrapper delivers the in-course experience now. LACE Hub adds API-backed dashboards, data, and reporting over time.
+      <strong>Two tracks, one vision:</strong> the wrapper delivers the in-course experience now. LACE Learning Hub adds API-backed dashboards, data, and reporting over time.
     </div>
 
     <div class="table-wrap">
@@ -226,8 +226,8 @@
         <tbody>
           <tr><td><strong>Brightspace</strong></td><td>Courses, enrollments, completions, grades, access, email triggers.</td><td>LMS records.</td></tr>
           <tr><td><strong>Custom HTML wrapper</strong></td><td>LACE learner experience inside a Brightspace Course Offering.</td><td>Course files and <code>course-config.js</code>.</td></tr>
-          <tr><td><strong>LACE Hub</strong></td><td>Frontend dashboards, course discovery/resume experience, and live integration diagnostics.</td><td>API response per role/view.</td></tr>
-          <tr><td><strong>Supabase</strong></td><td>Search, engagement, feedback, synced LMS data, and Hub-owned records in the <code>learning_items</code> schema.</td><td>Custom data layer.</td></tr>
+          <tr><td><strong>LACE Learning Hub</strong></td><td>Frontend dashboards, course discovery/resume experience, and live integration diagnostics.</td><td>API response per role/view.</td></tr>
+          <tr><td><strong>Supabase</strong></td><td>Search, engagement, feedback, synced LMS data, and Learning Hub-owned records in the <code>learning_items</code> schema.</td><td>Custom data layer.</td></tr>
         </tbody>
       </table>
     </div>
@@ -241,7 +241,7 @@
     </div>
 
     <div class="note">
-      <strong>Course Builder cleanup rule:</strong> Manage Files stores the actual files; Course Builder/Content stores the outline nodes that point to them. If a file is deleted from Manage Files, remove or replace the matching Course Builder node too, or Valence API outline responses may keep returning broken topics that the LACE Hub discovery layer cannot safely load.
+      <strong>Course Builder cleanup rule:</strong> Manage Files stores the actual files; Course Builder/Content stores the outline nodes that point to them. If a file is deleted from Manage Files, remove or replace the matching Course Builder node too, or Valence API outline responses may keep returning broken topics that the LACE Learning Hub discovery layer cannot safely load.
     </div>
 
     <div class="table-wrap">
@@ -282,10 +282,10 @@
   </section>
 
   <section class="guide-section" id="lace-hub-dashboard">
-    <h2>LACE Hub: Unified Dashboards</h2>
+    <h2>LACE Learning Hub: Unified Dashboards</h2>
 
     <div class="note">
-      <strong>One product, role-based views.</strong> LACE Hub is not a separate admin-only dashboard. Learners, managers, program staff, and admins see different views in the same app.
+      <strong>One product, role-based views.</strong> LACE Learning Hub is not a separate admin-only dashboard. Learners, managers, program staff, and admins see different views in the same app.
     </div>
 
     <div class="table-wrap">
@@ -310,8 +310,8 @@
         </thead>
         <tbody>
           <tr><td>Enrollments, completions, grades</td><td>Brightspace API</td><td>Learner home, reporting, completion records.</td></tr>
-          <tr><td>Last accessed / time in course</td><td>Brightspace, stored in Supabase for Hub views</td><td>Dashboard speed and reporting.</td></tr>
-          <tr><td>Search, clicks, ratings, feedback</td><td>LACE Hub / Supabase</td><td>Content improvement, evaluation, and content-gap detection.</td></tr>
+          <tr><td>Last accessed / time in course</td><td>Brightspace, stored in Supabase for Learning Hub views</td><td>Dashboard speed and reporting.</td></tr>
+          <tr><td>Search, clicks, ratings, feedback</td><td>LACE Learning Hub / Supabase</td><td>Content improvement, evaluation, and content-gap detection.</td></tr>
           <tr><td>Role and audience rules</td><td>Brightspace roles + LACE policy</td><td>UPL guardrails and view permissions.</td></tr>
         </tbody>
       </table>
@@ -325,7 +325,7 @@
     <ul class="task-list">
       <li><input type="checkbox" disabled><span class="label">Confirm minimum viable <code>/api/me/dashboard</code> response shape</span></li>
       <li><input type="checkbox" disabled><span class="label">Define manager access rules</span></li>
-      <li><input type="checkbox" disabled><span class="label">Decide how learner update notices appear in Hub</span></li>
+      <li><input type="checkbox" disabled><span class="label">Decide how learner update notices appear in the Learning Hub</span></li>
       <li><input type="checkbox" disabled><span class="label">Confirm which reports stakeholders need first</span></li>
     </ul>
   </section>
@@ -347,7 +347,7 @@
           <tr><td><strong>Core data pull</strong></td><td><span class="status in-progress">Partial</span> <code>whoami</code> works; course metadata route should validate Course Offering <code>6703</code>.</td></tr>
           <tr><td><strong>Supabase catalog proof</strong></td><td><span class="status done">Working locally</span> <code>learning_items</code> table is readable through the Learning Hub API and rendered on the admin page.</td></tr>
           <tr><td><strong>Learner dashboard</strong></td><td><code>/api/me/dashboard</code> powers learner home with progress and resume links.</td></tr>
-          <tr><td><strong>SSO / login</strong></td><td>Learner has a coherent login path across Brightspace and Hub.</td></tr>
+          <tr><td><strong>SSO / login</strong></td><td>Learner has a coherent login path across Brightspace and the Learning Hub.</td></tr>
           <tr><td><strong>Wrapper bridge</strong></td><td>Optional API-backed progress/checkmarks can be layered onto the wrapper later.</td></tr>
         </tbody>
       </table>
@@ -366,7 +366,7 @@
     <h3>Service User Production Path</h3>
     <ol class="steps">
       <li>Create the non-human Brightspace Service User. Do not bind production sync to a personal admin account.</li>
-      <li>Create a least-privilege role such as <code>Hub Sync Service</code> with read-only metadata permissions.</li>
+      <li>Create a least-privilege role such as <code>Learning Hub Sync Service</code> with read-only metadata permissions.</li>
       <li>Enroll the Service User in the Org Units it needs for catalog sync.</li>
       <li>Register the production OAuth app in Manage Extensibility using Client Credentials if available.</li>
       <li>Associate the app with the Service User and publish an HTTPS JWKS URL for JWT assertion verification.</li>
@@ -532,7 +532,7 @@
           </tr>
           <tr id="discover-page-vs-custom-catalog">
             <td><strong>Discover vs. custom catalog</strong></td>
-            <td>Do learners find courses through Brightspace Discover, LACE Hub, or both?</td>
+            <td>Do learners find courses through Brightspace Discover, LACE Learning Hub, or both?</td>
             <td>Wrapper solves delivery; this decision controls discovery and sync complexity.</td>
             <td><span class="status proposed">Open</span></td>
           </tr>

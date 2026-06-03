@@ -222,7 +222,7 @@
       </table>
     </div>
 
-    <p><strong>Technical build:</strong> see <a href="marlana.html#current-phase">Current Phase</a>, <a href="marlana.html#lace-hub-dashboard">LACE Hub dashboard plan</a>, and <a href="mlri-architecture.html">LACE Architecture</a>.</p>
+    <p><strong>Technical build:</strong> see <a href="marlana.html#current-phase">Current Phase</a>, <a href="marlana.html#lace-hub-dashboard">LACE Learning Hub dashboard plan</a>, and <a href="mlri-architecture.html">LACE Architecture</a>.</p>
   </section>
 
   <section class="guide-section" id="course-content-model">
@@ -347,7 +347,7 @@
           <tr><td><strong>System</strong></td><td>Host versioned LACE wrapper logic and brand assets.</td><td>Organization / Public Files</td><td>Version before changing live courses.</td></tr>
           <tr><td><strong>Content</strong></td><td>Host course-specific module files.</td><td>Manage Files, Course Offering level</td><td>One offering owns its content files.</td></tr>
           <tr><td><strong>Tracking</strong></td><td>Create learner-visible nodes for pages and activities.</td><td>Content / Course Builder</td><td>Trackable pages need official topics.</td></tr>
-          <tr><td><strong>Sync</strong></td><td>Cache metadata and launch URLs.</td><td>Supabase <code>learning_items</code></td><td>Fast Hub discovery; Brightspace remains record source.</td></tr>
+          <tr><td><strong>Sync</strong></td><td>Cache metadata and launch URLs.</td><td>Supabase <code>learning_items</code></td><td>Fast Learning Hub discovery; Brightspace remains record source.</td></tr>
           <tr><td><strong>Reusable</strong></td><td>Store repeated legal chunks.</td><td>LOR, optional Phase 2</td><td>Use only when reuse creates real savings.</td></tr>
         </tbody>
       </table>
@@ -506,7 +506,7 @@
       <p><a class="bs-cta" href="brightspace-map.html">Open the full interactive Brightspace map</a></p>
 
       <div class="note">
-        <strong>Sanity check:</strong> the map is directionally correct and useful for team orientation. The main adjustment is vocabulary: Brightspace's official default org unit types are Organization, Department, Semester, Course Template, Course Offering, Group, and Section. LACE labels such as Training Area and Program are planning/catalog labels that may be implemented as Departments, custom org unit types, or Hub-side categories.
+        <strong>Sanity check:</strong> the map is directionally correct and useful for team orientation. The main adjustment is vocabulary: Brightspace's official default org unit types are Organization, Department, Semester, Course Template, Course Offering, Group, and Section. LACE labels such as Training Area and Program are planning/catalog labels that may be implemented as Departments, custom org unit types, or Learning Hub-side categories.
       </div>
 
       <div class="table-wrap">
@@ -543,7 +543,7 @@
             <tr>
               <td><strong>Developer &amp; Integration Layer</strong></td>
               <td>Manage Extensibility, OAuth 2.0, scopes, LTI, and Valence/API tools are integration plumbing.</td>
-              <td>Use this layer for LACE Hub sync, external tools, service-user access, and approved API reads.</td>
+              <td>Use this layer for LACE Learning Hub sync, external tools, service-user access, and approved API reads.</td>
             </tr>
             <tr>
               <td><strong>Course Design &amp; Navigation</strong></td>
@@ -666,7 +666,7 @@
       <li><strong>Required retake:</strong> learner must complete the new version by a stated date.</li>
     </ul>
 
-    <p><strong>For now:</strong> Brightspace email is the available channel. Critical updates may also need direct team outreach. Future dashboard banners are tracked in <a href="marlana.html#lace-hub-dashboard">LACE Hub</a>.</p>
+    <p><strong>For now:</strong> Brightspace email is the available channel. Critical updates may also need direct team outreach. Future dashboard banners are tracked in <a href="marlana.html#lace-hub-dashboard">LACE Learning Hub</a>.</p>
   </section>
 
   <section class="guide-section" id="user-management">
@@ -761,7 +761,7 @@
           <tr id="glossary-offering"><td><strong>Course Offering</strong></td><td>Learner-facing course. Enroll learners here.</td></tr>
           <tr id="glossary-template"><td><strong>Course Template</strong></td><td>Reusable parent/library for related Course Offerings. It can hold shared setup or copied components, but settings do not automatically inherit into every Offering.</td></tr>
           <tr id="glossary-section"><td><strong>Section</strong></td><td>Optional cohort or scheduled-run subdivision inside an Offering.</td></tr>
-          <tr id="glossary-program"><td><strong>Program</strong></td><td>LACE planning label for a group of related Course Templates; implementation may be a Department/custom org unit or a Hub catalog category.</td></tr>
+          <tr id="glossary-program"><td><strong>Program</strong></td><td>LACE planning label for a group of related Course Templates; implementation may be a Department/custom org unit or a Learning Hub catalog category.</td></tr>
           <tr id="glossary-training-area"><td><strong>Training Area</strong></td><td>LACE planning label for broad catalog categories such as Legal Skills or Substantive Law.</td></tr>
           <tr id="glossary-org"><td><strong>Org</strong></td><td>D2L term for the top Brightspace site/container, not MLRI's staff org chart.</td></tr>
           <tr id="glossary-org-unit"><td><strong>Org Unit</strong></td><td>Brightspace structure object such as Organization, Department, Semester, Course Template, Course Offering, Group, or Section.</td></tr>

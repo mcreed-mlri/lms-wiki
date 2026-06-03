@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "Bash(git commit *)",
+      "Bash(awk '/<div class=\"simple-flow-panel\"/,/<\\\\/div>[[:space:]]*<!-- end simple-flow|simple-flow-note/' \"c:/dev/platform-wiki/mlri-architecture.html\")"
+    ]
+  }
+}

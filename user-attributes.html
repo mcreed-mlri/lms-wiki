@@ -96,13 +96,13 @@
     <h2>Discovery Access API Flow</h2>
 
     <div class="warning">
-      <strong>Discovery rule:</strong> the Hub should never ask the browser to hide restricted courses after the fact. The API should return only the learning items the signed-in user is allowed to discover.
+      <strong>Discovery rule:</strong> the Learning Hub should never ask the browser to hide restricted courses after the fact. The API should return only the learning items the signed-in user is allowed to discover.
     </div>
 
     <ol class="steps">
       <li><strong>Sign in:</strong> the learner authenticates through Brightspace OAuth, future SSO, or another approved identity provider.</li>
-      <li><strong>Resolve profile:</strong> the Hub matches the signed-in account to a stable learner record and loads controlled attributes such as <code>user_type</code>, <code>jurisdiction</code>, <code>access_status</code>, and UPL acknowledgement status.</li>
-      <li><strong>Build candidate catalog:</strong> the Hub loads active course, module, and path metadata from the discovery store. Brightspace remains the system of record for users, enrollments, course delivery, and launch access.</li>
+      <li><strong>Resolve profile:</strong> the Learning Hub matches the signed-in account to a stable learner record and loads controlled attributes such as <code>user_type</code>, <code>jurisdiction</code>, <code>access_status</code>, and UPL acknowledgement status.</li>
+      <li><strong>Build candidate catalog:</strong> the Learning Hub loads active course, module, and path metadata from the discovery store. Brightspace remains the system of record for users, enrollments, course delivery, and launch access.</li>
       <li><strong>Apply the access matrix server-side:</strong> the discovery API filters the candidate catalog against LACE eligibility rules before search ranking, facets, recommendations, paths, or launch URLs are returned.</li>
       <li><strong>Render allowed results only:</strong> the frontend receives an already-filtered response. Audience facets remain browse filters, not security controls.</li>
       <li><strong>Launch into Brightspace:</strong> Brightspace still enforces enrollment and delivery permissions when the learner opens an allowed course.</li>

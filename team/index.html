@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LACE — For the Team</title>
+  <title>LACE: For the Team</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,19 +12,86 @@
   <link rel="apple-touch-icon" href="../icon.svg">
   <link rel="manifest" href="../manifest.webmanifest">
   <meta name="theme-color" content="#3d2230">
-  <meta name="description" content="A plain-language reference for the LACE learning platform: user types, attributes, access, security, Brightspace structure, courses, optional tools, and reporting — answered simply.">
+  <meta name="description" content="Team reference for the LACE learning platform: what it is, who uses it, how access works, how courses work, records, growth, and learner experience.">
   <link rel="canonical" href="https://mcreed-mlri.github.io/lms-wiki/team/">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="LACE — For the Team">
-  <meta property="og:title" content="LACE — For the Team">
-  <meta property="og:description" content="A plain-language reference for the LACE learning platform — every common question, answered simply.">
+  <meta property="og:site_name" content="LACE: For the Team">
+  <meta property="og:title" content="LACE: For the Team">
+  <meta property="og:description" content="Team reference for understanding LACE: access, data, course structure, growth, and learner experience.">
   <meta property="og:url" content="https://mcreed-mlri.github.io/lms-wiki/team/">
   <meta property="og:image" content="https://mcreed-mlri.github.io/lms-wiki/icon.svg">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="LACE — For the Team">
-  <meta name="twitter:description" content="A plain-language reference for the LACE learning platform — every common question, answered simply.">
+  <meta name="twitter:title" content="LACE: For the Team">
+  <meta name="twitter:description" content="Team reference for understanding LACE: access, data, course structure, growth, and learner experience.">
   <meta name="twitter:image" content="https://mcreed-mlri.github.io/lms-wiki/icon.svg">
   <script src="../sidebar.js?v=20260529-redesign"></script>
+  <style>
+    .team-flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 0.5rem;
+      margin: 1.25rem 0 0.75rem;
+    }
+    .team-flow-node {
+      flex: 1 1 150px;
+      min-width: 150px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 0.85rem 1rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .team-flow-node .step {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .team-flow-node strong {
+      font-size: 0.95rem;
+      line-height: 1.25;
+      margin-bottom: 0.3rem;
+      color: var(--text);
+    }
+    .team-flow-node span {
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+    .team-flow-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ph-border);
+      font-size: 1.2rem;
+    }
+    @media (max-width: 720px) {
+      .team-flow { flex-direction: column; }
+      .team-flow-arrow { transform: rotate(90deg); justify-content: flex-start; padding-left: 1.25rem; }
+    }
+    body.page-team #sidebar details.nav-accordion > summary {
+      color: #d8c2cc;
+    }
+    body.page-team #sidebar details.nav-accordion > summary:hover {
+      color: #fdf2f7;
+    }
+    body.page-team #sidebar details.nav-accordion[open] > summary {
+      background: rgba(217, 139, 176, 0.12);
+      color: #fdf2f7;
+      border-left-color: #d98bb0;
+    }
+    body.page-team #sidebar details.nav-accordion .nav-accordion-panel a {
+      color: #caaeba;
+    }
+    body.page-team #sidebar details.nav-accordion .nav-accordion-panel a:hover {
+      color: #fdf2f7;
+    }
+  </style>
 </head>
 <body class="page-team">
 
@@ -32,98 +99,200 @@
 
 <aside id="sidebar">
   <div id="sidebar-header">
-    <div class="brand">LACE — For the Team</div>
-    <h2>Plain-Language Reference</h2>
+    <div class="brand">LACE: For the Team</div>
+    <h2>Team Reference</h2>
   </div>
   <nav>
-    <span class="section-label">Start</span>
-    <a href="#what-is-this">What is this?</a>
-
-    <span class="section-label">People</span>
-    <a href="#user-types">Who are the user types?</a>
-    <a href="#attributes">What are user attributes?</a>
-
-    <span class="section-label">Access &amp; Safety</span>
-    <a href="#access">Who can see what?</a>
-    <a href="#security">How is access kept secure?</a>
-
-    <span class="section-label">The Platform</span>
-    <a href="#structure">How is Brightspace organized?</a>
-    <a href="#courses">How does a course work?</a>
-
-    <span class="section-label">Optional &amp; Data</span>
-    <a href="#features">Manager Dashboard &amp; Learning Groups</a>
-    <a href="#data">What data will we have?</a>
+    <span class="section-label">Question Journey</span>
+    <details class="nav-accordion" open>
+      <summary>1. What is LACE?</summary>
+      <div class="nav-accordion-panel">
+        <a href="#what-is-lace">Section overview</a>
+        <a href="#training-unit-support">Training Unit support</a>
+        <a href="#learning-hub-vs-brightspace">Learning Hub vs. Brightspace</a>
+        <a href="#learner-flow">Learner flow</a>
+      </div>
+    </details>
+    <details class="nav-accordion">
+      <summary>2. Who uses it?</summary>
+      <div class="nav-accordion-panel">
+        <a href="#who-uses-it">Section overview</a>
+        <a href="#user-types">User types</a>
+        <a href="#user-type-vs-system-role">User type vs. system role</a>
+        <a href="#profile-attributes">Profile attributes</a>
+        <a href="#onboarding-profile-collection">Onboarding and profile collection</a>
+        <a href="#profile-changes">Profile changes over time</a>
+      </div>
+    </details>
+    <details class="nav-accordion">
+      <summary>3. How does access work?</summary>
+      <div class="nav-accordion-panel">
+        <a href="#access-work">Section overview</a>
+        <a href="#access-decisions">Access decisions</a>
+        <a href="#multiple-roles">More than one role</a>
+        <a href="#progress-visibility">Progress visibility</a>
+        <a href="#login-security-offboarding">Login, security, and offboarding</a>
+        <a href="#certificates-training-records">Certificates and training records</a>
+      </div>
+    </details>
+    <details class="nav-accordion">
+      <summary>4. How do courses work?</summary>
+      <div class="nav-accordion-panel">
+        <a href="#courses-work">Section overview</a>
+        <a href="#brightspace-structure">Brightspace structure</a>
+        <a href="#course-terms">Course terms</a>
+        <a href="#legal-skills-substantive-law">Legal Skills vs. Substantive Law</a>
+        <a href="#completion-meaning">Completion meaning</a>
+        <a href="#clean-course-view">Clean course view</a>
+        <a href="#content-locations">Content locations</a>
+      </div>
+    </details>
+    <details class="nav-accordion">
+      <summary>5. How are records handled?</summary>
+      <div class="nav-accordion-panel">
+        <a href="#records-data-reports">Section overview</a>
+        <a href="#official-vs-engagement-data">Official vs. engagement data</a>
+        <a href="#reliable-activity-data">Reliable activity data</a>
+        <a href="#reporting-needs">Reporting needs</a>
+        <a href="#feedback-loop">Feedback loop</a>
+        <a href="#technical-terms">Technical terms</a>
+      </div>
+    </details>
+    <details class="nav-accordion">
+      <summary>6. How does LACE grow?</summary>
+      <div class="nav-accordion-panel">
+        <a href="#growth-current">Section overview</a>
+        <a href="#growth-model">Growth model</a>
+        <a href="#jurisdiction-expansion">Jurisdiction-first expansion</a>
+        <a href="#minor-major-updates">Minor vs. major updates</a>
+        <a href="#old-versions-outdated-materials">Old versions and outdated materials</a>
+        <a href="#learner-notifications">Learner notifications</a>
+        <a href="#manager-dashboard-learning-groups">Manager Dashboard and Learning Groups</a>
+      </div>
+    </details>
+    <details class="nav-accordion">
+      <summary>7. What is the learner experience?</summary>
+      <div class="nav-accordion-panel">
+        <a href="#learner-experience">Section overview</a>
+        <a href="#mobile-use">Mobile use</a>
+        <a href="#finding-courses">Finding courses</a>
+        <a href="#progress-certificates">Progress and certificates</a>
+        <a href="#support-paths">Support paths</a>
+      </div>
+    </details>
   </nav>
 </aside>
 
 <main id="main">
 
-  <h1>LACE — For the Team</h1>
-  <p class="page-subtitle">A plain-language reference for the LACE learning platform. Every common question is below — pick one from the list on the left, or use the search box to find a word on this page.</p>
+  <h1>LACE: For the Team</h1>
+  <p class="page-subtitle">A plain-language reference for understanding what LACE is, who it serves, how access and records work, and how the platform can grow without losing trust.</p>
 
-  <section class="guide-section" id="what-is-this">
-    <h2>What is this?</h2>
+  <section class="guide-section" id="what-is-lace">
+    <h2>1. What Is LACE?</h2>
 
-    <div class="tip">
-      <strong>In one line:</strong> LACE is MLRI's online training platform for the Massachusetts legal aid community, built on Brightspace, with access controlled so each person only sees the material meant for them.
+    <p>LACE is the Learning Hub experience we are building around Brightspace. It gives learners a cleaner front door for finding training, while Brightspace remains the system underneath for sign-in, course hosting, enrollments, completion records, and certificates.</p>
+
+    <div class="note">
+      <strong>Brightspace (D2L):</strong> the LMS under LACE. Where Brightspace terms appear below, they are the actual product names, not simplified stand-ins.
     </div>
 
+    <h3 id="training-unit-support">How does it support the Training Unit?</h3>
+    <p>LACE helps the Training Unit move from one-off training delivery to a more reliable learning system. It gives the team a shared catalog, structured user profiles, clearer access rules, durable records, and better signals about what learners need next.</p>
+
+    <h3 id="learning-hub-vs-brightspace">How is the Learning Hub different from Brightspace?</h3>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>What this reference is</th><th>What it is not</th></tr>
+          <tr><th>Layer</th><th>What happens there</th><th>Plain-language role</th></tr>
         </thead>
         <tbody>
-          <tr><td>A calm, settled answer to "how does this work and are we covered?"</td><td>A status board, task list, or due-date tracker.</td></tr>
-          <tr><td>Plain language, with each Brightspace term explained in one line.</td><td>Technical setup notes or implementation steps.</td></tr>
-          <tr><td>A quick-scan reference: tables and short answers.</td><td>The day-to-day worklist (that lives in our project tools).</td></tr>
+          <tr><td><strong>Learning Hub</strong></td><td>Landing page, dashboard, search, filters, recommendations, profile updates, and the clean course entry point.</td><td>The front door and learner experience.</td></tr>
+          <tr><td><strong>Brightspace</strong></td><td>Authentication, course hosting, enrollments, progress, completion, certificates, grades, and official audit records.</td><td>The LMS engine and source of truth.</td></tr>
+          <tr><td><strong>Supabase / custom layer</strong></td><td>Fast catalog data, engagement signals, profile preferences, ratings, search behavior, and dashboard support.</td><td>The support layer that lets us build features Brightspace alone does not give us cleanly.</td></tr>
         </tbody>
       </table>
-    </div>
-
-    <div class="note">
-      <strong>Brightspace / D2L:</strong> the learning management system (LMS) underneath LACE — the software that hosts courses, signs people in, and keeps records. Wherever a Brightspace term appears below, a one-line plain meaning sits next to it.
-    </div>
-  </section>
-
-
-  <div class="cat-eyebrow">People</div>
-
-  <section class="guide-section" id="user-types">
-    <h2>Who are the user types?</h2>
-    <p>LACE sorts every user into one of four tiers. Access rises with professional responsibility — and tightens where the risk of overstepping the law rises.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>User type</th><th>Who they are</th><th>What they can reach</th><th>Why this tier</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Licensed attorney</strong></td><td>A bar-licensed lawyer.</td><td>Broadest access, including attorney-only practice material.</td><td>Carries full professional responsibility for the work.</td></tr>
-          <tr><td><strong>Paralegal</strong></td><td>Works under attorney supervision.</td><td>Skills and substantive training that fits supervised work.</td><td>Capable and trained, but acting under a lawyer's direction.</td></tr>
-          <tr><td><strong>Advocate</strong></td><td>A trained non-lawyer who helps clients.</td><td>Advocate-safe training within a defined scope.</td><td>Valuable front-line help, kept clear of lawyer-only territory.</td></tr>
-          <tr><td><strong>Community member</strong></td><td>General public; the least-verified user.</td><td>Foundational, public-facing material only.</td><td>Highest risk of overstepping the law, so the tightest gate.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="note">
-      <strong>Org Administrator:</strong> a separate, behind-the-scenes role with full control of the system. It is held by very few people and used sparingly — it runs the platform, it is not a learner tier.
     </div>
 
     <div class="warning">
-      <strong>The bright line:</strong> a non-lawyer must never receive access, certificates, or completion language that suggests authority to practice law. Honoring this line is the main reason the tiers exist, and it is enforced for every non-lawyer user.
+      <strong>Source of truth:</strong> Brightspace is the official record for enrollments, progress, completion, certificates, and grades. The Learning Hub can display and enrich that information, but it does not replace Brightspace as the record keeper.
+    </div>
+
+    <h3 id="learner-flow">Learner flow</h3>
+    <p>From first sign-in to a saved certificate, each part does one job and hands off to the next.</p>
+
+    <div class="team-flow">
+      <div class="team-flow-node">
+        <span class="step">Step 1</span>
+        <strong>You sign in</strong>
+        <span>Brightspace confirms who you are through a trusted login.</span>
+      </div>
+      <div class="team-flow-arrow">&rarr;</div>
+      <div class="team-flow-node">
+        <span class="step">Step 2</span>
+        <strong>LACE reads your profile</strong>
+        <span>Your user type, jurisdiction, and practice areas shape what appears.</span>
+      </div>
+      <div class="team-flow-arrow">&rarr;</div>
+      <div class="team-flow-node">
+        <span class="step">Step 3</span>
+        <strong>You find a course</strong>
+        <span>The dashboard, search, filters, and recommendations point you to relevant training.</span>
+      </div>
+      <div class="team-flow-arrow">&rarr;</div>
+      <div class="team-flow-node">
+        <span class="step">Step 4</span>
+        <strong>You finish, it is recorded</strong>
+        <span>A real completion action is stored in Brightspace and can produce a certificate.</span>
+      </div>
     </div>
 
     <div class="tip">
-      <strong>Why this matters:</strong> the tiers do two jobs at once — they decide what material a person can reach, and they decide the certificate and completion wording a person receives. So no one is met with content, or credentials, beyond their role.
+      <strong>Why this matters:</strong> LACE makes Brightspace easier to use without weakening Brightspace's official role. Learners get a calmer experience, and the Training Unit keeps audit-ready records.
     </div>
   </section>
 
-  <section class="guide-section" id="attributes">
-    <h2>What are user attributes?</h2>
-    <p>User attributes are small profile labels — like badges — that travel with each learner. They tell the platform who someone is, so the right courses reach them without anyone placing them by hand.</p>
+  <section class="guide-section" id="who-uses-it">
+    <h2>2. Who Uses It?</h2>
+
+    <p>LACE starts by understanding who someone is. That identity is not just a name and email address; it includes professional role, jurisdiction, practice area, and the level of access that is appropriate for them.</p>
+
+    <h3 id="user-types">User types</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>User type</th><th>Who they are</th><th>What they can reach</th><th>Why this tier exists</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Licensed attorney</strong></td><td>A bar-licensed lawyer.</td><td>Broadest access, including attorney-only practice material.</td><td>Carries full professional responsibility for legal work.</td></tr>
+          <tr><td><strong>Paralegal</strong></td><td>Works under attorney supervision.</td><td>Skills and substantive training that fits supervised work.</td><td>Can do advanced work, but under a lawyer's direction.</td></tr>
+          <tr><td><strong>Advocate</strong></td><td>A trained non-lawyer who helps clients.</td><td>Advocate-safe training within a defined scope.</td><td>Needs useful training without crossing into lawyer-only authority.</td></tr>
+          <tr><td><strong>Community member</strong></td><td>General public or least-verified user.</td><td>Foundational, public-facing material only.</td><td>Highest risk of overstepping, so the tightest gate.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="user-type-vs-system-role">User type vs. system role</h3>
+    <p>A <strong>user type</strong> describes the learner's professional identity. A <strong>system role</strong> describes what the person can do inside the software.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Concept</th><th>Examples</th><th>What it controls</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>User type</strong></td><td>Attorney, paralegal, advocate, community member.</td><td>Course access, legal-risk boundaries, and certificate wording.</td></tr>
+          <tr><td><strong>System role</strong></td><td>Learner, manager, admin, org administrator.</td><td>Software permissions, such as whether someone can view team progress or manage settings.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Org Administrator:</strong> a separate behind-the-scenes role with broad control of the system. It runs the platform; it is not a learner tier.
+    </div>
+
+    <h3 id="profile-attributes">Profile attributes</h3>
+    <p>User attributes are controlled profile labels that travel with a learner. They let the platform sort people into the right training without manual course-by-course placement.</p>
 
     <div class="table-wrap">
       <table>
@@ -131,265 +300,415 @@
           <tr><th>Attribute</th><th>What it records</th><th>Example</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>User type</strong></td><td>The person's tier.</td><td>Attorney, paralegal, advocate, community member</td></tr>
-          <tr><td><strong>Jurisdiction</strong></td><td>Which state(s) they work in.</td><td>Massachusetts (can be more than one)</td></tr>
-          <tr><td><strong>Practice area</strong></td><td>The kind of law they work in.</td><td>Housing, benefits, family, immigration</td></tr>
-          <tr><td><strong>Bar number</strong></td><td>An attorney's license number.</td><td>For attorneys only</td></tr>
-          <tr><td><strong>Onboarding date</strong></td><td>When they joined LACE.</td><td>A date</td></tr>
+          <tr><td><strong>User type</strong></td><td>The person's professional tier.</td><td>Attorney, paralegal, advocate, community member.</td></tr>
+          <tr><td><strong>Jurisdiction</strong></td><td>Which state or states they work in.</td><td>Massachusetts; later New York, Maine, or more than one state.</td></tr>
+          <tr><td><strong>Practice area</strong></td><td>The kind of law or service area they work in.</td><td>Housing, benefits, family, immigration.</td></tr>
+          <tr><td><strong>Bar number</strong></td><td>An attorney's license number.</td><td>For attorney certificate and compliance workflows.</td></tr>
+          <tr><td><strong>Onboarding date</strong></td><td>When the learner joined LACE.</td><td>Used for welcome flows and new-user reporting.</td></tr>
         </tbody>
       </table>
     </div>
 
-    <ul>
-      <li><strong>The labels do the sorting.</strong> When a learner's attributes match a course's intended audience, the platform can enroll them automatically — no sign-up form, no administrator placing them by hand.</li>
-      <li><strong>People can belong to more than one group.</strong> A learner can carry several jurisdictions or practice areas at once (for example, <em>Housing</em> and <em>Benefits</em>), so they receive everything relevant to them.</li>
-      <li><strong>The labels stay consistent everywhere.</strong> The same attributes drive enrollment, access, and reporting, so nothing has to be re-entered course by course.</li>
-    </ul>
-
-    <div class="note">
-      <strong>Attribute:</strong> a controlled label stored on an account — a badge the platform reads, not free-text notes. The platform supports up to 50 such labels, and a person can hold more than one value where it makes sense.
-    </div>
-
-    <div class="tip">
-      <strong>Why this matters:</strong> attorneys and advocates land in the correct state-specific and subject-matter material on their own, without waiting on an administrator. Less manual work means fewer gaps and fewer mistakes.
-    </div>
-  </section>
-
-
-  <div class="cat-eyebrow">Access &amp; Safety</div>
-
-  <section class="guide-section" id="access">
-    <h2>Who can see what?</h2>
-    <p>Every user only finds and opens the material meant for their tier. Here is how that decision is made — and why restricted material never reaches the wrong screen.</p>
-
-    <h3>How the platform decides</h3>
-    <ol class="steps">
-      <li><strong>Sign in:</strong> the platform confirms who you are.</li>
-      <li><strong>Look up your profile:</strong> it loads your user type and status.</li>
-      <li><strong>Check the rules:</strong> it compares your type against each item's intended audience.</li>
-      <li><strong>Build your view:</strong> it assembles only the material you are allowed to find.</li>
-      <li><strong>Show results:</strong> your screen receives the already-filtered list — nothing more.</li>
-      <li><strong>Open a course:</strong> Brightspace checks one more time at the door before letting you in.</li>
-    </ol>
-
-    <div class="note">
-      <strong>Discovery vs. access:</strong> <em>discovery</em> is searching or browsing the catalog; <em>access</em> is actually opening a course. LACE controls both, with the same rules.
-    </div>
-
-    <h3>Who sees whose progress</h3>
-    <ul>
-      <li><strong>Learners see their own progress only.</strong> They cannot view other people's records or any admin tools.</li>
-      <li><strong>Supervisors see their team.</strong> A manager view shows progress for the learners assigned to them — useful for tracking required training.</li>
-      <li><strong>Two supervisors can follow one learner.</strong> Many legal-aid staff answer to both a local supervisor and a program director, so a learner can be linked to <strong>two</strong> managers and both get real-time visibility.</li>
-    </ul>
-
-    <div class="note">
-      <strong>Secondary Manager:</strong> Brightspace normally allows a learner just one manager. We added a second manager link so a supervisor <em>and</em> a director can both see a person's progress at the same time.
-    </div>
-
-    <div class="tip">
-      <strong>Why this matters:</strong> the platform decides what you may see <em>before</em> anything reaches your screen. Restricted material is never sent and then hidden — it simply never arrives. A community member cannot stumble onto attorney-only content, even by searching for it.
-    </div>
-  </section>
-
-  <section class="guide-section" id="security">
-    <h2>How is access kept secure?</h2>
-    <p>Several safeguards work together so the right people reach the right material and records stay trustworthy. Each one is a protection — the technology just delivers it.</p>
+    <h3 id="onboarding-profile-collection">Onboarding and profile collection</h3>
+    <p>Onboarding is the moment the platform learns enough about someone to show the right training from day one.</p>
 
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Safeguard</th><th>What it does</th><th>Your reassurance</th></tr>
+          <tr><th>Audience</th><th>How they are added</th><th>What we need</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Trusted sign-in (OAuth 2.0)</strong></td><td>Identity is confirmed through Brightspace's standard sign-in.</td><td>Passwords aren't shared around; only confirmed users get in.</td></tr>
-          <tr><td><strong>Controlled user attributes</strong></td><td>Access is driven by a fixed user type on each account.</td><td>Access follows a verified label, never a guess or a typed-in title.</td></tr>
-          <tr><td><strong>One system of record</strong></td><td>Brightspace is the single home for enrollments, completions, and certificates.</td><td>Records can't drift between systems — there is one source of truth.</td></tr>
-          <tr><td><strong>Role-based views</strong></td><td>Each person sees only their own view: learner, manager, or admin.</td><td>A learner can't reach admin tools or another person's data.</td></tr>
-          <tr><td><strong>Server-side filtering</strong></td><td>The access rules run on our servers, not in the web browser.</td><td>Restricted material is never sent to the screen in the first place.</td></tr>
+          <tr><td><strong>MLRI staff</strong></td><td>Mostly automatic, using known HR or staff records and bulk attribute uploads.</td><td>Name, email, user type, jurisdiction, practice area, organization, and onboarding date.</td></tr>
+          <tr><td><strong>Partners and volunteers</strong></td><td>Through a Learning Hub sign-up flow, invitation, or admin-created account.</td><td>Basic identity, organization, role, jurisdiction, practice area, and any required acknowledgements.</td></tr>
+          <tr><td><strong>Future external users</strong></td><td>Through a more formal front-door workflow with eligibility checks where needed.</td><td>Only the fields needed to route training, confirm eligibility, and support certificates.</td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>Where data is stored</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Where</th><th>What it holds</th><th>Why there</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Brightspace</strong></td><td>Official records: personal information, enrollments, completions, and certificates.</td><td>The single, secure system of record.</td></tr>
-          <tr><td><strong>Custom data layer</strong></td><td>A fast working copy of course info, plus searches, feedback, and engagement.</td><td>Keeps the platform quick and responsive.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="note">
-      <strong>How the two connect:</strong> the custom layer reaches Brightspace only through an authorized doorway (OAuth&nbsp;2.0), so the platform sees only the data it is explicitly permitted to — and sensitive personal records stay in Brightspace, not copied elsewhere.
-    </div>
-
-    <h3>The terms, in plain words</h3>
-    <div class="note"><strong>OAuth 2.0:</strong> the industry-standard way to sign in through a trusted provider without handing your password to every app you use.</div>
-    <div class="note"><strong>API:</strong> a controlled doorway between two systems. Only specific, permitted information passes through, and only for approved requests.</div>
-    <div class="note"><strong>System of record:</strong> the single authoritative source for a piece of data. For enrollments and completions, that source is Brightspace.</div>
-
-    <div class="tip">
-      <strong>Why this matters:</strong> no single safeguard carries the whole weight. Trusted sign-in confirms who you are, controlled attributes decide what you may reach, filtering keeps restricted material off the screen, and Brightspace keeps the official record. Together they mean appropriate access is the default, not something to police after the fact.
-    </div>
-  </section>
-
-
-  <div class="cat-eyebrow">The Platform</div>
-
-  <section class="guide-section" id="structure">
-    <h2>How is Brightspace organized?</h2>
-    <p>Brightspace arranges courses in a tree, from the whole site down to a single class. "Organization" here means the <em>course</em> structure — not MLRI's staff structure.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Level</th><th>What it is</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>MLRI</strong></td><td>The top of our site.</td></tr>
-          <tr><td><strong>Massachusetts</strong></td><td>The state layer — with room to add more states later.</td></tr>
-          <tr><td><strong>Training Area</strong></td><td>A broad category: Legal Skills or Substantive Law.</td></tr>
-          <tr><td><strong>Program</strong></td><td>A topic cluster, such as Housing Law or Intro to Legal Skills.</td></tr>
-          <tr><td><strong>Course Template</strong></td><td>The master container holding every version of a course. No one enrolls here.</td></tr>
-          <tr><td><strong>Course Offering</strong></td><td>The actual course people take. Learners enroll here.</td></tr>
-          <tr><td><strong>Section</strong></td><td>An optional split within an offering, for a specific group or scheduled run.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="note">
-      <strong>Template vs. Offering — the one to remember:</strong> a <em>template</em> is the master file cabinet for a course; an <em>offering</em> is the live class people actually take. Learners always enroll in an <em>offering</em>, never a template. That separation is what lets us retire an old version while keeping its records intact.
-    </div>
-
-    <div class="tip">
-      <strong>Why this matters:</strong> a clear, predictable structure makes courses easy to find, easy to expand to new states, and easy to update — without breaking the history of who completed what.
-    </div>
-  </section>
-
-  <section class="guide-section" id="courses">
-    <h2>How does a course work?</h2>
-    <p>A LACE course is built by us and hosted on Brightspace. Here's what one is made of, what it takes to "complete" it, and how learners are kept current when the law moves.</p>
-
-    <h3>What a course is made of</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Layer</th><th>What it is</th><th>Who owns it</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Course content</strong></td><td>The pages, activities, and visuals a learner moves through.</td><td>LACE builds it.</td></tr>
-          <tr><td><strong>LACE wrapper</strong></td><td>The consistent LACE look and navigation around that content.</td><td>LACE builds it.</td></tr>
-          <tr><td><strong>Brightspace</strong></td><td>Hosts the course, signs people in, tracks progress, keeps records.</td><td>Brightspace admins.</td></tr>
-          <tr><td><strong>Optional Brightspace tools</strong></td><td>Quizzes, discussions, and the like — used only when simpler than building it ourselves.</td><td>Case-by-case.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="note">
-      <strong>Clean view:</strong> LACE courses open in a focused view that hides the standard LMS menus, so a learner sees only the legal material — not a cluttered software screen. It respects busy people's time.
-    </div>
-
-    <h3>What "completion" means</h3>
     <div class="warning">
-      <strong>Opening or watching is not completion.</strong> A course counts as complete only after at least one real action — a quiz, a check-in, a reflection, or a deliberate mark-complete.
-    </div>
-    <div class="note">
-      <strong>How it's tracked:</strong> Brightspace records that verifying action against the learner's account. That record is the official proof of completion — the same record any certificate is built from.
+      <strong>Collect less by default:</strong> avoid sensitive client information, unnecessary demographic detail, free-text legal facts, or anything we do not need for access, training, reporting, compliance, or support.
     </div>
 
-    <h3>When the law changes</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>What changed</th><th>Do learners hear about it?</th><th>What we tell them</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>A minor edit (wording, typo)</td><td>No</td><td>Nothing — their record is unchanged.</td></tr>
-          <tr><td>The law or a regulation changed</td><td>Yes</td><td>What changed, and whether they need to review.</td></tr>
-          <tr><td>A major rebuild of a course</td><td>Maybe</td><td>Only if they should review or retake it.</td></tr>
-          <tr><td>An old version retired</td><td>Maybe</td><td>Only if they must move to the new version.</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="note">
-      <strong>Minor vs. major change:</strong> a small fix is edited in place. A major law change becomes a <em>new</em> version of the course, and the old one is <em>archived</em> — never deleted — so past completion records are always preserved. When a retake is required, affected learners can be notified automatically.
-    </div>
+    <h3 id="profile-changes">How profile information changes over time</h3>
+    <ul>
+      <li><strong>Learners should update low-risk preferences</strong>, such as practice areas or interests, through a future My Profile page.</li>
+      <li><strong>Admins should control high-impact fields</strong>, such as user type, organization, jurisdiction, and eligibility when those fields affect access or certificates.</li>
+      <li><strong>Course activities can collect one-time confirmations</strong>, such as a UPL acknowledgement, bar-number prompt, or welcome survey response.</li>
+    </ul>
 
     <div class="tip">
-      <strong>Why this matters:</strong> completion reflects genuine engagement, not just a page load — so records and certificates mean something. And no one is left quietly sitting on outdated law: meaningful changes come with a clear notice, while small edits don't create noise.
+      <strong>Why this matters:</strong> good profile data means learners do not have to hunt. The right state-specific and practice-area training can meet them on the dashboard.
     </div>
   </section>
 
+  <section class="guide-section" id="access-work">
+    <h2>3. How Does Access Work?</h2>
 
-  <div class="cat-eyebrow">Optional &amp; Data</div>
+    <p>Access is based on who the learner is, what they are allowed to see, and what role they have inside the software. The goal is simple: people should find the training they need, and never be shown content or credentials beyond their role.</p>
 
-  <section class="guide-section" id="features">
-    <h2>Manager Dashboard &amp; Learning Groups — do we need them?</h2>
-    <p>Both are available Brightspace features. They are genuinely useful, but optional — especially at the start. Nothing breaks if we wait to turn them on.</p>
-
+    <h3 id="access-decisions">How the platform decides what someone can see</h3>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Feature</th><th>What it does</th><th>Do we need it now?</th></tr>
+          <tr><th>Signal</th><th>What it controls</th><th>Example</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Learning Groups</strong></td><td>Automatically enroll people into courses based on their attributes.</td><td>Helpful once attributes are set. Optional at first — people can be enrolled by hand.</td></tr>
-          <tr><td><strong>Manager Dashboard</strong></td><td>Lets a supervisor see their team's progress in one place.</td><td>Useful if supervisors must track required training. Optional for a small pilot.</td></tr>
+          <tr><td><strong>User type</strong></td><td>Professional access level and certificate language.</td><td>Attorney-only material stays limited to licensed attorneys.</td></tr>
+          <tr><td><strong>Jurisdiction</strong></td><td>Which state's content appears.</td><td>A Massachusetts learner sees Massachusetts-specific law first.</td></tr>
+          <tr><td><strong>Practice area</strong></td><td>Which topic areas are recommended or assigned.</td><td>A housing advocate sees housing training prominently.</td></tr>
+          <tr><td><strong>Organization / group</strong></td><td>Team views, required trainings, and manager reporting.</td><td>A manager sees assigned team progress, not the whole system.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="multiple-roles">What if someone has more than one role?</h3>
+    <p>When someone has more than one jurisdiction, practice area, or organization, they can belong to more than one group. Access should be additive for appropriate training, but conservative for legal-risk boundaries.</p>
+
+    <div class="warning">
+      <strong>The bright line:</strong> a non-lawyer must never receive access, certificates, or completion wording that suggests authority to practice law. When there is uncertainty, the safer user type wins until an admin verifies the record.
+    </div>
+
+    <h3 id="progress-visibility">Who can view learner progress?</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Viewer</th><th>What they should see</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Learner</strong></td><td>Their own courses, progress, completions, and certificates.</td></tr>
+          <tr><td><strong>Manager / supervisor</strong></td><td>Progress for learners they are responsible for, especially required or overdue training.</td></tr>
+          <tr><td><strong>Training Unit</strong></td><td>Completion and engagement patterns needed to support courses and improve training.</td></tr>
+          <tr><td><strong>Admins / Ops</strong></td><td>System health, sync issues, account status, and audit-support information.</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="note">
-      <strong>Think of these as switches:</strong> they can be turned on whenever we're ready. They are conveniences that save manual work — not prerequisites for launching.
+      <strong>Individual vs. summary views:</strong> managers may need individual completion status for required training. Broader evaluation reporting should prefer summaries unless individual-level detail is necessary.
+    </div>
+
+    <h3 id="login-security-offboarding">Login, security, and offboarding</h3>
+    <ul>
+      <li><strong>Login:</strong> learners enter through a trusted Brightspace-supported sign-in path, using OAuth or another approved authentication setup.</li>
+      <li><strong>Approved users:</strong> account creation, invitations, or eligibility checks decide who can enter the platform.</li>
+      <li><strong>Leaving an organization:</strong> the account should be deactivated or removed from the organization's active groups, not deleted.</li>
+      <li><strong>Forgotten passwords:</strong> the reset process should follow the configured Brightspace or identity-provider flow, not a separate LACE-only workaround.</li>
+    </ul>
+
+    <h3 id="certificates-training-records">Certificates and training records</h3>
+    <p>Certificates are built from Brightspace completion records and must match the learner's verified user type. A paralegal, advocate, or community member should never receive attorney credential language.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Certificate field</th><th>What it should include</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Learner name</strong></td><td>The name tied to the Brightspace account.</td></tr>
+          <tr><td><strong>Course title</strong></td><td>The completed course or course version.</td></tr>
+          <tr><td><strong>Completion date</strong></td><td>The date Brightspace records the course as complete.</td></tr>
+          <tr><td><strong>Role-appropriate language</strong></td><td>Attorney/CLE language only when the learner is verified as an attorney.</td></tr>
+          <tr><td><strong>Bar number</strong></td><td>Only when needed for attorney compliance or certificate rules.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Certificate sharing:</strong> sharing certificates on LinkedIn or other platforms should be a future product and policy decision, not a default assumption. We should decide what public wording is appropriate before enabling it.
     </div>
 
     <div class="tip">
-      <strong>Why this matters:</strong> we have powerful automation available, and we adopt it deliberately — only when it clearly saves real work. There's no pressure to use every feature on day one.
+      <strong>Why this matters:</strong> access and certificates carry legal meaning. The platform should make appropriate access the default, not something the team has to police after the fact.
     </div>
   </section>
 
-  <section class="guide-section" id="data">
-    <h2>What data will we have?</h2>
-    <p>The platform gives us two kinds of information: the official record of training, and a fuller picture of how people use it.</p>
+  <section class="guide-section" id="courses-work">
+    <h2>4. How Do Courses Work?</h2>
 
+    <p>A LACE course is built by us, wrapped in the LACE learning experience, and hosted in Brightspace. The learner sees a clean, focused course; Brightspace records the official activity underneath.</p>
+
+    <h3 id="brightspace-structure">Brightspace structure in plain language</h3>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Source</th><th>What we get</th></tr>
+          <tr><th>Level</th><th>What it means</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>From Brightspace (official)</strong></td><td>Who's enrolled, what they've completed, certificates, and grades.</td></tr>
-          <tr><td><strong>From our custom layer</strong></td><td>What people search for, what they rate, where they drop off, and overall engagement.</td></tr>
+          <tr><td><strong>MLRI</strong></td><td>The top of our Brightspace site.</td></tr>
+          <tr><td><strong>State / jurisdiction</strong></td><td>The state branch, starting with Massachusetts and leaving room for more states.</td></tr>
+          <tr><td><strong>Training area</strong></td><td>A broad category, such as Legal Skills or Substantive Law.</td></tr>
+          <tr><td><strong>Program</strong></td><td>A topic cluster, such as Housing Law or Intro to Legal Skills.</td></tr>
+          <tr><td><strong>Course template</strong></td><td>The master container for a course and its versions. Learners do not enroll here.</td></tr>
+          <tr><td><strong>Course offering</strong></td><td>The actual live version people take. Learners enroll here.</td></tr>
+          <tr><td><strong>Section</strong></td><td>An optional split inside an offering for a group, cohort, or scheduled run.</td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>Who sees which view</h3>
+    <h3 id="course-terms">Course terms</h3>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Role</th><th>Their view</th></tr>
+          <tr><th>Term</th><th>Plain meaning</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Learner</strong></td><td>Their own courses, progress, and what to resume.</td></tr>
-          <tr><td><strong>Supervisor / Manager</strong></td><td>Their team's progress and any overdue training.</td></tr>
-          <tr><td><strong>Program staff</strong></td><td>Completion rates, where learners struggle, and how content performs.</td></tr>
-          <tr><td><strong>Admin / Ops</strong></td><td>System health and whether everything is in sync.</td></tr>
+          <tr><td><strong>Course</strong></td><td>The full training experience on one subject.</td></tr>
+          <tr><td><strong>Module</strong></td><td>A major part of a course, often a chapter or unit.</td></tr>
+          <tr><td><strong>Activity</strong></td><td>Something the learner does, such as a reflection, scenario, checklist, or practice task.</td></tr>
+          <tr><td><strong>Quiz</strong></td><td>A Brightspace or custom knowledge check that can help verify completion.</td></tr>
+          <tr><td><strong>Certificate</strong></td><td>The record learners can receive after meeting completion requirements.</td></tr>
+          <tr><td><strong>Template</strong></td><td>The master file cabinet for a course across versions.</td></tr>
+          <tr><td><strong>Offering</strong></td><td>One live version of the course that learners actually take.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="legal-skills-substantive-law">Legal Skills vs. Substantive Law</h3>
+    <ul>
+      <li><strong>Legal Skills</strong> covers broad professional workflows: writing, research, ethics, interviewing, case planning, and other skills useful across practice areas.</li>
+      <li><strong>Substantive Law</strong> covers knowledge tied to a specific legal area: housing, benefits, family law, immigration, and similar topics.</li>
+    </ul>
+
+    <h3 id="completion-meaning">What completion means</h3>
+    <div class="warning">
+      <strong>Opening a page is not enough.</strong> Completion should require at least one real action: a quiz, check-in, reflection, scenario, upload, acknowledgement, or deliberate mark-complete.
+    </div>
+
+    <p>Completion can mean different things for different courses, but it should always be documented clearly in Brightspace so the record and certificate mean something.</p>
+
+    <h3 id="clean-course-view">The clean course view and wrapper</h3>
+    <p>LACE courses can open in a focused view that hides the standard LMS menus. The wrapper gives us consistent navigation and visual design, while Brightspace still records visits, progress, and completion.</p>
+
+    <div class="note">
+      <strong>Wrapper tracking rule:</strong> course navigation should point to Brightspace's official topic URLs. That keeps topic visits and completion rules connected to the LMS instead of bypassing it.
+    </div>
+
+    <h3 id="content-locations">Where content lives</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Place</th><th>What belongs there</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Brightspace Manage Files</strong></td><td>HTML pages, images, and documents for one specific course offering.</td></tr>
+          <tr><td><strong>Brightspace Organization Files</strong></td><td>Shared styling, logos, templates, and institutional assets used across courses.</td></tr>
+          <tr><td><strong>Media Library</strong></td><td>Video and audio, especially where captions, transcripts, and mobile playback matter.</td></tr>
+          <tr><td><strong>Learning Object Repository (LOR)</strong></td><td>Reusable modules that should appear in multiple courses.</td></tr>
+          <tr><td><strong>Learning Hub</strong></td><td>Catalog metadata, search, recommendations, dashboard display, and profile-driven course surfacing.</td></tr>
+          <tr><td><strong>Google Drive or another shared system</strong></td><td>Drafts, source documents, planning files, and working materials before publication.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warning">
+      <strong>Manage Files cleanup rule:</strong> if a file is deleted from a course's Manage Files, also remove the matching content link. Otherwise learners may hit broken links or see progress numbers that do not make sense.
+    </div>
+
+    <div class="tip">
+      <strong>Why this matters:</strong> courses can look simple to learners because the structure underneath is disciplined. That structure is what lets us update, reuse, report on, and archive training safely.
+    </div>
+  </section>
+
+  <section class="guide-section" id="records-data-reports">
+    <h2>5. How Are Records, Data, and Reports Handled?</h2>
+
+    <p>LACE has two data stories: the official training record and the richer engagement picture. They should work together, but they should not be treated as the same thing.</p>
+
+    <h3 id="official-vs-engagement-data">Official records vs. engagement data</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Source</th><th>What it tracks</th><th>How to treat it</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Brightspace</strong></td><td>Enrollments, course starts, topic visits, progress, completions, grades, and certificates.</td><td>Official source of truth for audit and compliance records.</td></tr>
+          <tr><td><strong>Learning Hub / Supabase</strong></td><td>Search terms, filters, ratings, profile preferences, drop-off points, and dashboard interactions.</td><td>Helpful operating and improvement data, not the official completion record.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="reliable-activity-data">What activity data is reliable?</h3>
+    <ul>
+      <li><strong>Reliable for records:</strong> enrollment, completion, certificate issue, grades, required activities, and Brightspace-tracked visits.</li>
+      <li><strong>Useful but interpret carefully:</strong> time on page, video watch behavior, search terms, ratings, and drop-off points. These show patterns, not full explanations.</li>
+      <li><strong>Worth combining:</strong> completion data plus feedback gives a better picture than either one alone.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Topic visit:</strong> Brightspace's record that a learner opened a specific module or page in a course. These visits can feed progress tracking and completion rules.
+    </div>
+
+    <h3 id="reporting-needs">What reports will we need?</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Audience</th><th>Likely reporting need</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Training Unit</strong></td><td>Enrollment, completion, feedback, course performance, learner demand, and where people get stuck.</td></tr>
+          <tr><td><strong>Managers</strong></td><td>Team progress, overdue required training, certificates, and upcoming deadlines.</td></tr>
+          <tr><td><strong>Partners</strong></td><td>Participation and completion for their own learners or agreed program groups.</td></tr>
+          <tr><td><strong>Funders / grants</strong></td><td>Aggregate participation, completion, reach, topic coverage, and evaluation outcomes.</td></tr>
+          <tr><td><strong>Internal evaluation</strong></td><td>Usefulness, learner confidence, course quality, equity of access, and training gaps.</td></tr>
+          <tr><td><strong>Admins / IT</strong></td><td>Sync status, account issues, broken links, access errors, and system health.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="feedback-loop">How do we collect feedback?</h3>
+    <p>Feedback can come from course ratings, short surveys, reflection prompts, support requests, search behavior, and completion patterns. The key is to use it as an improvement loop: what learners look for, where they struggle, and what training the team should build or revise next.</p>
+
+    <h3 id="technical-terms">Key technical terms</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Term</th><th>Plain meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>OAuth 2.0</strong></td><td>A standard way to sign in through a trusted provider without handing your password to every app you use.</td></tr>
+          <tr><td><strong>API</strong></td><td>A controlled doorway between systems. Only specific, permitted information passes through, and only for approved requests.</td></tr>
+          <tr><td><strong>System of record</strong></td><td>The authoritative source for a type of data. For LACE training records, that source is Brightspace.</td></tr>
+          <tr><td><strong>Supabase</strong></td><td>The database service behind the custom layer. It supports speed, search, dashboards, and engagement features; it does not replace Brightspace records.</td></tr>
+          <tr><td><strong>Custom frontend</strong></td><td>The Learning Hub interface we control, layered over Brightspace so the learner experience can be cleaner and more useful.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <strong>Why this matters:</strong> the Training Unit can answer "who completed what?" with confidence while also learning which trainings are useful, confusing, missing, or ready for revision.
+    </div>
+  </section>
+
+  <section class="guide-section" id="growth-current">
+    <h2>6. How Does LACE Grow and Stay Current?</h2>
+
+    <p>LACE should grow by configuration wherever possible: more learners, more states, more courses, and more practice areas should not require tearing the platform down.</p>
+
+    <h3 id="growth-model">Growth model</h3>
+    <ul>
+      <li><strong>More learners:</strong> add users through invitations, bulk upload, HR-backed onboarding, or external sign-up flows.</li>
+      <li><strong>More courses:</strong> add course offerings under a predictable Brightspace structure.</li>
+      <li><strong>More practice areas:</strong> add controlled attributes and catalog filters, then use them for recommendations and enrollment.</li>
+      <li><strong>More states:</strong> add new jurisdiction branches alongside Massachusetts instead of mixing state-specific law together.</li>
+    </ul>
+
+    <h3 id="jurisdiction-expansion">Jurisdiction-first expansion</h3>
+    <p>Massachusetts starts as its own branch. New York, Maine, or another state can be added later as separate branches. A learner licensed or working in more than one state can carry more than one jurisdiction and be placed into the right state-specific training.</p>
+
+    <h3 id="minor-major-updates">Minor vs. major law updates</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Kind of change</th><th>What counts</th><th>What we do</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Minor update</strong></td><td>Typos, broken links, wording cleanup, examples, or small clarifications.</td><td>Edit the live offering and document the change lightly.</td></tr>
+          <tr><td><strong>Major update</strong></td><td>A meaningful law, regulation, procedure, or practice change.</td><td>Create a new course offering or version, then decide who needs notice, review, or retake.</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="note">
-      <strong>Growing over time:</strong> some views are available early — connection health and basic progress — and the richer dashboards (team views, completion and equity reporting) build out as the platform matures.
+      <strong>Who decides?</strong> the Training Unit should own the content decision, with legal subject-matter input when needed. The platform should support the decision; it should not silently decide legal significance on its own.
+    </div>
+
+    <h3 id="old-versions-outdated-materials">Old versions and outdated materials</h3>
+    <p>We follow an <strong>archive, never delete</strong> rule. Old course versions should be renamed clearly, hidden from the public catalog, and preserved so past completions and certificates still make sense.</p>
+
+    <ul>
+      <li><strong>Archive old Brightspace offerings</strong> instead of deleting them.</li>
+      <li><strong>Hide outdated Learning Hub cards</strong> so learners do not start stale content by mistake.</li>
+      <li><strong>Keep records attached to the old version</strong> so a past certificate can still be audited.</li>
+      <li><strong>Document major changes</strong> enough that staff can explain what changed and why.</li>
+    </ul>
+
+    <h3 id="learner-notifications">Learner notifications and past completions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Situation</th><th>What learners need</th><th>What happens to past completion</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Minor correction</strong></td><td>No notification unless the fix affects learner action.</td><td>Past completion stands.</td></tr>
+          <tr><td><strong>Important legal update</strong></td><td>Email, dashboard banner, or assigned update review.</td><td>Past completion usually stands, but learners may need to review the update.</td></tr>
+          <tr><td><strong>Critical change</strong></td><td>Required retake or required update module with a due date.</td><td>Past completion remains historically true; current compliance may require the new version.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="manager-dashboard-learning-groups">Manager Dashboard and Learning Groups</h3>
+    <p>Both are useful Brightspace features, but they are not required on day one.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>What it does</th><th>How to treat it</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Learning Groups</strong></td><td>Automatically enrolls learners based on attributes like user type, jurisdiction, practice area, or organization.</td><td>Useful once attributes are stable. Learners can belong to more than one group.</td></tr>
+          <tr><td><strong>Manager Dashboard</strong></td><td>Lets supervisors view team progress in one place.</td><td>Useful for required training and deadlines. Optional for a small pilot.</td></tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="tip">
-      <strong>Why this matters:</strong> you'll be able to answer "who has completed what?" with confidence, and see where learners need help — without manual spreadsheets.
+      <strong>Why this matters:</strong> LACE can grow in size and stay current with the law while preserving old records. That combination is what makes the platform trustworthy over time.
+    </div>
+  </section>
+
+  <section class="guide-section" id="learner-experience">
+    <h2>7. What Is the Learner Experience?</h2>
+
+    <p>The learner experience should feel direct: sign in, see relevant training, start or resume a course, complete it, and find the certificate later without needing to understand the machinery underneath.</p>
+
+    <h3 id="mobile-use">Mobile use</h3>
+    <p>LACE works in a phone browser and can be installed like an app by choosing "Add to Home Screen." After that, it opens from the home screen with its own icon and a cleaner full-screen feel.</p>
+
+    <div class="note">
+      <strong>Installable app (PWA):</strong> LACE is a Progressive Web App, so there is nothing to download from an app store and nothing separate for learners to update.
+    </div>
+
+    <h3 id="finding-courses">Finding courses</h3>
+    <ul>
+      <li><strong>Search:</strong> learners should be able to look for courses by topic, keyword, or need.</li>
+      <li><strong>Browse:</strong> learners should be able to scan by category, such as Legal Skills or Substantive Law.</li>
+      <li><strong>Filters:</strong> filters can narrow by jurisdiction, practice area, role, format, or completion status.</li>
+      <li><strong>Recommendations:</strong> practice-area recommendations are a good future layer once profile data is reliable.</li>
+    </ul>
+
+    <h3 id="progress-certificates">Progress and certificates</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Learner question</th><th>Where the answer should appear</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>What have I started?</strong></td><td>A dashboard area for in-progress courses and resume links.</td></tr>
+          <tr><td><strong>What have I completed?</strong></td><td>A completed courses or history view, based on Brightspace records.</td></tr>
+          <tr><td><strong>Where are my certificates?</strong></td><td>A certificates area or course-completion view that points back to the official Brightspace certificate.</td></tr>
+          <tr><td><strong>What should I take next?</strong></td><td>Recommended or required courses based on profile attributes and Training Unit priorities.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="support-paths">Support paths</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Issue</th><th>Likely owner</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Course content question</strong></td><td>Training Unit or course owner.</td></tr>
+          <tr><td><strong>Certificate or completion concern</strong></td><td>Training Unit first, with Brightspace admin help if the record needs review.</td></tr>
+          <tr><td><strong>Login or password issue</strong></td><td>Brightspace support, IT, or the identity provider path configured for the site.</td></tr>
+          <tr><td><strong>Broken link, display problem, or dashboard issue</strong></td><td>LACE admin / technical support.</td></tr>
+          <tr><td><strong>Access looks wrong</strong></td><td>Training Unit or admin review of user type, jurisdiction, organization, and group assignments.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <strong>Why this matters:</strong> the best learner experience is not just attractive. It is understandable, forgiving, mobile-friendly, and clear about where to go when something is wrong.
     </div>
   </section>
 
