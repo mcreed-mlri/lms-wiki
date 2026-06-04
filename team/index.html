@@ -175,6 +175,7 @@
       <div class="nav-accordion-panel">
         <a href="#learner-experience">Section overview</a>
         <a href="#mobile-use">Mobile use</a>
+        <a href="#mobile-pwa-limitations">Mobile PWA limitations</a>
         <a href="#finding-courses">Finding courses</a>
         <a href="#progress-certificates">Progress and certificates</a>
         <a href="#support-paths">Support paths</a>
@@ -666,6 +667,17 @@
 
     <div class="note">
       <strong>Installable app (PWA):</strong> the Learning Hub is a Progressive Web App, so there is nothing to download from an app store and nothing separate for learners to update.
+    </div>
+
+    <h3 id="mobile-pwa-limitations">Are there any mobile PWA limitations right now?</h3>
+    <p>Yes, a small one. On iOS, an installed Progressive Web App can feel very app-like while the learner stays inside the Learning Hub. When a learner opens a course page that still lives directly on Brightspace, iOS may show the Safari browser interface because Brightspace is a separate website outside the Learning Hub app scope.</p>
+
+    <div class="note">
+      <strong>Current approach:</strong> the Learning Hub is still mobile-friendly, but a few course launches may briefly feel less integrated on iPhone or iPad while they open Brightspace-hosted pages.
+    </div>
+
+    <div class="tip">
+      <strong>Plan to address it:</strong> move toward Learning Hub-owned course URLs such as <code>/learn/[course-or-module]</code>. Brightspace remains the source of truth for enrollment, progress, completion, and certificates, while more of the learner-facing reading and course navigation renders inside the Learning Hub itself. The Welcome course and Eviction course can keep Brightspace URLs during the transition.
     </div>
 
     <h3 id="finding-courses">Finding courses</h3>
