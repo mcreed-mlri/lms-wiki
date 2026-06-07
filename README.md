@@ -18,6 +18,7 @@ This is the stable project memory: current status, open decisions, waiting items
 | [`brightspace-map.html`](brightspace-map.html) | Interactive, expandable map of the Brightspace platform structure (hierarchy, content, users, integrations, course design); replaces the old static mind-map image | Anyone orienting to how Brightspace is organized |
 | [`user-attributes.html`](user-attributes.html) | Planning guide for Brightspace User Attributes, access routing, Learning Groups, Manager Dashboard, UPL acknowledgement, bar records, and jurisdiction metadata | Marlie; admins configuring user metadata |
 | [`mlri-architecture.html`](mlri-architecture.html) | System architecture overview | Anyone needing the stack picture |
+| [`api-flashcards.html`](api-flashcards.html) | Brightspace API meeting flashcards: vocabulary, architecture map, and D2L specialist playbook | Marlie; API/integration prep |
 | [`styles.css`](styles.css) | Shared visual language used by the HTML pages |  |
 | [`screenshots/`](screenshots) | Screenshot assets referenced from reference pages |  |
 

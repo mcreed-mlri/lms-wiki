@@ -13,6 +13,7 @@ const PRECACHE_URLS = [
   './brightspace-map.html',
   './user-attributes.html',
   './mlri-architecture.html',
+  './api-flashcards.html',
   './team/',
   './team/index.html',
   './styles.css',
