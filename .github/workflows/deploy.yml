@@ -33,6 +33,7 @@ jobs:
           cp brightspace-map.html _site/
           cp user-attributes.html _site/
           cp mlri-architecture.html _site/
+          cp api-flashcards.html _site/
           mkdir -p _site/team
           cp team/index.html _site/team/
           cp styles.css _site/
