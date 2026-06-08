@@ -1158,8 +1158,8 @@
 
     <section class="visual-map" id="visualMap" aria-label="Brightspace integration architecture overview">
       <h2>How the pieces fit together</h2>
-      <p>Learning Hub is your learner-facing UI. Supabase is your backend — mapping tables, sync jobs, and Brightspace API calls. Brightspace owns compliance data; Data Hub handles bulk reporting.</p>
-      <svg viewBox="0 0 760 420" role="img" aria-label="Architecture diagram showing Learning Hub and Supabase connecting to Brightspace via dual OAuth and API paths">
+      <p>LACE Learning Hub is the learner-facing product. Brightspace is the LMS of record. Supabase stores LACE-owned app data and cached catalog metadata. The Brightspace API handles operational reads; Data Hub/BDS is better for scheduled bulk reporting.</p>
+      <svg viewBox="0 0 760 470" role="img" aria-label="Architecture diagram showing LACE Learning Hub, Supabase, Brightspace API, Brightspace LMS, and Data Hub paths">
         <defs>
           <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
             <path d="M0,0 L8,4 L0,8 Z" fill="#2f6f5e"/>
@@ -1172,85 +1172,100 @@
           </marker>
         </defs>
 
-        <rect x="16" y="16" width="728" height="388" rx="22" fill="#faf8f3" stroke="#ded7c9" stroke-width="1"/>
+        <rect x="16" y="16" width="728" height="438" rx="22" fill="#faf8f3" stroke="#ded7c9" stroke-width="1"/>
+
+        <!-- Row labels -->
+        <text x="46" y="52" fill="#716d63" font-size="10" font-weight="800" letter-spacing="1">LEARNER EXPERIENCE</text>
+        <text x="46" y="180" fill="#716d63" font-size="10" font-weight="800" letter-spacing="1">LACE DATA LAYER</text>
+        <text x="356" y="180" fill="#716d63" font-size="10" font-weight="800" letter-spacing="1">BRIGHTSPACE INTEGRATION</text>
+        <text x="536" y="52" fill="#716d63" font-size="10" font-weight="800" letter-spacing="1">LMS SYSTEM OF RECORD</text>
 
         <!-- Learning Hub -->
-        <rect x="36" y="48" width="196" height="98" rx="16" fill="#ffffff" stroke="#2f6f5e" stroke-width="2"/>
-        <text x="134" y="82" text-anchor="middle" fill="#25231f" font-size="15" font-weight="800">Learning Hub</text>
-        <text x="134" y="104" text-anchor="middle" fill="#716d63" font-size="11" font-weight="700">
-          <tspan x="134" dy="0">Learner-facing UI</tspan>
-          <tspan x="134" dy="15">Next.js front end</tspan>
+        <rect x="46" y="66" width="220" height="96" rx="16" fill="#ffffff" stroke="#2f6f5e" stroke-width="2"/>
+        <text x="156" y="98" text-anchor="middle" fill="#25231f" font-size="16" font-weight="800">LACE Learning Hub</text>
+        <text x="156" y="122" text-anchor="middle" fill="#716d63" font-size="11" font-weight="700">
+          <tspan x="156" dy="0">Custom front door</tspan>
+          <tspan x="156" dy="15">search, resume, dashboards</tspan>
         </text>
 
-        <!-- Dual OAuth -->
-        <rect x="282" y="48" width="196" height="72" rx="14" fill="#ffffff" stroke="#716d63" stroke-width="1.5" stroke-dasharray="5 4"/>
-        <text x="380" y="76" text-anchor="middle" fill="#25231f" font-size="13" font-weight="800">Dual OAuth</text>
-        <text x="380" y="96" text-anchor="middle" fill="#716d63" font-size="10" font-weight="700">
-          <tspan x="380" dy="0">3-legged for users</tspan>
-          <tspan x="380" dy="13">headless for sync</tspan>
+        <!-- Auth -->
+        <rect x="308" y="78" width="144" height="70" rx="14" fill="#ffffff" stroke="#716d63" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text x="380" y="104" text-anchor="middle" fill="#25231f" font-size="13" font-weight="800">Auth Boundary</text>
+        <text x="380" y="124" text-anchor="middle" fill="#716d63" font-size="10" font-weight="700">
+          <tspan x="380" dy="0">user OAuth / SSO</tspan>
+          <tspan x="380" dy="13">service user sync</tspan>
         </text>
 
         <!-- Brightspace LMS -->
-        <rect x="528" y="48" width="196" height="98" rx="16" fill="#ffffff" stroke="#2f6f5e" stroke-width="2"/>
-        <text x="626" y="82" text-anchor="middle" fill="#25231f" font-size="15" font-weight="800">Brightspace LMS</text>
-        <text x="626" y="104" text-anchor="middle" fill="#716d63" font-size="11" font-weight="700">
-          <tspan x="626" dy="0">System of record</tspan>
-          <tspan x="626" dy="15">enrollments · completion</tspan>
+        <rect x="494" y="66" width="220" height="96" rx="16" fill="#ffffff" stroke="#2f6f5e" stroke-width="2"/>
+        <text x="604" y="98" text-anchor="middle" fill="#25231f" font-size="16" font-weight="800">Brightspace LMS</text>
+        <text x="604" y="122" text-anchor="middle" fill="#716d63" font-size="11" font-weight="700">
+          <tspan x="604" dy="0">Official records</tspan>
+          <tspan x="604" dy="15">enrollments, access, completion</tspan>
         </text>
 
         <!-- Supabase -->
-        <rect x="36" y="196" width="196" height="108" rx="16" fill="#f3ead8" stroke="#c9a05a" stroke-width="2"/>
-        <text x="134" y="230" text-anchor="middle" fill="#25231f" font-size="15" font-weight="800">Supabase</text>
-        <text x="134" y="252" text-anchor="middle" fill="#716d63" font-size="11" font-weight="700">
-          <tspan x="134" dy="0">Backend layer</tspan>
-          <tspan x="134" dy="15">sync jobs · mapping</tspan>
+        <rect x="46" y="194" width="220" height="110" rx="16" fill="#f3ead8" stroke="#c9a05a" stroke-width="2"/>
+        <text x="156" y="230" text-anchor="middle" fill="#25231f" font-size="16" font-weight="800">Supabase</text>
+        <text x="156" y="254" text-anchor="middle" fill="#716d63" font-size="11" font-weight="700">
+          <tspan x="156" dy="0">LACE-owned backend</tspan>
+          <tspan x="156" dy="15">mapping, cached catalog, app events</tspan>
         </text>
 
         <!-- Brightspace API -->
-        <rect x="282" y="168" width="196" height="98" rx="16" fill="#e5f0ec" stroke="#2f6f5e" stroke-width="2"/>
-        <text x="380" y="202" text-anchor="middle" fill="#25231f" font-size="15" font-weight="800">Brightspace API</text>
-        <text x="380" y="224" text-anchor="middle" fill="#716d63" font-size="11" font-weight="700">
-          <tspan x="380" dy="0">Live reads</tspan>
-          <tspan x="380" dy="15">operational writes later</tspan>
+        <rect x="308" y="194" width="144" height="110" rx="16" fill="#e5f0ec" stroke="#2f6f5e" stroke-width="2"/>
+        <text x="380" y="230" text-anchor="middle" fill="#25231f" font-size="16" font-weight="800">Brightspace API</text>
+        <text x="380" y="254" text-anchor="middle" fill="#716d63" font-size="11" font-weight="700">
+          <tspan x="380" dy="0">Live operational path</tspan>
+          <tspan x="380" dy="15">course, TOC, enrollments</tspan>
         </text>
 
         <!-- Data Hub -->
-        <rect x="528" y="196" width="196" height="108" rx="16" fill="#f3ead8" stroke="#c9a05a" stroke-width="2"/>
-        <text x="626" y="230" text-anchor="middle" fill="#25231f" font-size="15" font-weight="800">Data Hub / BDS</text>
-        <text x="626" y="252" text-anchor="middle" fill="#716d63" font-size="11" font-weight="700">
-          <tspan x="626" dy="0">Bulk reporting</tspan>
-          <tspan x="626" dy="15">scheduled exports</tspan>
+        <rect x="494" y="194" width="220" height="110" rx="16" fill="#f3ead8" stroke="#c9a05a" stroke-width="2"/>
+        <text x="604" y="230" text-anchor="middle" fill="#25231f" font-size="16" font-weight="800">Data Hub / BDS</text>
+        <text x="604" y="254" text-anchor="middle" fill="#716d63" font-size="11" font-weight="700">
+          <tspan x="604" dy="0">Scheduled bulk exports</tspan>
+          <tspan x="604" dy="15">analytics, audits, reports</tspan>
         </text>
 
         <!-- learning_items -->
-        <rect x="36" y="334" width="196" height="54" rx="14" fill="#ffffff" stroke="#2f6f5e" stroke-width="1.5"/>
-        <text x="134" y="358" text-anchor="middle" fill="#25231f" font-size="13" font-weight="800">learning_items</text>
-        <text x="134" y="374" text-anchor="middle" fill="#716d63" font-size="10" font-weight="700">June proof · course 6703</text>
+        <rect x="46" y="340" width="220" height="74" rx="14" fill="#ffffff" stroke="#2f6f5e" stroke-width="1.5"/>
+        <text x="156" y="370" text-anchor="middle" fill="#25231f" font-size="14" font-weight="800">learning_items</text>
+        <text x="156" y="390" text-anchor="middle" fill="#716d63" font-size="10" font-weight="700">
+          <tspan x="156" dy="0">June proof: course 6703</tspan>
+          <tspan x="156" dy="13">catalog mirror for Hub UI</tspan>
+        </text>
+
+        <!-- Reporting store -->
+        <rect x="494" y="340" width="220" height="74" rx="14" fill="#ffffff" stroke="#c9a05a" stroke-width="1.5"/>
+        <text x="604" y="370" text-anchor="middle" fill="#25231f" font-size="14" font-weight="800">reporting tables / views</text>
+        <text x="604" y="390" text-anchor="middle" fill="#716d63" font-size="10" font-weight="700">
+          <tspan x="604" dy="0">manager and program reporting</tspan>
+          <tspan x="604" dy="13">fed by scheduled exports</tspan>
+        </text>
 
         <!-- Connectors -->
-        <line x1="134" y1="146" x2="134" y2="194" stroke="#716d63" stroke-width="2" marker-end="url(#arrow-muted)"/>
-        <line x1="134" y1="304" x2="134" y2="332" stroke="#716d63" stroke-width="2" marker-end="url(#arrow-muted)"/>
-        <line x1="232" y1="250" x2="280" y2="217" stroke="#2f6f5e" stroke-width="2" marker-end="url(#arrow)"/>
-        <line x1="232" y1="98" x2="526" y2="98" stroke="#2f6f5e" stroke-width="2" marker-end="url(#arrow)"/>
-        <line x1="478" y1="217" x2="526" y2="120" stroke="#2f6f5e" stroke-width="2" marker-end="url(#arrow)"/>
-        <line x1="478" y1="217" x2="526" y2="250" stroke="#c9a05a" stroke-width="2" marker-end="url(#arrow-gold)"/>
-        <line x1="626" y1="146" x2="626" y2="194" stroke="#716d63" stroke-width="2" marker-end="url(#arrow-muted)"/>
-        <line x1="380" y1="120" x2="380" y2="166" stroke="#716d63" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-muted)"/>
+        <line x1="266" y1="114" x2="306" y2="114" stroke="#716d63" stroke-width="1.8" marker-end="url(#arrow-muted)"/>
+        <line x1="452" y1="114" x2="492" y2="114" stroke="#716d63" stroke-width="1.8" marker-end="url(#arrow-muted)"/>
+        <line x1="156" y1="162" x2="156" y2="192" stroke="#716d63" stroke-width="2" marker-end="url(#arrow-muted)"/>
+        <line x1="156" y1="304" x2="156" y2="338" stroke="#716d63" stroke-width="2" marker-end="url(#arrow-muted)"/>
+        <line x1="266" y1="249" x2="306" y2="249" stroke="#2f6f5e" stroke-width="2.5" marker-end="url(#arrow)"/>
+        <line x1="452" y1="236" x2="492" y2="142" stroke="#2f6f5e" stroke-width="2.5" marker-end="url(#arrow)"/>
+        <line x1="604" y1="162" x2="604" y2="192" stroke="#716d63" stroke-width="2" marker-end="url(#arrow-muted)"/>
+        <line x1="604" y1="304" x2="604" y2="338" stroke="#c9a05a" stroke-width="2.5" marker-end="url(#arrow-gold)"/>
+        <path d="M494 386 C420 432, 340 432, 266 386" fill="none" stroke="#c9a05a" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow-gold)"/>
 
         <!-- Edge labels -->
-        <text x="134" y="178" text-anchor="middle" fill="#716d63" font-size="10" font-weight="800">app data</text>
-        <text x="134" y="322" text-anchor="middle" fill="#716d63" font-size="10" font-weight="800">sync target</text>
-        <text x="252" y="228" fill="#2f6f5e" font-size="10" font-weight="800">API calls</text>
-        <text x="348" y="92" fill="#2f6f5e" font-size="10" font-weight="800">deep link</text>
-        <text x="500" y="208" fill="#2f6f5e" font-size="10" font-weight="800">live path</text>
-        <text x="500" y="248" fill="#c9a05a" font-size="10" font-weight="800">batch path</text>
-        <text x="626" y="178" text-anchor="middle" fill="#716d63" font-size="10" font-weight="800">feeds LMS</text>
+        <text x="286" y="239" text-anchor="middle" fill="#2f6f5e" font-size="10" font-weight="800">API calls</text>
+        <text x="472" y="214" fill="#2f6f5e" font-size="10" font-weight="800">live reads</text>
+        <text x="604" y="326" text-anchor="middle" fill="#c9a05a" font-size="10" font-weight="800">bulk exports</text>
+        <text x="380" y="447" text-anchor="middle" fill="#c9a05a" font-size="10" font-weight="800">optional scheduled import into Supabase reporting views</text>
       </svg>
       <div class="map-legend">
         <div class="legend-item"><span class="legend-swatch" style="background:#2f6f5e"></span>Live API path</div>
         <div class="legend-item"><span class="legend-swatch" style="background:#c9a05a"></span>Bulk / reporting path</div>
-        <div class="legend-item"><span class="legend-swatch" style="background:#716d63"></span>Data stored in Supabase</div>
-        <div class="legend-item"><span class="legend-swatch" style="background:#e5f0ec;border:1px solid #2f6f5e"></span>Auth layer</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#716d63"></span>Auth and app data boundary</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#e5f0ec;border:1px solid #2f6f5e"></span>Operational integration layer</div>
       </div>
     </section>
     </div><!-- .extras-panel -->
