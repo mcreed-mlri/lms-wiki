@@ -71,6 +71,16 @@ A static server is recommended over `file://` so the stylesheet and inter-file l
 
 GitHub Pages, via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). On push to `main`, the workflow copies the HTML files plus `styles.css` and `screenshots/` into a Pages artifact and publishes it. No build step.
 
+### Adding a new page
+
+The deploy workflow copies files explicitly — it does not publish every HTML file in the repo automatically. When you add a new standalone page:
+
+1. Add `cp your-page.html _site/` to the **Stage site files** step in [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
+2. Add `'./your-page.html'` to `PRECACHE_URLS` in [`sw.js`](sw.js) if the page should be available offline in the installed PWA.
+3. Link it from `index.html` and any relevant **Related Docs** sidebars.
+
+If you skip step 1, the page may exist in GitHub but still return **404** on the live site — that is what happened with `api-flashcards.html` before it was added to the deploy copy list.
+
 ### PWA Updates
 
 The deployed service worker cache is versioned with the Git commit SHA during the Pages workflow. The workflow also stamps the deployed `sidebar.js` asset URL with the same SHA. Each push to `main` creates a new cache name, clears old caches on activation, and the app reloads once when the new service worker takes control. In practice, installed PWA users should see updates after the Pages deployment completes and the app is reopened or refreshed.
