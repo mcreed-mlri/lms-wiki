@@ -3,7 +3,7 @@
 | Note: Please don't worry about formatting. Add/modify any questions you can think of\!  Just highlight in any color to draw my attention 🙂 |
 | :---: |
 
-**How to read this FAQ:** answers are written in plain language for the Training Unit. Where an answer is settled, it is stated directly. Where a decision has not been made yet, the answer says **Decision pending** and points to where the decision is being worked out, so we never promise an answer that does not exist yet. Two names come up a lot: the **Learning Hub** is the friendly front door learners use, and **Brightspace** is the system underneath that signs people in, hosts courses, and keeps the official records.
+**How to read this FAQ:** answers are written in plain language for the Training Unit. Where an answer is settled, it is stated directly. Where a decision has not been made yet, the answer says **Decision pending** and points to where it is being worked out. Two names come up a lot: the **Learning Hub** is the friendly front door learners use, and **Brightspace** is the system underneath that signs people in, hosts courses, and keeps the official records.
 
 | Topic | Covers |
 | :---- | :---- |
@@ -75,7 +75,7 @@
 ## **3\. Access, Permissions, and Compliance**
 
 - **The legal bright line (UPL)**
-  - **What is UPL and why does it shape access?** UPL is the unauthorized practice of law. The core rule of the whole platform is that a non-lawyer must never receive access, certificates, or completion wording that suggests authority to practice law. This is the single biggest reason access and certificates are tied so carefully to user type.
+  - **What is UPL and why does it shape access?** UPL is the unauthorized practice of law. A non-lawyer must never receive access, certificates, or completion wording that suggests authority to practice law. This is why access and certificates are tied closely to user type.
 
 - **Access rules**
   - **Who can see what?** Access is based on user type, jurisdiction, practice area, and organization or group.
@@ -204,7 +204,7 @@
   - **What is SSO?** Single sign-on: one login that carries across the Learning Hub and Brightspace so learners do not have to sign in twice. (Still being set up.)
   - **What is a system of record?** The authoritative source for a type of data. For training records, that source is Brightspace.
   - **What is Supabase (our database)?** The database service behind the custom layer. It supports speed, search, dashboards, and engagement features; it does not replace Brightspace records.
-  - **What is a custom frontend?** The Learning Hub interface we control, layered over Brightspace so the learner experience can be cleaner and more useful.
+  - **What is a custom frontend?** The Learning Hub interface we control, layered over Brightspace.
   - **What is the wrapper?** The shared LACE navigation and design that surrounds course pages, so every course looks and feels consistent inside Brightspace.
   - **What is the installable app (PWA)?** The Learning Hub is a Progressive Web App, so learners can add it to their phone's home screen like an app, with nothing to download from an app store.
 
@@ -215,7 +215,7 @@
 - **Data collection**
   - **Will the customized HTML wrapper affect data collection?** No, as long as course navigation points to Brightspace's official topic URLs.
   - **Will learner progress still be recorded correctly?** Yes. The clean course view still lets Brightspace record visits and completion, as long as links use official topic URLs.
-  - **What data might Brightspace miss if content is displayed differently?** If content bypasses official topic URLs, visits and completion may not record. That is exactly why the rule is to point course links at Brightspace topic URLs.
+  - **What data might Brightspace miss if content is displayed differently?** If content bypasses official topic URLs, visits and completion may not record. So the rule is to point course links at Brightspace topic URLs.
 
 - **IT support**
   - **What needs Brightspace support?** Tenant setup, the vanity URL and SSL, SSO deep-linking, OAuth app registration, and confirming API versions. Note: after implementation ends, D2L moves to Standard Support, meaning tickets and help resources but no dedicated implementation manager.
