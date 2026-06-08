@@ -47,6 +47,7 @@
     <a href="#brightspace-native-fallback">Brightspace Native Fallback</a>
     <a href="#lace-hub-dashboard">LACE Learning Hub</a>
     <a href="#marlie-phase-1">Phase 1: API</a>
+    <a href="#brightspace-admin-mcp">Brightspace Admin MCP</a>
     <a href="#marlie-phase-2">Phase 2: Data</a>
     <a href="#marlie-phase-3">Phase 3: Reporting</a>
 
@@ -467,6 +468,56 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
       <li><strong>Community of Practice:</strong> possible mechanism for role-specific access in one shared space.</li>
       <li><strong>May 21 D2L note:</strong> User Attributes, Learning Groups, manager access, and completion criteria should be planned together because they drive automation and reporting.</li>
     </ul>
+  </section>
+
+  <section class="guide-section" id="brightspace-admin-mcp">
+    <h2>Brightspace Admin MCP <span class="status in-progress">Active</span></h2>
+
+    <p>A Brightspace Admin MCP is configured in Claude Code, giving direct Brightspace API access from the development environment. This lets us query real Brightspace data, prototype integrations, and build reports without leaving the editor. Current permissions are read-only for testing; write scopes will be added as use cases are validated.</p>
+
+    <h3>Current Permissions (Testing Scope)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Resource</th><th>Permission</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>core</code></td><td>All permissions (*)</td></tr>
+          <tr><td><code>datahub:dataexports</code></td><td>read</td></tr>
+          <tr><td><code>enrollment:enrollment</code></td><td>read</td></tr>
+          <tr><td><code>enrollment:orgunit</code></td><td>read</td></tr>
+          <tr><td><code>enrollment:own</code></td><td>read</td></tr>
+          <tr><td><code>grades:gradeobjects</code></td><td>read</td></tr>
+          <tr><td><code>grades:gradevalues</code></td><td>read</td></tr>
+          <tr><td><code>organizations:organization</code></td><td>read</td></tr>
+          <tr><td><code>users:own</code></td><td>read</td></tr>
+          <tr><td><code>users:userdata</code></td><td>read</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Use Cases: Current Permissions</h3>
+    <ul>
+      <li><strong>Compliance / completion tracking</strong> — query grade values and enrollment data to surface who is current vs. overdue on required trainings, broken down by org unit. Replaces manual admin pulls.</li>
+      <li><strong>Personalized Learning Hub home</strong> — pull a learner's active enrollments and in-progress grade data when they open LACE to power a "pick up where you left off" view with live Brightspace data.</li>
+      <li><strong>Cohort-based recommendations</strong> — use <code>enrollment:orgunit</code> and <code>organizations:organization</code> to surface what peers in the same role or department have completed.</li>
+      <li><strong>Data Hub export pipeline</strong> — bulk exports via <code>datahub:dataexports</code> into a lightweight data store for dashboards and reports without hitting the live API on every query.</li>
+      <li><strong>Grade-gated content unlocking</strong> — check whether a learner passed a prerequisite before surfacing advanced content in the Learning Hub.</li>
+    </ul>
+
+    <h3>Use Cases: With Write Permissions</h3>
+    <ul>
+      <li><strong>Automated enrollment management</strong> — highest-value near-term target. New hire onboarding auto-enrolls staff into required courses by role or org unit; no admin touch needed. Role changes and departures trigger enrollment updates automatically.</li>
+      <li><strong>Grade writeback</strong> — Learning Hub assessments and scenario exercises post scores back to the Brightspace gradebook so everything lives in one place.</li>
+      <li><strong>Badge and award issuance</strong> — issue credentials or completion badges automatically when a learner finishes a Learning Hub pathway, visible in their Brightspace profile.</li>
+      <li><strong>Content creation pipelines</strong> — push policy updates or templated course content across multiple courses at once; useful for SOPs and compliance content updates.</li>
+      <li><strong>Targeted announcements</strong> — combine enrollment data with announcement write access to send role-specific communications (e.g. nursing staff who haven't completed a required course by a deadline).</li>
+      <li><strong>Competency and outcome tracking</strong> — map Learning Hub activities to Brightspace learning outcomes for a fuller picture of staff development beyond course completion.</li>
+    </ul>
+
+    <h3>File and Content Management</h3>
+    <p>The content API supports creating and updating course topics and modules, uploading files to course offerings, and managing SCORM/xAPI package imports. The raw "Manage Files" area has limited API coverage; bulk file reorganization stays manual. The practical pattern for pushing updated policy docs or SOPs across multiple courses: store the canonical file in SharePoint or Drive, then use the content API to update the relevant course topics on change.</p>
+    <p>For consistent course styling, use a course template with the CSS already applied rather than trying to set a custom CSS file per course via the API. Course creation via API can specify a template, which brings the styling along automatically.</p>
   </section>
 
   <section class="guide-section" id="marlie-phase-2">
