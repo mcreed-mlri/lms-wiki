@@ -110,7 +110,10 @@
         <a href="#what-is-learning-hub">Section overview</a>
         <a href="#training-unit-support">Training Unit support</a>
         <a href="#learning-hub-vs-brightspace">Learning Hub vs. Brightspace</a>
+        <a href="#how-pieces-fit">How the pieces fit</a>
         <a href="#learner-flow">Learner flow</a>
+        <a href="#build-status">What works today</a>
+        <a href="#launch-timeline">When it launches</a>
       </div>
     </details>
     <details class="nav-accordion">
@@ -139,6 +142,7 @@
       <summary>4. How do courses work?</summary>
       <div class="nav-accordion-panel">
         <a href="#courses-work">Section overview</a>
+        <a href="#who-builds-courses">Who builds courses</a>
         <a href="#brightspace-structure">Brightspace structure</a>
         <a href="#course-terms">Course terms</a>
         <a href="#legal-skills-substantive-law">Legal Skills vs. Substantive Law</a>
@@ -179,6 +183,8 @@
         <a href="#finding-courses">Finding courses</a>
         <a href="#progress-certificates">Progress and certificates</a>
         <a href="#support-paths">Support paths</a>
+        <a href="#accessibility">Accessibility</a>
+        <a href="#languages">Languages</a>
       </div>
     </details>
   </nav>
@@ -191,6 +197,8 @@
 
   <section class="guide-section" id="what-is-learning-hub">
     <h2>1. What Is the Learning Hub?</h2>
+
+    <p><strong>LACE</strong> is MLRI's learning initiative: a shared training platform for the Massachusetts legal aid community, built and run by the Massachusetts Law Reform Institute (MLRI). Its purpose is to strengthen legal aid by strengthening learning.</p>
 
     <p>The Learning Hub is the experience we are building around Brightspace. It gives learners a cleaner front door for finding training, while Brightspace remains the system underneath for sign-in, course hosting, enrollments, completion records, and certificates.</p>
 
@@ -217,6 +225,29 @@
 
     <div class="warning">
       <strong>Source of truth:</strong> Brightspace is the official record for enrollments, progress, completion, certificates, and grades. The Learning Hub can display and enrich that information, but it does not replace Brightspace as the record keeper.
+    </div>
+
+    <h3 id="how-pieces-fit">How the pieces fit together</h3>
+    <p>Three layers, each with one job. Learners spend their time in the Learning Hub, Brightspace keeps the official records underneath, and Supabase holds the extra data that powers search and dashboards.</p>
+
+    <div class="team-flow">
+      <div class="team-flow-node">
+        <span class="step">The front door</span>
+        <strong>Learning Hub</strong>
+        <span>Search, dashboard, resume, and certificates: the experience learners actually see and use.</span>
+      </div>
+      <div class="team-flow-arrow">&rarr;</div>
+      <div class="team-flow-node">
+        <span class="step">The source of truth</span>
+        <strong>Brightspace</strong>
+        <span>Sign-in, enrollments, completion, and certificates: the official records that count.</span>
+      </div>
+      <div class="team-flow-arrow">&rarr;</div>
+      <div class="team-flow-node">
+        <span class="step">The support layer</span>
+        <strong>Supabase</strong>
+        <span>Catalog, search, feedback, and dashboard data: the extra layer we control.</span>
+      </div>
     </div>
 
     <h3 id="learner-flow">Learner flow</h3>
@@ -246,6 +277,23 @@
         <strong>You finish, it is recorded</strong>
         <span>A real completion action is stored in Brightspace and can produce a certificate.</span>
       </div>
+    </div>
+
+    <h3 id="build-status">Is it live yet, and what works today?</h3>
+    <p>It is an early working version, not the finished product. Today the course wrapper can deliver courses, the Learning Hub connects to Brightspace through a secure login (OAuth), and it can read a test course and sync that course's basic information into our own database. Learner dashboards, manager views, and reporting are still being built.</p>
+
+    <h3 id="launch-timeline">When does it launch?</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Milestone</th><th>When</th><th>Who</th><th>Content</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Pilot 1</strong></td><td>September 2026</td><td>Internal LACE cohort</td><td>Pre-Trial Skills</td></tr>
+          <tr><td><strong>Pilot 2</strong></td><td>October 2026</td><td>Broader legal aid community</td><td>Pre-Trial Skills, refined</td></tr>
+          <tr><td><strong>Partial public launch</strong></td><td>Mid-January 2027</td><td>Legal aid community</td><td>Foundations, Pre-Trial, and Trial Skills</td></tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="tip">
@@ -418,6 +466,14 @@
       <strong>Certificate sharing:</strong> sharing certificates on LinkedIn or other platforms should be a future product and policy decision, not a default assumption. We should decide what public wording is appropriate before enabling it.
     </div>
 
+    <div class="note">
+      <strong>CLE credit:</strong> the system is built to support Continuing Legal Education. Brightspace records official visits and completions that can feed jurisdictional CLE reporting, and CLE language appears only for a verified attorney. Whether a specific course is accredited for CLE credit is a per-course decision that is not yet established.
+    </div>
+
+    <div class="note">
+      <strong>Protecting learner information:</strong> we collect less by default and store only what we need. Brightspace holds the official records, the custom layer holds limited engagement and profile data, and sensitive client information is never collected.
+    </div>
+
     <div class="tip">
       <strong>Why this matters:</strong> access and certificates carry legal meaning. The platform should make appropriate access the default, not something the team has to police after the fact.
     </div>
@@ -427,6 +483,10 @@
     <h2>4. How Do Courses Work?</h2>
 
     <p>A Learning Hub course is built by us, wrapped in the Learning Hub experience, and hosted in Brightspace. The learner sees a clean, focused course; Brightspace records the official activity underneath.</p>
+
+    <h3 id="who-builds-courses">Who builds courses?</h3>
+    <p>One central course owner builds courses as custom HTML files, tests them, then uploads them to Brightspace. Custom HTML is the default course model; native Brightspace tools such as quizzes, surveys, or discussions are used only when they are simpler than custom HTML for a specific need.</p>
+    <p>As LACE expands to more states, a course is built as one "course family" (for example, Eviction Defense) with a separate offering for each state, because law, forms, deadlines, and local resources differ. Shared material is reused, but learner-facing legal guidance stays specific to each state.</p>
 
     <h3 id="brightspace-structure">Brightspace structure</h3>
     <div class="table-wrap">
@@ -566,7 +626,10 @@
           <tr><th>Term</th><th>Plain meaning</th></tr>
         </thead>
         <tbody>
+          <tr><td><strong>LMS (Learning Management System)</strong></td><td>The software that hosts courses, signs learners in, tracks progress, and stores records. Brightspace is our LMS.</td></tr>
+          <tr><td><strong>Brightspace (D2L)</strong></td><td>Our LMS, made by a company called D2L. It is the engine underneath the Learning Hub.</td></tr>
           <tr><td><strong>OAuth 2.0</strong></td><td>A standard way to sign in through a trusted provider without handing your password to every app you use.</td></tr>
+          <tr><td><strong>SSO (single sign-on)</strong></td><td>One login that carries across the Learning Hub and Brightspace, so learners do not have to sign in twice. Still being set up.</td></tr>
           <tr><td><strong>API</strong></td><td>A controlled doorway between systems. Only specific, permitted information passes through, and only for approved requests.</td></tr>
           <tr><td><strong>System of record</strong></td><td>The authoritative source for a type of data. For Learning Hub training records, that source is Brightspace.</td></tr>
           <tr><td><strong>Supabase</strong></td><td>The database service behind the custom layer. It supports speed, search, dashboards, and engagement features; it does not replace Brightspace records.</td></tr>
@@ -718,6 +781,12 @@
         </tbody>
       </table>
     </div>
+
+    <h3 id="accessibility">Accessibility</h3>
+    <p>We are building toward accessible courses: video and audio go in the Media Library with captions and transcripts, and accessibility is a current hardening priority. The formal target standard, such as an ADA, Section 508, or WCAG conformance level, is still being set.</p>
+
+    <h3 id="languages">Languages</h3>
+    <p>The Brightspace interface can show some text in multiple languages based on locale settings, including English, Spanish, Hmong, Somali, and Karen. Course content itself is authored per language and is mostly English for the pilot. Which courses get translated, and into which languages, is a future decision.</p>
 
     <div class="tip">
       <strong>Why this matters:</strong> the best learner experience is not just attractive. It is understandable, forgiving, mobile-friendly, and clear about where to go when something is wrong.
