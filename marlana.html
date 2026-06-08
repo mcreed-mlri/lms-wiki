@@ -44,6 +44,7 @@
     <span class="section-label">Platform Build</span>
     <a href="#marlies-roadmap">Roadmap</a>
     <a href="#marlie-phase-0">Phase 0: Wrapper</a>
+    <a href="#brightspace-native-fallback">Brightspace Native Fallback</a>
     <a href="#lace-hub-dashboard">LACE Learning Hub</a>
     <a href="#marlie-phase-1">Phase 1: API</a>
     <a href="#marlie-phase-2">Phase 2: Data</a>
@@ -127,7 +128,7 @@
       </table>
     </div>
 
-    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-05-27</em></p>
+    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-06-08</em></p>
   </section>
 
   <section class="guide-section" id="current-phase">
@@ -282,6 +283,81 @@
     <p><strong>Not Phase 0:</strong> OAuth, API-backed checkmarks, cross-course dashboard data, manager reporting, or custom catalog sync. Those start in Phase 1 and Phase 2.</p>
   </section>
 
+  <section class="guide-section" id="brightspace-native-fallback">
+    <h2>Brightspace Native Fallback <span class="status proposed">Make Presentable</span></h2>
+
+    <div class="note">
+      <strong>Design stance:</strong> LACE Learning Hub remains the intended front door. Brightspace still needs to look intentional because learners may enter through Brightspace login, bookmarks, Pulse, emails, notifications, or admin links.
+    </div>
+
+    <p>Treat the native Brightspace homepage as a fallback lobby, not the primary learning product. It does not need to be highly custom, but it cannot look empty, buried, or under construction.</p>
+
+    <h3>Minimum Standard</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label">Move <strong>My Courses</strong>, <strong>Continue</strong>, or <strong>Start Here</strong> as high as Brightspace allows.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Remove, hide, or collapse unused widgets such as placeholder announcements, social blocks, app promos, empty auditor widgets, and admin-only clutter.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Add calm orientation copy: <em>Welcome to MLRI Learning. Use this page to access your assigned courses.</em></span></li>
+      <li><input type="checkbox" disabled><span class="label">Add a clear path back to LACE Learning Hub for search, recommendations, resume, and dashboards.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Keep navbar links minimal: <strong>My Courses</strong>, <strong>LACE Hub</strong>, <strong>Help</strong>, and profile/account controls.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Make each native course homepage consistent: banner, Start/Resume button, short course description, support link.</span></li>
+      <li><input type="checkbox" disabled><span class="label">Check mobile so the first task is reachable without scrolling through irrelevant widgets.</span></li>
+    </ul>
+
+    <h3>Light Wireframe</h3>
+    <pre>
+MLRI Learning
+----------------------------------------------------------------------------
+Top nav:  My Courses   LACE Hub   Help                         Profile
+
+[Short welcome banner]
+Welcome to MLRI Learning.
+Use this page to access assigned courses. For search, recommendations,
+dashboards, and saved progress, open LACE Learning Hub.
+
+[Primary action row]
++---------------------------+   +---------------------------+
+| Continue Learning         |   | Go to LACE Learning Hub   |
+| Most recent course/topic  |   | Search, browse, dashboard |
+| [Resume]                  |   | [Open Hub]                |
++---------------------------+   +---------------------------+
+
+[My Courses]
++--------------------+ +--------------------+ +--------------------+
+| Course card        | | Course card        | | Course card        |
+| title, status      | | title, status      | | title, status      |
+| [Start/Resume]     | | [Start/Resume]     | | [Start/Resume]     |
++--------------------+ +--------------------+ +--------------------+
+
+[Important Announcements]
+Only urgent learner-facing items. No social/filler/placeholder blocks.
+
+[Help]
+Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
+    </pre>
+
+    <h3>Decision Rule</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Entry Point</th><th>Use For</th><th>Standard</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>LACE Learning Hub</strong></td><td>Primary learner journey: discovery, resume, role-aware dashboards, pathways, recommendations, reporting views.</td><td>Best experience; product-quality.</td></tr>
+          <tr><td><strong>Brightspace native homepage</strong></td><td>Fallback entry when learners log in directly, follow system links, use Pulse, or need native LMS pages.</td><td>Clean, intentional, no under-construction feel.</td></tr>
+          <tr><td><strong>Wrapper / clean-view course pages</strong></td><td>High-touch custom course experience with LACE navigation, custom interactions, and attorney-specific reading/practice flow.</td><td>Use when custom UX earns its keep.</td></tr>
+          <tr><td><strong>Native sequence viewer</strong></td><td>Simple linear courses where Brightspace's full-screen viewer, side menu, print/download, and native completion display are enough.</td><td>Evaluate as a supported launch mode.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>D2L Follow-Up</h3>
+    <ul>
+      <li>Ask D2L to show every learner-facing content delivery mode available in <code>mlritest.brightspace.com</code>, including New Learner Experience, New Content Experience/Lessons, enhanced TOC, and <code>/d2l/le/sequenceLauncher/</code>.</li>
+      <li>Ask which homepage widgets can be removed, reordered, role-scoped, or replaced with custom widgets.</li>
+      <li>Ask which configuration variables control learner navigation, side nav persistence, enhanced TOC, completion display, and default course homepage behavior.</li>
+    </ul>
+  </section>
+
   <section class="guide-section" id="lace-hub-dashboard">
     <h2>LACE Learning Hub: Unified Dashboards</h2>
 
@@ -376,7 +452,7 @@
 
     <h3>Brightspace Meeting Notes</h3>
     <ul>
-      <li><strong>Brightspace test site:</strong> D2L has not launched the test site yet; this is the right environment for API testing. Ask D2L to submit the internal request for early June 2026 launch.</li>
+      <li><strong>Brightspace test site:</strong> the MLRI test tenant is live at <a href="https://mlritest.brightspace.com/d2l/login" target="_blank" rel="noopener">mlritest.brightspace.com</a>. Use it for API testing, native homepage cleanup, wrapper upload tests, sequence viewer tests, roles, enrollments, and completion criteria.</li>
       <li><strong>Vanity URL / custom domain:</strong> hard deadline week of June 15-19, 2026. D2L needs the desired vanity URL before they can provide DNS records.</li>
       <li><strong>SSL option 1:</strong> preferred default unless IT objects. Let D2L manage the SSL certificate and renewal through AWS Certificate Manager; IT adds the D2L-provided validation CNAME for automatic renewal.</li>
       <li><strong>SSL option 2:</strong> use only if MLRI already has a valid wildcard certificate and is willing to send D2L the certificate and private key, then own renewals and replacement before expiry.</li>
@@ -479,9 +555,9 @@
           </tr>
           <tr id="brightspace-test-site">
             <td><strong>Brightspace test site</strong></td>
-            <td>Should D2L launch the Brightspace test instance now for API testing?</td>
-            <td>D2L confirmed the test site has not launched yet and that this is the right moment to create it before syncing against the live catalog.</td>
-            <td><span class="status in-progress">Ask D2L to submit</span></td>
+            <td>What capabilities and configuration options are enabled in the test tenant?</td>
+            <td>The MLRI test site is live at <a href="https://mlritest.brightspace.com/d2l/login" target="_blank" rel="noopener">mlritest.brightspace.com</a>. Confirm it mirrors production tools, config variables, APIs, roles, learner content experiences, and future vanity URL behavior.</td>
+            <td><span class="status in-progress">Live; validate config</span></td>
           </tr>
           <tr id="phase-1-auth-model">
             <td><strong>Phase 1 auth model</strong></td>
