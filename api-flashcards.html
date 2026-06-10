@@ -225,8 +225,42 @@
       max-width: 780px;
     }
 
+    .lace-why {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.85);
+      border-left: 4px solid var(--accent);
+      color: #365146;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .lace-why-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .lace-why-text {
+      margin: 0;
+    }
+
+    .lace-why-text code {
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 12px;
+      background: var(--gold-soft);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: #365146;
+    }
+
     .example {
-      margin-top: 20px;
+      margin-top: 16px;
       padding: 18px 20px;
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.7);
@@ -294,52 +328,173 @@
       justify-self: end;
     }
 
-    .mini-guide {
-      margin-top: 20px;
+    .reference-hub {
+      margin-top: 18px;
       border: 1px solid var(--border);
       border-radius: 24px;
-      background: rgba(255, 255, 255, 0.62);
-      padding: 18px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
+      background: rgba(255, 255, 255, 0.72);
+      padding: 16px;
     }
 
-    .mini-guide strong {
+    .extras-panel > .meeting-essentials {
+      margin-top: 0;
+      margin-bottom: 14px;
+    }
+
+    .meeting-essentials {
+      border: 1px solid rgba(47, 111, 94, 0.22);
+      border-radius: 18px;
+      background: linear-gradient(145deg, var(--accent-soft), rgba(243, 234, 216, 0.45));
+      padding: 16px 18px;
+    }
+
+    .meeting-essentials h3 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      letter-spacing: -0.02em;
       color: var(--ink);
     }
 
-    .visual-map-toggle {
-      margin-top: 14px;
-      width: 100%;
-      background: var(--gold-soft);
-      border-color: #d9cdb6;
+    .essentials-note {
+      margin: 0 0 12px;
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--muted);
     }
 
-    .visual-map {
-      margin-top: 14px;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.82);
-      padding: 20px;
+    .essentials-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .essentials-list label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .essentials-list input {
+      margin-top: 3px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .essentials-list code {
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: #365146;
+    }
+
+    .closing-line {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(47, 111, 94, 0.15);
+    }
+
+    .closing-line summary {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent);
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .closing-line summary::-webkit-details-marker {
       display: none;
     }
 
-    .visual-map.open {
+    .closing-line p {
+      margin: 10px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .closing-line strong {
+      color: var(--ink);
+    }
+
+    .mini-guide {
+      margin-top: 14px;
+      border: 1px solid rgba(47, 111, 94, 0.2);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+      padding: 14px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .reference-kicker {
+      margin: 0 0 10px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .reference-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .reference-tab {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 12px;
+      border-radius: 999px;
+      padding: 10px 14px;
+      min-height: 40px;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .reference-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .reference-panel {
+      display: none;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    .reference-panel.active {
       display: block;
     }
 
-    .visual-map h2 {
+    .reference-panel > h2 {
       margin: 0 0 6px;
       font-size: 18px;
       letter-spacing: -0.03em;
     }
 
-    .visual-map p {
-      margin: 0 0 16px;
+    .reference-panel > p:first-of-type {
+      margin: 0 0 18px;
       color: var(--muted);
       font-size: 14px;
       line-height: 1.45;
+    }
+
+    .mini-guide strong {
+      color: var(--ink);
     }
 
     .visual-map svg {
@@ -371,33 +526,19 @@
       flex-shrink: 0;
     }
 
-    .meeting-prep-toggle {
-      margin-top: 14px;
-      width: 100%;
-      background: var(--accent-soft);
-      border-color: rgba(47, 111, 94, 0.25);
-    }
-
-    .meeting-prep {
-      margin-top: 14px;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.82);
-      padding: 20px;
-      display: none;
-    }
-
-    .meeting-prep.open {
-      display: block;
-    }
-
-    .meeting-prep h2 {
+    .meeting-prep h2,
+    .stack-glossary h2,
+    .tech-faq h2,
+    .visual-map h2 {
       margin: 0 0 6px;
       font-size: 18px;
       letter-spacing: -0.03em;
     }
 
-    .meeting-prep > p {
+    .meeting-prep > p,
+    .stack-glossary > p,
+    .tech-faq > p,
+    .visual-map > p {
       margin: 0 0 16px;
       color: var(--muted);
       font-size: 14px;
@@ -652,38 +793,14 @@
       text-transform: uppercase;
     }
 
-    .stack-glossary-toggle,
-    .tech-faq-toggle {
-      margin-top: 14px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.8);
-      border-color: var(--border);
-    }
-
-    .stack-glossary {
-      margin-top: 14px;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.82);
-      padding: 20px;
-      display: none;
-    }
-
-    .stack-glossary.open {
-      display: block;
-    }
-
-    .stack-glossary h2 {
-      margin: 0 0 6px;
-      font-size: 18px;
-      letter-spacing: -0.03em;
-    }
-
-    .stack-glossary > p {
-      margin: 0 0 18px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.45;
+    .stack-glossary,
+    .tech-faq,
+    .visual-map {
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: 0;
     }
 
     .glossary-section + .glossary-section {
@@ -740,29 +857,7 @@
     }
 
     .tech-faq {
-      margin-top: 14px;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.82);
-      padding: 20px;
-      display: none;
-    }
-
-    .tech-faq.open {
       display: block;
-    }
-
-    .tech-faq h2 {
-      margin: 0 0 6px;
-      font-size: 18px;
-      letter-spacing: -0.03em;
-    }
-
-    .tech-faq > p {
-      margin: 0 0 18px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.45;
     }
 
     .faq-section {
@@ -906,11 +1001,37 @@
         line-height: 1.3;
       }
 
-      .example {
+      .lace-why {
         margin-top: 14px;
         padding: 14px;
         font-size: 14px;
+      }
+
+      .example {
+        margin-top: 12px;
+        padding: 14px;
+        font-size: 14px;
         line-height: 1.45;
+      }
+
+      .reference-hub {
+        padding: 14px;
+      }
+
+      .reference-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+      }
+
+      .reference-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .reference-tab {
+        flex-shrink: 0;
       }
 
       .hint {
@@ -1041,6 +1162,10 @@
             <div class="face-scroll">
               <span class="tag">Meeting language</span>
               <div class="meeting" id="meeting">The API is the interface Supabase would use for operational data exchange between Learning Hub and Brightspace.</div>
+              <div class="lace-why" id="laceWhy">
+                <span class="lace-why-label">Why ask this for LACE?</span>
+                <p class="lace-why-text" id="laceWhyText">Without a supported API path, the Hub cannot populate learning_items or show a live catalog from Brightspace.</p>
+              </div>
               <div class="example" id="example">Question: Is course discovery data available through the API, and is that the recommended source for a learner-facing catalog?</div>
             </div>
             <div class="hint">
@@ -1059,6 +1184,23 @@
     </div>
 
     <div class="extras-panel">
+    <section class="meeting-essentials" aria-label="Most important meeting questions">
+      <h3>Most important questions</h3>
+      <p class="essentials-note">Right under the cards — skim before the call and tick as you go. Filters and deeper reference are below.</p>
+      <ul class="essentials-list checklist">
+        <li><label><input type="checkbox"> If the Service User is enrolled at Massachusetts, does it inherit access to all current and future offerings (including <code>6703</code>)?</label></li>
+        <li><label><input type="checkbox"> For <code>learning_items</code> catalog sync, should we use the live API, Data Hub/BDS, or a hybrid?</label></li>
+        <li><label><input type="checkbox"> Can D2L validate our JWT client-assertion shape and walk through a first sandbox token?</label></li>
+        <li><label><input type="checkbox"> What specific read-only OAuth scopes are safest for the Phase 1 pilot?</label></li>
+        <li><label><input type="checkbox"> Which LMS and LE API versions should we build against for Org Unit metadata and Content TOC?</label></li>
+        <li><label><input type="checkbox"> Who can create the OAuth 2.0 app in Sandbox vs Production?</label></li>
+      </ul>
+      <details class="closing-line">
+        <summary>If you only say one thing at the end</summary>
+        <p><strong>Close with:</strong> “We want to confirm the <strong>Service User role permissions</strong> and <strong>enrollment inheritance rules</strong> required for a headless <strong>Client Credentials sync</strong> of Course Offering metadata into our <strong>Supabase catalog</strong>, specifically validating the correct <strong>LMS and LE API versions</strong> for the March 2026 release.”</p>
+      </details>
+    </section>
+
     <div class="deck-tools" aria-label="Deck filters">
       <span>Filter:</span>
       <button class="filter-chip active" type="button" data-filter="all">All</button>
@@ -1070,11 +1212,18 @@
       <button class="flow-btn" id="meetingFlow" type="button">Meeting order →</button>
     </div>
 
-    <button class="meeting-prep-toggle" id="prepToggle" type="button" aria-expanded="false" aria-controls="meetingPrep">
-      Show meeting playbook
-    </button>
+    <div class="reference-hub" aria-label="Meeting reference materials">
+      <p class="reference-kicker">Deeper reference</p>
 
-    <section class="meeting-prep" id="meetingPrep" aria-label="Brightspace API specialist meeting playbook">
+      <div class="reference-tabs" role="tablist" aria-label="Reference sections">
+        <button class="reference-tab active" type="button" role="tab" id="tabPlaybook" aria-selected="true" aria-controls="panelPlaybook" data-panel="panelPlaybook">Playbook</button>
+        <button class="reference-tab" type="button" role="tab" id="tabGlossary" aria-selected="false" aria-controls="panelGlossary" data-panel="panelGlossary">Stack glossary</button>
+        <button class="reference-tab" type="button" role="tab" id="tabFaq" aria-selected="false" aria-controls="panelFaq" data-panel="panelFaq">Developer FAQ</button>
+        <button class="reference-tab" type="button" role="tab" id="tabMap" aria-selected="false" aria-controls="panelMap" data-panel="panelMap">Architecture map</button>
+      </div>
+
+      <div class="reference-panels">
+    <section class="reference-panel active meeting-prep" id="panelPlaybook" role="tabpanel" aria-labelledby="tabPlaybook" aria-label="Brightspace API specialist meeting playbook">
       <h2>Meeting playbook</h2>
       <p>Use this as your spine. You already have a working spike — the goal is a production-safe Phase 1 path, not endpoint trivia.</p>
 
@@ -1135,7 +1284,8 @@
       </div>
 
       <div class="leave-with">
-        <h3>Leave the meeting with answers to:</h3>
+        <h3>Full exit checklist</h3>
+        <p class="essentials-note" style="margin-bottom:10px;">Includes the six questions above, plus a few more if time allows.</p>
         <ul class="checklist">
           <li><label><input type="checkbox"> Service User enrollment inheritance rules at the Massachusetts jurisdiction level</label></li>
           <li><label><input type="checkbox"> Recommended catalog sync pattern: live API, Data Hub/BDS, or hybrid</label></li>
@@ -1143,6 +1293,7 @@
           <li><label><input type="checkbox"> Specific read-only OAuth scopes for the pilot (not just wildcards)</label></li>
           <li><label><input type="checkbox"> LMS + LE API versions for Org Unit metadata and Content TOC (March 2026 release)</label></li>
           <li><label><input type="checkbox"> Who can create the OAuth 2.0 app in Sandbox vs Production</label></li>
+          <li><label><input type="checkbox"> Recommended Phase 1 architecture summary (auth, sync, scopes, versions)</label></li>
           <li><label><input type="checkbox"> Production SSO transition path from 3-legged OAuth testing</label></li>
           <li><label><input type="checkbox"> API Rate Logging thresholds we should design around</label></li>
         </ul>
@@ -1157,15 +1308,7 @@
       </div>
     </section>
 
-    <section class="mini-guide">
-      <strong>Best sentence to memorize:</strong> “We want to confirm the <strong>Service User role permissions</strong> and <strong>enrollment inheritance rules</strong> required for a headless <strong>Client Credentials sync</strong> of Course Offering metadata into our <strong>Supabase catalog</strong>, specifically validating the correct <strong>LMS and LE API versions</strong> for the March 2026 release.”
-    </section>
-
-    <button class="stack-glossary-toggle" id="glossaryToggle" type="button" aria-expanded="false" aria-controls="stackGlossary">
-      Show stack glossary
-    </button>
-
-    <section class="stack-glossary" id="stackGlossary" aria-label="Plain English glossary for the LACE stack">
+    <section class="reference-panel stack-glossary" id="panelGlossary" role="tabpanel" aria-labelledby="tabGlossary" aria-label="Plain English glossary for the LACE stack">
       <h2>Stack glossary</h2>
       <p>Plain English for the packages, platforms, and jargon you will hear in API meetings. Flashcards cover Brightspace API vocabulary; this covers the build stack around it.</p>
 
@@ -1276,11 +1419,7 @@
       </div>
     </section>
 
-    <button class="tech-faq-toggle" id="faqToggle" type="button" aria-expanded="false" aria-controls="techFaq">
-      Show technical FAQ for developers
-    </button>
-
-    <section class="tech-faq" id="techFaq" aria-label="LACE Hub technical FAQ for developers">
+    <section class="reference-panel tech-faq" id="panelFaq" role="tabpanel" aria-labelledby="tabFaq" aria-label="LACE Hub technical FAQ for developers">
       <h2>Technical FAQ for developers</h2>
       <p>Reference companion to the flashcards. Synthesizes Phase 1 requirements from the May 2026 Developer Platform documentation and LACE project strategy — use for implementation, not as meeting small-talk.</p>
 
@@ -1368,11 +1507,7 @@
       </div>
     </section>
 
-    <button class="visual-map-toggle" id="mapToggle" type="button" aria-expanded="false" aria-controls="visualMap">
-      Show big-picture architecture map
-    </button>
-
-    <section class="visual-map" id="visualMap" aria-label="Brightspace integration architecture overview">
+    <section class="reference-panel visual-map" id="panelMap" role="tabpanel" aria-labelledby="tabMap" aria-label="Brightspace integration architecture overview">
       <h2>How the pieces fit together</h2>
       <p>LACE Learning Hub is the learner-facing product. Brightspace is the LMS of record. Supabase stores LACE-owned app data and cached catalog metadata. The Brightspace API handles operational reads; Data Hub/BDS is better for scheduled bulk reporting.</p>
       <svg viewBox="0 0 760 470" role="img" aria-label="Architecture diagram showing LACE Learning Hub, Supabase, Brightspace API, Brightspace LMS, and Data Hub paths">
@@ -1484,6 +1619,8 @@
         <div class="legend-item"><span class="legend-swatch" style="background:#e5f0ec;border:1px solid #2f6f5e"></span>Operational integration layer</div>
       </div>
     </section>
+      </div><!-- .reference-panels -->
+    </div><!-- .reference-hub -->
     </div><!-- .extras-panel -->
   </main>
 
@@ -1586,6 +1723,56 @@
       secondaryManager: `<svg viewBox="0 0 320 120" ${svgStyle}><rect x="50" y="24" width="90" height="52" rx="10" fill="#e5f0ec" stroke="#2f6f5e" stroke-width="2"/><text x="95" y="46" text-anchor="middle" fill="#25231f" font-size="9" font-weight="800">whoami</text><text x="95" y="62" text-anchor="middle" fill="#716d63" font-size="8" font-weight="700">user endpoint</text><line x1="142" y1="50" x2="178" y2="50" stroke="#2f6f5e" stroke-width="1.5"/><polygon points="178,50 170,46 170,54" fill="#2f6f5e"/><rect x="180" y="24" width="90" height="52" rx="10" fill="#f3ead8" stroke="#c9a05a" stroke-width="2"/><text x="225" y="46" text-anchor="middle" fill="#25231f" font-size="8" font-weight="800">Secondary_</text><text x="225" y="60" text-anchor="middle" fill="#25231f" font-size="8" font-weight="800">Manager</text><text x="160" y="104" text-anchor="middle" fill="#716d63" font-size="9" font-weight="700">Custom attribute in default payload?</text></svg>`,
 
       rateLogging: `<svg viewBox="0 0 320 120" ${svgStyle}><rect x="60" y="24" width="200" height="56" rx="12" fill="#fff" stroke="#2f6f5e" stroke-width="2"/><text x="160" y="46" text-anchor="middle" fill="#25231f" font-size="10" font-weight="800">API Rate Logging</text><text x="160" y="64" text-anchor="middle" fill="#716d63" font-size="9" font-weight="700">monitor call volume</text><text x="160" y="104" text-anchor="middle" fill="#716d63" font-size="9" font-weight="700">Ask production thresholds, not basics</text></svg>`
+    };
+
+    const laceWhyByTerm = {
+      "API": "The Learning Hub catalog and admin diagnostics depend on reading Brightspace from our Next.js/Supabase backend — we need D2L to confirm this is the right operational path.",
+      "Endpoint": "Phase 1 sync for course 6703 needs the correct route families for offerings, content outline, and enrollments. Wrong endpoints mean rework before January launch.",
+      "Resource": "We have to know which Brightspace objects map to learning_items, dashboard reads, and compliance tracking — not every LMS object belongs in Supabase.",
+      "Payload": "Catalog cards only work if API responses include the title, dates, visibility, and outline fields we cache in learning_items.",
+      "Read vs. Write": "Phase 1 is a read-only catalog mirror. Write access adds security and audit risk we do not need unless D2L recommends a specific write for launch.",
+      "Org Unit": "If the Service User is enrolled at Massachusetts, inheritance rules determine whether catalog sync scales or requires manual enrollment per offering.",
+      "Service User Enrollment Inheritance": "This is the difference between a one-time setup and someone enrolling the bot in every new course forever — a major operational cost for LACE.",
+      "Course Offering": "learning_items mirrors live offerings learners take. Syncing templates or the wrong org unit breaks catalog cards and deep links.",
+      "learning_items": "June proof and January launch both depend on syncing 6703 into this table. The meeting should validate what belongs here vs only in Brightspace.",
+      "Content Table of Contents": "Resume links and module structure in the Hub need the official Brightspace content outline — not a hand-maintained copy.",
+      "Valence API Version": "Our spike uses LP 1.49 and LE 1.82. Hardcoding the wrong version on MLRI's instance breaks sync when Brightspace updates.",
+      "Authentication": "Production cannot rely on a personal admin login. We need the supported model for learner dashboard calls vs background catalog sync.",
+      "Dual Auth Model": "Dashboard reads need the learner's own context; catalog harvest needs a Service User. Mixing them causes permission failures in production.",
+      "OAuth 2.0": "Brightspace does not use simple API keys. OAuth is how the Hub and Supabase get legitimate access to LMS data.",
+      "Client Credentials": "Catalog sync runs on a schedule with no human present — this is the grant type for that headless job.",
+      "JWKS / Headless OAuth": "Local 3-legged OAuth proved the spike; production Service User sync requires JWKS. Without it, nightly catalog jobs cannot authenticate.",
+      "JWT Client Assertion": "A malformed assertion blocks every sync run. We need D2L to validate our shape, not re-explain documented fields.",
+      "Service User": "Sync cannot depend on Marlie's login. A dedicated account survives staffing changes and keeps permissions auditable.",
+      "Least Privilege": "Legal aid training data needs tight access. An over-scoped Service User is a security and compliance risk.",
+      "Scopes": "The OAuth app must request only what catalog sync needs — too broad is risky, too narrow breaks reads on 6703.",
+      "Permissions": "Scopes and Service User role permissions must align. Failures on 6703 are often enrollment or role issues, not just missing scopes.",
+      "Source of Truth": "Brightspace owns completions and CLE records. The Hub must not treat Supabase as the official training record.",
+      "Sync Strategy": "learning_items and dashboard reads go stale without a deliberate plan. Ad hoc API pulls will not scale to a statewide catalog.",
+      "Catalog Discovery Source": "Our biggest architecture fork: live API vs Data Hub for filling the learner-facing catalog at scale.",
+      "Data Hub": "Bulk catalog or manager reporting may be cheaper and more stable through exports than thousands of live API calls.",
+      "BDS": "Program evaluation and equity reporting may need datasets too large to pull page-by-page through the live API.",
+      "Real-time vs. Batch": "Hub search can use cached catalog data; manager reports can lag hours. Different features need different sync cadences.",
+      "Webhook": "If Brightspace can push enrollment or completion changes, the Hub stays fresher without constant polling and rate-limit pressure.",
+      "Polling": "Likely our Phase 1 fallback for catalog sync. The interval trades freshness against API Rate Logging thresholds.",
+      "API Rate Logging": "A statewide catalog sync could hit production limits. We need D2L's thresholds to size background jobs correctly.",
+      "Pagination": "A full catalog pull must page through offerings without timing out or silently missing courses.",
+      "Incremental Sync": "Re-downloading the entire catalog every hour does not scale. We need changed-since filtering for learning_items.",
+      "Stable ID": "learning_items maps to Brightspace OrgUnitIds. Titles and emails change; stable IDs keep deep links and resume working.",
+      "Mapping Table": "Every Hub course card needs a reliable brightspace_org_unit_id link — starting with 6703 as the proof case.",
+      "Deep Link": "Architecture B requires learners to land on official Brightspace topic URLs so compliance visits are recorded.",
+      "SSO Transition": "Learners should not sign in twice. Production launch needs one session across the Hub and Brightspace.",
+      "Context Copy Notice": "A quick filter saves meeting time: if this is LTI-only, it does not affect our headless catalog sync path.",
+      "Archive vs Delete": "Wrong status filters hide live courses or show retired ones in the Hub catalog after the March 2026 UI change.",
+      "Secondary Manager Attribute": "Manager routing depends on Secondary_Manager in API payloads — worth confirming now even if dashboard reads come in Phase 3.",
+      "LTI": "Confirms whether LACE needs embedded in-course tools or whether API plus deep links is the right pattern for the Hub.",
+      "Idempotency": "Future enrollment automation must not double-enroll advocates when a sync job retries.",
+      "Auditability": "Legal aid requires a clear record of who changed enrollments. Service User writes must appear in Brightspace audit logs.",
+      "Sandbox OAuth Permissions": "OAuth app creation is sometimes locked even for super admins — we need to know who configures sandbox before testing.",
+      "Versioning": "January launch needs stable API versions. Surprise deprecations break learning_items sync mid-build.",
+      "Production-safe": "Separates spike patterns that work locally from what D2L will support for real learners in 2027.",
+      "Supported Pattern": "Avoids building fragile workarounds D2L will not stand behind when the catalog goes statewide.",
+      "Phase 1 Architecture": "The meeting outcome: leave with a concrete auth, sync, scope, and versioning plan for 6703 → learning_items."
     };
 
     const meetingFlowOrder = [
@@ -2004,20 +2191,15 @@
     const term = document.getElementById("term");
     const plain = document.getElementById("plain");
     const meeting = document.getElementById("meeting");
+    const laceWhyText = document.getElementById("laceWhyText");
     const example = document.getElementById("example");
     const count = document.getElementById("count");
     const progress = document.getElementById("progress");
     const prev = document.getElementById("prev");
     const next = document.getElementById("next");
     const flip = document.getElementById("flip");
-    const mapToggle = document.getElementById("mapToggle");
-    const visualMap = document.getElementById("visualMap");
-    const prepToggle = document.getElementById("prepToggle");
-    const meetingPrep = document.getElementById("meetingPrep");
-    const glossaryToggle = document.getElementById("glossaryToggle");
-    const stackGlossary = document.getElementById("stackGlossary");
-    const faqToggle = document.getElementById("faqToggle");
-    const techFaq = document.getElementById("techFaq");
+    const referenceTabs = document.querySelectorAll(".reference-tab");
+    const referencePanels = document.querySelectorAll(".reference-panel");
     const studyFocusBtn = document.getElementById("studyFocus");
     const meetingFlowBtn = document.getElementById("meetingFlow");
     const filterChips = document.querySelectorAll(".filter-chip");
@@ -2071,6 +2253,7 @@
       term.textContent = item.term;
       plain.textContent = item.plain;
       meeting.textContent = item.meeting;
+      laceWhyText.textContent = item.laceWhy || laceWhyByTerm[item.term] || "";
       example.textContent = item.example;
       diagram.innerHTML = diagrams[item.diagram] || "";
       count.textContent = `${currentIndex + 1} / ${visibleCards.length}`;
@@ -2160,36 +2343,18 @@
       }
     });
 
-    mapToggle.addEventListener("click", () => {
-      const isOpen = visualMap.classList.toggle("open");
-      mapToggle.setAttribute("aria-expanded", String(isOpen));
-      mapToggle.textContent = isOpen
-        ? "Hide big-picture architecture map"
-        : "Show big-picture architecture map";
-    });
-
-    prepToggle.addEventListener("click", () => {
-      const isOpen = meetingPrep.classList.toggle("open");
-      prepToggle.setAttribute("aria-expanded", String(isOpen));
-      prepToggle.textContent = isOpen
-        ? "Hide meeting playbook"
-        : "Show meeting playbook";
-    });
-
-    glossaryToggle.addEventListener("click", () => {
-      const isOpen = stackGlossary.classList.toggle("open");
-      glossaryToggle.setAttribute("aria-expanded", String(isOpen));
-      glossaryToggle.textContent = isOpen
-        ? "Hide stack glossary"
-        : "Show stack glossary";
-    });
-
-    faqToggle.addEventListener("click", () => {
-      const isOpen = techFaq.classList.toggle("open");
-      faqToggle.setAttribute("aria-expanded", String(isOpen));
-      faqToggle.textContent = isOpen
-        ? "Hide technical FAQ for developers"
-        : "Show technical FAQ for developers";
+    referenceTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const panelId = tab.dataset.panel;
+        referenceTabs.forEach((item) => {
+          const isActive = item === tab;
+          item.classList.toggle("active", isActive);
+          item.setAttribute("aria-selected", String(isActive));
+        });
+        referencePanels.forEach((panel) => {
+          panel.classList.toggle("active", panel.id === panelId);
+        });
+      });
     });
 
     filterChips.forEach((chip) => {
