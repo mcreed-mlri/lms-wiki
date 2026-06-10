@@ -553,11 +553,25 @@
       flex-shrink: 0;
     }
 
+    .header-side {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
     .study-focus-btn {
-      margin-left: auto;
       background: var(--gold-soft);
-      border-color: #d9cdb6;
+      border: 1px solid #d9cdb6;
       color: var(--ink);
+      font-weight: 800;
+      font-size: 12px;
+      border-radius: 999px;
+      padding: 10px 14px;
+      min-height: 40px;
+      cursor: pointer;
+      touch-action: manipulation;
+      flex-shrink: 0;
     }
 
     .study-focus-btn.active {
@@ -611,6 +625,15 @@
 
     body.study-focus h1 {
       font-size: clamp(24px, 7vw, 34px);
+    }
+
+    body.study-focus .study-focus-btn {
+      position: fixed;
+      top: max(10px, env(safe-area-inset-top));
+      right: max(10px, env(safe-area-inset-right));
+      z-index: 10;
+      margin-left: 0;
+      box-shadow: 0 8px 24px rgba(37, 35, 31, 0.12);
     }
 
     .filter-chip.active,
@@ -755,6 +778,11 @@
         font-size: clamp(26px, 8vw, 36px);
       }
 
+      .header-side {
+        width: 100%;
+        align-items: stretch;
+      }
+
       .progress-wrap {
         text-align: left;
         width: 100%;
@@ -885,15 +913,6 @@
         min-height: calc(100dvh - 180px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
       }
 
-      .study-focus-btn {
-        position: fixed;
-        top: max(10px, env(safe-area-inset-top));
-        right: max(10px, env(safe-area-inset-right));
-        z-index: 10;
-        margin-left: 0;
-        box-shadow: 0 8px 24px rgba(37, 35, 31, 0.12);
-      }
-
       body.study-focus .study-focus-btn {
         top: auto;
         bottom: calc(92px + env(safe-area-inset-bottom));
@@ -911,10 +930,13 @@
         <div class="eyebrow">Learning Hub · API Bootcamp</div>
         <h1>Meeting flashcards</h1>
       </div>
-      <div class="progress-wrap">
-        <span id="count">1 / 1</span>
-        <div class="progress-bar" aria-hidden="true">
-          <div class="progress" id="progress"></div>
+      <div class="header-side">
+        <button class="study-focus-btn" id="studyFocus" type="button" aria-pressed="false">Study focus</button>
+        <div class="progress-wrap">
+          <span id="count">1 / 1</span>
+          <div class="progress-bar" aria-hidden="true">
+            <div class="progress" id="progress"></div>
+          </div>
         </div>
       </div>
     </header>
@@ -966,7 +988,6 @@
       <button class="filter-chip" type="button" data-filter="sync">Sync</button>
       <button class="filter-chip" type="button" data-filter="lace">LACE-specific</button>
       <button class="flow-btn" id="meetingFlow" type="button">Meeting order →</button>
-      <button class="study-focus-btn" id="studyFocus" type="button" aria-pressed="false">Study focus</button>
     </div>
 
     <button class="meeting-prep-toggle" id="prepToggle" type="button" aria-expanded="false" aria-controls="meetingPrep">
@@ -1930,6 +1951,10 @@
     }, { passive: true });
 
     document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && document.body.classList.contains("study-focus")) {
+        setStudyFocus(false);
+        return;
+      }
       if (event.key === "ArrowRight") nextCard();
       if (event.key === "ArrowLeft") prevCard();
       if (event.key === " " || event.key === "Enter") {
