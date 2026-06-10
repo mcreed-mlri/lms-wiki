@@ -652,11 +652,91 @@
       text-transform: uppercase;
     }
 
+    .stack-glossary-toggle,
     .tech-faq-toggle {
       margin-top: 14px;
       width: 100%;
       background: rgba(255, 255, 255, 0.8);
       border-color: var(--border);
+    }
+
+    .stack-glossary {
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.82);
+      padding: 20px;
+      display: none;
+    }
+
+    .stack-glossary.open {
+      display: block;
+    }
+
+    .stack-glossary h2 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .stack-glossary > p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .glossary-section + .glossary-section {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .glossary-section h3 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .glossary-list {
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .glossary-item {
+      display: grid;
+      gap: 4px;
+    }
+
+    .glossary-item dt {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.35;
+    }
+
+    .glossary-item dd {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .glossary-item dd strong {
+      color: var(--ink);
+    }
+
+    .glossary-item dd code {
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 12px;
+      background: var(--gold-soft);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: #365146;
     }
 
     .tech-faq {
@@ -1079,6 +1159,121 @@
 
     <section class="mini-guide">
       <strong>Best sentence to memorize:</strong> “We want to confirm the <strong>Service User role permissions</strong> and <strong>enrollment inheritance rules</strong> required for a headless <strong>Client Credentials sync</strong> of Course Offering metadata into our <strong>Supabase catalog</strong>, specifically validating the correct <strong>LMS and LE API versions</strong> for the March 2026 release.”
+    </section>
+
+    <button class="stack-glossary-toggle" id="glossaryToggle" type="button" aria-expanded="false" aria-controls="stackGlossary">
+      Show stack glossary
+    </button>
+
+    <section class="stack-glossary" id="stackGlossary" aria-label="Plain English glossary for the LACE stack">
+      <h2>Stack glossary</h2>
+      <p>Plain English for the packages, platforms, and jargon you will hear in API meetings. Flashcards cover Brightspace API vocabulary; this covers the build stack around it.</p>
+
+      <div class="glossary-section">
+        <h3>Learning Hub app stack</h3>
+        <dl class="glossary-list">
+          <div class="glossary-item">
+            <dt>Next.js</dt>
+            <dd>The framework that powers the Learning Hub website. It serves pages to learners and runs <strong>server-side API routes</strong> that can safely talk to Brightspace and Supabase without exposing secrets in the browser.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>React</dt>
+            <dd>A JavaScript library for building UI out of reusable pieces (cards, buttons, dashboards). Next.js is built on top of React.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Node.js</dt>
+            <dd>The runtime that runs JavaScript on a server instead of only in a browser. Next.js API routes and sync jobs run on Node.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>npm &amp; packages</dt>
+            <dd><strong>npm</strong> is Node’s package manager — think “app store for code libraries.” A <strong>package</strong> is one installable library (listed in <code>package.json</code>). Examples: the Brightspace client helper, date formatting, UI components.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>TypeScript</dt>
+            <dd>JavaScript with type labels so the editor catches mistakes early. Most of the Learning Hub codebase is TypeScript (<code>.ts</code> / <code>.tsx</code> files).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>API route</dt>
+            <dd>A server endpoint inside Next.js (e.g. <code>/api/me/dashboard</code>). The browser calls our route; our route calls Brightspace or Supabase with credentials kept on the server.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Environment variables</dt>
+            <dd>Secret configuration (client IDs, database URLs, keys) stored outside source code, usually in a <code>.env</code> file locally and in the host’s settings in production.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="glossary-section">
+        <h3>Data &amp; hosting</h3>
+        <dl class="glossary-list">
+          <div class="glossary-item">
+            <dt>Supabase</dt>
+            <dd>Our hosted database and auth service. It stores LACE-owned data — catalog cache (<code>learning_items</code>), engagement signals, profile preferences — not the official training record.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>PostgreSQL</dt>
+            <dd>The relational database engine under Supabase. Data lives in <strong>tables</strong> (rows and columns), like a spreadsheet with relationships.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Git &amp; GitHub</dt>
+            <dd><strong>Git</strong> tracks code changes over time. <strong>GitHub</strong> hosts the repo and runs deploy workflows. This wiki page is static HTML on GitHub Pages; the Learning Hub app itself deploys separately.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>PWA</dt>
+            <dd>Progressive Web App — the Learning Hub can be “installed” to a phone home screen from the browser without an app store download.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="glossary-section">
+        <h3>Web &amp; integration basics</h3>
+        <dl class="glossary-list">
+          <div class="glossary-item">
+            <dt>HTML, CSS, JavaScript</dt>
+            <dd><strong>HTML</strong> is page structure, <strong>CSS</strong> is styling, <strong>JavaScript</strong> is behavior. Course wrappers and this flashcards page are mostly HTML/CSS/JS; the Hub app adds React and Next.js on top.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>JSON</dt>
+            <dd>The text format APIs usually speak — structured data with keys and values, e.g. <code>{"title": "Intro to APIs"}</code>.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>REST API</dt>
+            <dd>A set of web URLs you can call to read or write data. Brightspace’s REST API is how the Hub requests course metadata, enrollments, and content outlines.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Brightspace (D2L)</dt>
+            <dd>Our LMS — the engine for courses, enrollments, completions, and certificates. <strong>D2L</strong> is the company; Brightspace is the product.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>LMS</dt>
+            <dd>Learning Management System — software that hosts courses and keeps official training records. Brightspace is our LMS; the Learning Hub is the custom front door on top.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>OAuth &amp; SSO</dt>
+            <dd><strong>OAuth</strong> is the standard way apps exchange login tokens without sharing passwords. <strong>SSO</strong> (single sign-on) means one login works across the Hub and Brightspace.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>JWT &amp; JWKS</dt>
+            <dd>A <strong>JWT</strong> is a signed token that proves “this request is from our app.” <strong>JWKS</strong> is the public URL where Brightspace fetches our signing keys to verify that token in headless sync.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Service User</dt>
+            <dd>A non-human Brightspace account used for background sync jobs — not Marlie’s personal login. It needs a role, OAuth app linkage, and Org Unit enrollment.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Org Unit</dt>
+            <dd>Brightspace’s hierarchy node — tenant, jurisdiction, department, course offering, etc. Enrollment at a parent level may (or may not) grant access to children; confirm with D2L.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>LTI</dt>
+            <dd>Learning Tools Interoperability — a standard for embedding external tools inside Brightspace. Useful for in-course tools; our catalog sync path is mostly API + deep links instead.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Data Hub / BDS</dt>
+            <dd>Brightspace’s bulk export path for scheduled reporting datasets. Better for large historical pulls; the live API is better for near-real-time catalog sync.</dd>
+          </div>
+        </dl>
+      </div>
     </section>
 
     <button class="tech-faq-toggle" id="faqToggle" type="button" aria-expanded="false" aria-controls="techFaq">
@@ -1819,6 +2014,8 @@
     const visualMap = document.getElementById("visualMap");
     const prepToggle = document.getElementById("prepToggle");
     const meetingPrep = document.getElementById("meetingPrep");
+    const glossaryToggle = document.getElementById("glossaryToggle");
+    const stackGlossary = document.getElementById("stackGlossary");
     const faqToggle = document.getElementById("faqToggle");
     const techFaq = document.getElementById("techFaq");
     const studyFocusBtn = document.getElementById("studyFocus");
@@ -1977,6 +2174,14 @@
       prepToggle.textContent = isOpen
         ? "Hide meeting playbook"
         : "Show meeting playbook";
+    });
+
+    glossaryToggle.addEventListener("click", () => {
+      const isOpen = stackGlossary.classList.toggle("open");
+      glossaryToggle.setAttribute("aria-expanded", String(isOpen));
+      glossaryToggle.textContent = isOpen
+        ? "Hide stack glossary"
+        : "Show stack glossary";
     });
 
     faqToggle.addEventListener("click", () => {
