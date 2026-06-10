@@ -1188,16 +1188,18 @@
       <h3>Most important questions</h3>
       <p class="essentials-note">Right under the cards — skim before the call and tick as you go. Filters and deeper reference are below.</p>
       <ul class="essentials-list checklist">
-        <li><label><input type="checkbox"> If the Service User is enrolled at Massachusetts, does it inherit access to all current and future offerings (including <code>6703</code>)?</label></li>
+        <li><label><input type="checkbox"> <strong>Org Unit inheritance:</strong> if the Service User is enrolled at <strong>Massachusetts (Jurisdiction)</strong>, does it automatically get read access to all current <em>and future</em> Course Offerings beneath it — or must we automate enrollment for every new course?</label></li>
         <li><label><input type="checkbox"> For <code>learning_items</code> catalog sync, should we use the live API, Data Hub/BDS, or a hybrid?</label></li>
+        <li><label><input type="checkbox"> <strong>Explicit versioning:</strong> should we pin to specific LP/LE versions (e.g. LP 1.51, LE 1.47) instead of calling “latest,” to avoid breakage during LMS updates?</label></li>
+        <li><label><input type="checkbox"> <strong>Archive terminology:</strong> March 2026 replaced “Delete” with “Archive” in the UI — do API status filters for courses also require a <code>deleted</code> → <code>archived</code> transition in our sync logic?</label></li>
+        <li><label><input type="checkbox"> <strong>Context Copy Notice:</strong> can we use proactive endpoint discovery before sync jobs run (not just LTI launch) to speed up Hub catalog harvesting?</label></li>
         <li><label><input type="checkbox"> Can D2L validate our JWT client-assertion shape and walk through a first sandbox token?</label></li>
         <li><label><input type="checkbox"> What specific read-only OAuth scopes are safest for the Phase 1 pilot?</label></li>
-        <li><label><input type="checkbox"> Which LMS and LE API versions should we build against for Org Unit metadata and Content TOC?</label></li>
         <li><label><input type="checkbox"> Who can create the OAuth 2.0 app in Sandbox vs Production?</label></li>
       </ul>
       <details class="closing-line">
         <summary>If you only say one thing at the end</summary>
-        <p><strong>Close with:</strong> “We want to confirm the <strong>Service User role permissions</strong> and <strong>enrollment inheritance rules</strong> required for a headless <strong>Client Credentials sync</strong> of Course Offering metadata into our <strong>Supabase catalog</strong>, specifically validating the correct <strong>LMS and LE API versions</strong> for the March 2026 release.”</p>
+        <p><strong>Close with:</strong> “I want to identify the <strong>source of truth</strong>, <strong>auth model</strong>, and <strong>sync strategy</strong> for the LACE Hub — specifically validating <strong>Service User enrollment inheritance</strong> across the <strong>Org Unit hierarchy</strong> and the correct <strong>LP/LE API versions</strong> for background metadata harvesting into Supabase.”</p>
       </details>
     </section>
 
@@ -1265,10 +1267,11 @@
         <div class="prep-block">
           <h3>Critical questions — not in standard docs</h3>
           <ul>
-            <li><strong>Enrollment inheritance:</strong> if the Service User is enrolled at Massachusetts (jurisdiction), does it see all current and future offerings beneath it?</li>
+            <li><strong>Org Unit inheritance:</strong> enrolling the Service User at <strong>Massachusetts (Jurisdiction)</strong> — does it automatically grant read access to all current and future Course Offerings beneath it, or must we automate enrollment for every new course?</li>
             <li><strong>Catalog discovery source:</strong> live API vs Data Hub/BDS for bulk <code>learning_items</code> sync</li>
-            <li><strong>Context Copy Notice:</strong> LTI-only, or any value for headless catalog sync?</li>
-            <li><strong>Archive vs delete:</strong> March 2026 UI change — do API filters move from <code>deleted</code> to <code>archived</code>?</li>
+            <li><strong>Explicit versioning:</strong> pin to specific LP/LE versions (e.g. LP 1.51, LE 1.47) rather than “latest,” for long-term stability through LMS updates</li>
+            <li><strong>Archive terminology:</strong> March 2026 officially replaced “Delete” with “Archive” in the UI — do API status filters for deleted courses require a <code>deleted</code> → <code>archived</code> transition in sync logic so <code>learning_items</code> stays clean?</li>
+            <li><strong>Context Copy Notice:</strong> can we leverage proactive endpoint discovery before sync jobs run — receiving service endpoint details ahead of launch to speed catalog harvesting — or is it LTI-only?</li>
             <li><strong>Secondary_Manager:</strong> included in <code>whoami</code>/User endpoints by default, or a specific version?</li>
           </ul>
         </div>
@@ -1285,13 +1288,15 @@
 
       <div class="leave-with">
         <h3>Full exit checklist</h3>
-        <p class="essentials-note" style="margin-bottom:10px;">Includes the six questions above, plus a few more if time allows.</p>
+        <p class="essentials-note" style="margin-bottom:10px;">Includes the eight questions above, plus a few more if time allows.</p>
         <ul class="checklist">
-          <li><label><input type="checkbox"> Service User enrollment inheritance rules at the Massachusetts jurisdiction level</label></li>
+          <li><label><input type="checkbox"> Org Unit inheritance: Massachusetts (Jurisdiction) enrollment grants read access to all current and future offerings, or per-course enrollment required</label></li>
+          <li><label><input type="checkbox"> Pin LP/LE API versions (e.g. 1.51 / 1.47) vs calling latest for production stability</label></li>
+          <li><label><input type="checkbox"> API status filters: transition from <code>deleted</code> to <code>archived</code> in sync logic (March 2026 UI change)</label></li>
+          <li><label><input type="checkbox"> Context Copy Notice: usable for proactive endpoint discovery in headless sync, or LTI-only</label></li>
           <li><label><input type="checkbox"> Recommended catalog sync pattern: live API, Data Hub/BDS, or hybrid</label></li>
           <li><label><input type="checkbox"> Validated JWT client-assertion sample + sandbox token walkthrough</label></li>
           <li><label><input type="checkbox"> Specific read-only OAuth scopes for the pilot (not just wildcards)</label></li>
-          <li><label><input type="checkbox"> LMS + LE API versions for Org Unit metadata and Content TOC (March 2026 release)</label></li>
           <li><label><input type="checkbox"> Who can create the OAuth 2.0 app in Sandbox vs Production</label></li>
           <li><label><input type="checkbox"> Recommended Phase 1 architecture summary (auth, sync, scopes, versions)</label></li>
           <li><label><input type="checkbox"> Production SSO transition path from 3-legged OAuth testing</label></li>
@@ -1443,7 +1448,7 @@
         <h3>2. API endpoints &amp; versioning</h3>
         <div class="faq-item">
           <p class="faq-q">Which API versions should we use?</p>
-          <p class="faq-a">"Latest" works, but docs recommend <strong>explicit versioning</strong> (e.g. LP 1.51 or LE 1.47) for long-term stability and to avoid breaking changes during LMS updates. Validate against MLRI's instance and the March 2026 release.</p>
+          <p class="faq-a">"Latest" works for spikes, but D2L should confirm whether production should <strong>pin to specific versions</strong> (e.g. LP 1.51, LE 1.47) rather than always calling latest — explicit versioning prevents unexpected breakage during LMS updates. Validate against MLRI's instance and the March 2026 release.</p>
         </div>
         <div class="faq-item">
           <p class="faq-q">What endpoints are required for catalog discovery?</p>
@@ -1484,7 +1489,7 @@
         </div>
         <div class="faq-item">
           <p class="faq-q">What is the Context Copy Notice?</p>
-          <p class="faq-a">A 2026 feature letting tools discover service endpoints before launch. Ask the API specialist whether it helps <strong>headless metadata harvesting</strong> or is LTI-only.</p>
+          <p class="faq-a">A March 2026 feature letting tools receive <strong>service endpoint details before launch</strong> — proactive discovery rather than waiting until a tool starts. Ask whether LACE can use it for <strong>headless catalog sync jobs</strong> (discovering endpoints ahead of time) or whether it is LTI-only.</p>
         </div>
       </div>
 
@@ -1732,11 +1737,11 @@
       "Payload": "Catalog cards only work if API responses include the title, dates, visibility, and outline fields we cache in learning_items.",
       "Read vs. Write": "Phase 1 is a read-only catalog mirror. Write access adds security and audit risk we do not need unless D2L recommends a specific write for launch.",
       "Org Unit": "If the Service User is enrolled at Massachusetts, inheritance rules determine whether catalog sync scales or requires manual enrollment per offering.",
-      "Service User Enrollment Inheritance": "This is the difference between a one-time setup and someone enrolling the bot in every new course forever — a major operational cost for LACE.",
+      "Service User Enrollment Inheritance": "Enrolling at Massachusetts (Jurisdiction) only helps if inheritance flows down — otherwise every new offering needs automated enrollment forever.",
       "Course Offering": "learning_items mirrors live offerings learners take. Syncing templates or the wrong org unit breaks catalog cards and deep links.",
       "learning_items": "June proof and January launch both depend on syncing 6703 into this table. The meeting should validate what belongs here vs only in Brightspace.",
       "Content Table of Contents": "Resume links and module structure in the Hub need the official Brightspace content outline — not a hand-maintained copy.",
-      "Valence API Version": "Our spike uses LP 1.49 and LE 1.82. Hardcoding the wrong version on MLRI's instance breaks sync when Brightspace updates.",
+      "Valence API Version": "Pinning LP/LE versions (e.g. 1.51 / 1.47) avoids surprise breakage when Brightspace updates — calling “latest” in production is risky.",
       "Authentication": "Production cannot rely on a personal admin login. We need the supported model for learner dashboard calls vs background catalog sync.",
       "Dual Auth Model": "Dashboard reads need the learner's own context; catalog harvest needs a Service User. Mixing them causes permission failures in production.",
       "OAuth 2.0": "Brightspace does not use simple API keys. OAuth is how the Hub and Supabase get legitimate access to LMS data.",
@@ -1762,8 +1767,9 @@
       "Mapping Table": "Every Hub course card needs a reliable brightspace_org_unit_id link — starting with 6703 as the proof case.",
       "Deep Link": "Architecture B requires learners to land on official Brightspace topic URLs so compliance visits are recorded.",
       "SSO Transition": "Learners should not sign in twice. Production launch needs one session across the Hub and Brightspace.",
-      "Context Copy Notice": "A quick filter saves meeting time: if this is LTI-only, it does not affect our headless catalog sync path.",
-      "Archive vs Delete": "Wrong status filters hide live courses or show retired ones in the Hub catalog after the March 2026 UI change.",
+      "Context Copy Notice": "If proactive endpoint discovery works for headless sync, catalog jobs can discover service URLs before they run — a potential speed win for the Hub.",
+      "Archive vs Delete": "March 2026 replaced Delete with Archive in the UI — sync code still filtering on deleted may leave stale or missing rows in learning_items.",
+      "Versioning": "Pinning versions is an insurance policy against LMS update breakage — confirm D2L's recommended LP/LE pins for MLRI's instance.",
       "Secondary Manager Attribute": "Manager routing depends on Secondary_Manager in API payloads — worth confirming now even if dashboard reads come in Phase 3.",
       "LTI": "Confirms whether LACE needs embedded in-course tools or whether API plus deep links is the right pattern for the Hub.",
       "Idempotency": "Future enrollment automation must not double-enroll advocates when a sync job retries.",
@@ -1847,16 +1853,16 @@
         category: "lace",
         diagram: "orgUnit",
         plain: "Brightspace's container for almost everything — departments, course offerings, sections, and more.",
-        meeting: "If we enroll the Service User at the Massachusetts jurisdiction Org Unit, will it inherit visibility to all current and future Course Offerings beneath it for catalog sync?",
-        example: "Critical question: inheritance vs explicit enrollment for each offering — docs mention enrollments but not the inheritance rules."
+        meeting: "If we enroll the Service User at the Massachusetts (Jurisdiction) Org Unit, will it inherit read access to all current and future Course Offerings beneath it — or must we automate enrollment for every new course?",
+        example: "Docs mention enrollments but not inheritance rules. This determines whether catalog sync is set-and-forget or a per-course maintenance job."
       },
       {
         term: "Service User Enrollment Inheritance",
         category: "lace",
         diagram: "enrollmentInheritance",
-        plain: "Whether a Service User enrolled high in the org tree automatically sees all child offerings — or needs each one enrolled manually.",
-        meeting: "Documentation says Service Users need permissions and enrollments, but not how inheritance works. If enrolled at Massachusetts, does our catalog sync see 6703 and future offerings automatically?",
-        example: "This is one of your highest-value questions — it determines how painful ongoing catalog maintenance will be."
+        plain: "Whether enrolling the Service User at Massachusetts (Jurisdiction) automatically grants read access to all child offerings — or requires enrolling each new course manually.",
+        meeting: "We need the Org Unit inheritance rules spelled out: if enrolled at Massachusetts (Jurisdiction), does the Service User automatically see 6703 and all future offerings — or must we build enrollment automation for every new Course Offering?",
+        example: "Highest-value question in the meeting. Wrong answer means ongoing ops pain or a catalog that silently misses new courses."
       },
       {
         term: "Course Offering",
@@ -1886,9 +1892,9 @@
         term: "Valence API Version",
         category: "data",
         diagram: "valence",
-        plain: "Brightspace puts the API version in the URL path, like lp/1.49 or le/1.82.",
-        meeting: "Our spike uses LP 1.49 and LE 1.82. Are those the correct supported versions for Org Unit metadata and Content TOC on MLRI's instance?",
-        example: "Question: Are there newer versions we should build against now to avoid rework before January launch?"
+        plain: "Brightspace puts the API version in the URL path, like lp/1.51 or le/1.47 — you choose whether to pin a version or call latest.",
+        meeting: "Our spike uses LP 1.49 and LE 1.82. For production stability, do you recommend pinning to specific versions (e.g. LP 1.51, LE 1.47) rather than always calling latest, to prevent breakage during LMS updates?",
+        example: "Ask which versions are supported on MLRI's instance today and how deprecations are communicated before January launch."
       },
       {
         term: "Authentication",
@@ -2094,17 +2100,17 @@
         term: "Context Copy Notice",
         category: "lace",
         diagram: "contextCopy",
-        plain: "A March 2026 feature that lets tools discover service endpoints earlier when courses are copied.",
-        meeting: "Context Copy Notice appears in the March 2026 release notes for LTI 1.3 tools. Does it offer any advantage for our headless catalog sync workflow, or is it LTI-only?",
-        example: "Quick filter question — saves time if the answer is 'LTI only, not relevant to your API sync.'"
+        plain: "A March 2026 feature for proactive discovery — tools can receive service endpoint details before a tool is launched, not only after copy.",
+        meeting: "Can LACE leverage Context Copy Notice for headless catalog sync — discovering service endpoints ahead of sync jobs — or is it limited to LTI 1.3 tool launch workflows?",
+        example: "If yes, the Hub could discover endpoints before harvesting metadata, which could speed up catalog sync. If LTI-only, we skip it for Phase 1."
       },
       {
         term: "Archive vs Delete",
         category: "data",
         diagram: "archiveDelete",
-        plain: "Brightspace changed Delete to Archive in the March 2026 UI — the API filter vocabulary may be shifting too.",
-        meeting: "With the March 2026 UI change from Delete to Archive, do our API status filters for courses need to move from <code>deleted</code> to <code>archived</code> in sync code?",
-        example: "Practical code question — prevents learning_items from going stale or hiding the wrong offerings."
+        plain: "March 2026 officially replaced “Delete” with “Archive” in the Brightspace UI — API status filters may need the same vocabulary shift.",
+        meeting: "The UI now says Archive, not Delete. Do our API status filters for courses require transitioning from <code>deleted</code> to <code>archived</code> in sync logic so retired offerings drop out of <code>learning_items</code> correctly?",
+        example: "Practical code question — wrong filters leave ghost courses in the Hub catalog or hide live offerings after the terminology change."
       },
       {
         term: "Secondary Manager Attribute",
@@ -2151,8 +2157,8 @@
         category: "data",
         diagram: "versioning",
         plain: "APIs change over time, so you need to know what version you are building against.",
-        meeting: "What API version should we build against for Org Units and Content TOC, and how are deprecations communicated?",
-        example: "Strong sentence: I want to avoid hardcoding LP 1.49 / LE 1.82 if D2L is moving us toward a newer supported approach."
+        meeting: "Should we pin to specific LP/LE versions in production (e.g. LP 1.51, LE 1.47) rather than calling latest — and how does D2L communicate deprecations before they break our routes?",
+        example: "Pair with Valence API Version card. Pinning is the stability play; latest is fine for spikes only."
       },
       {
         term: "Production-safe",
