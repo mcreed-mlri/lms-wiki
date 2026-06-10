@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Learning Hub · Brightspace API Flashcards</title>
+  <title>LACE Learning Hub · Stuff I actually need to ask</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="manifest" href="manifest.webmanifest">
@@ -14,7 +14,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="API Flashcards">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="description" content="Brightspace API meeting flashcards for LACE Learning Hub: vocabulary, architecture map, and D2L specialist playbook.">
+  <meta name="description" content="Brightspace API meeting prep for LACE Learning Hub: flashcards, must-ask questions, playbook, and plain-English reference.">
   <link rel="canonical" href="https://mcreed-mlri.github.io/lms-wiki/api-flashcards.html">
   <style>
     :root {
@@ -1123,8 +1123,8 @@
     </nav>
     <header>
       <div>
-        <div class="eyebrow">Learning Hub · API Bootcamp</div>
-        <h1>Meeting flashcards</h1>
+        <div class="eyebrow">LACE Learning Hub · Brightspace API Prep</div>
+        <h1>Stuff I actually need to ask</h1>
       </div>
       <div class="header-side">
         <button class="study-focus-btn" id="studyFocus" type="button" aria-pressed="false">Study focus</button>
@@ -1155,10 +1155,10 @@
 
           <div class="face back">
             <div class="face-scroll">
-              <span class="tag">Meeting language</span>
+              <span class="tag">How I’d say it in the meeting</span>
               <div class="meeting" id="meeting">The API is the interface Supabase would use for operational data exchange between Learning Hub and Brightspace.</div>
               <div class="lace-why" id="laceWhy">
-                <span class="lace-why-label">Why ask this for LACE?</span>
+                <span class="lace-why-label">Why this matters</span>
                 <p class="lace-why-text" id="laceWhyText">Without a supported API path, the Hub cannot populate learning_items or show a live catalog from Brightspace.</p>
               </div>
               <div class="example" id="example">Question: Is course discovery data available through the API, and is that the recommended source for a learner-facing catalog?</div>
@@ -1179,9 +1179,9 @@
     </div>
 
     <div class="extras-panel">
-    <section class="meeting-essentials" aria-label="Most important meeting questions">
-      <h3>Most important questions</h3>
-      <p class="essentials-note">Right under the cards — skim before the call and tick as you go. Filters and deeper reference are below.</p>
+    <section class="meeting-essentials" aria-label="Questions I cannot leave without answering">
+      <h3>Please do not let me forget these</h3>
+      <p class="essentials-note">These are the questions that matter. Everything else is helpful, but these are the ones that decide the architecture.</p>
       <ul class="essentials-list checklist">
         <li><label><input type="checkbox"><span><strong>Org Unit inheritance:</strong> if the Service User is enrolled at <strong>Massachusetts (Jurisdiction)</strong>, does it automatically get read access to all current <em>and future</em> Course Offerings beneath it — or must we automate enrollment for every new course?</span></label></li>
         <li><label><input type="checkbox"><span>For <code>learning_items</code> catalog sync, should we use the live API, Data Hub/BDS, or a hybrid?</span></label></li>
@@ -1193,8 +1193,8 @@
         <li><label><input type="checkbox"><span>Who can create the OAuth 2.0 app in Sandbox vs Production?</span></label></li>
       </ul>
       <details class="closing-line">
-        <summary>If you only say one thing at the end</summary>
-        <p><strong>Close with:</strong> “I want to identify the <strong>source of truth</strong>, <strong>auth model</strong>, and <strong>sync strategy</strong> for the LACE Hub — specifically validating <strong>Service User enrollment inheritance</strong> across the <strong>Org Unit hierarchy</strong> and the correct <strong>LP/LE API versions</strong> for background metadata harvesting into Supabase.”</p>
+        <summary>If my brain blanks at the end, say this</summary>
+        <p><strong>Close with:</strong> “Before we end, I want to make sure I understand the recommended production path: what stays in Brightspace, what LACE can safely cache in Supabase, what auth model we should use, and whether Service User access can inherit down the Org Unit structure. I’m trying to avoid building something that works in a sandbox but breaks the second this becomes real.”</p>
       </details>
     </section>
 
@@ -1222,22 +1222,23 @@
       <div class="reference-panels">
     <section class="reference-panel active meeting-prep" id="panelPlaybook" role="tabpanel" aria-labelledby="tabPlaybook" aria-label="Brightspace API specialist meeting playbook">
       <h2>Meeting playbook</h2>
-      <p>Use this as your spine. You already have a working spike — the goal is a production-safe Phase 1 path, not endpoint trivia.</p>
+      <p>Use this as the spine for the call. I do not need to prove I know every endpoint. I need to confirm the safest Phase 1 path before I build around the wrong assumptions.</p>
 
       <div class="prep-grid">
         <div class="prep-block">
           <h3>30-second opener</h3>
           <p style="margin:0;font-size:13px;line-height:1.5;">
-            LACE Learning Hub is a custom learner-facing app on Supabase/Next.js. Brightspace stays the LMS of record for enrollments, completions, and compliance. We have a local OAuth spike and can read course <code>6703</code>; we need your help confirming the supported production auth model, scopes, API version, and read-only endpoint families for Phase 1 catalog sync into <code>learning_items</code>.
+            I’m building LACE Learning Hub as a cleaner front door for learners, while Brightspace stays the LMS of record for enrollments, completions, and compliance. I have a local OAuth test working and can read a test course, but before I build more, I need to confirm the supported production pattern: auth model, Service User setup, scopes, API versions, and the best way to sync course and content metadata into <code>learning_items</code>.
           </p>
         </div>
         <div class="prep-block">
-          <h3>What is already proven</h3>
+          <h3>What I already got working</h3>
           <ul>
-            <li>3-legged OAuth consent and <code>whoami</code> work locally</li>
-            <li>Brightspace course/content reads work for test course <code>6703</code></li>
-            <li>Supabase <code>learning_items</code> is wired to the Learning Hub admin view</li>
-            <li>Next step: Service User + headless OAuth/JWKS for background sync</li>
+            <li>Local OAuth login works</li>
+            <li><code>whoami</code> works</li>
+            <li>I can read Brightspace course/content data for test course <code>6703</code></li>
+            <li>Supabase <code>learning_items</code> is connected to the Learning Hub admin view</li>
+            <li>The big missing piece is the production-safe Service User / headless sync path</li>
           </ul>
         </div>
         <div class="prep-block">
@@ -1271,19 +1272,19 @@
           </ul>
         </div>
         <div class="prep-block">
-          <h3>Do not overshare</h3>
+          <h3>Do not wander into the weeds</h3>
           <ul>
-            <li>Skip deep LTI 1.3 unless they raise embedded tools</li>
-            <li>Defer manager dashboards and equity reporting to Phase 3</li>
-            <li>Keep write operations out of Phase 1 unless they recommend one</li>
-            <li>Vanity URL/SSL is important but secondary in an API-only session</li>
+            <li>Do not deep-dive LTI 1.3 unless they bring it up</li>
+            <li>Do not spend this call on manager dashboards or equity reporting</li>
+            <li>Do not introduce write operations unless they recommend it</li>
+            <li>Do not let vanity URL / SSL hijack the API conversation</li>
           </ul>
         </div>
       </div>
 
       <div class="leave-with">
-        <h3>Full exit checklist</h3>
-        <p class="essentials-note" style="margin-bottom:10px;">Includes the eight questions above, plus a few more if time allows.</p>
+        <h3>What I need before we hang up</h3>
+        <p class="essentials-note" style="margin-bottom:10px;">The call is successful if I can answer these without guessing.</p>
         <ul class="checklist">
           <li><label><input type="checkbox"><span>Org Unit inheritance: Massachusetts (Jurisdiction) enrollment grants read access to all current and future offerings, or per-course enrollment required</span></label></li>
           <li><label><input type="checkbox"><span>Pin LP/LE API versions (e.g. 1.51 / 1.47) vs calling latest for production stability</span></label></li>
@@ -1310,7 +1311,7 @@
 
     <section class="reference-panel stack-glossary" id="panelGlossary" role="tabpanel" aria-labelledby="tabGlossary" aria-label="Plain English glossary for the LACE stack">
       <h2>Stack glossary</h2>
-      <p>Plain English for the packages, platforms, and jargon you will hear in API meetings. Flashcards cover Brightspace API vocabulary; this covers the build stack around it.</p>
+      <p>Plain-English notes for the tech words that keep coming up. Not a computer science textbook, just enough to keep the meeting from turning into alphabet soup.</p>
 
       <div class="glossary-section">
         <h3>Learning Hub app stack</h3>
@@ -1420,7 +1421,7 @@
     </section>
 
     <section class="reference-panel tech-faq" id="panelFaq" role="tabpanel" aria-labelledby="tabFaq" aria-label="LACE Hub technical FAQ for developers">
-      <h2>Technical FAQ for developers</h2>
+      <h2>Technical FAQ in human language</h2>
       <p>Reference companion to the flashcards. Synthesizes Phase 1 requirements from the May 2026 Developer Platform documentation and LACE project strategy — use for implementation, not as meeting small-talk.</p>
 
       <div class="faq-section">
@@ -1509,7 +1510,7 @@
 
     <section class="reference-panel visual-map" id="panelMap" role="tabpanel" aria-labelledby="tabMap" aria-label="Brightspace integration architecture overview">
       <h2>How the pieces fit together</h2>
-      <p>LACE Learning Hub is the learner-facing product. Brightspace is the LMS of record. Supabase stores LACE-owned app data and cached catalog metadata. The Brightspace API handles operational reads; Data Hub/BDS is better for scheduled bulk reporting.</p>
+      <p>This is the mental model: LACE is the front door, Brightspace is the official record, and Supabase is the helpful middle layer that keeps the Hub fast and usable. The API is for live operational reads. Data Hub/BDS is better for bigger scheduled reporting pulls.</p>
       <svg viewBox="0 0 760 470" role="img" aria-label="Architecture diagram showing LACE Learning Hub, Supabase, Brightspace API, Brightspace LMS, and Data Hub paths">
         <defs>
           <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
