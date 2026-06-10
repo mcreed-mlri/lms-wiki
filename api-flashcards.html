@@ -370,7 +370,8 @@
       gap: 8px;
     }
 
-    .essentials-list label {
+    .essentials-list label,
+    .checklist label {
       display: flex;
       align-items: flex-start;
       gap: 10px;
@@ -380,13 +381,21 @@
       cursor: pointer;
     }
 
-    .essentials-list input {
+    .essentials-list label > span,
+    .checklist label > span {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .essentials-list input,
+    .checklist input {
       margin-top: 3px;
       accent-color: var(--accent);
       flex-shrink: 0;
     }
 
-    .essentials-list code {
+    .essentials-list code,
+    .checklist code {
       font-family: "DM Mono", ui-monospace, monospace;
       font-size: 12px;
       background: rgba(255, 255, 255, 0.7);
@@ -606,20 +615,6 @@
       margin: 0;
       display: grid;
       gap: 8px;
-    }
-
-    .checklist label {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 13px;
-      line-height: 1.45;
-      cursor: pointer;
-    }
-
-    .checklist input {
-      margin-top: 3px;
-      accent-color: var(--accent);
     }
 
     .wiki-links {
@@ -1188,14 +1183,14 @@
       <h3>Most important questions</h3>
       <p class="essentials-note">Right under the cards — skim before the call and tick as you go. Filters and deeper reference are below.</p>
       <ul class="essentials-list checklist">
-        <li><label><input type="checkbox"> <strong>Org Unit inheritance:</strong> if the Service User is enrolled at <strong>Massachusetts (Jurisdiction)</strong>, does it automatically get read access to all current <em>and future</em> Course Offerings beneath it — or must we automate enrollment for every new course?</label></li>
-        <li><label><input type="checkbox"> For <code>learning_items</code> catalog sync, should we use the live API, Data Hub/BDS, or a hybrid?</label></li>
-        <li><label><input type="checkbox"> <strong>Explicit versioning:</strong> should we pin to specific LP/LE versions (e.g. LP 1.51, LE 1.47) instead of calling “latest,” to avoid breakage during LMS updates?</label></li>
-        <li><label><input type="checkbox"> <strong>Archive terminology:</strong> March 2026 replaced “Delete” with “Archive” in the UI — do API status filters for courses also require a <code>deleted</code> → <code>archived</code> transition in our sync logic?</label></li>
-        <li><label><input type="checkbox"> <strong>Context Copy Notice:</strong> can we use proactive endpoint discovery before sync jobs run (not just LTI launch) to speed up Hub catalog harvesting?</label></li>
-        <li><label><input type="checkbox"> Can D2L validate our JWT client-assertion shape and walk through a first sandbox token?</label></li>
-        <li><label><input type="checkbox"> What specific read-only OAuth scopes are safest for the Phase 1 pilot?</label></li>
-        <li><label><input type="checkbox"> Who can create the OAuth 2.0 app in Sandbox vs Production?</label></li>
+        <li><label><input type="checkbox"><span><strong>Org Unit inheritance:</strong> if the Service User is enrolled at <strong>Massachusetts (Jurisdiction)</strong>, does it automatically get read access to all current <em>and future</em> Course Offerings beneath it — or must we automate enrollment for every new course?</span></label></li>
+        <li><label><input type="checkbox"><span>For <code>learning_items</code> catalog sync, should we use the live API, Data Hub/BDS, or a hybrid?</span></label></li>
+        <li><label><input type="checkbox"><span><strong>Explicit versioning:</strong> should we pin to specific LP/LE versions (e.g. LP 1.51, LE 1.47) instead of calling “latest,” to avoid breakage during LMS updates?</span></label></li>
+        <li><label><input type="checkbox"><span><strong>Archive terminology:</strong> March 2026 replaced “Delete” with “Archive” in the UI — do API status filters for courses also require a <code>deleted</code> → <code>archived</code> transition in our sync logic?</span></label></li>
+        <li><label><input type="checkbox"><span><strong>Context Copy Notice:</strong> can we use proactive endpoint discovery before sync jobs run (not just LTI launch) to speed up Hub catalog harvesting?</span></label></li>
+        <li><label><input type="checkbox"><span>Can D2L validate our JWT client-assertion shape and walk through a first sandbox token?</span></label></li>
+        <li><label><input type="checkbox"><span>What specific read-only OAuth scopes are safest for the Phase 1 pilot?</span></label></li>
+        <li><label><input type="checkbox"><span>Who can create the OAuth 2.0 app in Sandbox vs Production?</span></label></li>
       </ul>
       <details class="closing-line">
         <summary>If you only say one thing at the end</summary>
@@ -1290,17 +1285,17 @@
         <h3>Full exit checklist</h3>
         <p class="essentials-note" style="margin-bottom:10px;">Includes the eight questions above, plus a few more if time allows.</p>
         <ul class="checklist">
-          <li><label><input type="checkbox"> Org Unit inheritance: Massachusetts (Jurisdiction) enrollment grants read access to all current and future offerings, or per-course enrollment required</label></li>
-          <li><label><input type="checkbox"> Pin LP/LE API versions (e.g. 1.51 / 1.47) vs calling latest for production stability</label></li>
-          <li><label><input type="checkbox"> API status filters: transition from <code>deleted</code> to <code>archived</code> in sync logic (March 2026 UI change)</label></li>
-          <li><label><input type="checkbox"> Context Copy Notice: usable for proactive endpoint discovery in headless sync, or LTI-only</label></li>
-          <li><label><input type="checkbox"> Recommended catalog sync pattern: live API, Data Hub/BDS, or hybrid</label></li>
-          <li><label><input type="checkbox"> Validated JWT client-assertion sample + sandbox token walkthrough</label></li>
-          <li><label><input type="checkbox"> Specific read-only OAuth scopes for the pilot (not just wildcards)</label></li>
-          <li><label><input type="checkbox"> Who can create the OAuth 2.0 app in Sandbox vs Production</label></li>
-          <li><label><input type="checkbox"> Recommended Phase 1 architecture summary (auth, sync, scopes, versions)</label></li>
-          <li><label><input type="checkbox"> Production SSO transition path from 3-legged OAuth testing</label></li>
-          <li><label><input type="checkbox"> API Rate Logging thresholds we should design around</label></li>
+          <li><label><input type="checkbox"><span>Org Unit inheritance: Massachusetts (Jurisdiction) enrollment grants read access to all current and future offerings, or per-course enrollment required</span></label></li>
+          <li><label><input type="checkbox"><span>Pin LP/LE API versions (e.g. 1.51 / 1.47) vs calling latest for production stability</span></label></li>
+          <li><label><input type="checkbox"><span>API status filters: transition from <code>deleted</code> to <code>archived</code> in sync logic (March 2026 UI change)</span></label></li>
+          <li><label><input type="checkbox"><span>Context Copy Notice: usable for proactive endpoint discovery in headless sync, or LTI-only</span></label></li>
+          <li><label><input type="checkbox"><span>Recommended catalog sync pattern: live API, Data Hub/BDS, or hybrid</span></label></li>
+          <li><label><input type="checkbox"><span>Validated JWT client-assertion sample + sandbox token walkthrough</span></label></li>
+          <li><label><input type="checkbox"><span>Specific read-only OAuth scopes for the pilot (not just wildcards)</span></label></li>
+          <li><label><input type="checkbox"><span>Who can create the OAuth 2.0 app in Sandbox vs Production</span></label></li>
+          <li><label><input type="checkbox"><span>Recommended Phase 1 architecture summary (auth, sync, scopes, versions)</span></label></li>
+          <li><label><input type="checkbox"><span>Production SSO transition path from 3-legged OAuth testing</span></label></li>
+          <li><label><input type="checkbox"><span>API Rate Logging thresholds we should design around</span></label></li>
         </ul>
       </div>
 
