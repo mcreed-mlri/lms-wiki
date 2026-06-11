@@ -1205,6 +1205,7 @@
       <button class="filter-chip" type="button" data-filter="sync">Sync</button>
       <button class="filter-chip" type="button" data-filter="lace">LACE-specific</button>
       <button class="flow-btn" id="meetingFlow" type="button">Meeting order →</button>
+      <button class="flow-btn active" id="languageMode" type="button" aria-pressed="true">Simple wording ✓</button>
     </div>
 
     <div class="reference-hub" aria-label="Meeting reference materials">
@@ -2428,14 +2429,11 @@
       }
     };
 
-    cards.forEach((item) => {
-      Object.assign(item, simpleCardCopy[item.term] || {});
-    });
-
     let currentIndex = 0;
     let flipped = false;
     let activeFilter = "all";
     let meetingFlowActive = false;
+    let simpleLanguageActive = true;
     let visibleCards = cards.slice();
 
     const card = document.getElementById("card");
@@ -2454,9 +2452,11 @@
     const referencePanels = document.querySelectorAll(".reference-panel");
     const studyFocusBtn = document.getElementById("studyFocus");
     const meetingFlowBtn = document.getElementById("meetingFlow");
+    const languageModeBtn = document.getElementById("languageMode");
     const filterChips = document.querySelectorAll(".filter-chip");
 
     const STUDY_FOCUS_KEY = "lace-flashcards-study-focus";
+    const LANGUAGE_MODE_KEY = "lace-flashcards-simple-language";
     const SWIPE_THRESHOLD = 48;
     let touchStartX = 0;
     let touchStartY = 0;
@@ -2499,9 +2499,38 @@
       return cards.filter((item) => item.category === activeFilter);
     }
 
+    function getDisplayCard(item) {
+      if (!simpleLanguageActive) return item;
+      return { ...item, ...(simpleCardCopy[item.term] || {}) };
+    }
+
+    function setLanguageMode(simple) {
+      simpleLanguageActive = simple;
+      if (!languageModeBtn) return;
+      languageModeBtn.classList.toggle("active", simple);
+      languageModeBtn.setAttribute("aria-pressed", String(simple));
+      languageModeBtn.textContent = simple ? "Simple wording ✓" : "Tech wording";
+      try {
+        localStorage.setItem(LANGUAGE_MODE_KEY, simple ? "1" : "0");
+      } catch (e) { /* ignore */ }
+      renderCard();
+    }
+
+    function initLanguageMode() {
+      if (!languageModeBtn) return;
+      try {
+        const saved = localStorage.getItem(LANGUAGE_MODE_KEY);
+        if (saved === "0") simpleLanguageActive = false;
+      } catch (e) { /* ignore */ }
+      languageModeBtn.addEventListener("click", () => {
+        setLanguageMode(!simpleLanguageActive);
+      });
+      setLanguageMode(simpleLanguageActive);
+    }
+
     function renderCard() {
       if (!visibleCards.length) return;
-      const item = visibleCards[currentIndex];
+      const item = getDisplayCard(visibleCards[currentIndex]);
       term.textContent = item.term;
       plain.textContent = item.plain;
       meeting.textContent = item.meeting;
@@ -2634,6 +2663,7 @@
 
     applyDeckView();
     initStudyFocus();
+    initLanguageMode();
   </script>
   <script>
     if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
