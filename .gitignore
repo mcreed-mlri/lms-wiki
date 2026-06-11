@@ -1,0 +1,12 @@
+# Python (icon generation script)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local editor / tooling
+.claude/
+
+# OS noise
+.DS_Store
+Thumbs.db

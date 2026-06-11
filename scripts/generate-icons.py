@@ -5,6 +5,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
+ICON_DIR = ROOT / "assets" / "icons"
 
 EXPORTS = [
     ("icon-maskable.svg", "apple-touch-icon.png", 180),
@@ -15,7 +16,7 @@ EXPORTS = [
 
 
 def export_png(svg_name: str, png_name: str, size: int) -> None:
-    svg_path = (ROOT / svg_name).resolve().as_uri()
+    svg_path = (ICON_DIR / svg_name).resolve().as_uri()
     html = f"""<!DOCTYPE html>
 <html>
   <head>
@@ -29,7 +30,7 @@ def export_png(svg_name: str, png_name: str, size: int) -> None:
   </body>
 </html>"""
 
-    png_path = ROOT / png_name
+    png_path = ICON_DIR / png_name
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
         page = browser.new_page(
@@ -41,7 +42,7 @@ def export_png(svg_name: str, png_name: str, size: int) -> None:
         page.screenshot(path=str(png_path), clip={"x": 0, "y": 0, "width": size, "height": size})
         browser.close()
 
-    print(f"wrote {png_name} ({size}x{size}) from {svg_name}")
+    print(f"wrote assets/icons/{png_name} ({size}x{size}) from {svg_name}")
 
 
 def main() -> None:

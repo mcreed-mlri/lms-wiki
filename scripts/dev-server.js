@@ -1,12 +1,12 @@
 // Tiny static file server for local preview. Node only — no dependencies.
-// Run: node dev-server.js   then open http://localhost:8000
+// Run from repo root: node scripts/dev-server.js
 // Not deployed; the GitHub Pages workflow only copies the site HTML/CSS.
 
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = __dirname;
+const ROOT = path.join(__dirname, '..');
 const PORT = Number(process.env.PORT) || 8000;
 
 const MIME = {
@@ -24,6 +24,7 @@ const MIME = {
   '.md':   'text/markdown; charset=utf-8',
   '.txt':  'text/plain; charset=utf-8',
   '.webmanifest': 'application/manifest+json; charset=utf-8',
+  '.pdf':  'application/pdf',
 };
 
 const server = http.createServer((req, res) => {
@@ -53,10 +54,6 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, () => {
   console.log(`Serving ${ROOT}`);
   console.log(`Open: http://localhost:${PORT}/`);
-  console.log('Pages:');
-  console.log(`  http://localhost:${PORT}/index.html`);
-  console.log(`  http://localhost:${PORT}/brightspace-interactive-guide.html`);
-  console.log(`  http://localhost:${PORT}/brightspace-map.html`);
-  console.log(`  http://localhost:${PORT}/mlri-architecture.html`);
+  console.log('Any *.html file in the repo root is available at /filename.html');
   console.log('Press Ctrl+C to stop.');
 });

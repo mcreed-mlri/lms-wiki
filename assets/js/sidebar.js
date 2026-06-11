@@ -3,7 +3,11 @@
 
   if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js').catch(function () { /* ignore */ });
+      var manifest = document.querySelector('link[rel="manifest"]');
+      var swUrl = manifest
+        ? new URL('sw.js', new URL('.', manifest.href)).href
+        : new URL('sw.js', window.location.href).href;
+      navigator.serviceWorker.register(swUrl).catch(function () { /* ignore */ });
     });
 
     var refreshing = false;

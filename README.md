@@ -6,6 +6,22 @@ This is the stable project memory: current status, open decisions, waiting items
 
 > **Workspace map:** See [`../README.md`](../README.md) for how this folder relates to the rest of `c:\dev`.
 
+## Layout
+
+```
+platform-wiki/
+├── *.html              # Site pages (deployed)
+├── team/               # Nested site pages (deployed)
+├── assets/
+│   ├── css/styles.css
+│   ├── js/sidebar.js
+│   └── icons/          # favicon.svg, icon.svg, PNG launcher icons
+├── manifest.webmanifest
+├── sw.js               # Service worker (stays at repo root for full-site scope)
+├── docs/               # Working notes and research PDFs (not deployed)
+└── scripts/            # Local dev tooling (not deployed)
+```
+
 ## What's in here
 
 | File | What it is | Audience |
@@ -19,8 +35,15 @@ This is the stable project memory: current status, open decisions, waiting items
 | [`user-attributes.html`](user-attributes.html) | Planning guide for Brightspace User Attributes, access routing, Learning Groups, Manager Dashboard, UPL acknowledgement, bar records, and jurisdiction metadata | Marlie; admins configuring user metadata |
 | [`mlri-architecture.html`](mlri-architecture.html) | System architecture overview | Anyone needing the stack picture |
 | [`api-flashcards.html`](api-flashcards.html) | Brightspace API meeting flashcards: vocabulary, architecture map, and D2L specialist playbook | Marlie; API/integration prep |
-| [`styles.css`](styles.css) | Shared visual language used by the HTML pages |  |
+| [`supabase-schema.html`](supabase-schema.html) | Planned Supabase tables, RLS guardrails, and Brightspace sync notes | Technical implementation |
+| [`supabase-visualizer.html`](supabase-visualizer.html) | Interactive ER diagram, policy viewer, and SQL DDL generator | Technical implementation |
+| [`team/index.html`](team/index.html) | Learning Hub team reference (installable PWA variant) | Internal staff |
+| [`assets/css/styles.css`](assets/css/styles.css) | Shared visual language used by the HTML pages |  |
+| [`assets/js/sidebar.js`](assets/js/sidebar.js) | Sidebar search, collapse, service worker registration |  |
+| [`assets/icons/`](assets/icons/) | Favicons and PWA launcher icons (SVG sources + PNG exports) |  |
 | [`screenshots/`](screenshots) | Screenshot assets referenced from reference pages |  |
+| [`docs/`](docs/) | Local working notes and research PDFs (not deployed) |  |
+| [`scripts/`](scripts/) | Dev server and icon generation tooling (not deployed) |  |
 
 The Team Wiki intentionally links only to core team references. Optional native-tool notes are kept secondary so the custom HTML course model stays clear.
 
@@ -43,12 +66,17 @@ The Team Wiki intentionally links only to core team references. Optional native-
 
 ## Editing
 
-All content is plain HTML. No build, no toolchain, no Python.
+All content is plain HTML. No build step for the site itself.
+
+Optional dev tooling (not required to edit pages):
+
+- [`scripts/dev-server.js`](scripts/dev-server.js) — local static preview (`node scripts/dev-server.js`)
+- [`scripts/generate-icons.py`](scripts/generate-icons.py) — regenerate PNG app icons from the SVG sources (requires Python + Playwright; see [`scripts/requirements.txt`](scripts/requirements.txt))
 
 - Open the file you want to edit (e.g. `index.html`) in any editor.
 - Each section is a `<section class="guide-section" id="...">` block. Add or edit sections in place.
 - The sidebar in each file is a flat `<nav>` near the top. When you add a new section, add a matching `<a href="#new-id">` link in the sidebar so it shows up.
-- Reusable components defined in `styles.css`:
+- Reusable components defined in `assets/css/styles.css`:
     - `.intro-card`: bordered panels for context blocks
     - `.tip` / `.note`: colored callouts
     - `ol.steps`: numbered task lists
@@ -69,22 +97,21 @@ A static server is recommended over `file://` so the stylesheet and inter-file l
 
 ## Deployment
 
-GitHub Pages, via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). On push to `main`, the workflow copies the HTML files plus `styles.css` and `screenshots/` into a Pages artifact and publishes it. No build step.
+GitHub Pages, via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). On push to `main`, the workflow copies all root `*.html`, `team/*.html`, shared assets, icons, and `screenshots/` into a Pages artifact and publishes it. No build step.
 
 ### Adding a new page
 
-The deploy workflow copies files explicitly — it does not publish every HTML file in the repo automatically. When you add a new standalone page:
-
-1. Add `cp your-page.html _site/` to the **Stage site files** step in [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
+1. Add `your-page.html` at the repo root (or under `team/` for nested pages).
 2. Add `'./your-page.html'` to `PRECACHE_URLS` in [`sw.js`](sw.js) if the page should be available offline in the installed PWA.
 3. Link it from `index.html` and any relevant **Related Docs** sidebars.
 
-If you skip step 1, the page may exist in GitHub but still return **404** on the live site — that is what happened with `api-flashcards.html` before it was added to the deploy copy list.
+Root-level HTML is deployed automatically. Subfolders other than `team/` are not copied unless you extend the deploy workflow.
 
 ### PWA Updates
 
-The deployed service worker cache is versioned with the Git commit SHA during the Pages workflow. The workflow also stamps the deployed `sidebar.js` asset URL with the same SHA. Each push to `main` creates a new cache name, clears old caches on activation, and the app reloads once when the new service worker takes control. In practice, installed PWA users should see updates after the Pages deployment completes and the app is reopened or refreshed.
+The deployed service worker cache is versioned with the Git commit SHA during the Pages workflow. The workflow also stamps the deployed `assets/js/sidebar.js` asset URL with the same SHA. Each push to `main` creates a new cache name, clears old caches on activation, and the app reloads once when the new service worker takes control. In practice, installed PWA users should see updates after the Pages deployment completes and the app is reopened or refreshed.
 
 ## Working Notes
 
-- [`screenshot-checklist.md`](screenshot-checklist.md): local working notes, intentionally excluded from the deployed site.
+- [`docs/screenshot-checklist.md`](docs/screenshot-checklist.md): local working notes, intentionally excluded from the deployed site.
+- [`docs/learning-hub-faq.md`](docs/learning-hub-faq.md): draft FAQ content, not deployed.

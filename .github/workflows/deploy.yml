@@ -28,31 +28,15 @@ jobs:
 
       - name: Stage site files
         run: |
-          mkdir -p _site
-          cp index.html _site/
-          cp team-wiki.html _site/
-          cp june-2026-priority-tasks.html _site/
-          cp marlana.html _site/
-          cp brightspace-interactive-guide.html _site/
-          cp brightspace-map.html _site/
-          cp user-attributes.html _site/
-          cp mlri-architecture.html _site/
-          cp api-flashcards.html _site/
-          mkdir -p _site/team
-          cp team/index.html _site/team/
-          cp styles.css _site/
-          cp sidebar.js _site/
-          cp favicon.svg _site/
-          cp icon.svg _site/
-          cp icon-maskable.svg _site/
-          cp apple-touch-icon.png _site/
-          cp icon-192.png _site/
-          cp icon-512.png _site/
-          cp icon-maskable-512.png _site/
-          cp manifest.webmanifest _site/
-          cp sw.js _site/
+          mkdir -p _site/team _site/assets/icons _site/assets/css _site/assets/js
+          cp *.html _site/
+          cp team/*.html _site/team/
+          cp assets/icons/* _site/assets/icons/
+          cp assets/css/styles.css _site/assets/css/
+          cp assets/js/sidebar.js _site/assets/js/
+          cp manifest.webmanifest sw.js _site/
           sed -i "s/__BUILD_VERSION__/${GITHUB_SHA}/g" _site/sw.js
-          sed -i "s/sidebar.js?v=[^\"]*/sidebar.js?v=${GITHUB_SHA}/g" _site/*.html _site/team/*.html
+          sed -i 's|assets/js/sidebar.js?v=[^"]*|assets/js/sidebar.js?v=${GITHUB_SHA}|g' _site/*.html _site/team/*.html
           if [ -d screenshots ]; then cp -r screenshots _site/; fi
 
       - name: Configure Pages
