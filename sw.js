@@ -21,6 +21,10 @@ const PRECACHE_URLS = [
   './favicon.svg',
   './icon.svg',
   './icon-maskable.svg',
+  './apple-touch-icon.png',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-maskable-512.png',
   './manifest.webmanifest'
 ];
 

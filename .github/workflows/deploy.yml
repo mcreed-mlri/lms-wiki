@@ -45,6 +45,10 @@ jobs:
           cp favicon.svg _site/
           cp icon.svg _site/
           cp icon-maskable.svg _site/
+          cp apple-touch-icon.png _site/
+          cp icon-192.png _site/
+          cp icon-512.png _site/
+          cp icon-maskable-512.png _site/
           cp manifest.webmanifest _site/
           cp sw.js _site/
           sed -i "s/__BUILD_VERSION__/${GITHUB_SHA}/g" _site/sw.js

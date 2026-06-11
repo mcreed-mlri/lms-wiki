@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supabase Schema Visualizer &mdash; LACE Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#090f19">
+  <meta name="description" content="An interactive database schema visualizer for the LACE platform's Supabase tables, with custom RLS policy reference and SQL code generator.">
+  <script src="sidebar.js?v=20260529-redesign"></script>
+</head>
+<body class="page-supabase-visualizer">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ═══════════════════════════════════════════════
+     SIDEBAR / TABLE OF CONTENTS
+     ═══════════════════════════════════════════════ -->
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <div class="brand">LACE Platform</div>
+    <h2>Supabase Visualizer</h2>
+  </div>
+  <nav>
+    <span class="section-label">Interactive View</span>
+    <a href="#main" class="active">Schema Visualizer</a>
+    <a href="supabase-schema.html" class="external">Schema Docs</a>
+
+    <span class="section-label">Related Docs</span>
+    <a href="index.html" class="external">Home</a>
+    <a href="mlri-architecture.html" class="external">LACE Architecture</a>
+    <a href="user-attributes.html" class="external">User Attributes</a>
+    <a href="team-wiki.html" class="external">Team Wiki</a>
+  </nav>
+</aside>
+
+<!-- ═══════════════════════════════════════════════
+     MAIN CONTENT
+     ═══════════════════════════════════════════════ -->
+<main id="main">
+  <h1>Supabase Schema Visualizer</h1>
+  <p class="page-subtitle">An interactive ER diagram, metadata inspector, and Row-Level Security (RLS) script generator for the LACE Learning Hub's database.</p>
+
+  <div class="sv-container">
+    <!-- Controls Bar -->
+    <div class="sv-controls">
+      <div class="sv-search-wrap">
+        <input type="text" id="sv-search" placeholder="Search tables or columns (e.g., user_id)..." aria-label="Search schema">
+      </div>
+      <div class="sv-buttons">
+        <button type="button" class="sv-btn active" id="sv-btn-visual">Visual Canvas</button>
+        <button type="button" class="sv-btn" id="sv-btn-docs">Detailed Docs</button>
+        <button type="button" class="sv-btn" id="sv-btn-reset">Reset View</button>
+      </div>
+    </div>
+
+    <!-- Main Visual Split View -->
+    <div class="sv-main-view" id="sv-main-view">
+      
+      <!-- Canvas Area -->
+      <div class="sv-canvas-area" id="sv-canvas-area">
+        <div class="sv-canvas" id="sv-canvas">
+          <div class="sv-scale-indicator" id="sv-scale-indicator">Zoom: 100%</div>
+          
+          <div class="sv-canvas-inner" id="sv-canvas-inner">
+
+            <!-- Table Nodes Grid -->
+            <div class="sv-grid">
+              
+              <!-- Row 1: Source & Caches -->
+              <div class="sv-grid-row">
+                <!-- auth.users (external) -->
+                <div class="sv-table external" id="table-auth-users" data-table="auth.users">
+                  <div class="sv-table-header">
+                    <span class="sv-table-title">auth.users</span>
+                    <span class="sv-table-status external">External</span>
+                  </div>
+                  <ul class="sv-table-columns">
+                    <li class="sv-column-row" data-column="id">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">id</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">uuid</span>
+                        <span class="sv-key-badge pk">PK</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="email">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">email</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">varchar</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- learning_items -->
+                <div class="sv-table" id="table-learning_items" data-table="learning_items">
+                  <div class="sv-table-header">
+                    <span class="sv-table-title">learning_items</span>
+                    <span class="sv-table-status live">Live</span>
+                  </div>
+                  <ul class="sv-table-columns">
+                    <li class="sv-column-row" data-column="id">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">id</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">uuid</span>
+                        <span class="sv-key-badge pk">PK</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="bs_org_unit_id">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">bs_org_unit_id</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">bigint</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="title">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">title</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="description">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">description</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="url">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">url</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="topic_count">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">topic_count</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">int</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="status">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">status</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="synced_at">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">synced_at</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">timestamptz</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="created_at">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">created_at</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">timestamptz</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Row 2: User Profiles -->
+              <div class="sv-grid-row">
+                <!-- profiles -->
+                <div class="sv-table" id="table-profiles" data-table="profiles">
+                  <div class="sv-table-header">
+                    <span class="sv-table-title">profiles</span>
+                    <span class="sv-table-status proposed">Proposed</span>
+                  </div>
+                  <ul class="sv-table-columns">
+                    <li class="sv-column-row" data-column="id">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">id</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">uuid</span>
+                        <span class="sv-key-badge pk">PK</span>
+                        <span class="sv-key-badge fk">FK</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="bs_user_id">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">bs_user_id</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">bigint</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="email">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">email</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="org">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">org</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="license_status">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">license_status</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="learning_group">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">learning_group</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="role">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">role</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="updated_at">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">updated_at</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">timestamptz</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="created_at">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">created_at</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">timestamptz</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Row 3: Interactions / Feedback -->
+              <div class="sv-grid-row">
+                <!-- events -->
+                <div class="sv-table" id="table-events" data-table="events">
+                  <div class="sv-table-header">
+                    <span class="sv-table-title">events</span>
+                    <span class="sv-table-status proposed">Proposed</span>
+                  </div>
+                  <ul class="sv-table-columns">
+                    <li class="sv-column-row" data-column="id">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">id</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">uuid</span>
+                        <span class="sv-key-badge pk">PK</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="user_id">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">user_id</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">uuid</span>
+                        <span class="sv-key-badge fk">FK</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="event_type">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">event_type</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="item_id">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">item_id</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">uuid</span>
+                        <span class="sv-key-badge fk">FK</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="metadata">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">metadata</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">jsonb</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="created_at">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">created_at</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">timestamptz</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- feedback -->
+                <div class="sv-table" id="table-feedback" data-table="feedback">
+                  <div class="sv-table-header">
+                    <span class="sv-table-title">feedback</span>
+                    <span class="sv-table-status proposed">Proposed</span>
+                  </div>
+                  <ul class="sv-table-columns">
+                    <li class="sv-column-row" data-column="id">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">id</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">uuid</span>
+                        <span class="sv-key-badge pk">PK</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="user_id">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">user_id</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">uuid</span>
+                        <span class="sv-key-badge fk">FK</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="item_id">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">item_id</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">uuid</span>
+                        <span class="sv-key-badge fk">FK</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="rating">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">rating</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">int</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="flag">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">flag</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="notes">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">notes</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">text</span>
+                      </div>
+                    </li>
+                    <li class="sv-column-row" data-column="created_at">
+                      <div class="sv-column-name-wrap">
+                        <span class="sv-column-name">created_at</span>
+                      </div>
+                      <div class="sv-column-type-wrap">
+                        <span class="sv-column-type">timestamptz</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div> <!-- sv-grid -->
+
+          </div> <!-- sv-canvas-inner -->
+
+          <!-- SVG overlay: sits outside the scaled inner so coords are raw screen-space -->
+          <svg class="sv-svg" id="sv-svg"></svg>
+        </div> <!-- sv-canvas -->
+      </div> <!-- sv-canvas-area -->
+
+      <!-- Sidebar Inspector Details Panel -->
+      <div class="sv-inspector" id="sv-inspector">
+        <div class="sv-inspector-header" id="sv-inspector-header">
+          <div class="sv-inspector-table-name" id="sv-inspector-title">No Table Selected</div>
+          <div class="sv-inspector-desc" id="sv-inspector-desc">Click a table on the canvas to inspect its schema details, security rules, and download SQL.</div>
+        </div>
+
+        <div class="sv-tabs">
+          <button type="button" class="sv-tab active" id="sv-tab-details">Table Info</button>
+          <button type="button" class="sv-tab" id="sv-tab-sql">Supabase SQL</button>
+        </div>
+
+        <!-- Details Tab Panel -->
+        <div class="sv-tab-panel" id="sv-panel-details">
+          <div class="sv-empty-state" id="sv-details-empty">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 111.063.852l-.708 2.836a.75.75 0 001.063.852l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+            </svg>
+            <p>Select a table to inspect policies &amp; attributes</p>
+          </div>
+
+          <div id="sv-details-content" hidden>
+            <div class="sv-inspector-section">
+              <h4>Purpose</h4>
+              <p id="sv-info-purpose"></p>
+            </div>
+            
+            <div class="sv-inspector-section">
+              <h4>Access Policy (RLS)</h4>
+              <p id="sv-info-rls"></p>
+            </div>
+
+            <div class="sv-inspector-section">
+              <h4>Allowed Actions</h4>
+              <ul class="sv-policy-list" id="sv-info-policies">
+                <!-- Dyn generated policy list -->
+              </ul>
+            </div>
+
+            <div class="sv-warning-card" id="sv-info-warning-card" hidden>
+              <p id="sv-info-warning"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SQL Tab Panel -->
+        <div class="sv-tab-panel" id="sv-panel-sql" hidden>
+          <div class="sv-sql-wrap">
+            <pre class="sv-sql-code"><code id="sv-sql-code-box">-- Select a table to view creation script</code></pre>
+            <button type="button" class="sv-copy-btn" id="sv-btn-copy">
+              <span id="sv-copy-text">Copy SQL</span>
+            </button>
+          </div>
+        </div>
+
+      </div> <!-- sv-inspector -->
+
+    </div> <!-- sv-main-view -->
+
+    <!-- Static Documentation Fallback View (Toggled via Controls) -->
+    <div class="sv-table-docs" id="sv-table-docs" hidden>
+      <!-- Dyn generated list of all table schemas, mimicking the original document but interactive -->
+    </div>
+
+  </div> <!-- sv-container -->
+</main>
+
+<script>
+  (function () {
+    'use strict';
+
+    // 1. Relationships Configuration
+    const relationships = [
+      { fromTable: 'profiles', fromCol: 'id', toTable: 'auth.users', toCol: 'id', type: '1:1' },
+      { fromTable: 'events', fromCol: 'user_id', toTable: 'profiles', toCol: 'id', type: 'N:1' },
+      { fromTable: 'events', fromCol: 'item_id', toTable: 'learning_items', toCol: 'id', type: 'N:1' },
+      { fromTable: 'feedback', fromCol: 'user_id', toTable: 'profiles', toCol: 'id', type: 'N:1' },
+      { fromTable: 'feedback', fromCol: 'item_id', toTable: 'learning_items', toCol: 'id', type: 'N:1' }
+    ];
+
+    // 2. Table Metadata Details
+    const tableMetadata = {
+      'auth.users': {
+        title: 'auth.users',
+        status: 'External',
+        statusClass: 'external',
+        desc: 'Built-in Supabase Auth user accounts.',
+        purpose: 'Stores login credentials, metadata, and handles JWT generation. Keyed 1:1 to profiles for application-level data storage.',
+        rls: 'Managed internally by Supabase Auth engine. RLS policies on other tables can verify identity via auth.uid().',
+        policies: [
+          { op: 'select', text: 'Supabase Auth internal logic only.' },
+          { op: 'update', text: 'User updating own password/email via Supabase client library.' }
+        ]
+      },
+      'learning_items': {
+        title: 'learning_items',
+        status: 'Live (early)',
+        statusClass: 'live',
+        desc: 'Catalog records mirrored from Brightspace Course Offerings.',
+        purpose: 'Provides high-speed metadata querying (titles, descriptions, status, sync date) for Learning Hub catalog search, bypassing D2L API limits.',
+        rls: 'Row-Level Security enabled. Open SELECT for authenticated users. All modifications require admin/service credentials.',
+        policies: [
+          { op: 'select', text: 'Any authenticated user (true).' },
+          { op: 'insert', text: 'Service role (Next.js sync route) only.' },
+          { op: 'update', text: 'Service role (Next.js sync route) only.' }
+        ]
+      },
+      'profiles': {
+        title: 'profiles',
+        status: 'Proposed',
+        statusClass: 'proposed',
+        desc: 'Extended user profiles linking to Auth and Brightspace.',
+        purpose: 'Stores user-facing preferences, organization name, licensed status, and Learning Group assignments used for catalogs and certification routing.',
+        rls: 'Row-Level Security enabled. Users can read and update their own profiles (excluding fields like role/learning_group).',
+        policies: [
+          { op: 'select', text: 'Own profile (auth.uid() = id); admins can read all profiles.' },
+          { op: 'update', text: 'Own profile (auth.uid() = id), restricted to non-administrative columns.' }
+        ],
+        warning: 'FERPA & Privacy: Contains personal identifiers (email, organization). Access must be guarded under legal compliance protocols.'
+      },
+      'events': {
+        title: 'events',
+        status: 'Proposed',
+        statusClass: 'proposed',
+        desc: 'Custom learner clickstream analytics and searches.',
+        purpose: 'Captures search terms, page stays, navigation paths, and other metrics to fuel equity reports and program evaluation metrics.',
+        rls: 'Row-Level Security enabled. Append-only configuration. Users write their own logs; admins/staff query bulk trends.',
+        policies: [
+          { op: 'insert', text: 'Own events (auth.uid() = user_id) on insert; no updates allowed.' },
+          { op: 'select', text: 'Own logs for individuals; all logs for admin and evaluator roles.' }
+        ],
+        warning: 'Privacy Risk: Do not log raw PII inside the metadata JSONB column. Clean payloads server-side before submitting to Supabase.'
+      },
+      'feedback': {
+        title: 'feedback',
+        status: 'Proposed',
+        statusClass: 'proposed',
+        desc: 'Learner course ratings, flags, and comments.',
+        purpose: 'Supplies content usefulness signals (rating score, flag triggers, text suggestions) per course to course builders.',
+        rls: 'Row-Level Security enabled. Constraint unique(user_id, item_id) limits users to a single feedback entry per course.',
+        policies: [
+          { op: 'select', text: 'Own feedback entry. Aggregated scores computed server-side to prevent metadata leakage.' },
+          { op: 'insert', text: 'Own feedback (auth.uid() = user_id).' },
+          { op: 'update', text: 'Own feedback (auth.uid() = user_id).' }
+        ]
+      }
+    };
+
+    // 3. Pre-defined Table SQL scripts
+    const tableSql = {
+      'auth.users': `-- auth.users is maintained internally by Supabase Auth.
+-- Direct client-side DDL queries are not permitted in the auth schema.
+-- Reference this table via foreign keys using:
+-- REFERENCES auth.users(id)`,
+      
+      'learning_items': `CREATE TABLE learning_items (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  bs_org_unit_id bigint UNIQUE NOT NULL,
+  title text NOT NULL,
+  description text,
+  url text NOT NULL,
+  topic_count int,
+  status text NOT NULL DEFAULT 'draft',
+  synced_at timestamptz,
+  created_at timestamptz DEFAULT now(),
+  
+  CONSTRAINT check_status CHECK (status IN ('active', 'draft', 'archived'))
+);
+
+-- Index for searching status and org unit mappings
+CREATE INDEX idx_learning_items_bs_org ON learning_items(bs_org_unit_id);
+
+-- Enable RLS
+ALTER TABLE learning_items ENABLE ROW LEVEL SECURITY;
+
+-- Select policy: Allow all logged in users to browse catalog
+CREATE POLICY "Allow public catalog browse"
+  ON learning_items FOR SELECT
+  TO authenticated
+  USING (true);
+
+-- Modification policy: Restrict to server sync routes (Service Role)
+CREATE POLICY "Allow writes via sync route"
+  ON learning_items FOR ALL
+  TO service_role
+  USING (true)
+  WITH CHECK (true);`,
+
+      'profiles': `CREATE TABLE profiles (
+  id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  bs_user_id bigint,
+  email text,
+  org text,
+  license_status text,
+  learning_group text,
+  role text DEFAULT 'learner',
+  updated_at timestamptz,
+  created_at timestamptz DEFAULT now(),
+
+  CONSTRAINT check_role CHECK (role IN ('learner', 'manager', 'admin')),
+  CONSTRAINT check_license CHECK (license_status IN ('licensed_attorney', 'paralegal', 'law_student', 'other_advocate'))
+);
+
+-- Enable RLS
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+-- Select Policy: Read own profile
+CREATE POLICY "Read own profile"
+  ON profiles FOR SELECT
+  TO authenticated
+  USING (auth.uid() = id);
+
+-- Update Policy: Edit own profile
+CREATE POLICY "Update own profile"
+  ON profiles FOR UPDATE
+  TO authenticated
+  USING (auth.uid() = id)
+  WITH CHECK (auth.uid() = id);
+
+-- Admin Policy: Read all
+CREATE POLICY "Admins read all profiles"
+  ON profiles FOR SELECT
+  TO authenticated
+  USING (
+    (SELECT role FROM profiles WHERE id = auth.uid()) = 'admin'
+  );`,
+
+      'events': `CREATE TABLE events (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id uuid REFERENCES profiles(id) ON DELETE SET NULL,
+  event_type text NOT NULL,
+  item_id uuid REFERENCES learning_items(id) ON DELETE SET NULL,
+  metadata jsonb,
+  created_at timestamptz DEFAULT now()
+);
+
+-- Index for analytics aggregation
+CREATE INDEX idx_events_metrics ON events(event_type, item_id);
+
+-- Enable RLS
+ALTER TABLE events ENABLE ROW LEVEL SECURITY;
+
+-- Insert Policy: Users can log own events
+CREATE POLICY "Insert own events"
+  ON events FOR INSERT
+  TO authenticated
+  WITH CHECK (auth.uid() = user_id);
+
+-- Select Policy: Read own events
+CREATE POLICY "Read own events"
+  ON events FOR SELECT
+  TO authenticated
+  USING (auth.uid() = user_id);
+
+-- Admin Policy: Bulk analysis
+CREATE POLICY "Admins/evaluators read all events"
+  ON events FOR SELECT
+  TO authenticated
+  USING (
+    (SELECT role FROM profiles WHERE id = auth.uid()) IN ('admin', 'manager')
+  );`,
+
+      'feedback': `CREATE TABLE feedback (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+  item_id uuid NOT NULL REFERENCES learning_items(id) ON DELETE CASCADE,
+  rating int CHECK (rating BETWEEN 1 AND 5),
+  flag text CHECK (flag IN ('outdated', 'unclear', 'not_relevant')),
+  notes text,
+  created_at timestamptz DEFAULT now(),
+
+  -- One rating per user per item
+  CONSTRAINT unique_user_item_feedback UNIQUE (user_id, item_id)
+);
+
+-- Enable RLS
+ALTER TABLE feedback ENABLE ROW LEVEL SECURITY;
+
+-- ALL Policy: User maintains their feedback
+CREATE POLICY "Manage own feedback"
+  ON feedback FOR ALL
+  TO authenticated
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);`
+    };
+
+    // 4. Dom Selectors
+    const svCanvas = document.getElementById('sv-canvas');
+    const svCanvasInner = document.getElementById('sv-canvas-inner');
+    const svSvg = document.getElementById('sv-svg');
+    const svSearch = document.getElementById('sv-search');
+    const btnVisual = document.getElementById('sv-btn-visual');
+    const btnDocs = document.getElementById('sv-btn-docs');
+    const btnReset = document.getElementById('sv-btn-reset');
+    const svMainView = document.getElementById('sv-main-view');
+    const svTableDocs = document.getElementById('sv-table-docs');
+    
+    // Inspector selectors
+    const tabDetails = document.getElementById('sv-tab-details');
+    const tabSql = document.getElementById('sv-tab-sql');
+    const panelDetails = document.getElementById('sv-panel-details');
+    const panelSql = document.getElementById('sv-panel-sql');
+    
+    const inspectorTitle = document.getElementById('sv-inspector-title');
+    const inspectorDesc = document.getElementById('sv-inspector-desc');
+    const detailsEmpty = document.getElementById('sv-details-empty');
+    const detailsContent = document.getElementById('sv-details-content');
+    
+    const infoPurpose = document.getElementById('sv-info-purpose');
+    const infoRls = document.getElementById('sv-info-rls');
+    const infoPolicies = document.getElementById('sv-info-policies');
+    const infoWarningCard = document.getElementById('sv-info-warning-card');
+    const infoWarning = document.getElementById('sv-info-warning');
+    
+    const sqlCodeBox = document.getElementById('sv-sql-code-box');
+    const btnCopy = document.getElementById('sv-btn-copy');
+    const copyText = document.getElementById('sv-copy-text');
+
+    let selectedTable = null;
+
+    // 5. Drawing Connection Lines
+    // The SVG is a sibling of sv-canvas-inner (NOT inside it), so it is NOT
+    // subject to the CSS scale() transform. We use sv-canvas as the reference
+    // rect so that all getBoundingClientRect() differences are pure screen-space
+    // pixels with no scale division required.
+    function drawLines() {
+      if (!svSvg || svMainView.hidden) return;
+      svSvg.innerHTML = '';
+
+      // Reference origin = top-left corner of the SVG element itself.
+      // Both the SVG and diagram elements are position:absolute inside sv-canvas
+      // (the scroll container), so getBoundingClientRect() on each reflects the
+      // same scroll offset — the differences are exact SVG-space coordinates.
+      const svgRect = svSvg.getBoundingClientRect();
+      const ox = svgRect.left;
+      const oy = svgRect.top;
+
+      relationships.forEach(rel => {
+        const fromTable = document.querySelector(`.sv-table[data-table="${rel.fromTable}"]`);
+        const toTable = document.querySelector(`.sv-table[data-table="${rel.toTable}"]`);
+        if (!fromTable || !toTable) return;
+
+        const fromCol = fromTable.querySelector(`.sv-column-row[data-column="${rel.fromCol}"]`);
+        const toCol = toTable.querySelector(`.sv-column-row[data-column="${rel.toCol}"]`);
+        if (!fromCol || !toCol) return;
+
+        const fromRect = fromCol.getBoundingClientRect();
+        const toRect   = toCol.getBoundingClientRect();
+        const fromTableRect = fromTable.getBoundingClientRect();
+        const toTableRect   = toTable.getBoundingClientRect();
+
+        // Row mid-point Y values (screen-space relative to canvas origin)
+        const y1 = fromRect.top  + fromRect.height  / 2 - oy;
+        const y2 = toRect.top    + toRect.height    / 2 - oy;
+
+        // Table edges in screen-space relative to canvas origin
+        const fromLeft  = fromTableRect.left  - ox;
+        const fromRight = fromTableRect.right - ox;
+        const toLeft    = toTableRect.left    - ox;
+        const toRight   = toTableRect.right   - ox;
+        const fromW     = fromTableRect.width;
+        const toW       = toTableRect.width;
+
+        // Decide which horizontal edges to connect
+        let startX, endX;
+        const gap = toLeft - fromRight;   // positive when from is left of to
+        const gap2 = fromLeft - toRight;  // positive when to is left of from
+
+        const isVerticallyAligned = Math.abs(fromLeft - toLeft) < fromW * 0.4;
+
+        if (isVerticallyAligned) {
+          // Tables in the same column — loop out from the right side
+          startX = fromRight;
+          endX   = toRight;
+        } else if (gap >= -8) {
+          // from is to the left of to
+          startX = fromRight;
+          endX   = toLeft;
+        } else if (gap2 >= -8) {
+          // to is to the left of from
+          startX = fromLeft;
+          endX   = toRight;
+        } else {
+          // Horizontally overlapping — pick closest sides
+          if (fromLeft < toLeft) {
+            startX = fromRight;
+            endX   = toLeft;
+          } else {
+            startX = fromLeft;
+            endX   = toRight;
+          }
+        }
+
+        // Bezier control points
+        let cx1, cx2;
+        if (isVerticallyAligned) {
+          // S-curve looping out to the right
+          const offset = Math.min(80, fromW * 0.35);
+          cx1 = startX + offset;
+          cx2 = endX   + offset;
+        } else {
+          const dx = Math.abs(endX - startX);
+          const controlOffset = Math.min(160, Math.max(40, dx * 0.45));
+          cx1 = startX + (startX < endX ?  controlOffset : -controlOffset);
+          cx2 = endX   + (startX < endX ? -controlOffset :  controlOffset);
+        }
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', `M ${startX} ${y1} C ${cx1} ${y1}, ${cx2} ${y2}, ${endX} ${y2}`);
+        path.setAttribute('class', 'sv-relation-line');
+        path.setAttribute('data-from-table', rel.fromTable);
+        path.setAttribute('data-from-col', rel.fromCol);
+        path.setAttribute('data-to-table', rel.toTable);
+        path.setAttribute('data-to-col', rel.toCol);
+
+        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+        title.textContent = `${rel.fromTable}.${rel.fromCol} (${rel.type}) → ${rel.toTable}.${rel.toCol}`;
+        path.appendChild(title);
+
+        svSvg.appendChild(path);
+      });
+    }
+
+    // 6. Interactivity & Selection
+    function selectTable(tableName) {
+      selectedTable = tableName;
+      
+      // Update UI classes
+      document.querySelectorAll('.sv-table').forEach(table => {
+        const name = table.getAttribute('data-table');
+        table.classList.toggle('selected', name === tableName);
+      });
+
+      if (!tableName) {
+        inspectorTitle.textContent = 'No Table Selected';
+        inspectorDesc.textContent = 'Click a table on the canvas to inspect its schema details, security rules, and download SQL.';
+        detailsEmpty.hidden = false;
+        detailsContent.hidden = true;
+        sqlCodeBox.textContent = '-- Select a table to view creation script';
+        return;
+      }
+
+      const meta = tableMetadata[tableName];
+      if (!meta) return;
+
+      // Fill Details Tab
+      inspectorTitle.textContent = meta.title;
+      inspectorDesc.textContent = meta.desc;
+      detailsEmpty.hidden = true;
+      detailsContent.hidden = false;
+
+      infoPurpose.textContent = meta.purpose;
+      infoRls.textContent = meta.rls;
+
+      infoPolicies.innerHTML = '';
+      meta.policies.forEach(pol => {
+        const li = document.createElement('li');
+        li.className = 'sv-policy-item';
+        li.innerHTML = `<span class="sv-policy-op ${pol.op}">${pol.op}</span> ${pol.text}`;
+        infoPolicies.appendChild(li);
+      });
+
+      if (meta.warning) {
+        infoWarningCard.hidden = false;
+        infoWarning.textContent = meta.warning;
+      } else {
+        infoWarningCard.hidden = true;
+      }
+
+      // Fill SQL Tab
+      sqlCodeBox.textContent = tableSql[tableName] || '';
+      
+      // Highlight matching connection lines
+      document.querySelectorAll('.sv-relation-line').forEach(line => {
+        const from = line.getAttribute('data-from-table');
+        const to = line.getAttribute('data-to-table');
+        const isConnected = (from === tableName || to === tableName);
+        line.classList.toggle('active', isConnected);
+        line.classList.toggle('dimmed', !isConnected && tableName !== null);
+      });
+
+      // Dim non-selected tables on visual canvas
+      document.querySelectorAll('.sv-table').forEach(table => {
+        const name = table.getAttribute('data-table');
+        table.classList.toggle('dimmed', name !== tableName);
+      });
+    }
+
+    function deselectAll() {
+      selectedTable = null;
+      document.querySelectorAll('.sv-table').forEach(table => {
+        table.classList.remove('selected', 'dimmed');
+      });
+      document.querySelectorAll('.sv-relation-line').forEach(line => {
+        line.classList.remove('active', 'dimmed');
+      });
+      selectTable(null);
+    }
+
+    // 7. Pan & Zoom Canvas
+    let scale = 0.95; // Initial zoom scale to fit standard sizes nicely
+    let translateX = 0;
+    let translateY = 0;
+    let isPanning = false;
+    let startPanX = 0;
+    let startPanY = 0;
+
+    function applyZoomTransform() {
+      svCanvasInner.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+      document.getElementById('sv-scale-indicator').textContent = `Zoom: ${Math.round(scale * 100)}%`;
+      drawLines();
+    }
+
+    svCanvas.addEventListener('mousedown', function (e) {
+      if (e.target.closest('.sv-table')) return; // Allow selecting tables
+      isPanning = true;
+      startPanX = e.clientX - translateX;
+      startPanY = e.clientY - translateY;
+      svCanvas.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', function (e) {
+      if (!isPanning) return;
+      translateX = e.clientX - startPanX;
+      translateY = e.clientY - startPanY;
+      applyZoomTransform();
+    });
+
+    window.addEventListener('mouseup', function () {
+      isPanning = false;
+      svCanvas.style.cursor = 'grab';
+    });
+
+    // Zoom on wheel (prevent default window scroll inside the canvas wrapper)
+    svCanvas.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      const zoomStep = 0.05;
+      if (e.deltaY < 0) {
+        scale = Math.min(1.4, scale + zoomStep);
+      } else {
+        scale = Math.max(0.65, scale - zoomStep);
+      }
+      applyZoomTransform();
+    }, { passive: false });
+
+    btnReset.addEventListener('click', function () {
+      scale = 0.95;
+      translateX = 0;
+      translateY = 0;
+      applyZoomTransform();
+      deselectAll();
+    });
+
+    // 8. Search & Highlighting Filter
+    svSearch.addEventListener('input', function () {
+      const q = svSearch.value.trim().toLowerCase();
+      
+      // Remove all row highlighting
+      document.querySelectorAll('.sv-column-row').forEach(row => {
+        row.classList.remove('highlighted');
+      });
+
+      if (!q) {
+        document.querySelectorAll('.sv-table').forEach(table => {
+          table.style.opacity = '1';
+        });
+        drawLines();
+        return;
+      }
+
+      document.querySelectorAll('.sv-table').forEach(table => {
+        const tableName = table.getAttribute('data-table').toLowerCase();
+        let matches = tableName.includes(q);
+
+        table.querySelectorAll('.sv-column-row').forEach(row => {
+          const colName = row.getAttribute('data-column').toLowerCase();
+          const colType = row.querySelector('.sv-column-type').textContent.toLowerCase();
+          
+          if (colName.includes(q) || colType.includes(q)) {
+            row.classList.add('highlighted');
+            matches = true;
+          }
+        });
+
+        table.style.opacity = matches ? '1' : '0.15';
+      });
+
+      // Highlight connections matching search columns
+      document.querySelectorAll('.sv-relation-line').forEach(line => {
+        const fromCol = line.getAttribute('data-from-col').toLowerCase();
+        const toCol = line.getAttribute('data-to-col').toLowerCase();
+        const fromTab = line.getAttribute('data-from-table').toLowerCase();
+        const toTab = line.getAttribute('data-to-table').toLowerCase();
+
+        const lineMatches = fromCol.includes(q) || toCol.includes(q) || fromTab.includes(q) || toTab.includes(q);
+        line.classList.toggle('active', lineMatches);
+        line.classList.toggle('dimmed', !lineMatches);
+      });
+    });
+
+    // 9. Inspector Tabs and Actions
+    tabDetails.addEventListener('click', function () {
+      tabDetails.classList.add('active');
+      tabSql.classList.remove('active');
+      panelDetails.hidden = false;
+      panelSql.hidden = true;
+    });
+
+    tabSql.addEventListener('click', function () {
+      tabSql.classList.add('active');
+      tabDetails.classList.remove('active');
+      panelSql.hidden = false;
+      panelDetails.hidden = true;
+    });
+
+    // Copy SQL Clipboard Action
+    btnCopy.addEventListener('click', function () {
+      if (!selectedTable) return;
+      const sql = tableSql[selectedTable];
+      if (!sql) return;
+
+      navigator.clipboard.writeText(sql).then(function () {
+        copyText.textContent = 'Copied!';
+        btnCopy.style.background = 'var(--accent)';
+        btnCopy.style.color = '#090f19';
+        
+        setTimeout(function () {
+          copyText.textContent = 'Copy SQL';
+          btnCopy.style.background = '';
+          btnCopy.style.color = '';
+        }, 1800);
+      }).catch(function () {
+        alert('Failed to copy text. Please select and copy manually.');
+      });
+    });
+
+    // 10. Switch Views: Canvas vs Docs List
+    btnVisual.addEventListener('click', function () {
+      btnVisual.classList.add('active');
+      btnDocs.classList.remove('active');
+      svMainView.hidden = false;
+      svTableDocs.hidden = true;
+      btnReset.hidden = false;
+      setTimeout(drawLines, 50); // Small timeout to ensure DOM rects are computed
+    });
+
+    btnDocs.addEventListener('click', function () {
+      btnDocs.classList.add('active');
+      btnVisual.classList.remove('active');
+      svMainView.hidden = true;
+      svTableDocs.hidden = false;
+      btnReset.hidden = true;
+      renderDocsView();
+    });
+
+    // Render detailed document elements inside documentation view
+    function renderDocsView() {
+      svTableDocs.innerHTML = '';
+      
+      const title = document.createElement('h2');
+      title.textContent = 'Database Schema Documentation';
+      title.style.marginBottom = '1.5rem';
+      title.style.color = '#fff';
+      svTableDocs.appendChild(title);
+
+      Object.keys(tableMetadata).forEach(name => {
+        const meta = tableMetadata[name];
+        const sql = tableSql[name];
+
+        const section = document.createElement('section');
+        section.className = 'sv-doc-table-section';
+        section.style.borderTop = '1px solid rgba(255, 255, 255, 0.08)';
+        section.style.paddingTop = '1.5rem';
+        section.style.marginTop = '1.5rem';
+
+        let warningHtml = '';
+        if (meta.warning) {
+          warningHtml = `
+            <div class="sv-warning-card" style="margin-top: 1rem;">
+              <p>⚠️ ${meta.warning}</p>
+            </div>
+          `;
+        }
+
+        section.innerHTML = `
+          <h3>${meta.title} <span class="sv-table-status ${meta.statusClass}">${meta.status}</span></h3>
+          <p style="color: #cbd5e1; font-size: 0.9rem;">${meta.desc}</p>
+          
+          <div class="sv-doc-table-info">
+            <div class="sv-doc-table-detail-block">
+              <h4>Purpose</h4>
+              <p>${meta.purpose}</p>
+            </div>
+            <div class="sv-doc-table-detail-block">
+              <h4>Row-Level Security (RLS)</h4>
+              <p>${meta.rls}</p>
+            </div>
+          </div>
+          
+          ${warningHtml}
+
+          <div style="margin-top: 1.25rem;">
+            <h4 style="font-size: 0.72rem; text-transform: uppercase; color: var(--accent-2); margin-bottom: 0.45rem;">DDL &amp; Policies SQL</h4>
+            <pre class="sv-sql-code" style="max-height: 250px;"><code>${sql}</code></pre>
+          </div>
+        `;
+        svTableDocs.appendChild(section);
+      });
+    }
+
+    // 11. Row and Table Node Event Registers
+    document.querySelectorAll('.sv-table').forEach(table => {
+      const name = table.getAttribute('data-table');
+      table.addEventListener('click', function (e) {
+        e.stopPropagation();
+        selectTable(name);
+      });
+    });
+
+    document.querySelectorAll('.sv-column-row').forEach(row => {
+      const table = row.closest('.sv-table').getAttribute('data-table');
+      const column = row.getAttribute('data-column');
+
+      row.addEventListener('mouseenter', function () {
+        // Highlight corresponding relationship paths
+        const lines = document.querySelectorAll(
+          `.sv-relation-line[data-from-table="${table}"][data-from-col="${column}"], ` +
+          `.sv-relation-line[data-to-table="${table}"][data-to-col="${column}"]`
+        );
+
+        if (lines.length > 0) {
+          document.querySelectorAll('.sv-relation-line').forEach(l => l.classList.add('dimmed'));
+          lines.forEach(line => {
+            line.classList.add('active-fk');
+            line.classList.remove('dimmed');
+
+            // Highlight target/source column row
+            const targetTable = line.getAttribute('data-from-table') === table ? line.getAttribute('data-to-table') : line.getAttribute('data-from-table');
+            const targetCol = line.getAttribute('data-from-table') === table ? line.getAttribute('data-to-col') : line.getAttribute('data-from-col');
+            const targetRow = document.querySelector(`.sv-table[data-table="${targetTable}"] .sv-column-row[data-column="${targetCol}"]`);
+            if (targetRow) targetRow.classList.add('highlighted');
+          });
+        }
+      });
+
+      row.addEventListener('mouseleave', function () {
+        document.querySelectorAll('.sv-relation-line').forEach(l => {
+          l.classList.remove('active-fk', 'dimmed');
+        });
+        document.querySelectorAll('.sv-column-row').forEach(r => {
+          r.classList.remove('highlighted');
+        });
+        
+        // Restore highlights for active selection
+        if (selectedTable) {
+          selectTable(selectedTable);
+        }
+      });
+    });
+
+    document.addEventListener('click', function () {
+      deselectAll();
+    });
+
+    // 12. Initialization
+    window.addEventListener('load', function () {
+      applyZoomTransform();
+      setTimeout(drawLines, 150); // Draw lines initially after sizes render
+    });
+    
+    window.addEventListener('resize', function () {
+      drawLines();
+    });
+
+    // Expose select table externally if hash nav is used
+    function handleHashNav() {
+      if (window.location.hash) {
+        const cleanHash = window.location.hash.substring(1);
+        if (tableMetadata[cleanHash]) {
+          selectTable(cleanHash);
+          // Scroll table into view inside the canvas
+          const tableNode = document.getElementById(`table-${cleanHash.replace('.', '-')}`);
+          if (tableNode) {
+            tableNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      }
+    }
+    window.addEventListener('hashchange', handleHashNav);
+    setTimeout(handleHashNav, 200);
+
+  })();
+</script>
+
+</body>
+</html>

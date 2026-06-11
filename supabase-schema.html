@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supabase Schema &mdash; LACE Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1E3A5F">
+  <script src="sidebar.js?v=20260529-redesign"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <div class="brand">LACE Platform</div>
+    <h2>Supabase Schema</h2>
+  </div>
+  <nav>
+    <span class="section-label">Interactive View</span>
+    <a href="supabase-visualizer.html">Schema Visualizer</a>
+
+    <span class="section-label">Overview</span>
+    <a href="#overview">What this page covers</a>
+    <a href="#what-belongs-where">What belongs where</a>
+
+    <span class="section-label">Planned Tables</span>
+    <a href="#learning-items">learning_items</a>
+    <a href="#profiles">profiles</a>
+    <a href="#events">events</a>
+    <a href="#feedback">feedback</a>
+
+    <span class="section-label">Design Considerations</span>
+    <a href="#rls">Row-level security</a>
+    <a href="#naming">Naming conventions</a>
+    <a href="#bs-sync">Brightspace sync</a>
+    <a href="#ferpa">FERPA &amp; privacy</a>
+
+    <span class="section-label">Related Docs</span>
+    <a href="index.html" class="external">Home</a>
+    <a href="mlri-architecture.html" class="external">LACE Architecture</a>
+    <a href="user-attributes.html" class="external">User Attributes</a>
+    <a href="team-wiki.html" class="external">Team Wiki</a>
+  </nav>
+</aside>
+
+<main id="main">
+  <h1>Supabase Database Schema</h1>
+  <p class="page-subtitle">Planned table structure for the LACE Learning Hub's custom data layer, what each table owns, and what to stay conscious of as we build.</p>
+
+  <!-- CALLOUT BANNER -->
+  <div class="sv-callout-banner">
+    <div class="sv-callout-content">
+      <h3>Interactive Schema Visualizer</h3>
+      <p>Explore our database structure using the interactive ER diagram. Inspect table details, check foreign key relationships, and generate copy-pasteable SQL scripts for DDL and Row-Level Security policies.</p>
+    </div>
+    <a href="supabase-visualizer.html" class="sv-callout-btn">
+      Open Visualizer &rarr;
+    </a>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="guide-section" id="overview">
+    <h2>What this page covers</h2>
+
+    <div class="intro-card">
+      <p>This is a planning document. Supabase is connected and one table (<code>learning_items</code>) is live in early form. The rest of the schema is designed but not yet built. Status labels on each section show where things stand.</p>
+    </div>
+
+    <p>The LACE Learning Hub uses Supabase as its <strong>custom data layer</strong> — the place we store data that Brightspace does not hold, or that we need to shape for our own experience. Brightspace stays the system of record for courses, enrollments, completions, and grades. Supabase fills the gaps: extended user profiles, catalog records synced from Brightspace, engagement events, and learner feedback.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Table</th><th>Purpose</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>learning_items</code></td>
+            <td>Catalog records synced from Brightspace course offerings</td>
+            <td><span class="status in-progress">Live (early)</span></td>
+          </tr>
+          <tr>
+            <td><code>profiles</code></td>
+            <td>Extended user attributes beyond what Brightspace stores</td>
+            <td><span class="status proposed">Proposed</span></td>
+          </tr>
+          <tr>
+            <td><code>events</code></td>
+            <td>Custom engagement analytics (search, navigation, time-on-page)</td>
+            <td><span class="status proposed">Proposed</span></td>
+          </tr>
+          <tr>
+            <td><code>feedback</code></td>
+            <td>Learner ratings and content usefulness signals</td>
+            <td><span class="status proposed">Proposed</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- WHAT BELONGS WHERE -->
+  <section class="guide-section" id="what-belongs-where">
+    <h2>What belongs where</h2>
+    <p>The most important design question is not "what columns should a table have" but "does this even belong in Supabase or does Brightspace already own it?" Getting this boundary wrong means duplicating data, building sync logic you don't need, or storing something in the wrong system.</p>
+
+    <div class="tip">
+      <strong>Rule of thumb:</strong> If Brightspace already tracks it authoritatively and you can read it via the API, don't store it in Supabase. Only sync what you need to shape or extend for the Learning Hub experience.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Data</th><th>Lives in</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Course title, description, org unit ID</td>
+            <td>Brightspace (synced to <code>learning_items</code>)</td>
+            <td>We need this in Supabase for search and catalog display without hitting the BS API on every page load</td>
+          </tr>
+          <tr>
+            <td>Enrollments</td>
+            <td>Brightspace only (for now)</td>
+            <td>BS is authoritative; read via API at request time. Only pull into Supabase if reporting latency becomes a real problem</td>
+          </tr>
+          <tr>
+            <td>Completions and grades</td>
+            <td>Brightspace only (for now)</td>
+            <td>Same reasoning. Don't duplicate unless there is a concrete reason</td>
+          </tr>
+          <tr>
+            <td>User identity / login</td>
+            <td>Supabase Auth + <code>profiles</code></td>
+            <td>Supabase Auth handles login; <code>profiles</code> extends it with org, license status, and Learning Group</td>
+          </tr>
+          <tr>
+            <td>What a user searched for</td>
+            <td>Supabase <code>events</code></td>
+            <td>Brightspace does not capture this; it is purely Learning Hub behavior</td>
+          </tr>
+          <tr>
+            <td>Content ratings and flags</td>
+            <td>Supabase <code>feedback</code></td>
+            <td>Custom signal; Brightspace has no equivalent</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Open question:</strong> We do not yet know the full scope of what the Brightspace API can return reliably for our use cases. Before building sync logic for enrollments or completions, confirm what the API gives us and whether a real-time read is fast enough. Current integration status is tracked on <a href="mlri-architecture.html">LACE Architecture</a>.
+    </div>
+  </section>
+
+  <!-- LEARNING ITEMS -->
+  <section class="guide-section" id="learning-items">
+    <h2>learning_items <span class="status in-progress">Live (early)</span></h2>
+    <p>The catalog table. One row per Brightspace course offering. Synced by the Learning Hub's server-side sync route, not written directly by users. This is what catalog search and discovery pages query instead of hitting the Brightspace API on every request.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>id</code></td><td><code>uuid</code></td><td>Supabase default primary key</td></tr>
+          <tr><td><code>bs_org_unit_id</code></td><td><code>bigint</code></td><td>Brightspace Org Unit ID; the stable foreign key back to BS. Used as the upsert key on sync</td></tr>
+          <tr><td><code>title</code></td><td><code>text</code></td><td>Course title from BS; used in search and catalog display</td></tr>
+          <tr><td><code>description</code></td><td><code>text</code></td><td>Course description from BS; nullable</td></tr>
+          <tr><td><code>url</code></td><td><code>text</code></td><td>Learner-facing Brightspace URL for the course</td></tr>
+          <tr><td><code>topic_count</code></td><td><code>int</code></td><td>Number of content topics synced from BS structure; nullable until we confirm the API gives it reliably</td></tr>
+          <tr><td><code>status</code></td><td><code>text</code></td><td><code>active</code>, <code>draft</code>, or <code>archived</code>; controls catalog visibility</td></tr>
+          <tr><td><code>synced_at</code></td><td><code>timestamptz</code></td><td>Last time this row was refreshed from BS</td></tr>
+          <tr><td><code>created_at</code></td><td><code>timestamptz</code></td><td>Auto-set by Supabase on first insert</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Access pattern</h3>
+    <ul>
+      <li>Read: any authenticated user (public catalog)</li>
+      <li>Write: service role only, from the server-side sync route</li>
+      <li>No browser code should ever insert or update a catalog row directly</li>
+    </ul>
+  </section>
+
+  <!-- PROFILES -->
+  <section class="guide-section" id="profiles">
+    <h2>profiles <span class="status proposed">Proposed</span></h2>
+    <p>Extended user data that Brightspace does not hold. One row per authenticated user, keyed to Supabase Auth's <code>auth.users</code> table. This is how the platform knows a user's organization, license status, and Learning Group assignment for routing and access control logic.</p>
+
+    <div class="note">
+      <strong>Design dependency:</strong> The Learning Group routing rules and user type matrix being worked out in <a href="user-attributes.html">User Attributes</a> map directly onto columns in this table. Build both in parallel rather than treating them as separate problems.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>id</code></td><td><code>uuid</code></td><td>Matches <code>auth.users.id</code> exactly; not a separate key</td></tr>
+          <tr><td><code>bs_user_id</code></td><td><code>bigint</code></td><td>Brightspace user ID; links this profile to a BS learner record</td></tr>
+          <tr><td><code>email</code></td><td><code>text</code></td><td>Denormalized from Auth for convenience; keep it in sync with <code>auth.users</code></td></tr>
+          <tr><td><code>org</code></td><td><code>text</code></td><td>Organization name (e.g., "Greater Boston Legal Services")</td></tr>
+          <tr><td><code>license_status</code></td><td><code>text</code></td><td><code>licensed_attorney</code>, <code>paralegal</code>, <code>law_student</code>, <code>other_advocate</code></td></tr>
+          <tr><td><code>learning_group</code></td><td><code>text</code></td><td>Routing group assignment; drives what catalog content a user sees</td></tr>
+          <tr><td><code>role</code></td><td><code>text</code></td><td>App role: <code>learner</code>, <code>manager</code>, or <code>admin</code></td></tr>
+          <tr><td><code>updated_at</code></td><td><code>timestamptz</code></td><td>Last profile update</td></tr>
+          <tr><td><code>created_at</code></td><td><code>timestamptz</code></td><td>Auto-set by Supabase</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Access pattern</h3>
+    <ul>
+      <li>A user can read and update their own row only (RLS: <code>auth.uid() = id</code>)</li>
+      <li>Admins can read all rows via a service role or an explicit admin policy</li>
+      <li><code>role</code> and <code>learning_group</code> should not be user-writable; set them via a controlled server-side function or the admin panel only</li>
+    </ul>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="guide-section" id="events">
+    <h2>events <span class="status proposed">Proposed</span></h2>
+    <p>Custom engagement analytics. Every meaningful action a learner takes in the Learning Hub that Brightspace does not capture: searches, catalog clicks, navigation paths, time-on-page, drop-off points. This is what eventually feeds the program evaluation and equity reporting phases.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>id</code></td><td><code>uuid</code></td><td>Auto-generated</td></tr>
+          <tr><td><code>user_id</code></td><td><code>uuid</code></td><td>FK to <code>profiles.id</code>; nullable if you want anonymous event capture</td></tr>
+          <tr><td><code>event_type</code></td><td><code>text</code></td><td><code>search</code>, <code>catalog_click</code>, <code>course_start</code>, <code>page_exit</code>, etc.</td></tr>
+          <tr><td><code>item_id</code></td><td><code>uuid</code></td><td>FK to <code>learning_items.id</code>; nullable for non-course events like search</td></tr>
+          <tr><td><code>metadata</code></td><td><code>jsonb</code></td><td>Flexible payload: search query, time spent, clicked URL, etc. See the warning below before using this</td></tr>
+          <tr><td><code>created_at</code></td><td><code>timestamptz</code></td><td>When the event fired</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warning">
+      <strong>Be careful with the metadata column.</strong> JSONB is flexible, but anything stored here carries the same privacy obligations as any other column. Do not put names, email addresses, or anything beyond the user's <code>user_id</code> in the event payload. Before writing events from the frontend, agree on a list of allowed event types and their allowed metadata keys, and enforce those in the server-side route.
+    </div>
+
+    <h3>Access pattern</h3>
+    <ul>
+      <li>Insert: any authenticated user, for their own <code>user_id</code> only</li>
+      <li>Read: own rows for learners; all rows for admin and program staff</li>
+      <li>Events are append-only; no update or delete from the browser</li>
+    </ul>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section class="guide-section" id="feedback">
+    <h2>feedback <span class="status proposed">Proposed</span></h2>
+    <p>Learner-generated signals about content quality: ratings, flags, and short-form usefulness notes. This feeds the content effectiveness views in the program reporting phase.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>id</code></td><td><code>uuid</code></td><td>Auto-generated</td></tr>
+          <tr><td><code>user_id</code></td><td><code>uuid</code></td><td>FK to <code>profiles.id</code></td></tr>
+          <tr><td><code>item_id</code></td><td><code>uuid</code></td><td>FK to <code>learning_items.id</code></td></tr>
+          <tr><td><code>rating</code></td><td><code>int</code></td><td>1&ndash;5 scale; nullable if the user only submits a flag</td></tr>
+          <tr><td><code>flag</code></td><td><code>text</code></td><td><code>outdated</code>, <code>unclear</code>, <code>not_relevant</code>; nullable</td></tr>
+          <tr><td><code>notes</code></td><td><code>text</code></td><td>Short free-text comment; nullable. Keep this short-form, not a full review system</td></tr>
+          <tr><td><code>created_at</code></td><td><code>timestamptz</code></td><td>Auto-set</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Access pattern</h3>
+    <ul>
+      <li>One row per user per item; enforce with a unique constraint on <code>(user_id, item_id)</code></li>
+      <li>User can insert or update their own row; no delete (preserve the signal)</li>
+      <li>Aggregate views (average rating, flag counts) should be computed server-side rather than exposing raw rows to all users</li>
+    </ul>
+  </section>
+
+  <!-- RLS -->
+  <section class="guide-section" id="rls">
+    <h2>Row-level security (RLS)</h2>
+    <p>Supabase enables RLS by default, but it does nothing until you write policies. A table with RLS enabled and no policies returns zero rows to everyone, which will look like silent bugs in your frontend. The pattern to follow:</p>
+
+    <ol class="steps">
+      <li><strong>Enable RLS on every table</strong> as soon as you create it, before adding any data.</li>
+      <li><strong>Write a SELECT policy for authenticated users first.</strong> For user-scoped tables use <code>auth.uid() = user_id</code>. For the catalog (<code>learning_items</code>) any logged-in user should see all rows, so the condition is just <code>true</code> for authenticated.</li>
+      <li><strong>Write INSERT and UPDATE policies separately.</strong> SELECT access and write access are different grants; do not assume one covers the other.</li>
+      <li><strong>Use the service role for admin operations</strong> like the Brightspace sync that writes to <code>learning_items</code>. The service role bypasses RLS, so it belongs only in server-side API routes, never in browser code.</li>
+      <li><strong>Test policies in the Supabase dashboard</strong> by running queries under a specific user role in the SQL editor before shipping any feature that touches new tables.</li>
+    </ol>
+
+    <div class="danger">
+      <strong>The service role key bypasses RLS entirely.</strong> It must never appear in frontend code or be committed to version control. It belongs only in server-side environment variables (<code>.env.local</code>, Vercel secrets, etc.). Treat it the same as a database root password.
+    </div>
+
+    <h3>Policy summary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Table</th><th>SELECT</th><th>INSERT / UPDATE</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>learning_items</code></td>
+            <td>Any authenticated user</td>
+            <td>Service role only (sync route)</td>
+          </tr>
+          <tr>
+            <td><code>profiles</code></td>
+            <td>Own row; admins can read all rows</td>
+            <td>Own row (except <code>role</code> and <code>learning_group</code>); admins via server-side function</td>
+          </tr>
+          <tr>
+            <td><code>events</code></td>
+            <td>Own rows; admins and program staff can read all</td>
+            <td>Any authenticated user for their own <code>user_id</code>; no update or delete</td>
+          </tr>
+          <tr>
+            <td><code>feedback</code></td>
+            <td>Own rows; aggregates computed server-side</td>
+            <td>Own row (insert or update); no delete</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- NAMING -->
+  <section class="guide-section" id="naming">
+    <h2>Naming conventions</h2>
+    <p>Consistent naming prevents confusion once you have multiple tables with foreign keys that cross between Supabase IDs and Brightspace IDs.</p>
+
+    <ul>
+      <li><strong>Table names:</strong> lowercase <code>snake_case</code>, plural. <code>learning_items</code>, not <code>LearningItem</code> or <code>learning_item</code>.</li>
+      <li><strong>Column names:</strong> lowercase <code>snake_case</code>, singular. <code>license_status</code>, not <code>licenseStatus</code>.</li>
+      <li><strong>Brightspace foreign keys:</strong> prefix with <code>bs_</code> to make the source obvious. <code>bs_org_unit_id</code>, <code>bs_user_id</code>.</li>
+      <li><strong>Timestamps:</strong> always <code>timestamptz</code> (timezone-aware), never plain <code>timestamp</code>. Name them <code>created_at</code> and <code>updated_at</code> consistently across every table.</li>
+      <li><strong>Status and type values:</strong> use lowercase strings with underscores, not integers or abbreviations. <code>active</code> not <code>1</code>; <code>licensed_attorney</code> not <code>LA</code>.</li>
+      <li><strong>Boolean columns:</strong> prefix with <code>is_</code> or <code>has_</code>. <code>is_published</code>, not <code>published</code>.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Changing names later is painful.</strong> RLS policies, API routes, and frontend queries all reference column names directly. Decide on the right name before data is in the table.
+    </div>
+  </section>
+
+  <!-- BRIGHTSPACE SYNC -->
+  <section class="guide-section" id="bs-sync">
+    <h2>Brightspace sync</h2>
+    <p>The sync relationship is one-directional: Brightspace is always the source; Supabase is a downstream copy of the pieces the Learning Hub needs. We never write back to Brightspace from Supabase.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Question</th><th>Answer</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Who initiates sync?</td>
+            <td>The Learning Hub's server-side sync route, triggered manually or on a schedule. Not the browser.</td>
+          </tr>
+          <tr>
+            <td>What happens when a course changes in BS?</td>
+            <td>The sync route upserts the matching <code>learning_items</code> row, keying on <code>bs_org_unit_id</code>.</td>
+          </tr>
+          <tr>
+            <td>What if a course is archived in BS?</td>
+            <td>Set <code>status = 'archived'</code> in <code>learning_items</code> rather than deleting the row. This preserves the event and feedback history for that course.</td>
+          </tr>
+          <tr>
+            <td>User identity sync?</td>
+            <td>Store <code>bs_user_id</code> in <code>profiles</code> to link a Supabase user to their BS record. Do not sync the full BS user object.</td>
+          </tr>
+          <tr>
+            <td>Completions and enrollments?</td>
+            <td>Read from the BS API at request time for now. Only pull into Supabase if performance or reporting requirements demand it later.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warning">
+      <strong>Do not build ahead of the sync.</strong> Course 6703 is the current validation target. Get one course syncing cleanly end-to-end before designing a bulk sync pipeline. The schema above is ready when you get there, but adding complexity before you need it will slow you down.
+    </div>
+  </section>
+
+  <!-- FERPA -->
+  <section class="guide-section" id="ferpa">
+    <h2>FERPA and privacy</h2>
+    <p>Learning records for identifiable students are FERPA-protected. Any data in Supabase that can be tied back to a specific person's educational activity falls under this obligation. That includes the <code>profiles</code>, <code>events</code>, and <code>feedback</code> tables.</p>
+
+    <div class="danger">
+      <strong>Core obligation:</strong> FERPA-protected records may not be disclosed to third parties without consent. Your Supabase project settings, API keys, and RLS policies are part of your compliance posture, not just a technical detail.
+    </div>
+
+    <h3>Things to stay conscious of</h3>
+    <ul>
+      <li><strong>Collect minimum necessary data.</strong> If there is no clear use case for a column, do not add it. Columns are easy to add later; removing them after data exists in production is harder.</li>
+      <li><strong>The events metadata column is a risk surface.</strong> It is easy to accidentally log a user's name, email, or full search query. Define allowed keys and enforce them in the API route before writing anything to the table.</li>
+      <li><strong>Small groups break anonymity.</strong> A "team completion rate" for a team of two people effectively discloses individual records. Design any reporting views with minimum group-size thresholds when that phase comes.</li>
+      <li><strong>The service role has full access.</strong> Treat the service role key with the same care as a database root password. Rotate it immediately if it is ever exposed.</li>
+      <li><strong>Get legal sign-off before the profiles table goes live.</strong> The user types and access matrix in <a href="team-wiki.html#legal-signoffs">Team Wiki &mdash; Legal Sign-offs</a> needs to be resolved before we start storing extended user attributes.</li>
+    </ul>
+
+    <div class="note">
+      <strong>FERPA applies to students in educational institutions, not necessarily all users.</strong> Our platform will serve a mix of licensed attorneys, paralegals, law students, and other advocates. Until legal has reviewed this mix, treat all user learning records as protected.
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
