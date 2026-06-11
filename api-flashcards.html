@@ -2190,6 +2190,248 @@
       }
     ];
 
+    const simpleCardCopy = {
+      "API": {
+        plain: "A way for one system to ask another system for information.",
+        meeting: "The Hub needs a safe way to ask Brightspace for course and learner information.",
+        example: "Ask: Is the API the right way for Learning Hub to get catalog data?"
+      },
+      "Endpoint": {
+        plain: "One specific API address for one job.",
+        meeting: "Which API addresses should we use first for courses, modules, users, enrollments, and completions?",
+        example: "Ask for the right groups of API routes, not every single route today."
+      },
+      "Resource": {
+        plain: "The thing the API is talking about, like a user, course, or enrollment.",
+        meeting: "Which Brightspace objects should Learning Hub treat as the official source?",
+        example: "Use Brightspace's word: org unit. Courses and departments can be org units."
+      },
+      "Payload": {
+        plain: "The information an API sends back.",
+        meeting: "Does Brightspace send back the fields we need for a good catalog card?",
+        example: "Ask about title, description, dates, visibility, and module list."
+      },
+      "Read vs. Write": {
+        plain: "Read means look at data. Write means change data.",
+        meeting: "Can Phase 1 stay read-only so we are not changing Brightspace records yet?",
+        example: "Read now. Write later only if D2L recommends it."
+      },
+      "Org Unit": {
+        plain: "A Brightspace container. Courses, departments, and sections can all sit in this structure.",
+        meeting: "If the Service User can see a parent org unit, can it also see the courses under it?",
+        example: "This tells us whether new courses appear automatically or need extra setup."
+      },
+      "Service User Enrollment Inheritance": {
+        plain: "Whether one higher-level permission lets the Service User see the courses underneath.",
+        meeting: "If the Service User is added at Massachusetts, can it see 6703 and future courses automatically?",
+        example: "If not, we need a process for every new course."
+      },
+      "Course Offering": {
+        plain: "The real course learners take.",
+        meeting: "Is Course Offering 6703 the right thing to sync into Learning Hub?",
+        example: "Ask whether links should go to the course, a topic, or both."
+      },
+      "learning_items": {
+        plain: "The Supabase table where Learning Hub keeps its course catalog cards.",
+        meeting: "What Brightspace data is safe to copy into learning_items, and what should stay only in Brightspace?",
+        example: "We do not want Supabase to become the official training record."
+      },
+      "Content Table of Contents": {
+        plain: "The list of modules and topics inside a course.",
+        meeting: "What is the supported way to read a course's module and topic list?",
+        example: "Ask whether resume links should point to official Brightspace topic pages."
+      },
+      "Valence API Version": {
+        plain: "The Brightspace API version in the URL.",
+        meeting: "Which API versions does MLRI's Brightspace site support right now?",
+        example: "Ask whether production should pin to a supported version."
+      },
+      "Authentication": {
+        plain: "How Brightspace knows our system is allowed in.",
+        meeting: "What login/auth pattern should Learning Hub use in production?",
+        example: "Separate learner login from background sync."
+      },
+      "Dual Auth Model": {
+        plain: "Two access paths: one for people, one for background jobs.",
+        meeting: "Should learner dashboard calls use user login, while catalog sync uses a Service User?",
+        example: "Ask which routes should never use the Service User."
+      },
+      "OAuth 2.0": {
+        plain: "A standard way for apps to get approved access without sharing passwords.",
+        meeting: "Which OAuth flow should we use for learners and which for server sync?",
+        example: "Do not ask for an API key. Ask for the supported OAuth pattern."
+      },
+      "Client Credentials": {
+        plain: "A way for a server job to log in without a person clicking anything.",
+        meeting: "Is Client Credentials the right flow for background catalog sync?",
+        example: "Ask D2L to validate the first working token request."
+      },
+      "JWKS / Headless OAuth": {
+        plain: "A public key page Brightspace uses to trust our server's signed request.",
+        meeting: "Can you walk us through JWKS setup and first token testing in sandbox?",
+        example: "Ask what a successful first token should look like."
+      },
+      "JWT Client Assertion": {
+        plain: "A signed message our server sends to prove who it is.",
+        meeting: "Can D2L give us a working example to compare against?",
+        example: "Ask for common reasons this token request fails."
+      },
+      "Service User": {
+        plain: "A dedicated Brightspace account for the integration, not a person.",
+        meeting: "What role and access should the Service User have for read-only sync?",
+        example: "This should not depend on Marlie's personal login."
+      },
+      "Least Privilege": {
+        plain: "Only give the integration the access it really needs.",
+        meeting: "What is the smallest safe permission set for Phase 1?",
+        example: "Read-only first. Broader access later only if needed."
+      },
+      "Scopes": {
+        plain: "The API permissions listed on the OAuth app.",
+        meeting: "Which read-only scopes do we need for the pilot?",
+        example: "Ask for the smallest set that still works."
+      },
+      "Permissions": {
+        plain: "What the Service User is allowed to do inside Brightspace.",
+        meeting: "How do scopes, role permissions, and org unit access work together?",
+        example: "If 6703 fails, ask how to tell what permission layer caused it."
+      },
+      "Source of Truth": {
+        plain: "The system that owns the official answer.",
+        meeting: "Which records must stay officially owned by Brightspace?",
+        example: "Completions and certificates should stay in Brightspace."
+      },
+      "Sync Strategy": {
+        plain: "The plan for keeping Brightspace, Supabase, and Learning Hub matched.",
+        meeting: "What should be live, what can sync on a schedule, and what should not be copied?",
+        example: "This prevents the Hub from showing stale courses."
+      },
+      "Catalog Discovery Source": {
+        plain: "Where Learning Hub gets its course catalog data.",
+        meeting: "Should catalog data come from the live API, Data Hub/BDS, or both?",
+        example: "Ask which source is best for a learner-facing catalog."
+      },
+      "Data Hub": {
+        plain: "Brightspace's bulk export tool for larger data pulls.",
+        meeting: "When should we use Data Hub instead of lots of API calls?",
+        example: "Good for reporting or scheduled exports if the needed fields are there."
+      },
+      "BDS": {
+        plain: "Brightspace Data Sets: exported Brightspace data tables.",
+        meeting: "Do BDS exports include the catalog and completion fields we need?",
+        example: "If not, BDS cannot be the only catalog source."
+      },
+      "Real-time vs. Batch": {
+        plain: "Real-time means now. Batch means on a schedule.",
+        meeting: "Which Hub data needs to be fresh right away, and which can update hourly or nightly?",
+        example: "Learner launch may need fresher data than reports."
+      },
+      "Webhook": {
+        plain: "Brightspace tells us when something changes.",
+        meeting: "Can Brightspace notify us about course, enrollment, or completion changes?",
+        example: "If not, we need polling."
+      },
+      "Polling": {
+        plain: "Learning Hub checks Brightspace on a schedule.",
+        meeting: "If we must poll, how often is safe?",
+        example: "Ask for a schedule that will not hit rate limits."
+      },
+      "API Rate Logging": {
+        plain: "A way to watch how many API calls we are making.",
+        meeting: "What API call limits should we design around?",
+        example: "Ask when a job should move from API calls to Data Hub."
+      },
+      "Pagination": {
+        plain: "Large API results come back in pages.",
+        meeting: "How should we safely pull all pages without missing records?",
+        example: "Missing a page could mean missing courses."
+      },
+      "Incremental Sync": {
+        plain: "Only pull what changed since last time.",
+        meeting: "Can we sync only changed records instead of refreshing everything?",
+        example: "This keeps the job smaller as the catalog grows."
+      },
+      "Stable ID": {
+        plain: "An ID that does not change when names or titles change.",
+        meeting: "Which Brightspace IDs should we store in Supabase?",
+        example: "Do not key important records by title or email."
+      },
+      "Mapping Table": {
+        plain: "A table that connects Learning Hub records to Brightspace records.",
+        meeting: "How should learning_items map back to Brightspace course and topic IDs?",
+        example: "This keeps links and support checks reliable."
+      },
+      "Deep Link": {
+        plain: "A link that opens the learner in the right Brightspace course or topic.",
+        meeting: "Should we store launch links, or build them from Brightspace IDs when needed?",
+        example: "Official links matter for tracking and compliance."
+      },
+      "SSO Transition": {
+        plain: "One login that works across Learning Hub and Brightspace.",
+        meeting: "What is the best path from OAuth testing to production SSO?",
+        example: "Learners should not have to sign in twice."
+      },
+      "Context Copy Notice": {
+        plain: "A possible LTI feature. It may not matter for Phase 1.",
+        meeting: "Is this only for LTI tools? If yes, we can skip it for now.",
+        example: "Keep this quick. Do not let it distract from sync and auth."
+      },
+      "Archive vs Delete": {
+        plain: "How we know a course should stop showing in the Hub catalog.",
+        meeting: "Which field tells us a course is retired: IsActive, Status, Deleted, Data Hub, or something else?",
+        example: "Wrong logic can show old courses or hide live ones."
+      },
+      "Secondary Manager Attribute": {
+        plain: "A custom user field LACE may need for manager routing.",
+        meeting: "Can the API read Secondary_Manager, or does it need another source?",
+        example: "Useful later for manager dashboards."
+      },
+      "LTI": {
+        plain: "A standard for putting outside tools inside an LMS.",
+        meeting: "Do we need LTI for Phase 1, or are API plus deep links enough?",
+        example: "Only go deeper if D2L says embedded tools are needed."
+      },
+      "Idempotency": {
+        plain: "Doing the same action twice does not create a duplicate mess.",
+        meeting: "If we later add enrollments, are repeated requests safe?",
+        example: "Retries should not double-enroll anyone."
+      },
+      "Auditability": {
+        plain: "Being able to see what changed, when, and by whom.",
+        meeting: "Where will Service User activity and sync errors be logged?",
+        example: "Ask what logs LACE should keep."
+      },
+      "Sandbox OAuth Permissions": {
+        plain: "Who is allowed to set up OAuth apps and Service Users.",
+        meeting: "Who owns sandbox and production setup for OAuth, Service User, JWKS, and approvals?",
+        example: "This prevents a setup blocker after the call."
+      },
+      "Versioning": {
+        plain: "Choosing which API version production will use.",
+        meeting: "Which versions should we pin to, and how will we know before they are retired?",
+        example: "We need a supported version policy, not a guessed number."
+      },
+      "Production-safe": {
+        plain: "Safe enough for real users and real records.",
+        meeting: "Is this the supported production pattern, or only a test pattern?",
+        example: "Ask this when something sounds technically possible but risky."
+      },
+      "Supported Pattern": {
+        plain: "The way D2L recommends doing it.",
+        meeting: "What is the D2L-supported pattern for our Phase 1 architecture?",
+        example: "This is the phrase to use if the conversation gets too clever."
+      },
+      "Phase 1 Architecture": {
+        plain: "The first safe version to build.",
+        meeting: "Can we leave with the recommended Phase 1 plan: auth, access, scopes, versions, sync source, and what to avoid?",
+        example: "Use this as the closing question."
+      }
+    };
+
+    cards.forEach((item) => {
+      Object.assign(item, simpleCardCopy[item.term] || {});
+    });
+
     let currentIndex = 0;
     let flipped = false;
     let activeFilter = "all";
