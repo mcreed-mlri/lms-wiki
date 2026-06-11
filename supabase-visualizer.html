@@ -69,6 +69,7 @@
           <div class="sv-scale-indicator" id="sv-scale-indicator">Zoom: 100%</div>
           
           <div class="sv-canvas-inner" id="sv-canvas-inner">
+            <svg class="sv-svg" id="sv-svg" aria-hidden="true"></svg>
 
             <!-- Table Nodes Grid -->
             <div class="sv-grid">
@@ -410,8 +411,6 @@
 
           </div> <!-- sv-canvas-inner -->
 
-          <!-- SVG overlay: sits outside the scaled inner so coords are raw screen-space -->
-          <svg class="sv-svg" id="sv-svg"></svg>
         </div> <!-- sv-canvas -->
       </div> <!-- sv-canvas-area -->
 
@@ -736,21 +735,37 @@ CREATE POLICY "Manage own feedback"
     let selectedTable = null;
 
     // 5. Drawing Connection Lines
-    // The SVG is a sibling of sv-canvas-inner (NOT inside it), so it is NOT
-    // subject to the CSS scale() transform. We use sv-canvas as the reference
-    // rect so that all getBoundingClientRect() differences are pure screen-space
-    // pixels with no scale division required.
+    // The SVG shares the same transformed canvas as the tables, so connectors
+    // stay attached while users pan, zoom, or scroll the diagram.
     function drawLines() {
       if (!svSvg || svMainView.hidden) return;
       svSvg.innerHTML = '';
 
-      // Reference origin = top-left corner of the SVG element itself.
-      // Both the SVG and diagram elements are position:absolute inside sv-canvas
-      // (the scroll container), so getBoundingClientRect() on each reflects the
-      // same scroll offset — the differences are exact SVG-space coordinates.
-      const svgRect = svSvg.getBoundingClientRect();
-      const ox = svgRect.left;
-      const oy = svgRect.top;
+      const innerRect = svCanvasInner.getBoundingClientRect();
+
+      function rowPoint(row, side) {
+        const rowRect = row.getBoundingClientRect();
+        const x = side === 'left'
+          ? rowRect.left - innerRect.left
+          : rowRect.right - innerRect.left;
+
+        return {
+          x: x / scale,
+          y: (rowRect.top + rowRect.height / 2 - innerRect.top) / scale
+        };
+      }
+
+      function chooseSides(fromRow, toRow) {
+        const fromRect = fromRow.getBoundingClientRect();
+        const toRect = toRow.getBoundingClientRect();
+        const fromCenter = fromRect.left + fromRect.width / 2;
+        const toCenter = toRect.left + toRect.width / 2;
+
+        if (fromCenter <= toCenter) {
+          return { fromSide: 'right', toSide: 'left' };
+        }
+        return { fromSide: 'left', toSide: 'right' };
+      }
 
       relationships.forEach(rel => {
         const fromTable = document.querySelector(`.sv-table[data-table="${rel.fromTable}"]`);
@@ -761,69 +776,29 @@ CREATE POLICY "Manage own feedback"
         const toCol = toTable.querySelector(`.sv-column-row[data-column="${rel.toCol}"]`);
         if (!fromCol || !toCol) return;
 
-        const fromRect = fromCol.getBoundingClientRect();
-        const toRect   = toCol.getBoundingClientRect();
-        const fromTableRect = fromTable.getBoundingClientRect();
-        const toTableRect   = toTable.getBoundingClientRect();
-
-        // Row mid-point Y values (screen-space relative to canvas origin)
-        const y1 = fromRect.top  + fromRect.height  / 2 - oy;
-        const y2 = toRect.top    + toRect.height    / 2 - oy;
-
-        // Table edges in screen-space relative to canvas origin
-        const fromLeft  = fromTableRect.left  - ox;
-        const fromRight = fromTableRect.right - ox;
-        const toLeft    = toTableRect.left    - ox;
-        const toRight   = toTableRect.right   - ox;
-        const fromW     = fromTableRect.width;
-        const toW       = toTableRect.width;
-
-        // Decide which horizontal edges to connect
-        let startX, endX;
-        const gap = toLeft - fromRight;   // positive when from is left of to
-        const gap2 = fromLeft - toRight;  // positive when to is left of from
-
-        const isVerticallyAligned = Math.abs(fromLeft - toLeft) < fromW * 0.4;
-
-        if (isVerticallyAligned) {
-          // Tables in the same column — loop out from the right side
-          startX = fromRight;
-          endX   = toRight;
-        } else if (gap >= -8) {
-          // from is to the left of to
-          startX = fromRight;
-          endX   = toLeft;
-        } else if (gap2 >= -8) {
-          // to is to the left of from
-          startX = fromLeft;
-          endX   = toRight;
-        } else {
-          // Horizontally overlapping — pick closest sides
-          if (fromLeft < toLeft) {
-            startX = fromRight;
-            endX   = toLeft;
-          } else {
-            startX = fromLeft;
-            endX   = toRight;
-          }
-        }
-
-        // Bezier control points
-        let cx1, cx2;
-        if (isVerticallyAligned) {
-          // S-curve looping out to the right
-          const offset = Math.min(80, fromW * 0.35);
-          cx1 = startX + offset;
-          cx2 = endX   + offset;
-        } else {
-          const dx = Math.abs(endX - startX);
-          const controlOffset = Math.min(160, Math.max(40, dx * 0.45));
-          cx1 = startX + (startX < endX ?  controlOffset : -controlOffset);
-          cx2 = endX   + (startX < endX ? -controlOffset :  controlOffset);
-        }
+        const sides = chooseSides(fromCol, toCol);
+        const start = rowPoint(fromCol, sides.fromSide);
+        const end = rowPoint(toCol, sides.toSide);
+        const direction = sides.fromSide === 'right' ? 1 : -1;
+        const stub = 28;
+        const startStubX = start.x + direction * stub;
+        const endStubX = end.x - direction * stub;
+        const midX = startStubX + (endStubX - startStubX) / 2;
+        const verticalDir = start.y <= end.y ? 1 : -1;
+        const radius = Math.min(18, Math.abs(end.y - start.y) / 2, Math.abs(endStubX - startStubX) / 2);
+        const d = [
+          `M ${start.x} ${start.y}`,
+          `L ${startStubX} ${start.y}`,
+          `L ${midX - direction * radius} ${start.y}`,
+          `Q ${midX} ${start.y} ${midX} ${start.y + verticalDir * radius}`,
+          `L ${midX} ${end.y - verticalDir * radius}`,
+          `Q ${midX} ${end.y} ${midX + direction * radius} ${end.y}`,
+          `L ${endStubX} ${end.y}`,
+          `L ${end.x} ${end.y}`
+        ].join(' ');
 
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', `M ${startX} ${y1} C ${cx1} ${y1}, ${cx2} ${y2}, ${endX} ${y2}`);
+        path.setAttribute('d', d);
         path.setAttribute('class', 'sv-relation-line');
         path.setAttribute('data-from-table', rel.fromTable);
         path.setAttribute('data-from-col', rel.fromCol);
@@ -831,13 +806,20 @@ CREATE POLICY "Manage own feedback"
         path.setAttribute('data-to-col', rel.toCol);
 
         const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-        title.textContent = `${rel.fromTable}.${rel.fromCol} (${rel.type}) → ${rel.toTable}.${rel.toCol}`;
+        title.textContent = `${rel.fromTable}.${rel.fromCol} (${rel.type}) -> ${rel.toTable}.${rel.toCol}`;
         path.appendChild(title);
 
         svSvg.appendChild(path);
+        [start, end].forEach(point => {
+          const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          dot.setAttribute('cx', point.x);
+          dot.setAttribute('cy', point.y);
+          dot.setAttribute('r', '3');
+          dot.setAttribute('class', 'sv-relation-dot');
+          svSvg.appendChild(dot);
+        });
       });
     }
-
     // 6. Interactivity & Selection
     function selectTable(tableName) {
       selectedTable = tableName;
@@ -923,7 +905,7 @@ CREATE POLICY "Manage own feedback"
     let startPanY = 0;
 
     function applyZoomTransform() {
-      svCanvasInner.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+      svCanvasInner.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
       document.getElementById('sv-scale-indicator').textContent = `Zoom: ${Math.round(scale * 100)}%`;
       drawLines();
     }

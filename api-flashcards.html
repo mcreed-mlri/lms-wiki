@@ -1179,20 +1179,20 @@
     <div class="extras-panel">
     <section class="meeting-essentials" aria-label="Questions I cannot leave without answering">
       <h3>Please do not let me forget these</h3>
-      <p class="essentials-note">These are the questions that matter. Everything else is helpful, but these are the ones that decide the architecture.</p>
+      <p class="essentials-note">These are the questions that decide whether Learning Hub becomes a supported front door on top of Brightspace, or a fragile catalog that drifts out of sync.</p>
       <ul class="essentials-list checklist">
-        <li><label><input type="checkbox"><span><strong>Org Unit inheritance:</strong> if the Service User is enrolled at <strong>Massachusetts (Jurisdiction)</strong>, does it automatically get read access to all current <em>and future</em> Course Offerings beneath it — or must we automate enrollment for every new course?</span></label></li>
-        <li><label><input type="checkbox"><span>For <code>learning_items</code> catalog sync, should we use the live API, Data Hub/BDS, or a hybrid?</span></label></li>
-        <li><label><input type="checkbox"><span><strong>Explicit versioning:</strong> should we pin to specific LP/LE versions (e.g. LP 1.51, LE 1.47) instead of calling “latest,” to avoid breakage during LMS updates?</span></label></li>
-        <li><label><input type="checkbox"><span><strong>Archive terminology:</strong> March 2026 replaced “Delete” with “Archive” in the UI — do API status filters for courses also require a <code>deleted</code> → <code>archived</code> transition in our sync logic?</span></label></li>
-        <li><label><input type="checkbox"><span><strong>Context Copy Notice:</strong> can we use proactive endpoint discovery before sync jobs run (not just LTI launch) to speed up Hub catalog harvesting?</span></label></li>
-        <li><label><input type="checkbox"><span>Can D2L validate our JWT client-assertion shape and walk through a first sandbox token?</span></label></li>
-        <li><label><input type="checkbox"><span>What specific read-only OAuth scopes are safest for the Phase 1 pilot?</span></label></li>
-        <li><label><input type="checkbox"><span>Who can create the OAuth 2.0 app in Sandbox vs Production?</span></label></li>
+        <li><label><input type="checkbox"><span><strong>Auth triangle:</strong> validate Service User role permissions, OAuth scopes, and Org Unit enrollment together so we can tell whether failures come from scope, role, or visibility.</span></label></li>
+        <li><label><input type="checkbox"><span><strong>Org Unit inheritance:</strong> if the Service User is enrolled at <strong>Massachusetts (Jurisdiction)</strong>, does it automatically get read access to all current <em>and future</em> Course Offerings beneath it, or must we automate enrollment for every new course?</span></label></li>
+        <li><label><input type="checkbox"><span><strong>Catalog source:</strong> for <code>learning_items</code>, should Phase 1 use the live API, Data Hub/BDS, or a hybrid, and which source has the fields we need for cards, outlines, enrollments, completions, and timestamps?</span></label></li>
+        <li><label><input type="checkbox"><span><strong>Versioning:</strong> which LP/LE versions does MLRI's tenant support today via <code>/versions/check</code>, and should production pin to the oldest fully supported contract or the latest supported contract?</span></label></li>
+        <li><label><input type="checkbox"><span><strong>Retired courses:</strong> for API sync, should retired offerings be detected through <code>IsActive</code>, Course Updater <code>Status</code>, <code>Deleted</code>, Data Hub fields, archive UI terminology, or another D2L-supported signal?</span></label></li>
+        <li><label><input type="checkbox"><span><strong>Launch URLs:</strong> are course/topic URLs stable enough to store in Supabase, or should Learning Hub generate official Brightspace links from IDs at runtime?</span></label></li>
+        <li><label><input type="checkbox"><span><strong>Operational owner:</strong> who creates OAuth apps, Service Users, JWKS registration, sandbox/prod approvals, and ongoing key rotation?</span></label></li>
+        <li><label><input type="checkbox"><span><strong>Audit/logging:</strong> where does Service User API activity appear in Brightspace, and what sync logs should LACE retain for support and compliance?</span></label></li>
       </ul>
       <details class="closing-line">
         <summary>If my brain blanks at the end, say this</summary>
-        <p><strong>Close with:</strong> “Before we end, I want to make sure I understand the recommended production path: what stays in Brightspace, what LACE can safely cache in Supabase, what auth model we should use, and whether Service User access can inherit down the Org Unit structure. I’m trying to avoid building something that works in a sandbox but breaks the second this becomes real.”</p>
+        <p><strong>Close with:</strong> “Before we end, I want to make sure I understand the recommended production path: what stays in Brightspace, what LACE can safely cache in Supabase, what auth model we should use, how Service User access inherits, and how we detect retired courses. I’m trying to avoid building something that works in a sandbox but breaks the second this becomes real.”</p>
       </details>
     </section>
 
@@ -1221,6 +1221,9 @@
     <section class="reference-panel active meeting-prep" id="panelPlaybook" role="tabpanel" aria-labelledby="tabPlaybook" aria-label="Brightspace API specialist meeting playbook">
       <h2>Meeting playbook</h2>
       <p>Use this as the spine for the call. I do not need to prove I know every endpoint. I need to confirm the safest Phase 1 path before I build around the wrong assumptions.</p>
+      <div class="mini-guide">
+        <strong>Connection:</strong> The Learning Hub is not replacing Brightspace. It is a learner-facing front door. Brightspace remains the LMS of record; Supabase is a cache and LACE-owned metadata layer; the API/Data Hub path decides how safely those systems stay in sync.
+      </div>
 
       <div class="prep-grid">
         <div class="prep-block">
@@ -1244,8 +1247,8 @@
           <ol>
             <li><strong>5 min</strong> — Context, architecture, Phase 1 scope</li>
             <li><strong>15 min</strong> — Auth: Service User, role, Org Unit enrollment, Client Credentials/JWKS, scopes</li>
-            <li><strong>15 min</strong> — Data: course offering metadata, content TOC, enrollments, completion reads</li>
-            <li><strong>7 min</strong> — Sync: API vs Data Hub/BDS, polling vs events, rate limits</li>
+            <li><strong>15 min</strong> — Data: endpoint list, course metadata, content TOC, launch URLs, enrollments, completion reads</li>
+            <li><strong>7 min</strong> — Sync: API vs Data Hub/BDS, freshness targets, retired course detection, rate limits</li>
             <li><strong>3 min</strong> — Ask for recommended Phase 1 architecture and sandbox plan</li>
           </ol>
         </div>
@@ -1261,11 +1264,14 @@
         <div class="prep-block">
           <h3>Critical questions — not in standard docs</h3>
           <ul>
+            <li><strong>Minimum Phase 1 route list:</strong> which exact endpoints and matching scopes should we validate for course metadata, content outline, enrollments, completions, users, and version checks?</li>
+            <li><strong>Failure diagnosis:</strong> when 6703 fails, how do we tell whether the cause is missing OAuth scope, missing Brightspace role permission, or missing Org Unit enrollment?</li>
             <li><strong>Org Unit inheritance:</strong> enrolling the Service User at <strong>Massachusetts (Jurisdiction)</strong> — does it automatically grant read access to all current and future Course Offerings beneath it, or must we automate enrollment for every new course?</li>
             <li><strong>Catalog discovery source:</strong> live API vs Data Hub/BDS for bulk <code>learning_items</code> sync</li>
-            <li><strong>Explicit versioning:</strong> pin to specific LP/LE versions (e.g. LP 1.51, LE 1.47) rather than “latest,” for long-term stability through LMS updates</li>
-            <li><strong>Archive terminology:</strong> March 2026 officially replaced “Delete” with “Archive” in the UI — do API status filters for deleted courses require a <code>deleted</code> → <code>archived</code> transition in sync logic so <code>learning_items</code> stays clean?</li>
-            <li><strong>Context Copy Notice:</strong> can we leverage proactive endpoint discovery before sync jobs run — receiving service endpoint details ahead of launch to speed catalog harvesting — or is it LTI-only?</li>
+            <li><strong>Explicit versioning:</strong> which LP/LE versions does MLRI's tenant support today via <code>/versions/check</code>, and should production pin to the oldest fully supported contract or latest supported contract?</li>
+            <li><strong>Retired offerings:</strong> should sync use <code>IsActive</code>, Course Updater <code>Status</code>, <code>Deleted</code>, Data Hub fields, archive UI terminology, or another D2L-supported signal?</li>
+            <li><strong>Launch URLs:</strong> are course/topic URLs stable enough to store, or should the Hub generate official Brightspace links from OrgUnitId/topic identifiers at runtime?</li>
+            <li><strong>Freshness target:</strong> what must be near-real-time for learner trust, and what can safely be nightly or hourly?</li>
             <li><strong>Secondary_Manager:</strong> included in <code>whoami</code>/User endpoints by default, or a specific version?</li>
           </ul>
         </div>
@@ -1285,16 +1291,21 @@
         <p class="essentials-note" style="margin-bottom:10px;">The call is successful if I can answer these without guessing.</p>
         <ul class="checklist">
           <li><label><input type="checkbox"><span>Org Unit inheritance: Massachusetts (Jurisdiction) enrollment grants read access to all current and future offerings, or per-course enrollment required</span></label></li>
-          <li><label><input type="checkbox"><span>Pin LP/LE API versions (e.g. 1.51 / 1.47) vs calling latest for production stability</span></label></li>
-          <li><label><input type="checkbox"><span>API status filters: transition from <code>deleted</code> to <code>archived</code> in sync logic (March 2026 UI change)</span></label></li>
-          <li><label><input type="checkbox"><span>Context Copy Notice: usable for proactive endpoint discovery in headless sync, or LTI-only</span></label></li>
+          <li><label><input type="checkbox"><span>Minimum Phase 1 endpoint list with matching scopes and required Brightspace role permissions</span></label></li>
+          <li><label><input type="checkbox"><span>Failure diagnosis path: missing scope vs role permission vs Org Unit enrollment</span></label></li>
+          <li><label><input type="checkbox"><span>LP/LE versions supported today via <code>/versions/check</code>, plus pinning recommendation for production</span></label></li>
+          <li><label><input type="checkbox"><span>Retired course signal: <code>IsActive</code>, Course Updater <code>Status</code>, <code>Deleted</code>, Data Hub fields, archive UI terminology, or another supported source</span></label></li>
           <li><label><input type="checkbox"><span>Recommended catalog sync pattern: live API, Data Hub/BDS, or hybrid</span></label></li>
+          <li><label><input type="checkbox"><span>Whether Data Hub/BDS includes catalog card fields, content outlines, enrollments, completions, and timestamps</span></label></li>
+          <li><label><input type="checkbox"><span>Course/topic launch URL strategy: store stable URLs or generate official Brightspace links from IDs</span></label></li>
           <li><label><input type="checkbox"><span>Validated JWT client-assertion sample + sandbox token walkthrough</span></label></li>
           <li><label><input type="checkbox"><span>Specific read-only OAuth scopes for the pilot (not just wildcards)</span></label></li>
-          <li><label><input type="checkbox"><span>Who can create the OAuth 2.0 app in Sandbox vs Production</span></label></li>
+          <li><label><input type="checkbox"><span>Operational owner for OAuth app, Service User, JWKS registration, production approvals, and key rotation</span></label></li>
+          <li><label><input type="checkbox"><span>Audit/logging location for Service User API activity and what LACE should retain</span></label></li>
           <li><label><input type="checkbox"><span>Recommended Phase 1 architecture summary (auth, sync, scopes, versions)</span></label></li>
           <li><label><input type="checkbox"><span>Production SSO transition path from 3-legged OAuth testing</span></label></li>
           <li><label><input type="checkbox"><span>API Rate Logging thresholds we should design around</span></label></li>
+          <li><label><input type="checkbox"><span>If relevant: Context Copy Notice is LTI-only or can help server-side discovery; if LTI-only, leave it out of Phase 1</span></label></li>
         </ul>
       </div>
 
@@ -1442,7 +1453,7 @@
         <h3>2. API endpoints &amp; versioning</h3>
         <div class="faq-item">
           <p class="faq-q">Which API versions should we use?</p>
-          <p class="faq-a">"Latest" works for spikes, but D2L should confirm whether production should <strong>pin to specific versions</strong> (e.g. LP 1.51, LE 1.47) rather than always calling latest — explicit versioning prevents unexpected breakage during LMS updates. Validate against MLRI's instance and the March 2026 release.</p>
+          <p class="faq-a">"Latest" works for spikes, but D2L should confirm which LP/LE versions MLRI's tenant supports today via <code>/versions/check</code>, and whether production should pin to the oldest fully supported contract or the latest supported contract. Explicit versioning prevents unexpected breakage during LMS updates.</p>
         </div>
         <div class="faq-item">
           <p class="faq-q">What endpoints are required for catalog discovery?</p>
@@ -1483,7 +1494,7 @@
         </div>
         <div class="faq-item">
           <p class="faq-q">What is the Context Copy Notice?</p>
-          <p class="faq-a">A March 2026 feature letting tools receive <strong>service endpoint details before launch</strong> — proactive discovery rather than waiting until a tool starts. Ask whether LACE can use it for <strong>headless catalog sync jobs</strong> (discovering endpoints ahead of time) or whether it is LTI-only.</p>
+          <p class="faq-a">If relevant, ask whether this is <strong>LTI-only</strong> or can help server-side discovery. If it is LTI-only, leave it out of Phase 1 so the meeting stays focused on API/Data Hub sync.</p>
         </div>
       </div>
 
@@ -1717,7 +1728,7 @@
 
       contextCopy: `<svg viewBox="0 0 320 120" ${svgStyle}><rect x="40" y="28" width="100" height="52" rx="10" fill="#fff" stroke="#c9a05a" stroke-width="2"/><text x="90" y="50" text-anchor="middle" fill="#25231f" font-size="9" font-weight="800">Copied course</text><text x="90" y="66" text-anchor="middle" fill="#716d63" font-size="8" font-weight="700">LTI tools</text><rect x="180" y="28" width="100" height="52" rx="10" fill="#e5f0ec" stroke="#2f6f5e" stroke-width="2"/><text x="230" y="50" text-anchor="middle" fill="#25231f" font-size="9" font-weight="800">Headless sync</text><text x="230" y="66" text-anchor="middle" fill="#716d63" font-size="8" font-weight="700">catalog job</text><text x="160" y="104" text-anchor="middle" fill="#716d63" font-size="9" font-weight="700">March 2026 Context Copy Notice</text></svg>`,
 
-      archiveDelete: `<svg viewBox="0 0 320 120" ${svgStyle}><rect x="40" y="34" width="100" height="44" rx="10" fill="#fff" stroke="#ded7c9" stroke-width="2"/><text x="90" y="56" text-anchor="middle" fill="#716d63" font-size="10" font-weight="800">deleted</text><text x="90" y="70" text-anchor="middle" fill="#716d63" font-size="8" font-weight="700">old API filter</text><line x1="142" y1="56" x2="178" y2="56" stroke="#2f6f5e" stroke-width="2"/><polygon points="178,56 170,52 170,60" fill="#2f6f5e"/><rect x="180" y="34" width="100" height="44" rx="10" fill="#e5f0ec" stroke="#2f6f5e" stroke-width="2"/><text x="230" y="56" text-anchor="middle" fill="#25231f" font-size="10" font-weight="800">archived</text><text x="230" y="70" text-anchor="middle" fill="#716d63" font-size="8" font-weight="700">March 2026 UI</text><text x="160" y="104" text-anchor="middle" fill="#716d63" font-size="9" font-weight="700">Does our sync code need to change?</text></svg>`,
+      archiveDelete: `<svg viewBox="0 0 320 120" ${svgStyle}><rect x="32" y="34" width="112" height="44" rx="10" fill="#fff" stroke="#ded7c9" stroke-width="2"/><text x="88" y="56" text-anchor="middle" fill="#716d63" font-size="9" font-weight="800">IsActive?</text><text x="88" y="70" text-anchor="middle" fill="#716d63" font-size="8" font-weight="700">API signal</text><line x1="146" y1="56" x2="174" y2="56" stroke="#2f6f5e" stroke-width="2"/><polygon points="174,56 166,52 166,60" fill="#2f6f5e"/><rect x="176" y="34" width="112" height="44" rx="10" fill="#e5f0ec" stroke="#2f6f5e" stroke-width="2"/><text x="232" y="56" text-anchor="middle" fill="#25231f" font-size="9" font-weight="800">Status?</text><text x="232" y="70" text-anchor="middle" fill="#716d63" font-size="8" font-weight="700">Data Hub?</text><text x="160" y="104" text-anchor="middle" fill="#716d63" font-size="9" font-weight="700">Which signal removes retired courses?</text></svg>`,
 
       secondaryManager: `<svg viewBox="0 0 320 120" ${svgStyle}><rect x="50" y="24" width="90" height="52" rx="10" fill="#e5f0ec" stroke="#2f6f5e" stroke-width="2"/><text x="95" y="46" text-anchor="middle" fill="#25231f" font-size="9" font-weight="800">whoami</text><text x="95" y="62" text-anchor="middle" fill="#716d63" font-size="8" font-weight="700">user endpoint</text><line x1="142" y1="50" x2="178" y2="50" stroke="#2f6f5e" stroke-width="1.5"/><polygon points="178,50 170,46 170,54" fill="#2f6f5e"/><rect x="180" y="24" width="90" height="52" rx="10" fill="#f3ead8" stroke="#c9a05a" stroke-width="2"/><text x="225" y="46" text-anchor="middle" fill="#25231f" font-size="8" font-weight="800">Secondary_</text><text x="225" y="60" text-anchor="middle" fill="#25231f" font-size="8" font-weight="800">Manager</text><text x="160" y="104" text-anchor="middle" fill="#716d63" font-size="9" font-weight="700">Custom attribute in default payload?</text></svg>`,
 
@@ -1725,53 +1736,53 @@
     };
 
     const laceWhyByTerm = {
-      "API": "The Hub only works if it can safely read Brightspace data from the backend. I need D2L to confirm this is the supported path before I build around it.",
-      "Endpoint": "If I build around the wrong routes, I will be cleaning this up later when I should be launching. I need the right endpoint families now.",
-      "Resource": "Not every Brightspace object belongs in Supabase. I need to know what LACE should mirror and what should stay only in Brightspace.",
-      "Payload": "Catalog cards only work if the API gives us the fields we actually need: title, dates, visibility, and content outline.",
-      "Read vs. Write": "Phase 1 should stay read-only unless D2L gives us a clear reason not to. Write access adds security and audit risk I do not want to invite early.",
-      "Org Unit": "This decides whether the setup is manageable or whether every new course becomes another tiny admin chore forever.",
-      "Service User Enrollment Inheritance": "This is the big one. If access does not flow down, the catalog can silently miss new courses unless we build another maintenance process.",
-      "Course Offering": "Learners need the real course they can take, not the template behind it. If we sync the wrong object, the cards and links get weird fast.",
-      "learning_items": "This table is the Hub’s working copy of the catalog. I need to know what belongs here and what should stay safely in Brightspace.",
-      "Content Table of Contents": "The Hub should not depend on me hand-copying module structure like it is 2009. It needs the official Brightspace outline.",
-      "Valence API Version": "If I always call latest, a Brightspace update can break the Hub mid-build. I want to pin versions so January launch does not depend on luck.",
-      "Authentication": "Production cannot run on my personal admin login. I need to know what auth model actually works for learners and for background sync.",
-      "Dual Auth Model": "Learner dashboard calls and catalog sync are not the same job. If I use the wrong token type, things fail in production in confusing ways.",
-      "OAuth 2.0": "Brightspace does not hand out simple API keys. OAuth is how the Hub gets legitimate access without cutting corners.",
-      "Client Credentials": "Catalog sync runs while nobody is logged in. I need the grant type that actually works for scheduled background jobs.",
-      "JWKS / Headless OAuth": "My local OAuth test proved the idea. Production nightly sync needs JWKS, or the catalog job has nothing to authenticate with.",
-      "JWT Client Assertion": "One wrong field in the assertion and every sync run fails. I need D2L to validate my shape, not another doc dump.",
-      "Service User": "Sync cannot depend on my personal login. A dedicated account survives staffing changes and keeps permissions auditable.",
-      "Least Privilege": "Legal aid training data is sensitive. An over-scoped Service User is a problem I do not want to explain later.",
-      "Scopes": "Too broad is risky, too narrow breaks reads on 6703. I need the smallest scope set that still lets Phase 1 work.",
-      "Permissions": "Missing scopes is only half the story. If the Service User role or enrollment is wrong, 6703 still fails for no obvious reason.",
-      "Source of Truth": "This is how we avoid accidentally treating Supabase like the official training record. Brightspace owns completions, certificates, and anything audit-sensitive.",
-      "Sync Strategy": "Without a real sync plan, the Hub slowly becomes a pretty catalog with stale data. That is exactly the kind of mess I am trying to avoid.",
-      "Catalog Discovery Source": "This is a fork in the road. Live API vs Data Hub decides how painful statewide catalog sync becomes.",
-      "Data Hub": "If bulk exports are the right tool, I would rather know now than discover it after building the wrong polling job.",
-      "BDS": "Some reporting pulls are too big for page-by-page API calls. I need to know when exports are the sane option.",
-      "Real-time vs. Batch": "Learners do not need manager-report freshness on search cards. Wrong cadence means wasted API calls or stale UX.",
-      "Webhook": "If Brightspace can push changes, the Hub stays fresher without me polling until we hit rate limits.",
-      "Polling": "This is probably Phase 1. The interval decides how fresh the catalog feels vs how hard we push rate limits.",
-      "API Rate Logging": "A statewide catalog sync could hit production limits. I need real thresholds so I size jobs correctly.",
-      "Pagination": "If paging is wrong, sync can time out or quietly skip courses. That is a terrible way to find out.",
-      "Incremental Sync": "Re-downloading the whole catalog every hour does not scale. I need changed-since filtering or the job becomes unsustainable.",
-      "Stable ID": "Titles change. People rename things. Stable IDs are what keep links, progress, and catalog records from falling apart.",
-      "Mapping Table": "Every Hub card needs a reliable link back to Brightspace. Without that, deep links and resume fall apart.",
-      "Deep Link": "Architecture B only works if learners land on official Brightspace topic URLs. If we guess wrong, compliance visits may not record.",
-      "SSO Transition": "Learners should not sign in twice. If SSO is messy, the Hub feels broken on day one.",
-      "Context Copy Notice": "If this works for headless sync, catalog jobs could discover service URLs before they run. That could save real time.",
-      "Archive vs Delete": "March 2026 renamed Delete to Archive in the UI. If our sync still filters on deleted, learning_items can get stale or wrong fast.",
-      "Versioning": "January launch needs stable API versions. Surprise deprecations mid-build are the kind of surprise I am trying to avoid.",
-      "Secondary Manager Attribute": "Manager routing may depend on Secondary_Manager showing up in payloads. Worth confirming now even if dashboard reads wait for Phase 3.",
-      "LTI": "I do not need an LTI rabbit hole unless embedded tools are actually required. API plus deep links may be the whole story.",
-      "Idempotency": "When enrollment automation comes, retries should not double-enroll advocates. That creates trust problems fast.",
-      "Auditability": "Legal aid needs a clear record of who changed enrollments. Service User writes have to show up in Brightspace audit logs.",
-      "Sandbox OAuth Permissions": "Sometimes even super admins cannot create OAuth apps. I need to know who can set up sandbox before I waste a week.",
-      "Production-safe": "What works locally in a spike is not always what D2L will support for real learners. I need the supported production path.",
-      "Supported Pattern": "I would rather hear the supported pattern now than build a clever workaround D2L will not stand behind.",
-      "Phase 1 Architecture": "The whole point of this call is leaving with a concrete plan for auth, sync, scopes, and versions for 6703 to learning_items."
+      "API": "This decides whether Learning Hub has a supported backend path into Brightspace. If we guess, the catalog can launch on an integration D2L will not support.",
+      "Endpoint": "This decides the minimum Phase 1 route list. Wrong endpoints mean rework later, missing fields, or a sync job that cannot explain its own failures.",
+      "Resource": "This decides what LACE mirrors and what stays only in Brightspace. If we mirror the wrong object, Supabase becomes stale instead of helpful.",
+      "Payload": "This decides whether catalog cards have enough official data to be useful. Missing fields mean hand-maintained metadata or learner cards that drift from Brightspace.",
+      "Read vs. Write": "This decides Phase 1 risk. Read-only keeps launch safer; write access adds audit, permission, and support obligations before we need them.",
+      "Org Unit": "This decides whether access is maintainable. If parent enrollment does not carry down, every new course needs another process or it may never appear in the Hub.",
+      "Service User Enrollment Inheritance": "This decides whether the catalog can grow without manual cleanup. If access does not flow down, new courses can silently disappear from Learning Hub.",
+      "Course Offering": "This decides what learners actually launch. If we sync templates instead of live offerings, links, status, and compliance context can be wrong.",
+      "learning_items": "This decides the boundary between cache and system of record. If too much lives here, Supabase starts pretending to own Brightspace data.",
+      "Content Table of Contents": "This decides whether the Hub can show official modules and resume targets. If we hand-copy outlines, they will drift the first time a course changes.",
+      "Valence API Version": "This decides the contract production depends on. We need MLRI's supported LP/LE versions via /versions/check so January launch is not pinned to a guess.",
+      "Authentication": "This decides who the API is acting as. If production depends on a personal admin login, staffing changes or token expiry can break sync.",
+      "Dual Auth Model": "This decides which routes use learner context and which use Service User sync. Mixing them can leak permissions or make dashboards fail unpredictably.",
+      "OAuth 2.0": "This decides legitimate access. Using the supported OAuth path keeps credentials auditable and avoids building around shortcuts D2L will not stand behind.",
+      "Client Credentials": "This decides how scheduled sync runs without a human present. If the grant type is wrong, nightly catalog jobs cannot authenticate reliably.",
+      "JWKS / Headless OAuth": "This decides whether Brightspace can verify the sync job. If JWKS registration or key rotation is wrong, every background run can fail at token time.",
+      "JWT Client Assertion": "This decides whether token requests succeed. One wrong claim or clock value can stop the whole sync, so a validated sample matters.",
+      "Service User": "This decides operational continuity and auditability. A dedicated account survives staffing changes and makes sync activity easier to trace.",
+      "Least Privilege": "This decides how much damage a compromised integration could do. Overbroad access is a legal aid data risk and a hard thing to justify later.",
+      "Scopes": "This decides which API actions the token can call. Too broad is risky, too narrow breaks Phase 1, so we need the smallest working read set.",
+      "Permissions": "This decides whether a valid token can actually see 6703. Scope, role permission, and Org Unit enrollment must all line up or failures become guesswork.",
+      "Source of Truth": "This decides who owns official records. Brightspace must own completions and compliance data so Learning Hub does not become an unofficial record system.",
+      "Sync Strategy": "This decides how the systems stay trustworthy over time. Without it, the Hub becomes a nice interface with stale catalog and dashboard data.",
+      "Catalog Discovery Source": "This decides the data pipeline for learning_items. Live API vs Data Hub/BDS changes freshness, rate-limit pressure, and field availability.",
+      "Data Hub": "This decides whether bulk exports are the better source for large pulls. If we use live API for reporting-scale work, sync can be slower and noisier than needed.",
+      "BDS": "This decides which fields are practical at scale. If BDS lacks catalog or timestamp fields, it cannot be the only source for learner-facing cards.",
+      "Real-time vs. Batch": "This decides user trust and API load. Learner launch and resume may need fresher data, while reporting can tolerate scheduled updates.",
+      "Webhook": "This decides whether Brightspace can push changes instead of making us poll. If not, polling cadence and rate limits become Phase 1 design constraints.",
+      "Polling": "This decides the freshness/cost tradeoff. Poll too slowly and the catalog is stale; poll too aggressively and we risk rate-limit or support issues.",
+      "API Rate Logging": "This decides how we size jobs for production. Without real thresholds, statewide sync can work in testing and then fail under real volume.",
+      "Pagination": "This decides whether bulk reads are complete. Bad paging can quietly skip records, which is worse than an obvious sync failure.",
+      "Incremental Sync": "This decides whether sync scales. Full refreshes may work for 6703 but become wasteful or fragile as the catalog grows.",
+      "Stable ID": "This decides whether mappings survive renames. Titles, emails, and course names change; stable IDs keep links and progress attached to the right records.",
+      "Mapping Table": "This decides how every Hub card ties back to Brightspace. Without reliable mapping, deep links, resume, and support diagnostics fall apart.",
+      "Deep Link": "This decides whether learners land in official Brightspace activity. If URLs are unstable or local-only, compliance visits may not record.",
+      "SSO Transition": "This decides launch friction. If learners have to sign in twice or sessions split, the Hub will feel broken even if the data is correct.",
+      "Context Copy Notice": "This decides whether the topic belongs in Phase 1. If it is LTI-only, we should skip it and keep the meeting on API/Data Hub sync.",
+      "Archive vs Delete": "This decides how retired offerings leave the catalog. The sync needs the supported signal, such as IsActive, Status, Deleted, Data Hub fields, or another D2L source.",
+      "Versioning": "This decides production stability. We need supported tenant versions and a pinning policy before the Hub depends on routes for January launch.",
+      "Secondary Manager Attribute": "This decides future manager routing. If Secondary_Manager is not in standard payloads, dashboard planning needs another source or scope.",
+      "LTI": "This decides whether we are solving the right integration problem. If Phase 1 is catalog sync and deep links, an LTI detour burns meeting time.",
+      "Idempotency": "This decides whether future retries are safe. Enrollment automation should not double-enroll people or create confusing support records.",
+      "Auditability": "This decides whether we can explain changes later. Service User activity needs to appear in Brightspace logs and LACE should know what sync logs to retain.",
+      "Sandbox OAuth Permissions": "This decides who can unblock implementation. If only D2L can create or approve the app, we need that owner before the meeting ends.",
+      "Production-safe": "This decides whether the pattern survives real users. A sandbox trick is not enough for January launch, support, or compliance confidence.",
+      "Supported Pattern": "This decides whether D2L will stand behind the architecture. The goal is a repeatable production pattern, not a clever workaround.",
+      "Phase 1 Architecture": "This decides the first build target: auth, endpoint/scope list, version policy, sync source, retired-course handling, and launch URL strategy."
     };
 
     const meetingFlowOrder = [
@@ -1885,9 +1896,9 @@
         term: "Valence API Version",
         category: "data",
         diagram: "valence",
-        plain: "Brightspace puts the API version in the URL path, like lp/1.51 or le/1.47 — you choose whether to pin a version or call latest.",
-        meeting: "Our spike uses LP 1.49 and LE 1.82. For production stability, do you recommend pinning to specific versions (e.g. LP 1.51, LE 1.47) rather than always calling latest, to prevent breakage during LMS updates?",
-        example: "Ask which versions are supported on MLRI's instance today and how deprecations are communicated before January launch."
+        plain: "Brightspace puts the API version in the URL path, like lp/1.49 or le/1.82 — production should know exactly what the tenant supports.",
+        meeting: "Which LP/LE versions does MLRI's tenant support today via /versions/check, and should production pin to the oldest fully supported contract or the latest supported contract?",
+        example: "Ask for the supported version response, the pinning recommendation, and how deprecations are communicated before January launch."
       },
       {
         term: "Authentication",
@@ -1966,8 +1977,8 @@
         category: "auth",
         diagram: "permissions",
         plain: "What the Brightspace user or role is allowed to do inside Brightspace.",
-        meeting: "Can you help me understand the relationship between OAuth scopes and the Service User's Brightspace role permissions?",
-        example: "Great follow-up: If something fails on 6703, how do we tell whether it is a missing scope versus missing Org Unit enrollment?"
+        meeting: "Can you help me validate the auth triangle: OAuth scopes, Service User role permissions, and Org Unit enrollment/visibility?",
+        example: "Great follow-up: If something fails on 6703, how do we tell whether it is a missing scope, missing role permission, or missing Org Unit enrollment?"
       },
       {
         term: "Source of Truth",
@@ -1990,16 +2001,16 @@
         category: "lace",
         diagram: "catalogDiscovery",
         plain: "The strategic choice of where LACE Learning Hub gets catalog data — live API calls or bulk Data Hub/BDS exports.",
-        meeting: "This is our most important architecture question: for a custom high-speed hub syncing into learning_items, should catalog discovery rely on live API calls or Brightspace Data Sets via Data Hub?",
-        example: "Docs explain how to use the API for metadata — a specialist can tell you which pattern is more stable at scale."
+        meeting: "For learning_items, should Phase 1 use the live API, Data Hub/BDS, or a hybrid, and which source has the fields we need for cards, outlines, enrollments, completions, and timestamps?",
+        example: "Docs explain each tool separately — the specialist can tell us which pattern is stable for a learner-facing catalog."
       },
       {
         term: "Data Hub",
         category: "sync",
         diagram: "dataHub",
         plain: "Brightspace's reporting/export data source, better for bulk analytics than many small live API calls.",
-        meeting: "We assume live API for learner-facing operational reads and Data Hub/BDS for bulk catalog or reporting pulls — but we want D2L's recommendation for learning_items sync specifically.",
-        example: "Pair with Catalog Discovery Source. Ask which fields are only practical through BDS, not the live API."
+        meeting: "We assume live API for learner-facing operational reads and Data Hub/BDS for bulk catalog or reporting pulls — but we need D2L's recommendation for learning_items sync specifically.",
+        example: "Pair with Catalog Discovery Source. Ask whether BDS includes catalog card fields, content outlines, enrollments, completions, and updated timestamps."
       },
       {
         term: "BDS",
@@ -2079,7 +2090,7 @@
         diagram: "deepLink",
         plain: "A link that takes the learner directly to a specific course or activity.",
         meeting: "Can Learning Hub deep link learners directly into the correct Brightspace course or topic URL so activity stays visible for compliance?",
-        example: "Ask: Are course and topic URLs stable enough to store, or should we generate them from Brightspace identifiers at runtime?"
+        example: "Ask: Are course and topic URLs stable enough to store in Supabase, or should we generate official Brightspace links from identifiers at runtime?"
       },
       {
         term: "SSO Transition",
@@ -2093,17 +2104,17 @@
         term: "Context Copy Notice",
         category: "lace",
         diagram: "contextCopy",
-        plain: "A March 2026 feature for proactive discovery — tools can receive service endpoint details before a tool is launched, not only after copy.",
-        meeting: "Can LACE leverage Context Copy Notice for headless catalog sync — discovering service endpoints ahead of sync jobs — or is it limited to LTI 1.3 tool launch workflows?",
-        example: "If yes, the Hub could discover endpoints before harvesting metadata, which could speed up catalog sync. If LTI-only, we skip it for Phase 1."
+        plain: "A possible LTI-related discovery feature — useful only if D2L says it applies outside launch workflows.",
+        meeting: "If relevant, is Context Copy Notice LTI-only, or can it help server-side discovery? If it is LTI-only, we will leave it out of Phase 1.",
+        example: "Use this as a quick clarification only. Do not let it steal time from auth, scopes, versions, and sync source."
       },
       {
         term: "Archive vs Delete",
         category: "data",
         diagram: "archiveDelete",
-        plain: "March 2026 officially replaced “Delete” with “Archive” in the Brightspace UI — API status filters may need the same vocabulary shift.",
-        meeting: "The UI now says Archive, not Delete. Do our API status filters for courses require transitioning from <code>deleted</code> to <code>archived</code> in sync logic so retired offerings drop out of <code>learning_items</code> correctly?",
-        example: "Practical code question — wrong filters leave ghost courses in the Hub catalog or hide live offerings after the terminology change."
+        plain: "The meeting question is not the UI label — it is which API or dataset field reliably means a course should leave the Hub catalog.",
+        meeting: "For API sync, should retired offerings be detected through <code>IsActive</code>, Course Updater <code>Status</code>, <code>Deleted</code>, Data Hub fields, archive UI terminology, or another D2L-supported signal?",
+        example: "Practical code question — wrong retirement logic leaves ghost courses in the Hub catalog or hides live offerings."
       },
       {
         term: "Secondary Manager Attribute",
@@ -2134,24 +2145,24 @@
         category: "data",
         diagram: "audit",
         plain: "A clear record of what changed, when, and by what user or system.",
-        meeting: "For any future write operations, especially enrollment changes, we need to understand auditability.",
-        example: "Question: If the Service User makes changes through the API, are those actions visible in Brightspace audit logs?"
+        meeting: "Where does Service User API activity appear in Brightspace, and what sync logs should LACE retain for support and compliance?",
+        example: "Even for read-heavy Phase 1, ask what token, sync, and error logs we should keep so future support is not guesswork."
       },
       {
         term: "Sandbox OAuth Permissions",
         category: "lace",
         diagram: "sandbox",
         plain: "Who is actually allowed to register OAuth apps and Service Users in sandbox vs production — sometimes locked even for super admins.",
-        meeting: "Who has permission to create the OAuth 2.0 app in our Sandbox vs Production? Is that sometimes locked during implementation even for Super Admins?",
-        example: "Practical blocker question — avoids discovering at the end of the meeting that D2L must configure the app for you."
+        meeting: "Who owns OAuth app creation, Service User setup, JWKS registration, production approvals, and key rotation in Sandbox vs Production?",
+        example: "Practical blocker question — avoids discovering after the meeting that D2L or a specific admin must configure the app."
       },
       {
         term: "Versioning",
         category: "data",
         diagram: "versioning",
         plain: "APIs change over time, so you need to know what version you are building against.",
-        meeting: "Should we pin to specific LP/LE versions in production (e.g. LP 1.51, LE 1.47) rather than calling latest — and how does D2L communicate deprecations before they break our routes?",
-        example: "Pair with Valence API Version card. Pinning is the stability play; latest is fine for spikes only."
+        meeting: "Which LP/LE versions does MLRI's tenant support today, should production pin to the oldest fully supported contract or latest supported contract, and how does D2L communicate deprecations?",
+        example: "Pair with Valence API Version card. The goal is a tenant-validated version policy, not a guessed number."
       },
       {
         term: "Production-safe",
