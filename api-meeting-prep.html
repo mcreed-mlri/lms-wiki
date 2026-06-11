@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LACE API Meeting Prep</title>
+  <style>
+    :root {
+      --bg: #f7f4ed;
+      --card: #ffffff;
+      --ink: #25231f;
+      --muted: #716d63;
+      --accent: #2f6f5e;
+      --accent-soft: #e5f0ec;
+      --gold-soft: #f3ead8;
+      --border: #ded7c9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Lato, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(980px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    nav a,
+    .jump a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    header {
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+
+    .lede {
+      max-width: 760px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 24px;
+    }
+
+    section {
+      margin-top: 18px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .priority {
+      background: linear-gradient(145deg, var(--accent-soft), rgba(243, 234, 216, 0.45));
+      border-color: rgba(47, 111, 94, 0.22);
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 21px;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    ul,
+    ol {
+      margin: 0;
+      padding-left: 21px;
+    }
+
+    li + li {
+      margin-top: 9px;
+    }
+
+    strong {
+      color: var(--ink);
+    }
+
+    code {
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 0.92em;
+      background: var(--gold-soft);
+      padding: 1px 5px;
+      border-radius: 5px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .mini {
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .mini h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      color: var(--accent);
+    }
+
+    .mini p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    @media (max-width: 720px) {
+      main {
+        width: min(100% - 24px, 980px);
+        padding-top: 18px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Wiki navigation">
+      <a href="api-flashcards.html">← Flashcards</a>
+      <a href="index.html">Wiki home</a>
+    </nav>
+
+    <header>
+      <div class="eyebrow">Brightspace API call</div>
+      <h1>Meeting Prep</h1>
+      <p class="lede">Use this page during the call. The goal is not to prove every technical detail. The goal is to leave with the supported production pattern.</p>
+    </header>
+
+    <div class="jump" aria-label="Page sections">
+      <a href="#must-ask">Must ask</a>
+      <a href="#call-flow">Call flow</a>
+      <a href="#leave-with">Leave with</a>
+      <a href="#plain-close">Closing line</a>
+    </div>
+
+    <section class="priority" id="must-ask">
+      <h2>Must Ask</h2>
+      <p>These are the questions that decide the architecture.</p>
+      <ol>
+        <li><strong>Auth triangle:</strong> How do OAuth scopes, Service User role permissions, and Org Unit enrollment work together?</li>
+        <li><strong>Org Unit inheritance:</strong> If the Service User has access at Massachusetts, can it see current and future course offerings below it?</li>
+        <li><strong>Catalog source:</strong> Should <code>learning_items</code> use live API, Data Hub/BDS, or both?</li>
+        <li><strong>Versioning:</strong> Which LP/LE versions does MLRI's tenant support through <code>/versions/check</code>, and which should production pin to?</li>
+        <li><strong>Retired courses:</strong> Which supported signal removes old courses from the Hub catalog: <code>IsActive</code>, <code>Status</code>, <code>Deleted</code>, Data Hub fields, or something else?</li>
+        <li><strong>Launch URLs:</strong> Should Learning Hub store Brightspace URLs, or generate them from IDs at runtime?</li>
+        <li><strong>Ownership:</strong> Who creates OAuth apps, Service Users, JWKS setup, production approvals, and key rotation?</li>
+        <li><strong>Audit/logging:</strong> Where does Service User activity appear, and what logs should LACE keep?</li>
+      </ol>
+    </section>
+
+    <section id="call-flow">
+      <h2>Call Flow</h2>
+      <div class="grid">
+        <div class="mini">
+          <h3>1. Context</h3>
+          <p>Learning Hub is a learner-facing front door. Brightspace remains the LMS and official record.</p>
+        </div>
+        <div class="mini">
+          <h3>2. What works</h3>
+          <p>Local OAuth spike works. We can read metadata/content for course offering 6703.</p>
+        </div>
+        <div class="mini">
+          <h3>3. Main decision</h3>
+          <p>Confirm production auth, access, scopes, versions, and sync source before building more.</p>
+        </div>
+        <div class="mini">
+          <h3>4. Keep focused</h3>
+          <p>Do not let LTI, vanity URL, or reporting details take over unless D2L says they affect Phase 1.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="leave-with">
+      <h2>Leave With</h2>
+      <ul>
+        <li>Recommended Phase 1 architecture: auth, scopes, role, Org Unit access, and sync source.</li>
+        <li>Minimum endpoint list for course metadata, content outline, enrollments, completions, users, and version checks.</li>
+        <li>How to diagnose a failed API call: scope problem, role problem, or Org Unit visibility problem.</li>
+        <li>Whether Data Hub/BDS has the fields needed for catalog cards, module outlines, completions, and timestamps.</li>
+        <li>Who owns sandbox and production setup steps.</li>
+      </ul>
+    </section>
+
+    <section id="plain-close">
+      <h2>Closing Line</h2>
+      <p><strong>Before we end, I want to make sure I understand the recommended production path:</strong> what stays in Brightspace, what LACE can safely cache in Supabase, what auth model we should use, how Service User access inherits, and how we detect retired courses. I’m trying to avoid building something that works in a sandbox but breaks when this becomes real.</p>
+    </section>
+  </main>
+</body>
+</html>

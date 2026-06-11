@@ -715,7 +715,83 @@
     }
 
     .extras-panel {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .prep-jump {
+      order: 2;
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .prep-jump a {
       display: block;
+      min-height: 86px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .prep-jump strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    .prep-jump span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .deck-tools {
+      order: 1;
+    }
+
+    .meeting-essentials {
+      order: 3;
+    }
+
+    .reference-hub {
+      order: 4;
+    }
+
+    .meeting-essentials summary,
+    .reference-hub > summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      list-style: none;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .meeting-essentials summary::-webkit-details-marker,
+    .reference-hub > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .meeting-essentials summary small,
+    .reference-hub > summary small {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .meeting-essentials-body,
+    .reference-hub-body {
+      margin-top: 14px;
     }
 
     body.study-focus .extras-panel,
@@ -1080,6 +1156,10 @@
         display: none;
       }
 
+      .prep-jump {
+        grid-template-columns: 1fr;
+      }
+
       .prep-grid {
         grid-template-columns: 1fr;
       }
@@ -1118,6 +1198,7 @@
   <main class="app">
     <nav class="top-nav" aria-label="Wiki navigation">
       <a href="index.html">← LACE Platform Wiki</a>
+      <a href="api-meeting-prep.html">Meeting prep</a>
     </nav>
     <header>
       <div>
@@ -1177,7 +1258,27 @@
     </div>
 
     <div class="extras-panel">
-    <section class="meeting-essentials" aria-label="Questions I cannot leave without answering">
+    <section class="prep-jump" aria-label="Meeting prep shortcuts">
+      <a href="api-meeting-prep.html">
+        <strong>Meeting prep page</strong>
+        <span>Clean checklist, call flow, and leave-with answers.</span>
+      </a>
+      <a href="#meetingChecklist">
+        <strong>Quick checklist</strong>
+        <span>Collapsed here so it does not crowd the cards.</span>
+      </a>
+      <a href="#deepReference">
+        <strong>Deep reference</strong>
+        <span>Glossary, FAQ, and architecture map only when needed.</span>
+      </a>
+    </section>
+
+    <details class="meeting-essentials" id="meetingChecklist" aria-label="Questions I cannot leave without answering">
+      <summary>
+        <span>Meeting checklist</span>
+        <small>Open only when you need the must-ask questions</small>
+      </summary>
+      <div class="meeting-essentials-body">
       <h3>Please do not let me forget these</h3>
       <p class="essentials-note">These are the questions that decide whether Learning Hub becomes a supported front door on top of Brightspace, or a fragile catalog that drifts out of sync.</p>
       <ul class="essentials-list checklist">
@@ -1194,7 +1295,8 @@
         <summary>If my brain blanks at the end, say this</summary>
         <p><strong>Close with:</strong> “Before we end, I want to make sure I understand the recommended production path: what stays in Brightspace, what LACE can safely cache in Supabase, what auth model we should use, how Service User access inherits, and how we detect retired courses. I’m trying to avoid building something that works in a sandbox but breaks the second this becomes real.”</p>
       </details>
-    </section>
+      </div>
+    </details>
 
     <div class="deck-tools" aria-label="Deck filters">
       <span>Filter:</span>
@@ -1208,7 +1310,12 @@
       <button class="flow-btn active" id="languageMode" type="button" aria-pressed="true">Simple wording ✓</button>
     </div>
 
-    <div class="reference-hub" aria-label="Meeting reference materials">
+    <details class="reference-hub" id="deepReference" aria-label="Meeting reference materials">
+      <summary>
+        <span>Deeper reference</span>
+        <small>Playbook, glossary, FAQ, architecture map</small>
+      </summary>
+      <div class="reference-hub-body">
       <p class="reference-kicker">Deeper reference</p>
 
       <div class="reference-tabs" role="tablist" aria-label="Reference sections">
@@ -1631,7 +1738,8 @@
       </div>
     </section>
       </div><!-- .reference-panels -->
-    </div><!-- .reference-hub -->
+      </div><!-- .reference-hub-body -->
+    </details><!-- .reference-hub -->
     </div><!-- .extras-panel -->
   </main>
 
