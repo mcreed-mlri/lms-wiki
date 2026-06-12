@@ -46,6 +46,7 @@
     <a href="#marlie-phase-0">Phase 0: Wrapper</a>
     <a href="#brightspace-native-fallback">Brightspace Native Fallback</a>
     <a href="#lace-hub-dashboard">LACE Learning Hub</a>
+    <a href="#brightspace-manager">Brightspace Manager</a>
     <a href="#marlie-phase-1">Phase 1: API</a>
     <a href="#brightspace-admin-mcp">Brightspace Admin MCP</a>
     <a href="#marlie-phase-2">Phase 2: Data</a>
@@ -232,6 +233,7 @@
           <tr><td><strong>Brightspace</strong></td><td>Courses, enrollments, completions, grades, access, email triggers.</td><td>LMS records.</td></tr>
           <tr><td><strong>Custom HTML wrapper</strong></td><td>LACE learner experience inside a Brightspace Course Offering.</td><td>Course files and <code>course-config.js</code>.</td></tr>
           <tr><td><strong>LACE Learning Hub</strong></td><td>Frontend dashboards, course discovery/resume experience, and live integration diagnostics.</td><td>API response per role/view.</td></tr>
+          <tr><td><strong>Brightspace Manager</strong></td><td>Admin command center and course builder for managing courses, sync, files, integrity checks, and publishing workflows.</td><td>Operational actions against Brightspace plus LACE-owned draft/course metadata.</td></tr>
           <tr><td><strong>Supabase</strong></td><td>Search, engagement, feedback, synced LMS data, and Learning Hub-owned records in the <code>learning_items</code> schema.</td><td>Custom data layer.</td></tr>
         </tbody>
       </table>
@@ -407,6 +409,37 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
       <li><input type="checkbox" disabled><span class="label">Define manager access rules</span></li>
       <li><input type="checkbox" disabled><span class="label">Decide how learner update notices appear in the Learning Hub</span></li>
       <li><input type="checkbox" disabled><span class="label">Confirm which reports stakeholders need first</span></li>
+    </ul>
+  </section>
+
+  <section class="guide-section" id="brightspace-manager">
+    <h2>Brightspace Manager <span class="status in-progress">In Progress</span></h2>
+
+    <div class="tip">
+      <strong>Product role:</strong> Brightspace Manager is the command center for the platform build. It handles administrative operations, course building, sync checks, file management, and publishing workflows so the learner-facing LACE Learning Hub can stay simpler.
+    </div>
+
+    <p>Think of Brightspace Manager as the staff/admin workbench behind the Learning Hub. The Learning Hub remains the front door for learners, managers, and program views; Brightspace Manager is where LACE builds, audits, and maintains the courses and integration data that power that experience.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Area</th><th>What Brightspace Manager Owns</th><th>Why It Simplifies Learning Hub Admin</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Command center</strong></td><td>Connection health, sync status, API diagnostics, integrity checks, and admin alerts.</td><td>Keeps operational troubleshooting out of the learner/admin dashboard surface.</td></tr>
+          <tr><td><strong>Course builder</strong></td><td>Draft courses, module/topic structure, wrapper previews, exports, and future publish-to-Brightspace flows.</td><td>Gives course creation a dedicated workflow instead of mixing authoring controls into the Hub.</td></tr>
+          <tr><td><strong>Course inventory</strong></td><td>Brightspace course offerings, files, content outline, launch URLs, and Supabase <code>learning_items</code> mapping.</td><td>Creates one place to verify that Brightspace, Supabase, and the Hub are aligned.</td></tr>
+          <tr><td><strong>Admin boundaries</strong></td><td>Least-privilege roles, write safeguards, audit trail, dry-run sync, and confirmation steps for destructive or publishing actions.</td><td>Lets the Hub expose only the simple admin views most staff need.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Boundary With Learning Hub</h3>
+    <ul>
+      <li><strong>Learning Hub:</strong> learner discovery, resume, progress display, manager/program dashboards, notices, and team-facing admin summaries.</li>
+      <li><strong>Brightspace Manager:</strong> course authoring, Brightspace operations, sync/write controls, file inspection, draft-to-export workflows, and technical admin checks.</li>
+      <li><strong>Brightspace:</strong> official LMS record for enrollments, completion, grades, access, certificates, and hosted course content.</li>
     </ul>
   </section>
 

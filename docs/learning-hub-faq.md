@@ -10,10 +10,10 @@
 | 1. Big Picture | What LACE and the Learning Hub are, how they relate to Brightspace, what works today, when it launches |
 | 2. Users, Onboarding, and Growth | User types, how people are added, profile attributes, how the platform grows |
 | 3. Access, Permissions, and Compliance | Who sees what, UPL, security, certificates, CLE, privacy, data storage |
-| 4. Course Structure and Content Management | How courses are built and organized, completion, where content lives, old versions |
+| 4. Course Structure and Content Management | How courses are built and organized, how non-coders can create courses, completion, where content lives, old versions |
 | 5. Law Changes and Evergreen Courses | Minor vs. major updates, learner notices, what happens to past completions |
 | 6. Data, Reporting, and Evaluation | What we can measure, reporting needs, Learning Groups, evaluation |
-| 7. Technical Foundations | Plain definitions: LMS, Brightspace, API, OAuth, SSO, Supabase, the wrapper, the app |
+| 7. Technical Foundations | Plain definitions: LMS, Brightspace, API, OAuth, SSO, Supabase, Brightspace Manager, the wrapper, the app |
 | 8. Learner Experience | Mobile, finding courses, progress, support, login, accessibility, languages |
 
 ## **1\. Big Picture**
@@ -34,6 +34,7 @@
 - **Learning Hub vs. Brightspace**
   - **What happens in the Learning Hub?** The landing page, dashboard, search, filters, recommendations, profile updates, and the clean course entry point.
   - **What happens in Brightspace?** Authentication, course hosting, enrollments, progress, completion, certificates, grades, and official audit records.
+  - **What happens in Brightspace Manager?** Brightspace Manager is the staff/admin command center we are building behind the Learning Hub. It is for course building, draft management, sync checks, file review, publishing workflows, and system monitoring. It lets staff manage the platform without turning the learner-facing Learning Hub into a cluttered admin tool.
   - **Which system is the "source of truth"?** Brightspace, for courses, progress, completion, and certificates. The Learning Hub displays and enriches that information; it does not own it.
 
 - **Where the build stands**
@@ -121,6 +122,9 @@
 
 - **Who builds courses**
   - **Who builds and maintains courses?** One central course owner builds courses as custom HTML files locally, tests them, then uploads them to Brightspace. Custom HTML is the default course model; native Brightspace tools (quizzes, surveys, discussions) are used only when they are simpler than custom HTML for a specific need.
+  - **What if I want to create a course but I do not code?** The goal is for Brightspace Manager to provide a course builder where staff can draft a course from structured fields and reusable templates: course title, description, modules, topics, activities, resources, and completion rules. Behind the scenes, the system can turn that structured draft into the HTML wrapper/course package and Brightspace-ready files. Staff should not need to hand-code HTML for every course.
+  - **Can I still use Brightspace-native course tools?** Yes, when they are the best fit. Quizzes, surveys, discussions, assignments, certificates, release conditions, and Intelligent Agents can still live in Brightspace. Brightspace Manager should help us decide and document which pieces are custom Learning Hub content and which pieces are native Brightspace activities.
+  - **What will a non-code course workflow look like?** Draft in Brightspace Manager, preview the course, check accessibility and completion rules, export or publish to Brightspace, then sync the course metadata into the Learning Hub catalog. Brightspace remains the official LMS record; Brightspace Manager is the easier authoring and operations layer.
   - **How do courses work across states?** As one "course family" (for example, Eviction Defense) with a separate Course Offering for each state, because law, forms, deadlines, and local resources differ. Shared source material is reused, but learner-facing legal guidance stays specific to each state.
 
 - **Completion**
@@ -180,6 +184,8 @@
 
 - **Reporting**
   - **What reports will the Training Unit need?** Enrollment, completion, feedback, course performance, learner demand, and where people get stuck.
+  - **What if I want to monitor Learning Hub data?** Brightspace Manager is where staff should go for the operating dashboard: sync status, catalog health, course inventory, broken links, file checks, draft/publish status, and basic Learning Hub engagement signals. The Learning Hub can show simple staff summaries, but the deeper monitoring view belongs in Brightspace Manager.
+  - **What data should Brightspace Manager show first?** Start with practical operating questions: Did the Brightspace sync run? Which courses are visible in the Learning Hub catalog? Are any launch links broken? Which courses have missing descriptions, dates, completion rules, or audience tags? Are learners searching for topics that do not exist yet?
   - **What reports will managers or partners need?** Managers: team progress, overdue required training, certificates, and deadlines. Partners: participation and completion for their own learners or agreed program groups.
   - **What reports are required for grant, funder, or internal evaluation purposes?** Aggregate participation, completion, reach, topic coverage, and evaluation outcomes such as usefulness and equity of access.
 
@@ -204,6 +210,7 @@
   - **What is SSO?** Single sign-on: one login that carries across the Learning Hub and Brightspace so learners do not have to sign in twice. (Still being set up.)
   - **What is a system of record?** The authoritative source for a type of data. For training records, that source is Brightspace.
   - **What is Supabase (our database)?** The database service behind the custom layer. It supports speed, search, dashboards, and engagement features; it does not replace Brightspace records.
+  - **What is Brightspace Manager?** The LACE-built admin command center and course builder. It gives staff a simpler place to create courses, inspect Brightspace/Learning Hub data, monitor sync health, review files and links, and manage publishing workflows without coding.
   - **What is a custom frontend?** The Learning Hub interface we control, layered over Brightspace.
   - **What is the wrapper?** The shared LACE navigation and design that surrounds course pages, so every course looks and feels consistent inside Brightspace.
   - **What is the installable app (PWA)?** The Learning Hub is a Progressive Web App, so learners can add it to their phone's home screen like an app, with nothing to download from an app store.

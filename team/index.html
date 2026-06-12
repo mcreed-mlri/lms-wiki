@@ -143,6 +143,7 @@
       <div class="nav-accordion-panel">
         <a href="#courses-work">Section overview</a>
         <a href="#who-builds-courses">Who builds courses</a>
+        <a href="#non-code-course-builder">Course creation without code</a>
         <a href="#brightspace-structure">Brightspace structure</a>
         <a href="#course-terms">Course terms</a>
         <a href="#legal-skills-substantive-law">Legal Skills vs. Substantive Law</a>
@@ -158,6 +159,7 @@
         <a href="#official-vs-engagement-data">Official vs. engagement data</a>
         <a href="#reliable-activity-data">Reliable activity data</a>
         <a href="#reporting-needs">Reporting needs</a>
+        <a href="#monitor-learning-hub-data">Monitoring Learning Hub data</a>
         <a href="#feedback-loop">Feedback loop</a>
         <a href="#technical-terms">Technical terms</a>
       </div>
@@ -218,6 +220,7 @@
         <tbody>
           <tr><td><strong>Learning Hub</strong></td><td>Landing page, dashboard, search, filters, recommendations, profile updates, and the clean course entry point.</td><td>The front door and learner experience.</td></tr>
           <tr><td><strong>Brightspace</strong></td><td>Authentication, course hosting, enrollments, progress, completion, certificates, grades, and official audit records.</td><td>The LMS engine and source of truth.</td></tr>
+          <tr><td><strong>Brightspace Manager</strong></td><td>Course builder, draft management, sync checks, file review, publishing workflows, and system monitoring.</td><td>The staff/admin command center behind the Learning Hub.</td></tr>
           <tr><td><strong>Supabase / custom layer</strong></td><td>Fast catalog data, engagement signals, profile preferences, ratings, search behavior, and dashboard support.</td><td>The support layer that lets us build features Brightspace alone does not give us cleanly.</td></tr>
         </tbody>
       </table>
@@ -479,6 +482,27 @@
     <p>One central course owner builds courses as custom HTML files, tests them, then uploads them to Brightspace. Custom HTML is the default course model; native Brightspace tools such as quizzes, surveys, or discussions are used only when they are simpler than custom HTML for a specific need.</p>
     <p>As LACE expands to more states, a course is built as one "course family" (for example, Eviction Defense) with a separate offering for each state, because law, forms, deadlines, and local resources differ. Shared material is reused, but learner-facing legal guidance stays specific to each state.</p>
 
+    <h3 id="non-code-course-builder">What if I want to create a course without coding?</h3>
+    <p>The goal is for Brightspace Manager to give staff a course builder: a place to draft a course from structured fields and reusable templates instead of writing HTML by hand. A staff member should be able to define the course title, description, modules, topics, activities, resources, and completion rules, then preview the result before it is exported or published to Brightspace.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Staff action</th><th>What Brightspace Manager should handle</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Draft the course</strong></td><td>Collect course details, modules, topic text, activities, resource links, and audience rules in a guided form.</td></tr>
+          <tr><td><strong>Preview the course</strong></td><td>Show the course in the LACE wrapper before it goes live.</td></tr>
+          <tr><td><strong>Check readiness</strong></td><td>Flag missing descriptions, broken links, accessibility issues, incomplete completion rules, and missing audience tags.</td></tr>
+          <tr><td><strong>Publish or export</strong></td><td>Prepare Brightspace-ready files and metadata while keeping Brightspace as the official LMS record.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Plain-English version:</strong> the long-term goal is not that every course creator becomes a coder. The goal is that Brightspace Manager turns staff-friendly course drafts into consistent Learning Hub/Brightspace course packages.
+    </div>
+
     <h3 id="brightspace-structure">Brightspace structure</h3>
     <div class="table-wrap">
       <table>
@@ -604,6 +628,23 @@
       </table>
     </div>
 
+    <h3 id="monitor-learning-hub-data">What if I want to monitor Learning Hub data?</h3>
+    <p>Brightspace Manager is the right home for deeper monitoring. The Learning Hub can show simple staff summaries, but the command-center view should live in Brightspace Manager so staff can check the health of courses, sync, files, catalog records, and learner engagement without crowding the learner-facing app.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Question</th><th>Brightspace Manager should help answer</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Is the system healthy?</strong></td><td>Did the Brightspace sync run? Are API and Supabase connections working?</td></tr>
+          <tr><td><strong>Is the catalog accurate?</strong></td><td>Which courses are visible in the Learning Hub, and are titles, descriptions, dates, audiences, and launch links complete?</td></tr>
+          <tr><td><strong>Are courses ready?</strong></td><td>Are there broken links, missing files, incomplete completion rules, or accessibility issues?</td></tr>
+          <tr><td><strong>What are learners doing?</strong></td><td>What are learners searching for, which courses are being opened, where do people get stuck, and what topics are missing?</td></tr>
+        </tbody>
+      </table>
+    </div>
+
     <h3 id="feedback-loop">How do we collect feedback?</h3>
     <p>Feedback can come from course ratings, short surveys, reflection prompts, support requests, search behavior, and completion patterns. The key is to use it as an improvement loop: what learners look for, where they struggle, and what training the team should build or revise next.</p>
 
@@ -621,6 +662,7 @@
           <tr><td><strong>API</strong></td><td>A controlled doorway between systems. Only specific, permitted information passes through, and only for approved requests.</td></tr>
           <tr><td><strong>System of record</strong></td><td>The authoritative source for a type of data. For Learning Hub training records, that source is Brightspace.</td></tr>
           <tr><td><strong>Supabase</strong></td><td>The database service behind the custom layer. It supports speed, search, dashboards, and engagement features; it does not replace Brightspace records.</td></tr>
+          <tr><td><strong>Brightspace Manager</strong></td><td>The LACE-built admin command center and course builder. It helps staff create courses, monitor sync health, inspect Learning Hub data, check files and links, and manage publishing workflows without coding.</td></tr>
           <tr><td><strong>Custom frontend</strong></td><td>The Learning Hub interface we control, layered over Brightspace so the learner experience can be cleaner and more useful.</td></tr>
         </tbody>
       </table>
