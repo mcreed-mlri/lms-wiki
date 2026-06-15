@@ -112,8 +112,8 @@
           </tr>
           <tr>
             <td><strong>LACE Learning Hub dashboards</strong></td>
-            <td>One app with role-based views; admin page now shows live Supabase and Brightspace connection status.</td>
-            <td>Keep admin diagnostics minimal while wiring the production catalog sync route.</td>
+            <td>One app with learner-facing discovery/progress views; Brightspace operations now hand off to Brightspace Manager.</td>
+            <td>Keep the Hub focused on learner, manager, and program reporting while Brightspace Manager owns sync and diagnostics.</td>
             <td><span class="status in-progress">Planned</span></td>
           </tr>
           <tr>
@@ -153,7 +153,7 @@
           <tr>
             <td><strong>Phase 1: API</strong></td>
             <td>Connect Brightspace to the custom frontend.</td>
-            <td>Supabase health route, Brightspace OAuth, <code>whoami</code>, and admin integration status are working locally.</td>
+            <td>Supabase health route, Brightspace OAuth, <code>whoami</code>, and local Brightspace Manager diagnostics are working.</td>
             <td>Create the Brightspace Service User, least-privilege role, OAuth Client Credentials registration, JWKS URL, scopes, API version, and sync route.</td>
           </tr>
         </tbody>
@@ -232,8 +232,8 @@
         <tbody>
           <tr><td><strong>Brightspace</strong></td><td>Courses, enrollments, completions, grades, access, email triggers.</td><td>LMS records.</td></tr>
           <tr><td><strong>Custom HTML wrapper</strong></td><td>LACE learner experience inside a Brightspace Course Offering.</td><td>Course files and <code>course-config.js</code>.</td></tr>
-          <tr><td><strong>LACE Learning Hub</strong></td><td>Frontend dashboards, course discovery/resume experience, and live integration diagnostics.</td><td>API response per role/view.</td></tr>
-          <tr><td><strong>Brightspace Manager</strong></td><td>Admin command center and course builder for managing courses, sync, files, integrity checks, and publishing workflows.</td><td>Operational actions against Brightspace plus LACE-owned draft/course metadata.</td></tr>
+          <tr><td><strong>LACE Learning Hub</strong></td><td>Frontend dashboards, course discovery/resume experience, learner notices, and simple staff summaries.</td><td>API response per role/view.</td></tr>
+          <tr><td><strong>Brightspace Manager</strong></td><td>Admin command center and course builder for managing courses, sync, diagnostics, files, integrity checks, and publishing workflows.</td><td>Operational actions against Brightspace plus LACE-owned draft/course metadata.</td></tr>
           <tr><td><strong>Supabase</strong></td><td>Search, engagement, feedback, synced LMS data, and Learning Hub-owned records in the <code>learning_items</code> schema.</td><td>Custom data layer.</td></tr>
         </tbody>
       </table>
@@ -367,7 +367,7 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
     <h2>LACE Learning Hub: Unified Dashboards</h2>
 
     <div class="note">
-      <strong>One product, role-based views.</strong> LACE Learning Hub is not a separate admin-only dashboard. Learners, managers, program staff, and admins see different views in the same app.
+      <strong>One learner-facing product, role-based views.</strong> LACE Learning Hub is not the operations console. Learners, managers, and program staff see different learning/reporting views in the same app; Brightspace Manager owns course/admin operations.
     </div>
 
     <div class="table-wrap">
@@ -379,7 +379,7 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
           <tr><td><strong>Learner</strong></td><td>My courses, progress, completion %, last visited, continue learning link.</td><td>Phase 1</td></tr>
           <tr><td><strong>Manager</strong></td><td>Team progress, overdue/incomplete training, cohort view.</td><td>Phase 3</td></tr>
           <tr><td><strong>Program staff</strong></td><td>Completion, equity, drop-off, content performance, survey/feedback signals.</td><td>Phase 3</td></tr>
-          <tr><td><strong>Super-admin ops</strong></td><td>Full test pipe, sync status, diagnostics, Brightspace/Supabase data checks.</td><td>Phase 1+</td></tr>
+          <tr><td><strong>Admin/reporting</strong></td><td>Simple staff summaries and reporting views that support learning operations.</td><td>Phase 3</td></tr>
         </tbody>
       </table>
     </div>
@@ -424,20 +424,20 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Area</th><th>What Brightspace Manager Owns</th><th>Why It Simplifies Learning Hub Admin</th></tr>
+          <tr><th>Area</th><th>What Brightspace Manager Owns</th><th>Why It Simplifies the Learning Hub</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Command center</strong></td><td>Connection health, sync status, API diagnostics, integrity checks, and admin alerts.</td><td>Keeps operational troubleshooting out of the learner/admin dashboard surface.</td></tr>
+          <tr><td><strong>Command center</strong></td><td>Connection health, sync status, API diagnostics, integrity checks, and admin alerts.</td><td>Keeps operational troubleshooting out of the learner-facing Hub.</td></tr>
           <tr><td><strong>Course builder</strong></td><td>Draft courses, module/topic structure, wrapper previews, exports, and future publish-to-Brightspace flows.</td><td>Gives course creation a dedicated workflow instead of mixing authoring controls into the Hub.</td></tr>
           <tr><td><strong>Course inventory</strong></td><td>Brightspace course offerings, files, content outline, launch URLs, and Supabase <code>learning_items</code> mapping.</td><td>Creates one place to verify that Brightspace, Supabase, and the Hub are aligned.</td></tr>
-          <tr><td><strong>Admin boundaries</strong></td><td>Least-privilege roles, write safeguards, audit trail, dry-run sync, and confirmation steps for destructive or publishing actions.</td><td>Lets the Hub expose only the simple admin views most staff need.</td></tr>
+          <tr><td><strong>Admin boundaries</strong></td><td>Least-privilege roles, write safeguards, audit trail, dry-run sync, and confirmation steps for destructive or publishing actions.</td><td>Lets the Hub expose only the simple staff summaries and reporting views most users need.</td></tr>
         </tbody>
       </table>
     </div>
 
     <h3>Boundary With Learning Hub</h3>
     <ul>
-      <li><strong>Learning Hub:</strong> learner discovery, resume, progress display, manager/program dashboards, notices, and team-facing admin summaries.</li>
+      <li><strong>Learning Hub:</strong> learner discovery, resume, progress display, manager/program dashboards, notices, and team-facing reporting summaries.</li>
       <li><strong>Brightspace Manager:</strong> course authoring, Brightspace operations, sync/write controls, file inspection, draft-to-export workflows, and technical admin checks.</li>
       <li><strong>Brightspace:</strong> official LMS record for enrollments, completion, grades, access, certificates, and hosted course content.</li>
     </ul>
@@ -458,7 +458,7 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
         <tbody>
           <tr><td><strong>OAuth / API auth</strong></td><td><span class="status in-progress">Hardening</span> Create Service User, assign least-privilege role, enroll required Org Units, register headless/server-to-server app, host JWKS URL, and verify the minimum required scopes.</td></tr>
           <tr><td><strong>Core data pull</strong></td><td><span class="status in-progress">Partial</span> <code>whoami</code> works; course metadata route should validate Course Offering <code>6703</code>.</td></tr>
-          <tr><td><strong>Supabase catalog proof</strong></td><td><span class="status done">Working locally</span> <code>learning_items</code> table is readable through the Learning Hub API and rendered on the admin page.</td></tr>
+          <tr><td><strong>Supabase catalog proof</strong></td><td><span class="status done">Working locally</span> <code>learning_items</code> table is readable through the Learning Hub API; operational inspection belongs in Brightspace Manager.</td></tr>
           <tr><td><strong>Learner dashboard</strong></td><td><code>/api/me/dashboard</code> powers learner home with progress and resume links.</td></tr>
           <tr><td><strong>SSO / login</strong></td><td>Learner has a coherent login path across Brightspace and the Learning Hub.</td></tr>
           <tr><td><strong>Wrapper bridge</strong></td><td>Optional API-backed progress/checkmarks can be layered onto the wrapper later.</td></tr>

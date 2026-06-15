@@ -231,7 +231,7 @@
     </div>
 
     <h3 id="how-pieces-fit">How the pieces fit together</h3>
-    <p>Three layers, each with one job. Learners spend their time in the Learning Hub, Brightspace keeps the official records underneath, and Supabase holds the extra data that powers search and dashboards.</p>
+    <p>Four layers, each with one job. Learners spend their time in the Learning Hub, Brightspace keeps the official records underneath, Supabase holds the extra data that powers search and dashboards, and Brightspace Manager gives staff one place to build, test, and maintain the system.</p>
 
     <div class="team-flow">
       <div class="team-flow-node">
@@ -250,6 +250,12 @@
         <span class="step">The support layer</span>
         <strong>Supabase</strong>
         <span>Catalog, search, feedback, and dashboard data: the extra layer we control.</span>
+      </div>
+      <div class="team-flow-arrow">&rarr;</div>
+      <div class="team-flow-node">
+        <span class="step">The workbench</span>
+        <strong>Brightspace Manager</strong>
+        <span>Course building, sync checks, diagnostics, files, and publishing workflows for staff.</span>
       </div>
     </div>
 
@@ -623,7 +629,7 @@
           <tr><td><strong>Partners</strong></td><td>Participation and completion for their own learners or agreed program groups.</td></tr>
           <tr><td><strong>Funders / grants</strong></td><td>Aggregate participation, completion, reach, topic coverage, and evaluation outcomes.</td></tr>
           <tr><td><strong>Internal evaluation</strong></td><td>Usefulness, learner confidence, course quality, equity of access, and training gaps.</td></tr>
-          <tr><td><strong>Admins / IT</strong></td><td>Sync status, account issues, broken links, access errors, and system health.</td></tr>
+          <tr><td><strong>Admins / IT</strong></td><td>Sync status, account issues, broken links, access errors, and system health through Brightspace Manager and technical support paths.</td></tr>
         </tbody>
       </table>
     </div>
@@ -662,7 +668,7 @@
           <tr><td><strong>API</strong></td><td>A controlled doorway between systems. Only specific, permitted information passes through, and only for approved requests.</td></tr>
           <tr><td><strong>System of record</strong></td><td>The authoritative source for a type of data. For Learning Hub training records, that source is Brightspace.</td></tr>
           <tr><td><strong>Supabase</strong></td><td>The database service behind the custom layer. It supports speed, search, dashboards, and engagement features; it does not replace Brightspace records.</td></tr>
-          <tr><td><strong>Brightspace Manager</strong></td><td>The LACE-built admin command center and course builder. It helps staff create courses, monitor sync health, inspect Learning Hub data, check files and links, and manage publishing workflows without coding.</td></tr>
+          <tr><td><strong>Brightspace Manager</strong></td><td>The LACE-built admin command center and course builder. It helps staff create courses, monitor sync health, inspect Learning Hub data, check files and links, and manage publishing workflows without crowding the learner-facing Hub.</td></tr>
           <tr><td><strong>Custom frontend</strong></td><td>The Learning Hub interface we control, layered over Brightspace so the learner experience can be cleaner and more useful.</td></tr>
         </tbody>
       </table>
@@ -800,7 +806,7 @@
           <tr><td><strong>Course content question</strong></td><td>Training Unit or course owner.</td></tr>
           <tr><td><strong>Certificate or completion concern</strong></td><td>Training Unit first, with Brightspace admin help if the record needs review.</td></tr>
           <tr><td><strong>Login or password issue</strong></td><td>Brightspace support, IT, or the identity provider path configured for the site.</td></tr>
-          <tr><td><strong>Broken link, display problem, or dashboard issue</strong></td><td>Learning Hub admin / technical support.</td></tr>
+          <tr><td><strong>Broken link, display problem, or dashboard issue</strong></td><td>Learning Hub technical support for learner-facing display issues; Brightspace Manager for course file, sync, or publishing issues.</td></tr>
           <tr><td><strong>Access looks wrong</strong></td><td>Training Unit or admin review of user type, jurisdiction, organization, and group assignments.</td></tr>
         </tbody>
       </table>
