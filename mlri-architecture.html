@@ -1090,38 +1090,41 @@
   </div>
 </div>
 
-<!-- WEDNESDAY PREP -->
+<!-- BRIGHTSPACE API DECISIONS -->
 <div class="stack-diagram" style="margin-top: 48px;">
   <div class="stack-diagram-title">Wednesday Brightspace session — questions to unlock the next proof</div>
   <p style="text-align: center; font-size: 13px; color: var(--gray-bright); max-width: 640px; margin: 0 auto 16px; line-height: 1.6;">
     Meeting prep deck: <a href="api-flashcards.html" style="color: var(--teal-light);">API Meeting Flashcards</a> — vocabulary, architecture map, and leave-with checklist.
   </p>
+  <p style="text-align: center; font-size: 13px; color: var(--gray-bright); max-width: 640px; margin: -6px auto 16px; line-height: 1.6;">
+    Outcome: <a href="api-integration-architecture.html" style="color: var(--teal-light);">API Integration Decisions</a> confirms Brightspace as the system of record and the Learning Hub as the learner-facing discovery layer.
+  </p>
   <div class="data-flows" style="grid-template-columns: repeat(3, 1fr); margin-top: 0;">
     <div class="flow-card fc-bs">
-      <div class="flow-card-label">Need from Brightspace</div>
-      <h3>One safe test course</h3>
+      <div class="flow-card-label">Auth model</div>
+      <h3>Service user</h3>
       <ul>
-        <li>Course offering Org Unit ID</li>
-        <li>Correct LMS API version</li>
-        <li>Permission needed to see course offerings</li>
+        <li>Dedicated Brightspace service account</li>
+        <li>Role assigned high enough for org unit inheritance</li>
+        <li>Scopes narrowed before production</li>
       </ul>
     </div>
     <div class="flow-card fc-own">
-      <div class="flow-card-label">Need to confirm</div>
-      <h3>Metadata endpoints</h3>
+      <div class="flow-card-label">Data source split</div>
+      <h3>APIs plus Data Hub</h3>
       <ul>
-        <li>Course title / description</li>
-        <li>Visibility and start/end dates</li>
-        <li>Module and topic structure</li>
+        <li>APIs for learner-facing search and content structure</li>
+        <li>Data Hub for initial load and reporting</li>
+        <li>Store Brightspace IDs in Supabase</li>
       </ul>
     </div>
     <div class="flow-card fc-out">
-      <div class="flow-card-label">Decision</div>
-      <h3>Production auth model</h3>
+      <div class="flow-card-label">Sync model</div>
+      <h3>Bulk load, then refresh</h3>
       <ul>
-        <li>Service User role and Org Unit enrollment</li>
-        <li>Headless/server-to-server OAuth app + JWKS URL</li>
-        <li>What not to pull in v1?</li>
+        <li>Nightly catalog/course/module reconciliation</li>
+        <li>More frequent sync only for awards or completion if needed</li>
+        <li>Archive or hide locally instead of hard-deleting courses</li>
       </ul>
     </div>
   </div>

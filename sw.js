@@ -13,6 +13,7 @@ const PRECACHE_URLS = [
   './brightspace-map.html',
   './user-attributes.html',
   './mlri-architecture.html',
+  './api-integration-architecture.html',
   './api-flashcards.html',
   './supabase-schema.html',
   './supabase-visualizer.html',
