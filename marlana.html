@@ -39,6 +39,7 @@
     <span class="section-label">Overview</span>
     <a href="#home">Executive Scan</a>
     <a href="#current-phase">Current Phase</a>
+    <a href="#roadblocks">Roadblocks</a>
     <a href="#marlie-program-timeline">My Timeline</a>
 
     <span class="section-label">Platform Build</span>
@@ -161,6 +162,80 @@
     </div>
 
     <p><strong>Bottom line:</strong> the wrapper can carry course delivery now. API work unlocks real progress, dashboard data, SSO, and cross-system reporting. The active June checklist is tracked in <a href="june-2026-priority-tasks.html">June 2026 Priority Tasks</a>.</p>
+  </section>
+
+  <section class="guide-section" id="roadblocks">
+    <h2>Roadblocks <span class="status blocked">Active</span></h2>
+
+    <p>Use this section as the short list of dependencies that are blocking the next serious build moves. Keep it practical: what is blocked, what decision unlocks it, who/what is needed, and what can still move while we wait.</p>
+
+    <div class="roadblock-board" aria-label="Roadblock dependency diagram">
+      <div class="roadblock-lane">
+        <div class="roadblock-node blocker">
+          <span class="roadblock-label">External dependency</span>
+          <h3>Official org name</h3>
+          <p>Needed before the learner-facing Brightspace identity and URL can be finalized.</p>
+        </div>
+        <div class="roadblock-arrow" aria-hidden="true">-&gt;</div>
+        <div class="roadblock-node waiting">
+          <span class="roadblock-label">Blocked setup</span>
+          <h3>Official Brightspace URL</h3>
+          <p>D2L needs the final URL/domain path before DNS and production-facing links harden.</p>
+        </div>
+        <div class="roadblock-arrow" aria-hidden="true">-&gt;</div>
+        <div class="roadblock-node impact">
+          <span class="roadblock-label">Delayed work</span>
+          <h3>Learning Hub polish</h3>
+          <p>Deep links, login language, dashboard URLs, and launch docs should wait for the official address.</p>
+        </div>
+      </div>
+
+      <div class="roadblock-lane">
+        <div class="roadblock-node blocker">
+          <span class="roadblock-label">External dependency</span>
+          <h3>Service User API path</h3>
+          <p>Need a non-human Brightspace identity with least-privilege permissions for background sync.</p>
+        </div>
+        <div class="roadblock-arrow" aria-hidden="true">-&gt;</div>
+        <div class="roadblock-node waiting">
+          <span class="roadblock-label">Blocked setup</span>
+          <h3>Headless OAuth / scopes</h3>
+          <p>Do not bind production sync, catalog reads, or diagnostics to a personal admin account.</p>
+        </div>
+        <div class="roadblock-arrow" aria-hidden="true">-&gt;</div>
+        <div class="roadblock-node impact">
+          <span class="roadblock-label">Delayed work</span>
+          <h3>API-backed Hub data</h3>
+          <p>Course metadata sync, dashboard progress, and stable manager/program reporting depend on this.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Roadblock</th><th>Blocks</th><th>Needed To Resolve</th><th>Can Still Move</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Official org name</strong></td>
+            <td>Official Brightspace URL, production link language, final Learning Hub launch paths, and public-facing docs.</td>
+            <td>Confirm the exact organization/platform name to use in Brightspace and learner-facing materials.</td>
+            <td>Keep refining local Learning Hub UI, content structure, accessibility, wrapper behavior, and non-final copy.</td>
+            <td><span class="status blocked">Waiting</span></td>
+          </tr>
+          <tr>
+            <td><strong>Brightspace Service User API</strong></td>
+            <td>Production-safe API sync, catalog metadata harvesting, dashboard data, Brightspace Manager diagnostics, and recurring background jobs.</td>
+            <td>Create the Service User, assign least-privilege role, confirm Org Unit enrollment, register the server-side app, host JWKS, and verify scopes/API version.</td>
+            <td>Keep local Supabase schema work, mock dashboard states, route contracts, wrapper launch patterns, and API documentation moving.</td>
+            <td><span class="status blocked">Waiting</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Working rule:</strong> do not treat these as reasons to stop everything. Treat them as the line between prototype polish and production hardening.</p>
   </section>
 
   <section class="guide-section" id="marlie-program-timeline">
