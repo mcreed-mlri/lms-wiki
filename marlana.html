@@ -171,40 +171,80 @@
 
     <div class="roadblock-board" aria-label="Roadblock dependency diagram">
       <div class="roadblock-lane">
+        <!-- Blocker Node -->
         <div class="roadblock-node blocker">
-          <span class="roadblock-label">External dependency</span>
+          <span class="roadblock-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            External dependency
+          </span>
           <h3>Official org name</h3>
           <p>Needed before the learner-facing Brightspace identity and URL can be finalized.</p>
         </div>
-        <div class="roadblock-arrow" aria-hidden="true">-&gt;</div>
+        
+        <div class="roadblock-arrow" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </div>
+        
+        <!-- Waiting Node -->
         <div class="roadblock-node waiting">
-          <span class="roadblock-label">Blocked setup</span>
+          <span class="roadblock-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Blocked setup
+          </span>
           <h3>Official Brightspace URL</h3>
           <p>D2L needs the final URL/domain path before DNS and production-facing links harden.</p>
         </div>
-        <div class="roadblock-arrow" aria-hidden="true">-&gt;</div>
+        
+        <div class="roadblock-arrow" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </div>
+        
+        <!-- Impact Node -->
         <div class="roadblock-node impact">
-          <span class="roadblock-label">Delayed work</span>
+          <span class="roadblock-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+            Delayed work
+          </span>
           <h3>Learning Hub polish</h3>
           <p>Deep links, login language, dashboard URLs, and launch docs should wait for the official address.</p>
         </div>
       </div>
 
       <div class="roadblock-lane">
+        <!-- Blocker Node -->
         <div class="roadblock-node blocker">
-          <span class="roadblock-label">External dependency</span>
+          <span class="roadblock-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            External dependency
+          </span>
           <h3>Service User API path</h3>
           <p>Need a non-human Brightspace identity with least-privilege permissions for background sync.</p>
         </div>
-        <div class="roadblock-arrow" aria-hidden="true">-&gt;</div>
+        
+        <div class="roadblock-arrow" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </div>
+        
+        <!-- Waiting Node -->
         <div class="roadblock-node waiting">
-          <span class="roadblock-label">Blocked setup</span>
+          <span class="roadblock-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Blocked setup
+          </span>
           <h3>Headless OAuth / scopes</h3>
           <p>Do not bind production sync, catalog reads, or diagnostics to a personal admin account.</p>
         </div>
-        <div class="roadblock-arrow" aria-hidden="true">-&gt;</div>
+        
+        <div class="roadblock-arrow" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </div>
+        
+        <!-- Impact Node -->
         <div class="roadblock-node impact">
-          <span class="roadblock-label">Delayed work</span>
+          <span class="roadblock-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+            Delayed work
+          </span>
           <h3>API-backed Hub data</h3>
           <p>Course metadata sync, dashboard progress, and stable manager/program reporting depend on this.</p>
         </div>
@@ -243,59 +283,240 @@
 
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr><th>Month</th><th>Deliverables</th><th>Status</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>May 2026</strong></td>
-            <td>Course wrapper template; Architecture B tracking; accessibility policy draft; demo course 6698 setup.</td>
-            <td><span class="status in-progress">Wrapper built; demo setup remains</span></td>
-          </tr>
-          <tr>
-            <td><strong>June 2026</strong></td>
-            <td>Vanity URL, production auth hardening, Course 6703 metadata sync, attributes/groups freeze, accessibility policy, and completion criteria.</td>
-            <td><span class="status in-progress">In progress</span></td>
-          </tr>
-          <tr>
-            <td><strong>July 2026</strong></td>
-            <td>Custom data layer; email system, templates, learner outreach coordination.</td>
-            <td><span class="status not-started">Next</span></td>
-          </tr>
-          <tr>
-            <td><strong>August 2026</strong></td>
-            <td>Evaluation, analysis, predictors, reporting foundation.</td>
-            <td><span class="status not-started">Planned</span></td>
-          </tr>
-          <tr>
-            <td><strong>Sept 2026-Feb 2027</strong></td>
-            <td>Pilot support, launch support, reporting iteration, dashboard expansion.</td>
-            <td><span class="status not-started">TBA</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
   <section class="guide-section" id="marlies-roadmap">
-    <h2>Platform Roadmap</h2>
+    <h2>Platform Roadmap & Timeline</h2>
 
     <div class="note">
       <strong>Two tracks, one vision:</strong> the wrapper delivers the in-course experience now. LACE Learning Hub adds API-backed dashboards, data, and reporting over time.
     </div>
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Phase</th><th>Focus</th><th>Delivery</th><th>Result</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>0</strong></td><td><a href="#marlie-phase-0">In-course HTML wrappers</a></td><td>Now</td><td>Custom HTML course experience inside Brightspace.</td></tr>
-          <tr><td><strong>1</strong></td><td><a href="#marlie-phase-1">Connect to Brightspace</a></td><td>Months 1-2</td><td>OAuth, SSO, learner dashboard, core Brightspace data.</td></tr>
-          <tr><td><strong>2</strong></td><td><a href="#marlie-phase-2">Own data layer</a></td><td>Months 2-4</td><td>Supabase is connected for catalog proof; events, search, engagement, feedback, and synced LMS data come next.</td></tr>
-          <tr><td><strong>3</strong></td><td><a href="#marlie-phase-3">Reporting and evaluation</a></td><td>Months 4-6</td><td>Manager/program dashboards, equity analysis, update notices.</td></tr>
-        </tbody>
-      </table>
+    <div class="roadmap-container">
+      <div class="roadmap-modes">
+        <button type="button" class="roadmap-mode-btn active" id="btn-timeline-view">Interactive Timeline Map</button>
+        <button type="button" class="roadmap-mode-btn" id="btn-cards-view">Explore Phase Cards</button>
+      </div>
+
+      <!-- Mode 1: Gantt-style Timeline Map -->
+      <div class="roadmap-timeline-scroll" id="view-timeline">
+        <div class="roadmap-timeline-map">
+          <!-- Headers -->
+          <div class="timeline-header-cell">Track</div>
+          <div class="timeline-header-cell">May 2026</div>
+          <div class="timeline-header-cell">June 2026</div>
+          <div class="timeline-header-cell">July 2026</div>
+          <div class="timeline-header-cell">August 2026</div>
+          <div class="timeline-header-cell">Sept 2026-Feb 2027</div>
+
+          <!-- Track A: Learner Experience -->
+          <div class="timeline-row">
+            <div class="timeline-track-title">
+              LACE Experience
+              <span>HTML Wrapper & UI</span>
+            </div>
+            <!-- May -->
+            <div class="timeline-cell">
+              <a href="#marlie-phase-0" class="timeline-block done">
+                <span class="timeline-block-phase">Phase 0</span>
+                <span class="timeline-block-title">Wrapper Template</span>
+                <span class="timeline-block-desc">Custom course templates, LACE nav chrome.</span>
+                <span class="timeline-block-status">✓ Complete</span>
+              </a>
+            </div>
+            <!-- June -->
+            <div class="timeline-cell">
+              <a href="#marlie-phase-0" class="timeline-block active">
+                <span class="timeline-block-phase">Phase 0</span>
+                <span class="timeline-block-title">LMS Wrapper Pilot</span>
+                <span class="timeline-block-desc">Demo 6698 deploy, Content outline links.</span>
+                <span class="timeline-block-status">● Active</span>
+              </a>
+            </div>
+            <!-- July -->
+            <div class="timeline-cell">
+              <a href="#lace-hub-dashboard" class="timeline-block planned">
+                <span class="timeline-block-phase">Phase 1-2</span>
+                <span class="timeline-block-title">Outreach Prep</span>
+                <span class="timeline-block-desc">Coordination of custom learner outreach & templates.</span>
+                <span class="timeline-block-status">○ Next</span>
+              </a>
+            </div>
+            <!-- August -->
+            <div class="timeline-cell">
+              <a href="#lace-hub-dashboard" class="timeline-block planned">
+                <span class="timeline-block-phase">Phase 2-3</span>
+                <span class="timeline-block-title">Learner Portal</span>
+                <span class="timeline-block-desc">V1 Learning Hub dashboard.</span>
+                <span class="timeline-block-status">○ Planned</span>
+              </a>
+            </div>
+            <!-- Sept-Feb -->
+            <div class="timeline-cell">
+              <a href="#lace-hub-dashboard" class="timeline-block tba">
+                <span class="timeline-block-phase">Phase 3</span>
+                <span class="timeline-block-title">Expansion</span>
+                <span class="timeline-block-desc">Pilot feedback & dashboard additions.</span>
+                <span class="timeline-block-status">TBA</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Track B: Data & API Integration -->
+          <div class="timeline-row">
+            <div class="timeline-track-title">
+              Integration & Data
+              <span>Valence API & Supabase</span>
+            </div>
+            <!-- May -->
+            <div class="timeline-cell">
+              <a href="#marlie-phase-1" class="timeline-block done">
+                <span class="timeline-block-phase">Phase 1</span>
+                <span class="timeline-block-title">Initial Auth Setup</span>
+                <span class="timeline-block-desc">OAuth registered, basic whoami test.</span>
+                <span class="timeline-block-status">✓ Complete</span>
+              </a>
+            </div>
+            <!-- June -->
+            <div class="timeline-cell">
+              <a href="#marlie-phase-1" class="timeline-block active">
+                <span class="timeline-block-phase">Phase 1</span>
+                <span class="timeline-block-title">API & Sync</span>
+                <span class="timeline-block-desc">Service User setup, Course 6703 sync validation.</span>
+                <span class="timeline-block-status">● Active</span>
+              </a>
+            </div>
+            <!-- July -->
+            <div class="timeline-cell">
+              <a href="#marlie-phase-2" class="timeline-block planned">
+                <span class="timeline-block-phase">Phase 2</span>
+                <span class="timeline-block-title">Custom Data Layer</span>
+                <span class="timeline-block-desc">Supabase catalog sync, activity tracking, feed.</span>
+                <span class="timeline-block-status">○ Next</span>
+              </a>
+            </div>
+            <!-- August -->
+            <div class="timeline-cell">
+              <a href="#marlie-phase-3" class="timeline-block planned">
+                <span class="timeline-block-phase">Phase 3</span>
+                <span class="timeline-block-title">Reporting Engine</span>
+                <span class="timeline-block-desc">Manager/staff summaries, equity analysis.</span>
+                <span class="timeline-block-status">○ Planned</span>
+              </a>
+            </div>
+            <!-- Sept-Feb -->
+            <div class="timeline-cell">
+              <a href="#marlie-phase-3" class="timeline-block tba">
+                <span class="timeline-block-phase">Phase 3</span>
+                <span class="timeline-block-title">Scale & Analytics</span>
+                <span class="timeline-block-desc">Prediction tracking & pilot support.</span>
+                <span class="timeline-block-status">TBA</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mode 2: Detailed Phase Cards -->
+      <div class="roadmap-phase-cards" id="view-cards" style="display: none;">
+        <!-- Phase 0 -->
+        <a href="#marlie-phase-0" class="roadmap-phase-card">
+          <div class="phase-card-header">
+            <span class="phase-number-badge">Phase 0</span>
+            <span class="phase-status-pill done">Largely Complete</span>
+          </div>
+          <div class="phase-card-header-title">
+            <h3>In-Course HTML Wrappers</h3>
+          </div>
+          <div class="phase-card-content">
+            <p>Prove the custom visual experience inside Brightspace using Clean View and configurations.</p>
+            <ul class="phase-deliverables">
+              <li>Course-Template files built</li>
+              <li>Shared course-nav.js & course-style.css</li>
+              <li>Clean View wrapper launch patterns</li>
+              <li>Local dev vs LMS production modes</li>
+            </ul>
+            <div class="phase-tags">
+              <span class="phase-tag">Brightspace</span>
+              <span class="phase-tag">HTML5/CSS3</span>
+              <span class="phase-tag">JS Navigation</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Phase 1 -->
+        <a href="#marlie-phase-1" class="roadmap-phase-card active">
+          <div class="phase-card-header">
+            <span class="phase-number-badge">Phase 1</span>
+            <span class="phase-status-pill active">In Progress</span>
+          </div>
+          <div class="phase-card-header-title">
+            <h3>Connect to Brightspace</h3>
+          </div>
+          <div class="phase-card-content">
+            <p>Integrate LACE Learning Hub with D2L Valence API utilizing secure authentication.</p>
+            <ul class="phase-deliverables">
+              <li>Headless OAuth & Service User setup</li>
+              <li>JWKS / public key hosting</li>
+              <li>Course 6703 metadata sync</li>
+              <li>Attributes & groups definition freeze</li>
+            </ul>
+            <div class="phase-tags">
+              <span class="phase-tag">Valence API</span>
+              <span class="phase-tag">OAuth 2.0 / LTI 1.3</span>
+              <span class="phase-tag">Node.js</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Phase 2 -->
+        <a href="#marlie-phase-2" class="roadmap-phase-card planned">
+          <div class="phase-card-header">
+            <span class="phase-number-badge">Phase 2</span>
+            <span class="phase-status-pill planned">Planned</span>
+          </div>
+          <div class="phase-card-header-title">
+            <h3>Custom Data Layer</h3>
+          </div>
+          <div class="phase-card-content">
+            <p>Deploy Supabase to house independent user engagement data, catalog items, and logs.</p>
+            <ul class="phase-deliverables">
+              <li>Connect Supabase database</li>
+              <li>Define engagement & events tables</li>
+              <li>Search and discovery indexes</li>
+              <li>Feedback forms & activity streams</li>
+            </ul>
+            <div class="phase-tags">
+              <span class="phase-tag">Supabase</span>
+              <span class="phase-tag">PostgreSQL</span>
+              <span class="phase-tag">Activity Streams</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Phase 3 -->
+        <a href="#marlie-phase-3" class="roadmap-phase-card planned">
+          <div class="phase-card-header">
+            <span class="phase-number-badge">Phase 3</span>
+            <span class="phase-status-pill planned">Planned</span>
+          </div>
+          <div class="phase-card-header-title">
+            <h3>Reporting & Evaluation</h3>
+          </div>
+          <div class="phase-card-content">
+            <p>Introduce the dashboard metrics for program coordinators, managers, and staff analytics.</p>
+            <ul class="phase-deliverables">
+              <li>Manager/staff dashboards</li>
+              <li>Equity Analysis tracking</li>
+              <li>Predictor models & completion logs</li>
+              <li>Automatic update notices</li>
+            </ul>
+            <div class="phase-tags">
+              <span class="phase-tag">Dashboards</span>
+              <span class="phase-tag">Analytics</span>
+              <span class="phase-tag">Equity Metrics</span>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
 
     <h3>System Model</h3>
@@ -801,6 +1022,28 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
 
     window.addEventListener('scroll', onScroll, { passive: true });
     document.addEventListener('DOMContentLoaded', onScroll);
+
+    // Roadmap view toggles
+    const btnTimeline = document.getElementById('btn-timeline-view');
+    const btnCards = document.getElementById('btn-cards-view');
+    const viewTimeline = document.getElementById('view-timeline');
+    const viewCards = document.getElementById('view-cards');
+
+    if (btnTimeline && btnCards && viewTimeline && viewCards) {
+      btnTimeline.addEventListener('click', function() {
+        btnTimeline.classList.add('active');
+        btnCards.classList.remove('active');
+        viewTimeline.style.display = 'block';
+        viewCards.style.display = 'none';
+      });
+
+      btnCards.addEventListener('click', function() {
+        btnTimeline.classList.remove('active');
+        btnCards.classList.add('active');
+        viewTimeline.style.display = 'none';
+        viewCards.style.display = 'grid';
+      });
+    }
   })();
 </script>
 
