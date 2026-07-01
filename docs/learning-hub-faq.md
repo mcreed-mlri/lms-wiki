@@ -104,7 +104,7 @@
   - **How do we protect learner personal information?** We collect less by default and store only what we need. Brightspace holds the official records, the custom layer holds limited engagement and profile data, and sensitive client information is never collected.
 
 - **Data storage**
-  - **Where is learner data stored?** Across two places: Brightspace for official records, and our custom layer (Supabase) for catalog and engagement data.
+  - **Where is learner data stored?** Across two places: Brightspace for official records and learner sign-in, and our shared custom layer (Supabase) for catalog, engagement, dashboard, and operations data.
   - **What data is stored in Brightspace?** Enrollments, progress, completion, grades, and certificates.
   - **What data is stored outside of Brightspace?** Catalog metadata, search behavior, ratings, profile preferences, and dashboard data.
 
@@ -209,14 +209,14 @@
   - **What is OAuth?** A standard way to sign in through a trusted provider without handing your password to every app you use.
   - **What is SSO?** Single sign-on: one login that carries across the Learning Hub and Brightspace so learners do not have to sign in twice. (Still being set up.)
   - **What is a system of record?** The authoritative source for a type of data. For training records, that source is Brightspace.
-  - **What is Supabase (our database)?** The database service behind the custom layer. It supports speed, search, dashboards, and engagement features; it does not replace Brightspace records.
+  - **What is Supabase (our database)?** The database service behind the custom layer. Both the Learning Hub and Brightspace Manager can use the same Supabase project for shared data and backend services. Supabase Auth is currently for Brightspace Manager staff/admin login; Learning Hub learner login should come from Brightspace when that is built out. Supabase does not replace Brightspace records.
   - **What is Brightspace Manager?** The LACE-built admin command center and course builder. It gives staff a simpler place to create courses, inspect Brightspace/Learning Hub data, monitor sync health, review files and links, and manage publishing workflows without coding.
   - **What is a custom frontend?** The Learning Hub interface we control, layered over Brightspace.
   - **What is the wrapper?** The shared LACE navigation and design that surrounds course pages, so every course looks and feels consistent inside Brightspace.
   - **What is the installable app (PWA)?** The Learning Hub is a Progressive Web App, so learners can add it to their phone's home screen like an app, with nothing to download from an app store.
 
 - **System roles**
-  - **What information lives in Brightspace and in Supabase?** Brightspace holds the official records (enrollments, progress, completion, grades, certificates). Supabase holds catalog data, engagement signals, and profile preferences.
+  - **What information lives in Brightspace and in Supabase?** Brightspace holds the official records and learner authentication (enrollments, progress, completion, grades, certificates, and sign-in). Supabase holds shared custom data such as catalog data, engagement signals, profile preferences, reporting support, and Brightspace Manager staff/admin access.
   - **What information lives in the Learning Hub?** The experience layer: the catalog, search, dashboards, recommendations, and clean course entry.
 
 - **Data collection**

@@ -74,7 +74,11 @@
       <p>This is a planning document. Supabase is connected and one table (<code>learning_items</code>) is live in early form. The rest of the schema is designed but not yet built. Status labels on each section show where things stand.</p>
     </div>
 
-    <p>The LACE Learning Hub uses Supabase as its <strong>custom data layer</strong> — the place we store data that Brightspace does not hold, or that we need to shape for our own experience. Brightspace stays the system of record for courses, enrollments, completions, and grades. Supabase fills the gaps: extended user profiles, catalog records synced from Brightspace, engagement events, and learner feedback.</p>
+    <p>The LACE platform uses one shared Supabase project as its <strong>custom data layer</strong> across the Learning Hub and Brightspace Manager. Brightspace stays the system of record for learner authentication, courses, enrollments, completions, and grades. Supabase fills the gaps: staff/admin auth for Brightspace Manager, extended operational data, catalog records synced from Brightspace, engagement events, and learner feedback.</p>
+
+    <div class="note">
+      <strong>Current auth boundary:</strong> Supabase Auth is for <strong>Brightspace Manager</strong>, the staff/admin command center. Learning Hub learner authentication should come from Brightspace when that flow is built out. Both apps can still use the same Supabase project for shared data and backend services.
+    </div>
 
     <div class="table-wrap">
       <table>
@@ -139,8 +143,8 @@
           </tr>
           <tr>
             <td>User identity / login</td>
-            <td>Supabase Auth + <code>profiles</code></td>
-            <td>Supabase Auth handles login; <code>profiles</code> extends it with org, license status, and Learning Group</td>
+            <td>Brightspace for Learning Hub; Supabase Auth for Brightspace Manager</td>
+            <td>Learning Hub learner login comes from Brightspace when built out. Brightspace Manager can use Supabase Auth for staff/admin access, with <code>profiles</code> or a manager-specific user table extending roles and permissions.</td>
           </tr>
           <tr>
             <td>What a user searched for</td>
@@ -196,7 +200,7 @@
   <!-- PROFILES -->
   <section class="guide-section" id="profiles">
     <h2>profiles <span class="status proposed">Proposed</span></h2>
-    <p>Extended user data that Brightspace does not hold. One row per authenticated user, keyed to Supabase Auth's <code>auth.users</code> table. This is how the platform knows a user's organization, license status, and Learning Group assignment for routing and access control logic.</p>
+    <p>Extended user data that Brightspace does not hold. For Brightspace Manager, staff/admin profile rows can be keyed to Supabase Auth users. For the Learning Hub, learner profile rows should link back to Brightspace identity instead of creating a separate learner login in Supabase.</p>
 
     <div class="note">
       <strong>Design dependency:</strong> The Learning Group routing rules and user type matrix being worked out in <a href="user-attributes.html">User Attributes</a> map directly onto columns in this table. Build both in parallel rather than treating them as separate problems.
@@ -385,7 +389,7 @@
           </tr>
           <tr>
             <td>User identity sync?</td>
-            <td>Store <code>bs_user_id</code> in <code>profiles</code> to link a Supabase user to their BS record. Do not sync the full BS user object.</td>
+            <td>Store <code>bs_user_id</code> on Learning Hub-facing profile or event records when a Brightspace learner needs to be linked to Supabase data. Do not sync the full Brightspace user object. Supabase Auth identities are for Brightspace Manager staff/admin access.</td>
           </tr>
           <tr>
             <td>Completions and enrollments?</td>

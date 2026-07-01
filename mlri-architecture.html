@@ -844,7 +844,7 @@
   <div class="simple-flow-kicker">Current integration diagram</div>
   <h2>Simple flow: Brightspace to Learning Hub to Supabase</h2>
   <p>
-    Brightspace remains the course system of record. The Learning Hub reads selected Brightspace data through secure server-side API routes, then stores the pieces we need for the Learning Hub experience in Supabase.
+    Brightspace remains the course and learner-auth system of record. The Learning Hub reads selected Brightspace data through secure server-side API routes, then stores the pieces we need for the Learning Hub experience in the shared Supabase project. Supabase Auth is reserved for Brightspace Manager staff/admin access.
   </p>
   <div class="simple-flow">
     <div class="simple-flow-node source">
@@ -858,7 +858,7 @@
     <div class="simple-flow-node app">
       <div>
         <strong>Learning Hub</strong>
-        <span>Our custom front end and API layer. It authenticates, requests approved Brightspace data, and presents learner, manager, and program/reporting views.</span>
+        <span>Our custom front end and API layer. Learner sign-in should come through Brightspace; the Hub requests approved Brightspace data and presents learner, manager, and program/reporting views.</span>
       </div>
       <small>Experience layer</small>
     </div>
@@ -866,7 +866,7 @@
     <div class="simple-flow-node data">
       <div>
         <strong>Supabase</strong>
-        <span>Stores the Learning Hub data we control, such as synced catalog records, search behavior, feedback, and future reporting support.</span>
+        <span>Shared project for Learning Hub and Brightspace Manager data: synced catalog records, search behavior, feedback, future reporting support, and Manager staff/admin auth.</span>
       </div>
       <small>Custom data layer</small>
     </div>
@@ -946,7 +946,7 @@
         <div class="card card-teal">
           <div class="card-icon">🔑</div>
           <div class="card-title">SSO / Auth</div>
-          <div class="card-desc">Use 3-legged OAuth for user context and Service User/headless OAuth for data harvesting</div>
+          <div class="card-desc">Use Brightspace for Learning Hub learner auth; use Service User/headless OAuth for data harvesting. Supabase Auth belongs to Brightspace Manager staff/admin access</div>
           <div class="card-tags"><span class="tag">SSO</span><span class="tag">Service User</span></div>
         </div>
       </div>
@@ -1040,7 +1040,7 @@
   <div class="stack-row">
     <div class="stack-box sb-frontend">🖥️ LACE Learning Hub<br><small style="opacity:0.6;font-size:11px">Discovery · Catalog · Resume</small></div>
     <div class="stack-arrow-center">⟷</div>
-    <div class="stack-box sb-supabase">🗄️ Supabase<br><small style="opacity:0.6;font-size:11px">Custom events · Feedback · Users</small></div>
+    <div class="stack-box sb-supabase">🗄️ Supabase<br><small style="opacity:0.6;font-size:11px">Shared data · Events · Manager auth</small></div>
   </div>
   <div class="v-connector">↕</div>
   <div class="stack-box-full" style="background: rgba(5,150,105,0.12); color: var(--green-light); border: 1px solid rgba(5,150,105,0.25); font-size: 12px;">📄 In-Course HTML Wrappers — course-config.js · course-nav.js · topic pages<br><small style="opacity:0.6;font-size:11px">Phase 0 · works today without API</small></div>
