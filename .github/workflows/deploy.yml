@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -38,6 +38,8 @@ jobs:
           sed -i "s/__BUILD_VERSION__/${GITHUB_SHA}/g" _site/sw.js
           sed -i 's|assets/js/sidebar.js?v=[^"]*|assets/js/sidebar.js?v=${GITHUB_SHA}|g' _site/*.html _site/team/*.html
           if [ -d screenshots ]; then cp -r screenshots _site/; fi
+          if [ -d pics ]; then cp -r pics _site/; fi
+          if [ -d scripts ]; then cp -r scripts _site/; fi
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -63,3 +65,16 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Retry deploy on transient Pages failure
+        if: steps.deployment.outcome == 'failure'
+        id: deployment_retry
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Require successful deploy
+        if: steps.deployment.outcome != 'success' && steps.deployment_retry.outcome != 'success'
+        run: |
+          echo "GitHub Pages deploy failed twice. Re-run the workflow or check https://www.githubstatus.com/."
+          exit 1
