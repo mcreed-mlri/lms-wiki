@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LACE August 2026 Priority Tasks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1E3A5F">
+  <meta name="description" content="August 2026 priority tasks: D2L wrap-up window, team decisions, production login verification, and service-user sync registration.">
+  <link rel="canonical" href="https://mcreed-mlri.github.io/lms-wiki/august-2026-priority-tasks.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LACE Platform Wiki">
+  <meta property="og:title" content="LACE August 2026 Priority Tasks">
+  <meta property="og:description" content="August 2026 D2L wrap-up: trainings, vanity URL, team decisions, and deployment hardening.">
+  <meta property="og:url" content="https://mcreed-mlri.github.io/lms-wiki/august-2026-priority-tasks.html">
+  <meta property="og:image" content="https://mcreed-mlri.github.io/lms-wiki/assets/icons/icon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="LACE August 2026 Priority Tasks">
+  <meta name="twitter:description" content="August 2026 D2L wrap-up and priority tasks.">
+  <meta name="twitter:image" content="https://mcreed-mlri.github.io/lms-wiki/assets/icons/icon.svg">
+  <script src="assets/js/sidebar.js?v=20260529-redesign"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <div class="brand">August Tasks</div>
+    <h2>LACE Learning Hub</h2>
+  </div>
+  <nav>
+    <span class="section-label">Overview</span>
+    <a href="#priority-scan">Priority Scan</a>
+    <a href="#team-decisions">Team Decisions</a>
+    <a href="#technical-follow-ups">Technical Follow-ups</a>
+    <a href="#what-happened">What Happened During the Delay</a>
+
+    <span class="section-label">Operations</span>
+    <a href="#task-summary">Task Summary</a>
+
+    <span class="section-label">Related Docs</span>
+    <a href="index.html" class="external">Home</a>
+    <a href="june-2026-priority-tasks.html" class="external">June 2026 (Historical)</a>
+    <a href="team-wiki.html" class="external">Team Wiki</a>
+    <a href="marlana.html" class="external">Marlie's Workspace</a>
+    <a href="mlri-architecture.html" class="external">LACE Architecture</a>
+    <a href="api-flashcards.html" class="external">API Meeting Flashcards</a>
+    <a href="supabase-schema.html" class="external">Supabase Schema</a>
+    <a href="supabase-visualizer.html" class="external">Supabase Visualizer</a>
+  </nav>
+</aside>
+
+<main id="main">
+
+  <h1>LACE Learning Hub: August 2026 Priority Tasks</h1>
+  <p class="page-subtitle">August 2026 D2L wrap-up, team decision milestones, production login verification, and deployment hardening.</p>
+
+  <section class="guide-section" id="priority-scan">
+    <h2>Priority Scan</h2>
+
+    <div class="tip">
+      <strong>The June implementation window ended, and D2L granted an extension to August 2026.</strong> The remaining items are scheduled work: required trainings, vanity URL process, custom email configuration, and the closure call with D2L. They are not emergencies—team decisions and verification happen in parallel.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Priority</th><th>August Focus</th><th>Why It Matters</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>D2L trainings &amp; setup</strong></td><td>Staff trainings, vanity URL domain, custom email templates, closure checklist.</td><td>Completes the D2L implementation window and transitions to standard support.</td></tr>
+          <tr><td><strong>Team decisions</strong></td><td>Attributes sign-off, UPL access matrix, completion definition, official org name.</td><td>Unblocks pilot build and reporting automation.</td></tr>
+          <tr><td><strong>Production verification</strong></td><td>Deploy Supabase RLS migration, end-to-end Brightspace login test on deployed Hub, service-user sync registration.</td><td>Moves the Learning Hub from demo to production-ready for fall pilots.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="guide-section" id="team-decisions">
+    <h2>Team Decisions Needed</h2>
+
+    <div class="warning">
+      <strong>These are the non-technical blockers for pilot readiness.</strong> They don't require D2L help—they require team alignment on policy, user roles, and product decisions.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Decision</th><th>Current Status</th><th>Impact</th><th>Timeline</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>User Attributes schema</strong></td><td>Drafted and ready for team sign-off</td><td>Enables enrollment automation and Manager Dashboard reporting</td><td>Early August</td></tr>
+          <tr><td><strong>UPL access matrix</strong></td><td>Draft ready (top blocker)</td><td>Defines content routing and role permissions for lawyers, advocates, paralegals</td><td>ASAP</td></tr>
+          <tr><td><strong>Completion criteria definition</strong></td><td>Policy draft pending</td><td>Determines whether custom LACE tracking is required or native Brightspace video triggers suffice</td><td>Before content build</td></tr>
+          <tr><td><strong>Official org &amp; platform name</strong></td><td>Branding delayed from June</td><td>Unblocks vanity URL process and public messaging</td><td>Early August</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="guide-section" id="technical-follow-ups">
+    <h2>Technical Follow-ups (High-Level)</h2>
+
+    <p>These are production verification and configuration tasks. Detailed specs remain in the June priority page.</p>
+
+    <h3>Supabase &amp; Data Layer</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label"><strong>Apply RLS migration:</strong> deploy <code>supabase-rls-learning-items.sql</code> to production before Phase 2 learner data lands.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Validate catalog sync:</strong> verify <code>learning_items</code> table populates correctly from the Brightspace Course Offering API.</span></li>
+    </ul>
+
+    <h3>Production Login &amp; Authentication</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label"><strong>Configure production environment:</strong> set <code>NEXT_PUBLIC_OAUTH_TENANT</code>, <code>NEXT_PUBLIC_OAUTH_REDIRECT_URI</code>, and related OAuth environment variables on the deployed Hub.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>End-to-end Brightspace sign-in test:</strong> verify learners can sign in through the real Brightspace OAuth flow on the deployed Learning Hub (no demo mode).</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Session &amp; token verification:</strong> confirm session cookies, token refresh, and <code>/api/me</code> identity endpoint work correctly in production.</span></li>
+    </ul>
+
+    <h3>Service-User &amp; Server-to-Server OAuth</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label"><strong>Service-user sync app registration:</strong> finalize the D2L Manage Extensibility app registration for server-to-server OAuth, including JWKS URL and required scopes.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Client Credentials flow test:</strong> validate JWT client assertion generation and access token requests.</span></li>
+    </ul>
+
+    <h3>D2L Ticket Queue</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled><span class="label"><strong>Attribute limit clarification:</strong> get written confirmation: 10 or 50 total attributes? How many can be multi-value? Which attributes can drive Learning Groups?</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Vanity URL:</strong> domain selection → submit to D2L for internal request and DNS records.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Custom email templates:</strong> review and approve branded email notifications for learner events.</span></li>
+      <li><input type="checkbox" disabled><span class="label"><strong>Closure call:</strong> confirm all implementation items are covered and transition to standard support.</span></li>
+    </ul>
+  </section>
+
+  <section class="guide-section" id="what-happened">
+    <h2>What Happened During the Delay</h2>
+
+    <p>The June-to-August extension was used productively. Here's what the team built instead of waiting:</p>
+
+    <ul>
+      <li><span class="status done">Done</span> <strong>Brightspace Manager command center:</strong> admin dashboard for sync monitoring, learner data verification, and operations troubleshooting.</li>
+      <li><span class="status done">Done</span> <strong>Brightspace admin MCP server:</strong> Claude integration for automated data inspection, diagnostics, and admin tasks.</li>
+      <li><span class="status done">Done</span> <strong>Hub login is real:</strong> the Learning Hub learner sign-in now uses end-to-end Brightspace OAuth (no demo-only mode for live usage).</li>
+      <li><span class="status done">Done</span> <strong>Service user created:</strong> the non-human Brightspace account for server-to-server sync is established and ready for app registration.</li>
+      <li><span class="status done">Done</span> <strong>Ops &amp; integration docs:</strong> credential rotation runbook and assumption-testing checklist drafted (local operations runbook, not published).</li>
+    </ul>
+  </section>
+
+  <section class="guide-section" id="task-summary">
+    <h2>Task Summary</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>August Focus</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>D2L coordination</strong></td><td>Trainings, vanity URL, custom email, closure call, attribute limit confirmation.</td></tr>
+          <tr><td><strong>Team decisions</strong></td><td>Attributes sign-off, UPL access matrix, completion definition, official org name.</td></tr>
+          <tr><td><strong>Production verification</strong></td><td>RLS migration deployment, production login end-to-end test, service-user sync registration, catalog sync validation.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  (function () {
+    const links = document.querySelectorAll('#sidebar nav a[href^="#"]:not(.external)');
+    const sections = Array.from(links).map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+
+    function setActive() {
+      let current = sections[0];
+      sections.forEach(section => {
+        if (section.getBoundingClientRect().top <= 140) {
+          current = section;
+        }
+      });
+
+      links.forEach(link => {
+        link.classList.toggle('active', current && link.getAttribute('href') === '#' + current.id);
+      });
+    }
+
+    setActive();
+    window.addEventListener('scroll', setActive, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

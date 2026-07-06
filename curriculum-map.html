@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curriculum Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#1E3A5F">
+  <meta name="description" content="An interactive sticky-note wall of how the LACE curriculum will be organized: Legal Skills across the case lifecycle and Substantive Law practice areas.">
+
+  <style>
+    /* ─────────────────────────────────────────────
+       Standalone curriculum map. Self-contained:
+       no shared stylesheet, no sidebar, no wiki chrome.
+    ───────────────────────────────────────────── */
+    :root {
+      --navy:   #1E3A5F;
+      --blue:   #2C6FAC;
+      --teal:   #2A8F82;
+      --amber:  #B06A00;
+      --bg:     #F4F6F9;
+      --white:  #FFFFFF;
+      --border: #D0D7E2;
+      --text:   #222831;
+      --muted:  #5A6478;
+      --ph-bg:  #EEF1F6;
+      --ph-border: #9BAAC2;
+      --tip-bg: #E8F6F3;
+      --tip-border: #2A8F82;
+
+      --note-blue:   #BFE0F2;
+      --note-orange: #F4B183;
+      --note-teal:   #7FC7BC;
+      --note-green:  #C6E86B;
+      --note-ink:    #23303a;
+      --tape:        rgba(255, 255, 255, 0.55);
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-pill: 999px;
+      --shadow-sm: 0 1px 2px rgba(30, 58, 95, 0.06), 0 2px 6px rgba(30, 58, 95, 0.05);
+      --shadow-md: 0 4px 12px rgba(30, 58, 95, 0.08), 0 2px 4px rgba(30, 58, 95, 0.04);
+      --shadow-lg: 0 12px 28px rgba(30, 58, 95, 0.12), 0 4px 10px rgba(30, 58, 95, 0.06);
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+      --dur-fast: 0.15s;
+      --dur: 0.25s;
+      --focus-ring: 0 0 0 3px rgba(44, 111, 172, 0.4);
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+
+    .skip-link {
+      position: absolute; left: -999px; top: 0;
+      background: var(--navy); color: #fff;
+      padding: 0.5rem 0.9rem; border-radius: var(--radius-sm);
+      z-index: 10;
+    }
+    .skip-link:focus { left: 1rem; top: 1rem; }
+
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+
+    /* Header */
+    .cm-hero {
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      color: #fff;
+      padding: 2rem 0 1.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .cm-kicker {
+      display: inline-block;
+      font-family: "DM Mono", ui-monospace, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #BFE0F2;
+      margin-bottom: 0.4rem;
+    }
+    .cm-hero h1 { margin: 0 0 0.4rem; font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.1; font-weight: 800; }
+    .cm-hero p { margin: 0; max-width: 64ch; font-size: 1rem; color: rgba(255,255,255,0.85); }
+    .cm-hero strong { color: #fff; }
+
+    h2 { font-size: 1.35rem; font-weight: 700; color: var(--navy); margin: 0 0 0.5rem; }
+    section { margin-bottom: 2.5rem; }
+    a { color: var(--blue); }
+
+    .cm-lead { font-size: 1rem; color: var(--muted); max-width: 70ch; }
+
+    /* Compact legend bar */
+    .cm-legend {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.25rem;
+      margin: 0 0 1.25rem; padding: 0; list-style: none;
+      font-size: 0.85rem; color: var(--muted);
+    }
+    .cm-legend li { display: flex; align-items: center; gap: 0.5rem; }
+    .cm-swatch { width: 1.1rem; height: 1.1rem; border-radius: 3px; box-shadow: var(--shadow-sm); flex: none; }
+    .cm-swatch.is-blue   { background: var(--note-blue); }
+    .cm-swatch.is-orange { background: var(--note-orange); }
+    .cm-swatch.is-teal   { background: var(--note-teal); }
+
+    .tip {
+      margin: 1.5rem 0 0;
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-left-width: 4px;
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1.1rem;
+    }
+    .tip p { margin: 0; font-size: 0.95rem; }
+
+    /* Branch toolbar */
+    .cm-toolbar { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin: 0 0 0.5rem; }
+    .cm-branch-tag {
+      display: inline-block; background: var(--note-green); color: var(--note-ink);
+      font-weight: 700; letter-spacing: 0.02em; padding: 0.35rem 0.9rem;
+      border-radius: 4px; box-shadow: var(--shadow-sm); transform: rotate(-1.2deg);
+    }
+    .cm-expand-all {
+      margin-left: auto; font: inherit; font-size: 0.85rem; font-weight: 600;
+      color: var(--blue); background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-pill); padding: 0.35rem 0.9rem; cursor: pointer;
+      transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+    }
+    .cm-expand-all:hover { background: var(--ph-bg); border-color: var(--ph-border); }
+    .cm-expand-all:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+    .cm-branch-note { margin: 0 0 1.25rem; color: var(--muted); font-size: 0.95rem; }
+
+    /* Wall = row of columns */
+    .cm-wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; align-items: start; }
+    .cm-col { align-self: start; }
+
+    .cm-col-head {
+      display: block; width: 100%; text-align: left; font: inherit; font-weight: 700;
+      color: var(--note-ink); background: var(--note-blue); border: none; border-radius: 4px;
+      padding: 0.85rem 2.2rem 0.85rem 0.9rem; cursor: pointer; position: relative;
+      box-shadow: var(--shadow-md);
+      transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+    }
+    .cm-col-head::before {
+      content: ""; position: absolute; top: -8px; left: 50%;
+      width: 46px; height: 16px; transform: translateX(-50%) rotate(-2deg);
+      background: var(--tape); border-radius: 2px;
+    }
+    .cm-col-head::after {
+      content: ""; position: absolute; right: 0.95rem; top: 50%;
+      width: 8px; height: 8px; border-right: 2px solid var(--note-ink); border-bottom: 2px solid var(--note-ink);
+      transform: translateY(-70%) rotate(45deg); transition: transform var(--dur-fast) var(--ease); opacity: 0.65;
+    }
+    .cm-col-head[aria-expanded="true"]::after { transform: translateY(-30%) rotate(-135deg); }
+    .cm-col-head:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .cm-col-head:focus-visible { outline: none; box-shadow: var(--shadow-md), var(--focus-ring); }
+    .cm-col-count { display: block; font-size: 0.75rem; font-weight: 600; color: var(--note-ink); opacity: 0.7; margin-top: 0.15rem; }
+
+    .cm-notes { display: none; padding: 0.5rem 0 0; margin: 0; list-style: none; }
+    .cm-col.is-open .cm-notes { display: block; }
+
+    .cm-note {
+      position: relative; background: var(--note-orange); color: var(--note-ink);
+      border-radius: 3px; padding: 0.55rem 0.7rem; margin: 0.4rem 0 0;
+      font-size: 0.9rem; line-height: 1.35; box-shadow: var(--shadow-sm);
+    }
+    .cm-note.is-sub { background: var(--note-teal); margin-left: 1.1rem; font-size: 0.85rem; }
+    .cm-note.is-sub::before { content: ""; position: absolute; left: -0.7rem; top: 50%; width: 0.55rem; height: 1px; background: var(--ph-border); }
+    .cm-note .cm-tentative {
+      display: inline-block; margin-left: 0.35rem; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase; color: var(--amber); vertical-align: 0.05em;
+    }
+    span.cm-tentative {
+      display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--amber);
+    }
+
+    /* Substantive law grid */
+    .cm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; margin-top: 1.25rem; }
+    .cm-tile {
+      background: var(--note-blue); color: var(--note-ink); font-weight: 600; text-align: center;
+      padding: 1.1rem 0.75rem; border-radius: 4px; box-shadow: var(--shadow-sm);
+      transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+    }
+    .cm-tile:nth-child(3n)   { transform: rotate(0.8deg); }
+    .cm-tile:nth-child(3n+1) { transform: rotate(-0.7deg); }
+    .cm-tile:hover { transform: translateY(-2px) rotate(0); box-shadow: var(--shadow-md); }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .cm-col:nth-child(even) .cm-col-head { transform: rotate(-0.5deg); }
+      .cm-col:nth-child(odd) .cm-col-head  { transform: rotate(0.5deg); }
+      .cm-col:nth-child(even) .cm-col-head:hover,
+      .cm-col:nth-child(odd) .cm-col-head:hover { transform: translateY(-2px) rotate(0); }
+    }
+
+    /* Source photo gallery */
+    .cm-photos > summary { cursor: pointer; font-weight: 700; color: var(--navy); padding: 0.75rem 0; font-size: 1.05rem; }
+    .cm-photos > summary:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-sm); }
+    .cm-photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.9rem; margin-top: 1rem; }
+    .cm-photo-grid img {
+      width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 3;
+      border-radius: var(--radius-md); border: 1px solid var(--border); box-shadow: var(--shadow-sm); background: var(--ph-bg);
+    }
+
+    .cm-updated { color: var(--muted); font-size: 0.85rem; margin-top: 1.5rem; }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="cm-hero">
+  <div class="wrap">
+    <span class="cm-kicker">LACE Curriculum</span>
+    <h1>Curriculum Map</h1>
+    <p>How the curriculum is taking shape. Click a heading to open it. Work in progress.</p>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <ul class="cm-legend">
+    <li><span class="cm-swatch is-blue" aria-hidden="true"></span> Skill area</li>
+    <li><span class="cm-swatch is-orange" aria-hidden="true"></span> Topic</li>
+    <li><span class="cm-swatch is-teal" aria-hidden="true"></span> Sub-topic</li>
+    <li><span class="cm-tentative" aria-hidden="true">tentative</span> Flagged "?" on the wall</li>
+  </ul>
+
+  <section id="legal-skills">
+    <div class="cm-toolbar">
+      <span class="cm-branch-tag">Legal Skills</span>
+      <button type="button" class="cm-expand-all" data-target="wall-skills">Expand all</button>
+    </div>
+
+    <div class="cm-wall" id="wall-skills">
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">Foundations<span class="cm-col-count">8 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">Case Lifecycle</li>
+          <li class="cm-note">History of Legal Aid</li>
+          <li class="cm-note">Trauma-Informed Practice</li>
+          <li class="cm-note">Cultural Humility</li>
+          <li class="cm-note">Structural Competence</li>
+          <li class="cm-note">Systems Thinking</li>
+          <li class="cm-note">Working with Interpreters &amp; Translators</li>
+          <li class="cm-note">Working with Interdisciplinary Teams (ethics, strategy, etc.)</li>
+        </ul>
+      </div>
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">Ethics<span class="cm-col-count">2 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">MA Rules of Prof. Conduct</li>
+          <li class="cm-note is-sub">Competence / Diligence</li>
+          <li class="cm-note is-sub">Confidentiality &amp; A-C Privilege</li>
+          <li class="cm-note is-sub">Conflicts of Interest</li>
+          <li class="cm-note is-sub">Scope of Rep &amp; Client-Directed Decisions</li>
+          <li class="cm-note is-sub">Candor to Tribunal</li>
+          <li class="cm-note is-sub">Duties to Third Parties</li>
+          <li class="cm-note is-sub">Supervising Paralegals, Law Students, Non-Legal Staff</li>
+          <li class="cm-note is-sub">Withdrawal &amp; Termination of Rep</li>
+          <li class="cm-note is-sub">LSC Restrictions</li>
+          <li class="cm-note">AI &amp; Legal Aid</li>
+        </ul>
+      </div>
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">Pre-Engagement Prep<span class="cm-col-count">2 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">Referral &amp; Intake</li>
+          <li class="cm-note">Conflict Checks</li>
+        </ul>
+      </div>
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">Legal Writing<span class="cm-col-count">7 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">Legal Writing Basics</li>
+          <li class="cm-note is-sub">Audience</li>
+          <li class="cm-note is-sub">Active vs Passive Voice</li>
+          <li class="cm-note is-sub">Tone</li>
+          <li class="cm-note is-sub">Point of View</li>
+          <li class="cm-note is-sub">Plain Language vs Legalese</li>
+          <li class="cm-note is-sub">Concise Sentences</li>
+          <li class="cm-note is-sub">Limit Nominalizations</li>
+          <li class="cm-note is-sub">Remove Unnecessary Words</li>
+          <li class="cm-note">Types of Legal Writing</li>
+          <li class="cm-note is-sub">Emails &amp; Texts</li>
+          <li class="cm-note is-sub">Demand Letters</li>
+          <li class="cm-note is-sub">Memos</li>
+          <li class="cm-note is-sub">Briefs &amp; Motions</li>
+          <li class="cm-note is-sub">Contracts &amp; Transactional Documents</li>
+          <li class="cm-note is-sub">Training &amp; Know Your Rights Material</li>
+          <li class="cm-note is-sub">Client Communications</li>
+          <li class="cm-note">Legal Writing Prep</li>
+          <li class="cm-note">Organization &amp; Structure</li>
+          <li class="cm-note">Clusters</li>
+          <li class="cm-note">The Existing Process</li>
+          <li class="cm-note">Legal Writing + AI</li>
+        </ul>
+      </div>
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">Legal Research<span class="cm-col-count">10 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">Legal Research Planning</li>
+          <li class="cm-note">Primary &amp; Secondary Sources</li>
+          <li class="cm-note">Research Strategy</li>
+          <li class="cm-note">Legal Databases</li>
+          <li class="cm-note">Public Records &amp; Open-Source Docs</li>
+          <li class="cm-note">Identifying Claims</li>
+          <li class="cm-note">Identifying Defenses</li>
+          <li class="cm-note">Identifying Damages</li>
+          <li class="cm-note">Mapping Evidence &amp; Elements</li>
+          <li class="cm-note">Procedure &amp; Logistics</li>
+        </ul>
+      </div>
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">Pre-Trial / Advocacy Skills<span class="cm-col-count">7 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">Initial Client Interviews <span class="cm-tentative">unit intro</span></li>
+          <li class="cm-note is-sub">Trauma-Informed Interviewing</li>
+          <li class="cm-note is-sub">Working with Translators &amp; Interpreters</li>
+          <li class="cm-note is-sub">Prep for Initial Client Interview</li>
+          <li class="cm-note is-sub">Building Client Rapport</li>
+          <li class="cm-note is-sub">Establishing A-C Relationship</li>
+          <li class="cm-note is-sub">Eliciting Client Narrative</li>
+          <li class="cm-note is-sub">Open vs Closed Questions</li>
+          <li class="cm-note is-sub">Identifying Key Facts</li>
+          <li class="cm-note is-sub">Issue Spotting</li>
+          <li class="cm-note is-sub">Threshold Legal Issues</li>
+          <li class="cm-note is-sub">Closing the Interview</li>
+          <li class="cm-note is-sub">Documenting the Interview</li>
+          <li class="cm-note">Informal Fact Investigation</li>
+          <li class="cm-note is-sub">Planning for Informal Fact Investigation</li>
+          <li class="cm-note is-sub">Record Releases</li>
+          <li class="cm-note is-sub">Witness Interviews</li>
+          <li class="cm-note is-sub">Physical Evidence</li>
+          <li class="cm-note is-sub">Public Records &amp; Open-Source Research</li>
+          <li class="cm-note is-sub">Expert Consultation</li>
+          <li class="cm-note">Case Evaluation</li>
+          <li class="cm-note">Client Counseling</li>
+          <li class="cm-note">Case Strategy</li>
+          <li class="cm-note">Case Theory</li>
+          <li class="cm-note">Affirmative Litigation Planning</li>
+        </ul>
+      </div>
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">Trial Skills / Advocacy<span class="cm-col-count">14 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">Litigation Planning</li>
+          <li class="cm-note">Pleadings</li>
+          <li class="cm-note">Discovery</li>
+          <li class="cm-note">Motions</li>
+          <li class="cm-note">Pre-Trial Conference</li>
+          <li class="cm-note">Jury Selection</li>
+          <li class="cm-note">Exhibits</li>
+          <li class="cm-note">Opening Statements</li>
+          <li class="cm-note">Direct Exams</li>
+          <li class="cm-note">Cross Exams</li>
+          <li class="cm-note">Witnesses &amp; Experts <span class="cm-tentative">tentative</span></li>
+          <li class="cm-note">Objections</li>
+          <li class="cm-note">Closing Statements</li>
+          <li class="cm-note">Oral Argument / Best Practice <span class="cm-tentative">tentative</span></li>
+        </ul>
+      </div>
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">Post-Trial Skills<span class="cm-col-count">3 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">Verdicts</li>
+          <li class="cm-note">Post-Trial Motions</li>
+          <li class="cm-note">Preserving Issues for Appeal</li>
+        </ul>
+      </div>
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">Appellate Practice<span class="cm-col-count">6 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">Preserving Issues for Appeal</li>
+          <li class="cm-note">Appellate Strategy</li>
+          <li class="cm-note">Briefing <span class="cm-tentative">tentative</span></li>
+          <li class="cm-note">Oral Argument</li>
+          <li class="cm-note">Rehearing / Rehearing en Banc</li>
+          <li class="cm-note">Certiorari</li>
+        </ul>
+      </div>
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">ADR<span class="cm-col-count">3 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">Negotiation</li>
+          <li class="cm-note">Arbitration</li>
+          <li class="cm-note">Settlement</li>
+        </ul>
+      </div>
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">Legislative Advocacy<span class="cm-col-count">4 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">Preparing for Legislative Advocacy <span class="cm-tentative">tentative</span></li>
+          <li class="cm-note">Legislative &amp; Budget Process <span class="cm-tentative">tentative</span></li>
+          <li class="cm-note">Administrative Advocacy <span class="cm-tentative">tentative</span></li>
+          <li class="cm-note">Lobbying Strategies <span class="cm-tentative">tentative</span></li>
+        </ul>
+      </div>
+
+      <div class="cm-col">
+        <button type="button" class="cm-col-head" aria-expanded="false">Community / Movement Lawyering<span class="cm-col-count">4 topics</span></button>
+        <ul class="cm-notes">
+          <li class="cm-note">Planning for Community / Movement Lawyering <span class="cm-tentative">tentative</span></li>
+          <li class="cm-note">Building Community Partnerships <span class="cm-tentative">tentative</span></li>
+          <li class="cm-note">Accountability &amp; Ethics <span class="cm-tentative">tentative</span></li>
+          <li class="cm-note">Key Concepts <span class="cm-tentative">tentative</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="substantive-law">
+    <div class="cm-toolbar">
+      <span class="cm-branch-tag">Substantive Law</span>
+      <span class="cm-branch-note" style="margin:0 0 0 auto">Practice areas, not yet mapped in detail.</span>
+    </div>
+
+    <div class="cm-grid">
+      <div class="cm-tile">Housing Law</div>
+      <div class="cm-tile">Family Law</div>
+      <div class="cm-tile">Immigration Law</div>
+      <div class="cm-tile">Education Law</div>
+      <div class="cm-tile">Employment Law</div>
+      <div class="cm-tile">Public Benefits Law</div>
+      <div class="cm-tile">Elder Law</div>
+      <div class="cm-tile">Health Law</div>
+      <div class="cm-tile">Consumer Protection Law</div>
+      <div class="cm-tile">Children's Law</div>
+    </div>
+  </section>
+
+  <section id="source-photos">
+    <details class="cm-photos">
+      <summary>Source photos: the original wall</summary>
+      <div class="cm-photo-grid">
+        <img src="pics/IMG_6301.jpeg" alt="Wide view of the planning wall showing Legal Skills columns of sticky notes." loading="lazy">
+        <img src="pics/IMG_6302.jpeg" alt="Legal Skills column headers with topic and sub-topic notes beneath them." loading="lazy">
+        <img src="pics/IMG_6303.jpeg" alt="Close view of Foundations, Ethics, Pre-Engagement Prep, Legal Writing, and Legal Research columns." loading="lazy">
+        <img src="pics/IMG_6304.jpeg" alt="Angled view showing the Legal Skills and Substantive Law branch labels and corner notes." loading="lazy">
+        <img src="pics/IMG_6305.jpeg" alt="Substantive Law row: Housing, Family, Immigration, Education, and other practice-area notes." loading="lazy">
+        <img src="pics/IMG_6306.jpeg" alt="Detail of Legal Writing and Legal Research sub-topic notes." loading="lazy">
+        <img src="pics/IMG_6307.jpeg" alt="Detail of Pre-Trial, Legal Research, Legal Writing, Pre-Engagement Prep, and Ethics columns." loading="lazy">
+        <img src="pics/IMG_6308.jpeg" alt="Detail of Trial Skills and Pre-Trial Advocacy sub-topic notes." loading="lazy">
+        <img src="pics/IMG_6309.jpeg" alt="Detail of Appellate Practice, Post-Trial, Trial Skills, and Pre-Trial columns." loading="lazy">
+        <img src="pics/IMG_6310.jpeg" alt="Detail of Post-Trial, Appellate, ADR, Legislative Advocacy, and Community/Movement Lawyering columns." loading="lazy">
+      </div>
+    </details>
+
+    <p class="cm-updated"><em>Digitized from the team planning wall &middot; 2026-06-30</em></p>
+  </section>
+
+</main>
+
+<script>
+  (function () {
+    'use strict';
+
+    // Expand / collapse individual columns
+    document.querySelectorAll('.cm-col-head').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var col = btn.closest('.cm-col');
+        var open = col.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+    });
+
+    // Expand-all / collapse-all per branch
+    document.querySelectorAll('.cm-expand-all').forEach(function (toggle) {
+      var target = document.getElementById(toggle.getAttribute('data-target'));
+      if (!target) return;
+      toggle.addEventListener('click', function () {
+        var cols = Array.prototype.slice.call(target.querySelectorAll('.cm-col'));
+        var shouldOpen = cols.some(function (c) { return !c.classList.contains('is-open'); });
+        cols.forEach(function (c) {
+          c.classList.toggle('is-open', shouldOpen);
+          var head = c.querySelector('.cm-col-head');
+          if (head) head.setAttribute('aria-expanded', String(shouldOpen));
+        });
+        toggle.textContent = shouldOpen ? 'Collapse all' : 'Expand all';
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

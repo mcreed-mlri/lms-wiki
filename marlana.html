@@ -59,7 +59,8 @@
 
     <span class="section-label">Related Docs</span>
     <a href="index.html" class="external">Home</a>
-    <a href="june-2026-priority-tasks.html" class="external">June Priority Tasks</a>
+    <a href="august-2026-priority-tasks.html" class="external">August Priority Tasks</a>
+    <a href="june-2026-priority-tasks.html" class="external">June Tasks (Historical)</a>
     <a href="team-wiki.html" class="external">Team Wiki</a>
     <a href="brightspace-interactive-guide.html" class="external">Brightspace Native Tools Reference</a>
     <a href="brightspace-map.html" class="external">Brightspace Map</a>
@@ -84,7 +85,7 @@
     </div>
 
     <div class="note">
-      <strong>June execution checklist:</strong> see <a href="june-2026-priority-tasks.html">LACE Learning Hub: June 2026 Priority Tasks</a> for the production-hardening roadmap, including Service User setup, Course 6703 metadata sync, OAuth/JWKS implementation, LTI 1.3 readiness, attributes/groups freeze, accessibility, and completion criteria.
+      <strong>Current checklist:</strong> see <a href="august-2026-priority-tasks.html">LACE Learning Hub: August 2026 Priority Tasks</a> for D2L wrap-up, team decisions, and production verification. Historical context on June work is in the <a href="june-2026-priority-tasks.html">June 2026 Priority Tasks</a> archive.
     </div>
 
     <div class="table-wrap">
@@ -107,8 +108,8 @@
           </tr>
           <tr>
             <td><strong>Brightspace API</strong></td>
-            <td>OAuth 2.0 app is registered; Learning Hub can complete OAuth and call Brightspace <code>whoami</code>.</td>
-            <td>Create the Service User path, then use Course Offering <code>6703</code> to validate metadata sync into <code>learning_items</code>.</td>
+            <td>Learner login is live end-to-end (OAuth → session → <code>/api/me</code>, token refresh). Service-user sync app registration is pending.</td>
+            <td>Finalize service-user OAuth registration, then validate metadata sync into <code>learning_items</code> with Course Offering <code>6703</code>.</td>
             <td><span class="status in-progress">In Progress</span></td>
           </tr>
           <tr>
@@ -116,6 +117,12 @@
             <td>One app with learner-facing discovery/progress views; Brightspace operations now hand off to Brightspace Manager.</td>
             <td>Keep the Hub focused on learner, manager, and program reporting while Brightspace Manager owns sync and diagnostics.</td>
             <td><span class="status in-progress">Planned</span></td>
+          </tr>
+          <tr>
+            <td><strong>Brightspace Manager &amp; Admin MCP</strong></td>
+            <td>Command center for sync monitoring and operations; Claude integration for automated diagnostics.</td>
+            <td>Integrate into ops workflows for troubleshooting and data verification during pilot ramp-up.</td>
+            <td><span class="status done">Built</span></td>
           </tr>
           <tr>
             <td><strong>Attributes and groups</strong></td>
@@ -133,7 +140,11 @@
       </table>
     </div>
 
-    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-06-08</em></p>
+    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-07-06</em></p>
+
+    <div class="tip">
+      <strong>July 2026 status.</strong> D2L granted an extension to <strong>August 2026</strong> for trainings, the vanity URL, and remaining wrap-up items. The Learning Hub gained real Brightspace login (OAuth → session → <code>/api/me</code>, with token refresh), locked-down API routes, a written Supabase RLS migration, and local operations runbooks (credentials, rotation, rollback; assumption-by-assumption test plan, including the unresolved 10-vs-50 user-attribute limit question for D2L). See <a href="august-2026-priority-tasks.html">August 2026 Priority Tasks</a> for current status.
+    </div>
   </section>
 
   <section class="guide-section" id="current-phase">
@@ -161,7 +172,7 @@
       </table>
     </div>
 
-    <p><strong>Bottom line:</strong> the wrapper can carry course delivery now. API work unlocks real progress, dashboard data, SSO, and cross-system reporting. The active June checklist is tracked in <a href="june-2026-priority-tasks.html">June 2026 Priority Tasks</a>.</p>
+    <p><strong>Bottom line:</strong> the wrapper can carry course delivery now. API work unlocks real progress, dashboard data, SSO, and cross-system reporting. The active worklist is tracked in <a href="august-2026-priority-tasks.html">August 2026 Priority Tasks</a>.</p>
   </section>
 
   <section class="guide-section" id="roadblocks">
@@ -324,20 +335,20 @@
             </div>
             <!-- June -->
             <div class="timeline-cell">
-              <a href="#marlie-phase-0" class="timeline-block active">
+              <a href="#marlie-phase-0" class="timeline-block done">
                 <span class="timeline-block-phase">Phase 0</span>
                 <span class="timeline-block-title">LMS Wrapper Pilot</span>
                 <span class="timeline-block-desc">Demo 6698 deploy, Content outline links.</span>
-                <span class="timeline-block-status">● Active</span>
+                <span class="timeline-block-status">✓ Done</span>
               </a>
             </div>
             <!-- July -->
             <div class="timeline-cell">
-              <a href="#lace-hub-dashboard" class="timeline-block planned">
+              <a href="#lace-hub-dashboard" class="timeline-block active">
                 <span class="timeline-block-phase">Phase 1-2</span>
                 <span class="timeline-block-title">Outreach Prep</span>
                 <span class="timeline-block-desc">Coordination of custom learner outreach & templates.</span>
-                <span class="timeline-block-status">○ Next</span>
+                <span class="timeline-block-status">● Active</span>
               </a>
             </div>
             <!-- August -->
@@ -346,7 +357,7 @@
                 <span class="timeline-block-phase">Phase 2-3</span>
                 <span class="timeline-block-title">Learner Portal</span>
                 <span class="timeline-block-desc">V1 Learning Hub dashboard.</span>
-                <span class="timeline-block-status">○ Planned</span>
+                <span class="timeline-block-status">○ Next</span>
               </a>
             </div>
             <!-- Sept-Feb -->
@@ -377,20 +388,20 @@
             </div>
             <!-- June -->
             <div class="timeline-cell">
-              <a href="#marlie-phase-1" class="timeline-block active">
+              <a href="#marlie-phase-1" class="timeline-block done">
                 <span class="timeline-block-phase">Phase 1</span>
                 <span class="timeline-block-title">API & Sync</span>
-                <span class="timeline-block-desc">Service User setup, Course 6703 sync validation.</span>
-                <span class="timeline-block-status">● Active</span>
+                <span class="timeline-block-desc">Learner login live end-to-end; service-user sync pending.</span>
+                <span class="timeline-block-status">✓ Done</span>
               </a>
             </div>
             <!-- July -->
             <div class="timeline-cell">
-              <a href="#marlie-phase-2" class="timeline-block planned">
+              <a href="#marlie-phase-2" class="timeline-block active">
                 <span class="timeline-block-phase">Phase 2</span>
                 <span class="timeline-block-title">Custom Data Layer</span>
-                <span class="timeline-block-desc">Supabase catalog sync, activity tracking, feed.</span>
-                <span class="timeline-block-status">○ Next</span>
+                <span class="timeline-block-desc">Supabase RLS deployment, catalog sync, activity tracking.</span>
+                <span class="timeline-block-status">● Active</span>
               </a>
             </div>
             <!-- August -->
@@ -399,7 +410,7 @@
                 <span class="timeline-block-phase">Phase 3</span>
                 <span class="timeline-block-title">Reporting Engine</span>
                 <span class="timeline-block-desc">Manager/staff summaries, equity analysis.</span>
-                <span class="timeline-block-status">○ Planned</span>
+                <span class="timeline-block-status">○ Next</span>
               </a>
             </div>
             <!-- Sept-Feb -->
@@ -785,7 +796,7 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
     <h3>Brightspace Meeting Notes</h3>
     <ul>
       <li><strong>Brightspace test site:</strong> the MLRI test tenant is live at <a href="https://mlritest.brightspace.com/d2l/login" target="_blank" rel="noopener">mlritest.brightspace.com</a>. Use it for API testing, native homepage cleanup, wrapper upload tests, sequence viewer tests, roles, enrollments, and completion criteria.</li>
-      <li><strong>Vanity URL / custom domain:</strong> hard deadline week of June 15-19, 2026. D2L needs the desired vanity URL before they can provide DNS records.</li>
+      <li><strong>Vanity URL / custom domain:</strong> D2L needs the desired vanity URL before they can provide DNS records. <em>Update July 2026: extended to August 2026 along with trainings and other wrap-up items.</em> Cutover checklist lives in <code>c:\dev\INTEGRATION-PLAYBOOK.md</code>.</li>
       <li><strong>SSL option 1:</strong> preferred default unless IT objects. Let D2L manage the SSL certificate and renewal through AWS Certificate Manager; IT adds the D2L-provided validation CNAME for automatic renewal.</li>
       <li><strong>SSL option 2:</strong> use only if MLRI already has a valid wildcard certificate and is willing to send D2L the certificate and private key, then own renewals and replacement before expiry.</li>
       <li><strong>API specialist follow-up:</strong> D2L is working to bring in an implementation specialist for Service User, Client Credentials/JWKS, API version, endpoint, and scope questions.</li>
@@ -932,8 +943,8 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
           <tr id="vanity-url">
             <td><strong>Vanity URL / custom domain</strong></td>
             <td>What should the learner-facing domain be, and who owns it?</td>
-            <td>Most urgent June task: send D2L the desired vanity URL so they can return DNS records. Preferred SSL path is D2L-managed AWS Certificate Manager renewal unless MLRI IT requires using an existing wildcard certificate.</td>
-            <td><span class="status blocked">Needs URL</span></td>
+            <td>Send D2L the desired vanity URL so they can return DNS records (extended to August 2026). Preferred SSL path is D2L-managed AWS Certificate Manager renewal unless MLRI IT requires using an existing wildcard certificate. Still blocked upstream on the official org/platform name decision.</td>
+            <td><span class="status blocked">Needs URL · due Aug 2026</span></td>
           </tr>
           <tr id="brightspace-test-site">
             <td><strong>Brightspace test site</strong></td>

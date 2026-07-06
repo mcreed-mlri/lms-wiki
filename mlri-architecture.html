@@ -795,14 +795,14 @@
 <div class="header">
   <div class="header-tag">System Architecture · LACE Learning Hub</div>
   <h1>What We're <span>Building</span></h1>
-  <p>The wrapper is built, Supabase is connected, and Brightspace OAuth is working. June hardening turns the local spike into a production path: Course 6703 metadata sync, production OAuth registration, dashboard routes, and routing policy.</p>
+  <p>Learner login is live with real Brightspace OAuth. August focus: service-user sync registration, vanity URL finalization, team decisions (attributes, UPL access matrix, completion criteria), and production verification.</p>
 </div>
 
 <div class="legend">
   <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> Phase 0 · Built</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#14b8a6"></div> Phase 1 · Working spike</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> Phase 2 · Next 1–3 weeks</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Phase 3 · June–July</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#14b8a6"></div> Phase 1 · Login live · sync hardening (Aug)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> Phase 2 · Planned — after RLS applied</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Phase 3 · Fall 2026</div>
 </div>
 
 <div class="proof-panel">
@@ -830,12 +830,12 @@
     <div class="proof-step">
       <div class="proof-status">Working</div>
       <strong>Brightspace OAuth</strong>
-      <span>OAuth consent completes and <code>whoami</code> returns the authorized user; production sync should move to a Service User/headless OAuth path.</span>
+      <span>User login complete (OAuth → session → <code>/api/me</code>, token refresh). Service-user path for server-to-server sync is pending registration.</span>
     </div>
     <div class="proof-step proof-next">
       <div class="proof-status">Working</div>
       <strong>Course metadata</strong>
-      <span>Course <code>6703</code> is the June validation target for metadata sync into <code>learning_items</code>.</span>
+      <span>Course <code>6703</code> is the validation course for metadata sync into <code>learning_items</code>.</span>
     </div>
   </div>
 </div>
@@ -872,7 +872,7 @@
     </div>
   </div>
   <div class="simple-flow-note">
-    Current proof: OAuth works and Brightspace course/content reads work. June validation focuses on syncing Course <code>6703</code> metadata into <code>learning_items</code> with production-ready terminology and route hardening.
+    Current proof: OAuth works and Brightspace course/content reads work. Validation focuses on syncing Course <code>6703</code> metadata into <code>learning_items</code> with production-ready terminology and route hardening.
   </div>
 </div>
 
@@ -921,7 +921,7 @@
     <div class="phase-label">
       <div class="phase-num">Phase 1</div>
       <div class="phase-name">Connect to Brightspace</div>
-      <div class="phase-timeline">Working spike</div>
+      <div class="phase-timeline">Login live · sync hardening (Aug)</div>
     </div>
     <div class="phase-content">
       <div class="cards">
@@ -959,7 +959,7 @@
     <div class="phase-label">
       <div class="phase-num">Phase 2</div>
       <div class="phase-name">Your Own Data Layer</div>
-      <div class="phase-timeline">Next 1–3 weeks</div>
+      <div class="phase-timeline">Planned — after RLS applied</div>
     </div>
     <div class="phase-content">
       <div class="cards">
@@ -997,7 +997,7 @@
     <div class="phase-label">
       <div class="phase-num">Phase 3</div>
       <div class="phase-name">Reporting & Evaluation</div>
-      <div class="phase-timeline">June–July</div>
+      <div class="phase-timeline">Fall 2026</div>
     </div>
     <div class="phase-content">
       <div class="cards">

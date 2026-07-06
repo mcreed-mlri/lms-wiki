@@ -71,7 +71,7 @@
     <h2>What this page covers</h2>
 
     <div class="intro-card">
-      <p>This is a planning document. Supabase is connected and one table (<code>learning_items</code>) is live in early form. The rest of the schema is designed but not yet built. Status labels on each section show where things stand.</p>
+      <p>This is a planning document. Supabase is connected and one table (<code>learning_items</code>) is live in early form. The RLS hardening migration is written and pending application to production. The rest of the schema is designed but not yet built. Status labels on each section show where things stand. A unified setup script containing all table DDL and RLS policies is compiled in <a href="scripts/setup-supabase-schema.sql">scripts/setup-supabase-schema.sql</a> for easy database initialization.</p>
     </div>
 
     <p>The LACE platform uses one shared Supabase project as its <strong>custom data layer</strong> across the Learning Hub and Brightspace Manager. Brightspace stays the system of record for learner authentication, courses, enrollments, completions, and grades. Supabase fills the gaps: staff/admin auth for Brightspace Manager, extended operational data, catalog records synced from Brightspace, engagement events, and learner feedback.</p>
