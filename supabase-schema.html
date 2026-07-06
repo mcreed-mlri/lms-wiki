@@ -36,6 +36,8 @@
     <a href="#profiles">profiles</a>
     <a href="#events">events</a>
     <a href="#feedback">feedback</a>
+    <a href="#survey-responses">survey_responses</a>
+    <a href="#org-rosters">org_rosters</a>
 
     <span class="section-label">Design Considerations</span>
     <a href="#rls">Row-level security</a>
@@ -103,11 +105,25 @@
           </tr>
           <tr>
             <td><code>feedback</code></td>
-            <td>Learner ratings and content usefulness signals</td>
+            <td>Learner ratings, content flags, and abandonment reasons from the in-hub micro-surveys</td>
+            <td><span class="status proposed">Proposed</span></td>
+          </tr>
+          <tr>
+            <td><code>survey_responses</code></td>
+            <td>Landing zone for Brightspace survey exports and 30/60-day follow-up surveys</td>
+            <td><span class="status proposed">Proposed</span></td>
+          </tr>
+          <tr>
+            <td><code>org_rosters</code></td>
+            <td>Hand-maintained target-population headcounts &mdash; the reach denominator</td>
             <td><span class="status proposed">Proposed</span></td>
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="note">
+      <strong>Metric definitions live elsewhere:</strong> every number the dashboards report is defined once (numerator, denominator, window) in <code>Brightspace-Manager/docs/planning/metrics-framework.md</code>. This page owns the tables; that file owns what gets computed from them.
     </div>
   </section>
 
@@ -246,7 +262,7 @@
         <tbody>
           <tr><td><code>id</code></td><td><code>uuid</code></td><td>Auto-generated</td></tr>
           <tr><td><code>user_id</code></td><td><code>uuid</code></td><td>FK to <code>profiles.id</code>; nullable if you want anonymous event capture</td></tr>
-          <tr><td><code>event_type</code></td><td><code>text</code></td><td><code>search</code>, <code>catalog_click</code>, <code>course_start</code>, <code>page_exit</code>, etc.</td></tr>
+          <tr><td><code>event_type</code></td><td><code>text</code></td><td>Hub events: <code>search</code>, <code>catalog_click</code>, <code>course_start</code>, <code>page_exit</code>. Course-wrapper beacon events: <code>page_view</code>, <code>video_progress</code>, <code>session_heartbeat</code>. The full allowlist (with per-type allowed metadata keys) lives in <code>learning-hub/docs/planning/supabase-analytics.sql</code></td></tr>
           <tr><td><code>item_id</code></td><td><code>uuid</code></td><td>FK to <code>learning_items.id</code>; nullable for non-course events like search</td></tr>
           <tr><td><code>metadata</code></td><td><code>jsonb</code></td><td>Flexible payload: search query, time spent, clicked URL, etc. See the warning below before using this</td></tr>
           <tr><td><code>created_at</code></td><td><code>timestamptz</code></td><td>When the event fired</td></tr>
@@ -256,6 +272,10 @@
 
     <div class="warning">
       <strong>Be careful with the metadata column.</strong> JSONB is flexible, but anything stored here carries the same privacy obligations as any other column. Do not put names, email addresses, or anything beyond the user's <code>user_id</code> in the event payload. Before writing events from the frontend, agree on a list of allowed event types and their allowed metadata keys, and enforce those in the server-side route.
+    </div>
+
+    <div class="note">
+      <strong>Beacon events arrive anonymous.</strong> The course-wrapper beacon (in <code>brightspace-courses</code> templates) runs inside Brightspace, where the learner has no Supabase identity &mdash; those rows carry <code>item_id</code> and topic-level metadata only, with <code>user_id</code> null. Do not add <code>bs_user_id</code> to beacon payloads without legal sign-off on the user-attributes matrix.
     </div>
 
     <h3>Access pattern</h3>
@@ -269,7 +289,7 @@
   <!-- FEEDBACK -->
   <section class="guide-section" id="feedback">
     <h2>feedback <span class="status proposed">Proposed</span></h2>
-    <p>Learner-generated signals about content quality: ratings, flags, and short-form usefulness notes. This feeds the content effectiveness views in the program reporting phase.</p>
+    <p>Learner-generated signals about content quality and fit: ratings, flags, abandonment reasons, and short-form usefulness notes. This feeds the content effectiveness views in the program reporting phase. Two Learning Hub micro-surveys write here: the <strong>post-completion rating card</strong> ("How useful was this course?" 1&ndash;5 + optional comment) and the <strong>stalled-course nudge</strong> (course idle 14+ days &rarr; "Still working on this?" with a reason picker).</p>
 
     <div class="table-wrap">
       <table>
@@ -281,7 +301,7 @@
           <tr><td><code>user_id</code></td><td><code>uuid</code></td><td>FK to <code>profiles.id</code></td></tr>
           <tr><td><code>item_id</code></td><td><code>uuid</code></td><td>FK to <code>learning_items.id</code></td></tr>
           <tr><td><code>rating</code></td><td><code>int</code></td><td>1&ndash;5 scale; nullable if the user only submits a flag</td></tr>
-          <tr><td><code>flag</code></td><td><code>text</code></td><td><code>outdated</code>, <code>unclear</code>, <code>not_relevant</code>; nullable</td></tr>
+          <tr><td><code>flag</code></td><td><code>text</code></td><td>Content-quality flags: <code>outdated</code>, <code>unclear</code>, <code>not_relevant</code>. Abandonment reasons from the stalled-course nudge: <code>too_busy</code>, <code>too_long</code>, <code>need_help</code>. Nullable</td></tr>
           <tr><td><code>notes</code></td><td><code>text</code></td><td>Short free-text comment; nullable. Keep this short-form, not a full review system</td></tr>
           <tr><td><code>created_at</code></td><td><code>timestamptz</code></td><td>Auto-set</td></tr>
         </tbody>
@@ -293,6 +313,69 @@
       <li>One row per user per item; enforce with a unique constraint on <code>(user_id, item_id)</code></li>
       <li>User can insert or update their own row; no delete (preserve the signal)</li>
       <li>Aggregate views (average rating, flag counts) should be computed server-side rather than exposing raw rows to all users</li>
+      <li><code>need_help</code> rows are a support request, not just a metric &mdash; surface them in the Brightspace Manager needs-attention feed for human follow-up</li>
+    </ul>
+  </section>
+
+  <!-- SURVEY RESPONSES -->
+  <section class="guide-section" id="survey-responses">
+    <h2>survey_responses <span class="status proposed">Proposed</span></h2>
+    <p>The landing zone for every survey answer, regardless of where the survey ran: Brightspace-native surveys (exported per survey close), 30/60-day application follow-ups (email link), and any future in-hub instrument. One row per answered question. With no graded assignments on the platform, this table carries the Learning (L2) and Application (L3) layers of the metrics framework.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>id</code></td><td><code>uuid</code></td><td>Auto-generated</td></tr>
+          <tr><td><code>survey_key</code></td><td><code>text</code></td><td>Instrument identifier, e.g. <code>end_of_course_v1</code>, <code>followup_30d_v1</code>. Versioned keys &mdash; changing a question means a new key, never silently rewording</td></tr>
+          <tr><td><code>question_key</code></td><td><code>text</code></td><td>e.g. <code>worth_my_time</code>, <code>confidence_post</code>, <code>applied_in_practice</code>. Maps to <code>Brightspace-Manager/docs/planning/survey-instruments.md</code></td></tr>
+          <tr><td><code>user_id</code></td><td><code>uuid</code></td><td>FK to <code>profiles.id</code>; nullable &mdash; anonymous Brightspace surveys export without identity, and that anonymity must survive the import</td></tr>
+          <tr><td><code>item_id</code></td><td><code>uuid</code></td><td>FK to <code>learning_items.id</code>; which course the survey was about</td></tr>
+          <tr><td><code>response_value</code></td><td><code>text</code></td><td>The raw answer as text</td></tr>
+          <tr><td><code>response_numeric</code></td><td><code>int</code></td><td>1&ndash;5; duplicated from <code>response_value</code> for scale items so aggregates never parse strings. Nullable for free-text answers</td></tr>
+          <tr><td><code>kirkpatrick_level</code></td><td><code>smallint</code></td><td>1 = reaction, 2 = learning, 3 = application; lets dashboards group without knowing every question</td></tr>
+          <tr><td><code>source</code></td><td><code>text</code></td><td><code>brightspace_export</code>, <code>followup_email</code>, or <code>in_hub</code></td></tr>
+          <tr><td><code>collected_at</code></td><td><code>timestamptz</code></td><td>When the learner answered (from the export), not when we imported it</td></tr>
+          <tr><td><code>created_at</code></td><td><code>timestamptz</code></td><td>Import time</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Access pattern</h3>
+    <ul>
+      <li>Write: service role only (import scripts and server routes); learners never write raw survey rows directly</li>
+      <li>Read: service role / admin only. Aggregates are computed server-side and must apply the minimum group-size rule (suppress cells with n &lt; 5)</li>
+      <li>Report Application (L3) numbers with their n &mdash; response rates will be low and a bare percentage would mislead</li>
+    </ul>
+  </section>
+
+  <!-- ORG ROSTERS -->
+  <section class="guide-section" id="org-rosters">
+    <h2>org_rosters <span class="status proposed">Proposed</span></h2>
+    <p>The reach denominator. "74 active learners" is meaningless without knowing whether the target population is 90 or 900. This table holds target-population headcounts per organization and role, maintained <strong>by hand</strong> from program contact lists &mdash; a quarterly update, not a sync. Keep history (a new row per refresh, never overwrite) so reach trends stay honest.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Column</th><th>Type</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>id</code></td><td><code>uuid</code></td><td>Auto-generated</td></tr>
+          <tr><td><code>org</code></td><td><code>text</code></td><td>Organization name; must match the vocabulary used in <code>profiles.org</code></td></tr>
+          <tr><td><code>role</code></td><td><code>text</code></td><td>Mirrors <code>profiles.license_status</code>: <code>licensed_attorney</code>, <code>paralegal</code>, <code>law_student</code>, <code>other_advocate</code></td></tr>
+          <tr><td><code>headcount</code></td><td><code>int</code></td><td>How many people in this org/role could be using LACE</td></tr>
+          <tr><td><code>as_of</code></td><td><code>date</code></td><td>Snapshot date; unique with <code>(org, role)</code></td></tr>
+          <tr><td><code>created_at</code></td><td><code>timestamptz</code></td><td>Auto-set</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Access pattern</h3>
+    <ul>
+      <li>Read: admin only; write: service role / admin tooling only</li>
+      <li>Small headcounts here are exactly the n &lt; 5 cells that reach reporting must suppress</li>
     </ul>
   </section>
 
@@ -339,6 +422,16 @@
             <td><code>feedback</code></td>
             <td>Own rows; aggregates computed server-side</td>
             <td>Own row (insert or update); no delete</td>
+          </tr>
+          <tr>
+            <td><code>survey_responses</code></td>
+            <td>Service role / admin only; aggregates server-side with n &ge; 5 rule</td>
+            <td>Service role only (import scripts, server routes)</td>
+          </tr>
+          <tr>
+            <td><code>org_rosters</code></td>
+            <td>Admins only</td>
+            <td>Service role / admin tooling only</td>
           </tr>
         </tbody>
       </table>

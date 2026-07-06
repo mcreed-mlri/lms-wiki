@@ -140,7 +140,11 @@ CREATE TABLE IF NOT EXISTS feedback (
   user_id uuid NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
   item_id uuid NOT NULL REFERENCES learning_items(id) ON DELETE CASCADE,
   rating int CHECK (rating BETWEEN 1 AND 5),
-  flag text CHECK (flag IN ('outdated', 'unclear', 'not_relevant')),
+  -- Content-quality flags (outdated/unclear/not_relevant) share this column
+  -- with abandonment reasons from the stalled-course nudge (too_busy/too_long/
+  -- need_help); values distinguish them. need_help rows surface in the
+  -- Brightspace Manager needs-attention feed for human follow-up.
+  flag text CHECK (flag IN ('outdated', 'unclear', 'not_relevant', 'too_busy', 'too_long', 'need_help')),
   notes text,
   created_at timestamptz DEFAULT now(),
 
@@ -161,3 +165,59 @@ CREATE POLICY "Manage own feedback"
   TO authenticated
   USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
+
+
+-- 5. SURVEY RESPONSES (Survey export landing zone)
+-- One row per answered question. survey_key/question_key map to the
+-- instruments in Brightspace-Manager/docs/planning/survey-instruments.md.
+CREATE TABLE IF NOT EXISTS survey_responses (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  survey_key text NOT NULL,
+  question_key text NOT NULL,
+  -- Nullable: anonymous Brightspace surveys export without identity.
+  user_id uuid REFERENCES profiles(id) ON DELETE SET NULL,
+  item_id uuid REFERENCES learning_items(id) ON DELETE SET NULL,
+  response_value text NOT NULL,
+  response_numeric int CHECK (response_numeric BETWEEN 1 AND 5),
+  -- 1 = reaction, 2 = learning, 3 = application (Kirkpatrick)
+  kirkpatrick_level smallint CHECK (kirkpatrick_level IN (1, 2, 3)),
+  source text NOT NULL CHECK (source IN ('brightspace_export', 'followup_email', 'in_hub')),
+  collected_at timestamptz NOT NULL,
+  created_at timestamptz DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_survey_responses_item
+  ON survey_responses(item_id, survey_key, question_key);
+
+ALTER TABLE survey_responses ENABLE ROW LEVEL SECURITY;
+-- No authenticated policies: raw survey rows are service-role only.
+-- Aggregates are computed server-side with the n >= 5 suppression rule.
+
+
+-- 6. ORG ROSTERS (Reach denominators — maintained by hand, ~quarterly)
+CREATE TABLE IF NOT EXISTS org_rosters (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  org text NOT NULL,
+  role text NOT NULL CHECK (role IN ('licensed_attorney', 'paralegal', 'law_student', 'other_advocate')),
+  headcount int NOT NULL CHECK (headcount > 0),
+  as_of date NOT NULL,
+  created_at timestamptz DEFAULT now(),
+
+  -- Keep history: new row per refresh so reach trends stay honest.
+  CONSTRAINT org_rosters_snapshot_key UNIQUE (org, role, as_of)
+);
+
+ALTER TABLE org_rosters ENABLE ROW LEVEL SECURITY;
+
+DO $$
+BEGIN
+  DROP POLICY IF EXISTS "Admins read rosters" ON org_rosters;
+END
+$$;
+
+CREATE POLICY "Admins read rosters"
+  ON org_rosters FOR SELECT
+  TO authenticated
+  USING (
+    (SELECT role FROM profiles WHERE id = auth.uid()) = 'admin'
+  );
