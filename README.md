@@ -35,7 +35,6 @@ platform-wiki/
 | [`user-attributes.html`](user-attributes.html) | Planning guide for Brightspace User Attributes, access routing, Learning Groups, Manager Dashboard, UPL acknowledgement, bar records, and jurisdiction metadata | Marlie; admins configuring user metadata |
 | [`mlri-architecture.html`](mlri-architecture.html) | System architecture overview | Anyone needing the stack picture |
 | [`api-integration-architecture.html`](api-integration-architecture.html) | Brightspace API meeting decision record: service user auth, API/Data Hub split, sync cadence, lifecycle statuses, and open questions | Technical implementation; Marlie |
-| [`api-flashcards.html`](api-flashcards.html) | Brightspace API meeting flashcards: vocabulary, architecture map, and D2L specialist playbook | Marlie; API/integration prep |
 | [`supabase-schema.html`](supabase-schema.html) | Planned Supabase tables, RLS guardrails, and Brightspace sync notes | Technical implementation |
 | [`supabase-visualizer.html`](supabase-visualizer.html) | Interactive ER diagram, policy viewer, and SQL DDL generator | Technical implementation |
 | [`team/index.html`](team/index.html) | Learning Hub team reference (installable PWA variant) | Internal staff |

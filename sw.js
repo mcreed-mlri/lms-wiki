@@ -16,8 +16,6 @@ const PRECACHE_URLS = [
   './user-attributes.html',
   './mlri-architecture.html',
   './api-integration-architecture.html',
-  './api-flashcards.html',
-  './api-meeting-prep.html',
   './supabase-schema.html',
   './supabase-visualizer.html',
   './team/',
