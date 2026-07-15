@@ -65,7 +65,7 @@
     <a href="brightspace-interactive-guide.html" class="external">Brightspace Native Tools Reference</a>
     <a href="brightspace-map.html" class="external">Brightspace Map</a>
     <a href="mlri-architecture.html" class="external">LACE Architecture</a>
-    <a href="api-flashcards.html" class="external">API Meeting Flashcards</a>
+    <a href="api-integration-architecture.html" class="external">API Integration Decisions</a>
     <a href="https://github.com/mcreed-mlri/brightspace-course-demo" class="external" target="_blank" rel="noopener">brightspace-courses repo</a>
     <a href="supabase-schema.html" class="external">Supabase Schema</a>
     <a href="supabase-visualizer.html" class="external">Supabase Visualizer</a>
@@ -116,13 +116,13 @@
             <td><strong>LACE Learning Hub dashboards</strong></td>
             <td>One app with learner-facing discovery/progress views; Brightspace operations now hand off to Brightspace Manager.</td>
             <td>Keep the Hub focused on learner, manager, and program reporting while Brightspace Manager owns sync and diagnostics.</td>
-            <td><span class="status in-progress">Planned</span></td>
+            <td><span class="status in-progress">In Progress</span></td>
           </tr>
           <tr>
             <td><strong>Brightspace Manager &amp; Admin MCP</strong></td>
             <td>Command center for sync monitoring and operations; Claude integration for automated diagnostics.</td>
             <td>Integrate into ops workflows for troubleshooting and data verification during pilot ramp-up.</td>
-            <td><span class="status done">Built</span></td>
+            <td><span class="status in-progress">In Progress</span></td>
           </tr>
           <tr>
             <td><strong>Attributes and groups</strong></td>
@@ -270,7 +270,7 @@
         <tbody>
           <tr>
             <td><strong>Official org name</strong></td>
-            <td>Official Brightspace URL, production link language, final Learning Hub launch paths, and public-facing docs.</td>
+            <td>Official Brightspace URL, production link language, final Learning Hub launch paths, branding rollout, direct-entry homepage, and public-facing docs.</td>
             <td>Confirm the exact organization/platform name to use in Brightspace and learner-facing materials.</td>
             <td>Keep refining local Learning Hub UI, content structure, accessibility, wrapper behavior, and non-final copy.</td>
             <td><span class="status blocked">Waiting</span></td>
@@ -294,6 +294,26 @@
 
     <div class="table-wrap">
       <table>
+        <thead>
+          <tr><th>When</th><th>Focus</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Now &middot; July 2026</strong></td><td>Brightspace API integration and service-user sync.</td><td><span class="status in-progress">In Progress</span></td></tr>
+          <tr><td><strong>Now &middot; July 2026</strong></td><td>LMS user attributes and data requirements.</td><td><span class="status in-progress">In Progress</span></td></tr>
+          <tr><td><strong>Now &middot; July 2026</strong></td><td>Reporting and evaluation metrics definition (pilot success criteria, key LMS metrics, end-of-course survey).</td><td><span class="status in-progress">In Progress</span></td></tr>
+          <tr><td><strong>Now &middot; July 2026</strong></td><td>Interactive tool guides for faculty and content creators.</td><td><span class="status in-progress">In Progress</span></td></tr>
+          <tr><td><strong>Blocked</strong></td><td>Branding rollout, direct-entry homepage, and H5P / Course Studio setup. Waiting on the official org name and approved branding.</td><td><span class="status blocked">Waiting</span></td></tr>
+          <tr><td><strong>Jul 21 &ndash; Sep 5</strong></td><td>Learner support resources ready.</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td><strong>Aug 1 &ndash; Sep 19</strong></td><td>Learner journey and usability testing.</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td><strong>Sept &ndash; Oct 2026</strong></td><td>Pilot content build, pilot cohort launch and evaluation.</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td><strong>January 2027</strong></td><td>Partial public launch: Foundations, Pre-Trial, Trial Skills.</td><td><span class="status not-started">Not Started</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="color: var(--muted); font-size: 0.85rem;"><em>Snapshot of my active and upcoming work, synced from the team's Monday.com boards.</em></p>
+  </section>
+
   <section class="guide-section" id="marlies-roadmap">
     <h2>Platform Roadmap & Timeline</h2>
 
@@ -406,11 +426,11 @@
             </div>
             <!-- August -->
             <div class="timeline-cell">
-              <a href="#marlie-phase-3" class="timeline-block planned">
+              <a href="#marlie-phase-3" class="timeline-block active">
                 <span class="timeline-block-phase">Phase 3</span>
                 <span class="timeline-block-title">Reporting Engine</span>
                 <span class="timeline-block-desc">Manager/staff summaries, equity analysis.</span>
-                <span class="timeline-block-status">○ Next</span>
+                <span class="timeline-block-status">● Active</span>
               </a>
             </div>
             <!-- Sept-Feb -->
@@ -504,10 +524,10 @@
         </a>
 
         <!-- Phase 3 -->
-        <a href="#marlie-phase-3" class="roadmap-phase-card planned">
+        <a href="#marlie-phase-3" class="roadmap-phase-card active">
           <div class="phase-card-header">
             <span class="phase-number-badge">Phase 3</span>
-            <span class="phase-status-pill planned">Planned</span>
+            <span class="phase-status-pill active">In Progress</span>
           </div>
           <div class="phase-card-header-title">
             <h3>Reporting & Evaluation</h3>
@@ -545,6 +565,8 @@
         </tbody>
       </table>
     </div>
+
+    <p style="color: var(--muted); font-size: 0.9rem;">Full picture: the <a href="mlri-architecture.html">architecture overview</a> shows the end-to-end flow, and the <a href="supabase-schema.html#what-belongs-where">Supabase schema</a> covers exactly which data lives where.</p>
   </section>
 
   <section class="guide-section" id="marlie-phase-0">
@@ -883,7 +905,11 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
   </section>
 
   <section class="guide-section" id="marlie-phase-3">
-    <h2>Phase 3: Reporting &amp; Evaluation <span class="status not-started">Not Started</span></h2>
+    <h2>Phase 3: Reporting &amp; Evaluation <span class="status in-progress">In Progress</span></h2>
+
+    <div class="note">
+      <strong>Definition underway:</strong> pilot success criteria, key LMS metrics, and the end-of-course survey are being scoped now on the Monday Data &amp; Evaluation board. The dashboard build below starts during the August wrap-up.
+    </div>
 
     <div class="table-wrap">
       <table>
@@ -967,7 +993,7 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
           <tr>
             <td><strong>Versioning threshold</strong></td>
             <td>When do we create a new Offering vs. edit in place?</td>
-            <td>Rule: minor updates such as typos and formatting are edited in place; major updates such as changes in law or completion rules require a new Course Offering to preserve completion history and support accurate learner notices.</td>
+            <td>Resolved. The full rule (minor edits in place; major changes create a new Offering) lives in <a href="team-wiki.html#versioning">Team Wiki &rarr; Versioning</a>.</td>
             <td><span class="status done">Guidance set</span></td>
           </tr>
           <tr>
