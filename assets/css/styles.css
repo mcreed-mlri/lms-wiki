@@ -545,11 +545,6 @@ body.page-supabase-visualizer {
 }
 
 
-@media (min-width: 801px) {
-  .home-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
 
 /* ── Section spacing ─────────────────────────── */
 .guide-section { margin-bottom: 3.5rem; }

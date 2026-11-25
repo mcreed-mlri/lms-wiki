@@ -1,355 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Brightspace Integration Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#1E3A5F">
   <meta name="description" content="Brightspace integration architecture for the LACE Learning Hub: auth model, permissions, data sources, sync strategy, course lifecycle, and open questions.">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://mcreed-mlri.github.io/lms-wiki/api-integration-architecture.html">
+  <script src="assets/js/sidebar.js?v=20261125-calm"></script>
   <style>
-    :root {
-      --bg: #F4F6F9;
-      --surface: #FFFFFF;
-      --ink: #222831;
-      --muted: #5A6478;
-      --navy: #1E3A5F;
-      --blue: #2C6FAC;
-      --border: #D0D7E2;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-      font-size: 16px;
-      color: var(--ink);
-      background: var(--bg);
-      line-height: 1.6;
-    }
-
-    a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
-    a:hover { color: var(--navy); }
-    a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 2px; }
-
-    .skip-link {
-      position: absolute;
-      left: -999px;
-      top: 0;
-      background: var(--navy);
-      color: #fff;
-      padding: 8px 14px;
-      border-radius: 6px;
-    }
-    .skip-link:focus { left: 16px; top: 16px; color: #fff; }
-
-    .page {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 32px 24px 80px;
-    }
-
-    .crumbs {
-      margin: 0 0 32px;
-      font-size: 15px;
-      color: var(--muted);
-    }
-
-    header { margin-bottom: 40px; }
-
-    h1 {
-      margin: 0 0 12px;
-      font-size: clamp(30px, 5vw, 40px);
-      line-height: 1.2;
-      color: var(--navy);
-    }
-
-    .lede {
-      margin: 0 0 12px;
-      font-size: 17px;
-    }
-
-    .source {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    h2 {
-      margin: 0 0 8px;
-      color: var(--navy);
-      font-size: 24px;
-      line-height: 1.25;
-    }
-
-    p { margin: 0 0 12px; }
-
-    .jump {
-      margin: 32px 0 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-    .jump ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 18px;
-      margin: 4px 0 0;
-      padding: 0;
-      list-style: none;
-    }
-    .jump li + li { margin-top: 0; }
-
-    section { margin-top: 56px; }
-    section.decision { margin-top: 0; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .mini {
-      padding: 20px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface);
-    }
-    .mini p:last-child { margin-bottom: 0; }
-
-    .mini h3 {
-      margin: 0 0 6px;
-      color: var(--navy);
-      font-size: 18px;
-      line-height: 1.3;
-    }
-
-    ul,
-    ol {
-      margin: 0;
-      padding-left: 22px;
-    }
-
-    li + li { margin-top: 8px; }
-
-    code {
-      font-family: "DM Mono", Consolas, monospace;
-      font-size: 0.92em;
-      color: var(--navy);
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      margin-top: 16px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 12px 14px 12px 0;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      color: var(--ink);
-      font-weight: 700;
-      border-bottom-color: #9BAAC2;
-    }
-
-    .note {
-      margin-top: 16px;
-      padding: 16px 20px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface);
-    }
-
-    .note p { margin: 0; }
-
-    @media (max-width: 760px) {
-      .page { padding: 20px 16px 56px; }
-      .grid { grid-template-columns: 1fr; }
-      section { margin-top: 44px; }
-    }
+    /* Page-specific: panels in a 2-column grid hold short paragraphs. */
+    .home-panel > :last-child { margin-bottom: 0; }
   </style>
 </head>
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <div class="page">
-    <nav class="crumbs" aria-label="Wiki navigation">
-      <a href="index.html">Wiki home</a> /
-      <a href="mlri-architecture.html">Architecture</a> /
-      <a href="supabase-schema.html">Supabase schema</a>
-    </nav>
+<body class="page-api-integration">
 
-  <main id="main">
-    <header>
-      <h1>Brightspace Integration Architecture for the LACE Learning Hub</h1>
-      <p class="lede">Brightspace remains the official system of record. The LACE Learning Hub becomes a calmer, searchable learner-facing view that reads approved Brightspace data, stores searchable copies in Supabase, and sends learners back to Brightspace for official LMS activity.</p>
-      <p class="source">Source: summary of the Brightspace API meeting, a D2L API discussion with Ahmad and Amanda, captured June 2026. Implementation closeout wrap-up is extended to August 2026. Ahmad remains the technical contact for one-off Brightspace API questions after closeout.</p>
-    </header>
+<a class="skip-link" href="#main">Skip to content</a>
 
-    <section class="decision" aria-labelledby="core-decision">
-      <h2 id="core-decision">Build a read-mostly companion layer, not a replacement LMS.</h2>
-      <p>The D2L technical guidance confirmed that this architecture is supported: Brightspace can own courses, enrollments, completion, awards, and audit trails while the Learning Hub improves discovery, search, dashboards, and learner orientation.</p>
-      <p>For implementation, treat Supabase as an indexed cache and LACE-specific data layer. Do not let Supabase become the source of truth for official Brightspace records.</p>
-    </section>
-
-    <nav class="jump" aria-label="Page sections">
-      On this page:
-      <ul>
-        <li><a href="#auth">Auth model</a></li>
-        <li><a href="#permissions">Permissions</a></li>
-        <li><a href="#data-sources">Data sources</a></li>
-        <li><a href="#apis">API focus</a></li>
-        <li><a href="#sync">Sync strategy</a></li>
-        <li><a href="#lifecycle">Lifecycle</a></li>
-        <li><a href="#first-slice">First slice</a></li>
-        <li><a href="#questions">Open questions</a></li>
-      </ul>
-    </nav>
-
-    <section id="auth">
-      <h2>Authentication Model</h2>
-      <p><strong>Decision:</strong> Use a dedicated Brightspace service user for machine-to-machine integration.</p>
-      <div class="grid">
-        <div class="mini">
-          <h3>Use a service account</h3>
-          <p>Create a dedicated Brightspace service user for background sync jobs and server-side API access. Do not bind the integration to Marlie's personal admin login.</p>
-        </div>
-        <div class="mini">
-          <h3>Keep API calls server-side</h3>
-          <p>The Learning Hub should call Brightspace from trusted server routes or scheduled jobs. Learner browsers should not hold Brightspace integration secrets.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="permissions">
-      <h2>Scopes, Roles, and Org Unit Access</h2>
-      <p>Required scopes and permissions depend on the Brightspace endpoints used. The operating pattern is broad during testing, then least privilege before production.</p>
-      <ol>
-        <li>Start with enough test access to validate org units, course offerings, content structure, users, and optional awards/completion reads.</li>
-        <li>Record the exact endpoints used by the Learning Hub.</li>
-        <li>Before launch, remove unused scopes and role permissions.</li>
-        <li>Place the service user high enough in the Brightspace org structure that access cascades to the needed child org units and course offerings.</li>
-      </ol>
-      <div class="note">
-        <p>Important inheritance note: D2L guidance confirmed that service user access at an upper org unit should cascade down, assuming the role and permissions are correct.</p>
-      </div>
-    </section>
-
-    <section id="data-sources">
-      <h2>APIs vs. Data Hub</h2>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="APIs vs. Data Hub comparison">
-      <table>
-        <thead>
-          <tr>
-            <th>Source</th>
-            <th>Best use</th>
-            <th>LACE implication</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Brightspace APIs</strong></td>
-            <td>Learner-facing search, catalog browsing, near-real-time sync, course structure, module/topic content, selected learner state.</td>
-            <td>Use APIs for the actual Learning Hub experience and scheduled refresh jobs.</td>
-          </tr>
-          <tr>
-            <td><strong>Brightspace Data Hub / datasets</strong></td>
-            <td>Reporting, analytics, historical exports, warehouse-style analysis, and large initial extracts.</td>
-            <td>Use Data Hub for initial bulk load and analytics/reporting. Differential updates are daily; full updates are weekly.</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-    </section>
-
-    <section id="apis">
-      <h2>API Areas for Version 1</h2>
-      <p>Keep the first implementation narrow. The first useful Learning Hub does not need every Brightspace object.</p>
-      <div class="grid">
-        <div class="mini">
-          <h3>Org Units</h3>
-          <p>Hierarchy, parent/child relationships, program/course structure, and stable Brightspace identifiers.</p>
-        </div>
-        <div class="mini">
-          <h3>Course Offerings</h3>
-          <p>Course names, codes, descriptions, start/end dates, availability, status, and launch targets.</p>
-        </div>
-        <div class="mini">
-          <h3>Content</h3>
-          <p>Module and topic structure so the Hub can preview what a course contains and improve discovery.</p>
-        </div>
-        <div class="mini">
-          <h3>Users, Awards, Completion</h3>
-          <p>Use users only where needed for personalization. Add awards/completion if v1 needs badges, certificates, or progress views. Avoid grade-heavy design unless MLRI needs it.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="sync">
-      <h2>Sync Strategy</h2>
-      <ol>
-        <li>Run an initial bulk load, likely from Data Hub, to seed the local catalog and capture Brightspace internal IDs.</li>
-        <li>Store Brightspace IDs on Supabase records so future syncs compare stable identifiers instead of names or URLs.</li>
-        <li>Run scheduled incremental syncs for catalog, course, org unit, and content metadata.</li>
-        <li>Run nightly reconciliation to detect items that changed, disappeared from active views, or moved lifecycle state.</li>
-        <li>Only use more frequent syncs for data that must be fresh, such as awards or completion updates.</li>
-      </ol>
-      <div class="note">
-        <p>Practical cadence: nightly catalog/content refresh is enough for most discovery data. Completion or award data can refresh more frequently, around every 15-16 minutes, if the learner experience requires it.</p>
-      </div>
-    </section>
-
-    <section id="lifecycle">
-      <h2>Course Lifecycle and Versioning</h2>
-      <p>Do not hard-delete local learning records just because a Brightspace course is no longer active. Course-like org units can be archived/restored; users are different and should be handled carefully if deleted.</p>
-      <div class="grid">
-        <div class="mini">
-          <h3>Local statuses</h3>
-          <p>Use statuses such as <code>active</code>, <code>archived</code>, <code>retired</code>, and <code>hidden_from_learners</code> to preserve history while controlling learner visibility.</p>
-        </div>
-        <div class="mini">
-          <h3>Evergreen courses</h3>
-          <p>Minor edits can stay in the same offering. Major revisions should become a new offering or version, with a code like <code>LegalWriting-2026</code> or <code>LegalWriting-Jun2026</code>.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="first-slice">
-      <h2>First Implementation Slice</h2>
-      <ol>
-        <li>Create the dedicated Brightspace service user and assign the right role at the right upper org unit.</li>
-        <li>Confirm the production OAuth/app setup and document the owner for app registration, keys, JWKS, and rotation.</li>
-        <li>Sync one known course offering end to end: org unit ID, course metadata, content outline, status, and launch URL.</li>
-        <li>Map synced fields into <code>learning_items</code> and related Supabase tables.</li>
-        <li>Build the nightly reconciliation job and log sync outcomes.</li>
-        <li>Review endpoint usage and reduce scopes/permissions before production.</li>
-      </ol>
-    </section>
-
-    <section id="questions">
-      <h2>Open Questions for Ahmad</h2>
-      <ul>
-        <li>Which exact endpoint/version should production use for course offerings, org unit hierarchy, and content structure?</li>
-        <li>Which Brightspace field is the best production signal for archived, retired, deleted, inactive, or hidden courses?</li>
-        <li>Where will service user API activity appear in Brightspace audit or logging views?</li>
-        <li>What is the preferred launch URL pattern: store canonical Brightspace URLs or generate them from org unit IDs?</li>
-        <li>Who owns production app registration, key rotation, and emergency credential revocation?</li>
-      </ul>
-    </section>
-  </main>
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <div class="brand">Integration decisions</div>
+    <h2>Brightspace Integration</h2>
   </div>
+  <nav>
+    <span class="section-label">Decision</span>
+    <a href="#core-decision">Core Decision</a>
+    <a href="#auth">Auth Model</a>
+    <a href="#permissions">Permissions</a>
+    <a href="#data-sources">Data Sources</a>
+
+    <span class="section-label">Implementation</span>
+    <a href="#apis">API Focus</a>
+    <a href="#sync">Sync Strategy</a>
+    <a href="#lifecycle">Lifecycle</a>
+    <a href="#first-slice">First Slice</a>
+    <a href="#questions">Open Questions</a>
+
+    <span class="section-label">Related Docs</span>
+    <a href="index.html" class="external">Home</a>
+    <a href="mlri-architecture.html" class="external">LACE Architecture</a>
+    <a href="supabase-schema.html" class="external">Supabase Schema</a>
+    <a href="user-attributes.html" class="external">User Attributes</a>
+    <a href="november-2026-status.html" class="external">November 2026 Status</a>
+    <a href="team-wiki.html" class="external">Team Wiki</a>
+  </nav>
+</aside>
+
+<main id="main">
+
+  <h1>Brightspace Integration Architecture for the LACE Learning Hub</h1>
+  <p class="page-subtitle">Brightspace remains the official system of record. The LACE Learning Hub becomes a calmer, searchable learner-facing view that reads approved Brightspace data, stores searchable copies in Supabase, and sends learners back to Brightspace for official LMS activity.</p>
+
+  <div class="note">
+    <strong>Source:</strong> summary of the Brightspace API meeting, a D2L API discussion with Ahmad and Amanda, captured June 2026. Implementation closeout wrap-up is extended to August 2026. Ahmad remains the technical contact for one-off Brightspace API questions after closeout.
+  </div>
+
+  <section class="guide-section" id="core-decision">
+    <h2>Build a read-mostly companion layer, not a replacement LMS.</h2>
+    <p>The D2L technical guidance confirmed that this architecture is supported: Brightspace can own courses, enrollments, completion, awards, and audit trails while the Learning Hub improves discovery, search, dashboards, and learner orientation.</p>
+    <p>For implementation, treat Supabase as an indexed cache and LACE-specific data layer. Do not let Supabase become the source of truth for official Brightspace records.</p>
+  </section>
+
+  <section class="guide-section" id="auth">
+    <h2>Authentication Model</h2>
+    <p><strong>Decision:</strong> Use a dedicated Brightspace service user for machine-to-machine integration.</p>
+    <div class="home-grid">
+      <div class="home-panel">
+        <h3>Use a service account</h3>
+        <p>Create a dedicated Brightspace service user for background sync jobs and server-side API access. Do not bind the integration to Marlie's personal admin login.</p>
+      </div>
+      <div class="home-panel">
+        <h3>Keep API calls server-side</h3>
+        <p>The Learning Hub should call Brightspace from trusted server routes or scheduled jobs. Learner browsers should not hold Brightspace integration secrets.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide-section" id="permissions">
+    <h2>Scopes, Roles, and Org Unit Access</h2>
+    <p>Required scopes and permissions depend on the Brightspace endpoints used. The operating pattern is broad during testing, then least privilege before production.</p>
+    <ol class="steps">
+      <li>Start with enough test access to validate org units, course offerings, content structure, users, and optional awards/completion reads.</li>
+      <li>Record the exact endpoints used by the Learning Hub.</li>
+      <li>Before launch, remove unused scopes and role permissions.</li>
+      <li>Place the service user high enough in the Brightspace org structure that access cascades to the needed child org units and course offerings.</li>
+    </ol>
+    <div class="note">
+      <p><strong>Important inheritance note:</strong> D2L guidance confirmed that service user access at an upper org unit should cascade down, assuming the role and permissions are correct.</p>
+    </div>
+  </section>
+
+  <section class="guide-section" id="data-sources">
+    <h2>APIs vs. Data Hub</h2>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="APIs vs. Data Hub comparison">
+    <table>
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Best use</th>
+          <th>LACE implication</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Brightspace APIs</strong></td>
+          <td>Learner-facing search, catalog browsing, near-real-time sync, course structure, module/topic content, selected learner state.</td>
+          <td>Use APIs for the actual Learning Hub experience and scheduled refresh jobs.</td>
+        </tr>
+        <tr>
+          <td><strong>Brightspace Data Hub / datasets</strong></td>
+          <td>Reporting, analytics, historical exports, warehouse-style analysis, and large initial extracts.</td>
+          <td>Use Data Hub for initial bulk load and analytics/reporting. Differential updates are daily; full updates are weekly.</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="guide-section" id="apis">
+    <h2>API Areas for Version 1</h2>
+    <p>Keep the first implementation narrow. The first useful Learning Hub does not need every Brightspace object.</p>
+    <div class="home-grid">
+      <div class="home-panel">
+        <h3>Org Units</h3>
+        <p>Hierarchy, parent/child relationships, program/course structure, and stable Brightspace identifiers.</p>
+      </div>
+      <div class="home-panel">
+        <h3>Course Offerings</h3>
+        <p>Course names, codes, descriptions, start/end dates, availability, status, and launch targets.</p>
+      </div>
+      <div class="home-panel">
+        <h3>Content</h3>
+        <p>Module and topic structure so the Hub can preview what a course contains and improve discovery.</p>
+      </div>
+      <div class="home-panel">
+        <h3>Users, Awards, Completion</h3>
+        <p>Use users only where needed for personalization. Add awards/completion if v1 needs badges, certificates, or progress views. Avoid grade-heavy design unless MLRI needs it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide-section" id="sync">
+    <h2>Sync Strategy</h2>
+    <ol class="steps">
+      <li>Run an initial bulk load, likely from Data Hub, to seed the local catalog and capture Brightspace internal IDs.</li>
+      <li>Store Brightspace IDs on Supabase records so future syncs compare stable identifiers instead of names or URLs.</li>
+      <li>Run scheduled incremental syncs for catalog, course, org unit, and content metadata.</li>
+      <li>Run nightly reconciliation to detect items that changed, disappeared from active views, or moved lifecycle state.</li>
+      <li>Only use more frequent syncs for data that must be fresh, such as awards or completion updates.</li>
+    </ol>
+    <div class="note">
+      <p><strong>Practical cadence:</strong> nightly catalog/content refresh is enough for most discovery data. Completion or award data can refresh more frequently, around every 15-16 minutes, if the learner experience requires it.</p>
+    </div>
+  </section>
+
+  <section class="guide-section" id="lifecycle">
+    <h2>Course Lifecycle and Versioning</h2>
+    <p>Do not hard-delete local learning records just because a Brightspace course is no longer active. Course-like org units can be archived/restored; users are different and should be handled carefully if deleted.</p>
+    <div class="home-grid">
+      <div class="home-panel">
+        <h3>Local statuses</h3>
+        <p>Use statuses such as <code>active</code>, <code>archived</code>, <code>retired</code>, and <code>hidden_from_learners</code> to preserve history while controlling learner visibility.</p>
+      </div>
+      <div class="home-panel">
+        <h3>Evergreen courses</h3>
+        <p>Minor edits can stay in the same offering. Major revisions should become a new offering or version, with a code like <code>LegalWriting-2026</code> or <code>LegalWriting-Jun2026</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide-section" id="first-slice">
+    <h2>First Implementation Slice</h2>
+    <ol class="steps">
+      <li>Create the dedicated Brightspace service user and assign the right role at the right upper org unit.</li>
+      <li>Confirm the production OAuth/app setup and document the owner for app registration, keys, JWKS, and rotation.</li>
+      <li>Sync one known course offering end to end: org unit ID, course metadata, content outline, status, and launch URL.</li>
+      <li>Map synced fields into <code>learning_items</code> and related Supabase tables.</li>
+      <li>Build the nightly reconciliation job and log sync outcomes.</li>
+      <li>Review endpoint usage and reduce scopes/permissions before production.</li>
+    </ol>
+  </section>
+
+  <section class="guide-section" id="questions">
+    <h2>Open Questions for Ahmad</h2>
+    <ul>
+      <li>Which exact endpoint/version should production use for course offerings, org unit hierarchy, and content structure?</li>
+      <li>Which Brightspace field is the best production signal for archived, retired, deleted, inactive, or hidden courses?</li>
+      <li>Where will service user API activity appear in Brightspace audit or logging views?</li>
+      <li>What is the preferred launch URL pattern: store canonical Brightspace URLs or generate them from org unit IDs?</li>
+      <li>Who owns production app registration, key rotation, and emergency credential revocation?</li>
+    </ul>
+  </section>
+
+</main>
+
 </body>
 </html>
