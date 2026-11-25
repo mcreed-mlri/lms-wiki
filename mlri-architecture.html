@@ -5,776 +5,199 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light">
 <title>LACE Platform Architecture</title>
+<meta name="description" content="System architecture for the Legal Aid Training Hub: what is working now, the phased roadmap, the system stack, and the Brightspace API integration decisions.">
 <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1E3A5F">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
   :root {
-    --navy: #0a1628;
-    --navy2: #111f38;
-    --surface: rgba(255,255,255,0.04);
-    --surface-hover: rgba(255,255,255,0.07);
-    --line: rgba(255,255,255,0.09);
-    --teal: #0d9488;
-    --teal-light: #2dd4bf;
-    --amber: #d97706;
-    --amber-light: #fbbf24;
-    --blue: #2563eb;
-    --blue-light: #60a5fa;
-    --rose: #e11d48;
-    --green: #059669;
-    --green-light: #34d399;
-    --purple: #7c3aed;
-    --purple-light: #a78bfa;
-    --white: #ffffff;
-    --gray: #94a3b8;
-    --gray-bright: #cbd5e1;
+    --navy: #1E3A5F;
+    --blue: #2C6FAC;
+    --bg: #F4F6F9;
+    --white: #FFFFFF;
+    --border: #D0D7E2;
+    --text: #222831;
+    --muted: #5A6478;
+    --ok: #1E6B45;
   }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
-    background-color: var(--navy);
-    background-image:
-      radial-gradient(ellipse 70% 45% at 15% -5%, rgba(45,212,191,0.14) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 40% at 95% 105%, rgba(167,139,250,0.1) 0%, transparent 50%),
-      radial-gradient(ellipse 40% 30% at 50% 60%, rgba(96,165,250,0.06) 0%, transparent 60%);
-    color: var(--white);
-    min-height: 100vh;
-    padding: 48px 24px 80px;
+    margin: 0;
+    font-family: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--bg);
   }
 
-  .page-wrap {
-    max-width: 960px;
-    margin: 0 auto;
-    position: relative;
+  a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+  a:hover { color: var(--navy); }
+  a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 2px; }
+
+  code {
+    font-family: 'DM Mono', Consolas, monospace;
+    font-size: 0.92em;
+    color: var(--navy);
   }
 
-  /* BACK LINK */
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gray-bright);
-    text-decoration: none;
+  .skip-link {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: var(--navy);
+    color: #fff;
     padding: 8px 14px;
-    margin-bottom: 20px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+    border-radius: 6px;
   }
-  .back-link:hover,
-  .back-link:focus-visible {
-    background: var(--surface-hover);
-    border-color: rgba(45,212,191,0.35);
-    color: var(--teal-light);
-    transform: translateX(-2px);
-    outline: none;
-  }
-  .back-link .arrow { transition: transform 0.2s; }
-  .back-link:hover .arrow { transform: translateX(-2px); }
+  .skip-link:focus { left: 16px; top: 16px; color: #fff; }
 
-  /* HEADER */
-  .header {
-    text-align: center;
-    margin-bottom: 48px;
-    padding: 2rem 1.5rem 2.25rem;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    box-shadow: 0 24px 48px rgba(0,0,0,0.25);
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--green-light), var(--teal-light), var(--blue-light), var(--purple-light));
-  }
-  .header-tag {
-    display: inline-block;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--teal-light);
-    margin-bottom: 16px;
-    padding: 6px 14px;
-    background: rgba(45,212,191,0.1);
-    border: 1px solid rgba(45,212,191,0.25);
-    border-radius: 999px;
-  }
-  .header h1 {
-    font-family: 'DM Sans', sans-serif;
-    font-size: clamp(26px, 4vw, 42px);
-    font-weight: 800;
-    color: white;
-    line-height: 1.12;
-    margin-bottom: 14px;
-    letter-spacing: -0.02em;
-  }
-  .header h1 span {
-    background: linear-gradient(135deg, var(--teal-light) 0%, var(--blue-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .header p {
-    font-size: 15px;
-    color: var(--gray-bright);
-    max-width: 540px;
-    margin: 0 auto;
-    line-height: 1.65;
-  }
-
-  /* PHASE LEGEND */
-  .legend {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    color: var(--gray-bright);
-    font-family: 'DM Mono', monospace;
-    padding: 8px 14px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    transition: background 0.2s, border-color 0.2s;
-  }
-  .legend-item:hover {
-    background: var(--surface-hover);
-    border-color: rgba(255,255,255,0.14);
-  }
-  .legend-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    box-shadow: 0 0 8px currentColor;
-  }
-
-  /* CURRENT PROOF PATH */
-  .proof-panel {
-    max-width: 900px;
-    margin: 0 auto 42px;
-    background: rgba(255,255,255,0.055);
-    border: 1px solid rgba(255,255,255,0.11);
-    border-radius: 18px;
-    padding: 24px;
-    box-shadow: 0 20px 44px rgba(0,0,0,0.22);
-  }
-  .proof-kicker {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--green-light);
-    margin-bottom: 10px;
-  }
-  .proof-panel h2 {
-    font-size: 19px;
-    line-height: 1.25;
-    margin-bottom: 8px;
-  }
-  .proof-panel p {
-    font-size: 13px;
-    line-height: 1.65;
-    color: var(--gray-bright);
-    max-width: 760px;
-  }
-  .proof-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin-top: 20px;
-  }
-  .proof-step {
-    min-height: 120px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(10,22,40,0.55);
-    padding: 14px;
-    position: relative;
-  }
-  .proof-step::after {
-    content: '→';
-    position: absolute;
-    right: -12px;
-    top: 42px;
-    color: rgba(255,255,255,0.38);
-    font-family: 'DM Mono', monospace;
-  }
-  .proof-step:last-child::after { display: none; }
-  .proof-step strong {
-    display: block;
-    color: white;
-    font-size: 13px;
-    line-height: 1.25;
-    margin-bottom: 8px;
-  }
-  .proof-step span {
-    display: block;
-    color: var(--gray-bright);
-    font-size: 11px;
-    line-height: 1.45;
-  }
-  .proof-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 10px;
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--green-light);
-  }
-  .proof-status::before {
-    content: '';
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--green-light);
-    box-shadow: 0 0 10px var(--green-light);
-  }
-  .proof-next .proof-status {
-    color: var(--amber-light);
-  }
-  .proof-next .proof-status::before {
-    background: var(--amber-light);
-    box-shadow: 0 0 10px var(--amber-light);
-  }
-
-  /* SIMPLE CURRENT FLOW */
-  .simple-flow-panel {
-    max-width: 900px;
-    margin: 0 auto 42px;
-    background: rgba(255,255,255,0.045);
-    border: 1px solid rgba(255,255,255,0.11);
-    border-radius: 18px;
-    padding: 24px;
-    box-shadow: 0 20px 44px rgba(0,0,0,0.18);
-  }
-  .simple-flow-kicker {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--teal-light);
-    margin-bottom: 10px;
-  }
-  .simple-flow-panel h2 {
-    font-size: 19px;
-    line-height: 1.25;
-    margin-bottom: 8px;
-  }
-  .simple-flow-panel p {
-    font-size: 13px;
-    line-height: 1.65;
-    color: var(--gray-bright);
-    max-width: 760px;
-  }
-  .simple-flow {
-    display: grid;
-    grid-template-columns: 1fr 46px 1fr 46px 1fr;
-    gap: 8px;
-    align-items: stretch;
-    margin-top: 22px;
-  }
-  .simple-flow-node {
-    min-height: 150px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(10,22,40,0.54);
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .simple-flow-node strong {
-    display: block;
-    font-size: 15px;
-    line-height: 1.2;
-    margin-bottom: 8px;
-    color: white;
-  }
-  .simple-flow-node span {
-    display: block;
-    color: var(--gray-bright);
-    font-size: 12px;
-    line-height: 1.5;
-  }
-  .simple-flow-node small {
-    display: inline-block;
-    margin-top: 14px;
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .simple-flow-node.source {
-    border-color: rgba(251,191,36,0.28);
-    background: rgba(217,119,6,0.12);
-  }
-  .simple-flow-node.source small { color: var(--amber-light); }
-  .simple-flow-node.app {
-    border-color: rgba(96,165,250,0.28);
-    background: rgba(37,99,235,0.12);
-  }
-  .simple-flow-node.app small { color: var(--blue-light); }
-  .simple-flow-node.data {
-    border-color: rgba(167,139,250,0.28);
-    background: rgba(124,58,237,0.12);
-  }
-  .simple-flow-node.data small { color: var(--purple-light); }
-  .simple-flow-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255,255,255,0.48);
-    font-family: 'DM Mono', monospace;
-    font-size: 22px;
-  }
-  .simple-flow-note {
-    margin-top: 16px;
-    padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid rgba(52,211,153,0.22);
-    background: rgba(5,150,105,0.1);
-    color: var(--gray-bright);
-    font-size: 12px;
-    line-height: 1.55;
-  }
-
-  /* DIAGRAM WRAPPER */
-  .diagram {
+  .page {
     max-width: 900px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    padding: 32px 24px 80px;
   }
 
-  /* PHASE ROW */
-  .phase {
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 0;
-    margin-bottom: 6px;
-    animation: fadeIn 0.5s ease both;
+  .crumbs {
+    margin: 0 0 32px;
+    font-size: 15px;
+    color: var(--muted);
   }
-  .phase:nth-child(1) { animation-delay: 0.1s; }
-  .phase:nth-child(2) { animation-delay: 0.2s; }
-  .phase:nth-child(3) { animation-delay: 0.3s; }
-  .phase:nth-child(4) { animation-delay: 0.4s; }
-  .phase:nth-child(5) { animation-delay: 0.5s; }
+  .crumbs a { margin-right: 4px; }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateX(-12px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
+  h1, h2, h3 { color: var(--navy); line-height: 1.25; }
 
-  .phase-label {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
-    padding: 14px 16px;
-    margin-right: 8px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .phase:hover .phase-label {
-    transform: translateX(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  }
-  .p5 .phase-label { border-color: rgba(52,211,153,0.28); background: rgba(52,211,153,0.06); }
-  .p1 .phase-label { border-color: rgba(45,212,191,0.28); background: rgba(45,212,191,0.06); }
-  .p2 .phase-label { border-color: rgba(96,165,250,0.28); background: rgba(96,165,250,0.06); }
-  .p3 .phase-label { border-color: rgba(167,139,250,0.28); background: rgba(167,139,250,0.06); }
-  .phase-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 3px;
-  }
-  .phase-name {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
+  h1 {
+    font-size: clamp(30px, 5vw, 40px);
     font-weight: 700;
-    text-align: right;
-    line-height: 1.3;
-  }
-  .phase-timeline {
-    font-size: 10px;
-    font-family: 'DM Mono', monospace;
-    color: var(--gray);
-    text-align: right;
-    margin-top: 4px;
+    margin: 0 0 8px;
   }
 
-  .phase-content {
-    border-left: 2px solid rgba(255,255,255,0.1);
-    padding-left: 28px;
-    padding-bottom: 32px;
-    position: relative;
-  }
-  .phase-content::before {
-    content: '';
-    position: absolute;
-    left: -6px;
-    top: 18px;
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    border: 2px solid var(--navy);
-    z-index: 1;
-  }
-
-  /* phase colors */
-  .p1 .phase-num { color: var(--teal-light); }
-  .p1 .phase-name { color: var(--teal-light); }
-  .p1 .phase-content::before { background: var(--teal-light); box-shadow: 0 0 8px var(--teal-light); }
-
-  .p2 .phase-num { color: var(--blue-light); }
-  .p2 .phase-name { color: var(--blue-light); }
-  .p2 .phase-content::before { background: var(--blue-light); box-shadow: 0 0 8px var(--blue-light); }
-
-  .p3 .phase-num { color: var(--purple-light); }
-  .p3 .phase-name { color: var(--purple-light); }
-  .p3 .phase-content::before { background: var(--purple-light); box-shadow: 0 0 8px var(--purple-light); }
-
-  .p5 .phase-num { color: var(--green-light); }
-  .p5 .phase-name { color: var(--green-light); }
-  .p5 .phase-content::before { background: var(--green-light); box-shadow: 0 0 8px var(--green-light); }
-
-  /* CARDS */
-  .cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding-top: 8px;
-  }
-
-  .card {
-    border-radius: 12px;
-    padding: 18px 18px 16px;
-    min-width: 160px;
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    backdrop-filter: blur(8px);
-    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
-  }
-  .card::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
-    border-radius: 12px 0 0 12px;
-    opacity: 0.85;
-  }
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
-    border-color: rgba(255,255,255,0.14);
-  }
-  .card-icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    margin-bottom: 12px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .card-title {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
+  h2 {
+    font-size: 24px;
     font-weight: 700;
-    margin-bottom: 5px;
-    line-height: 1.2;
-  }
-  .card-desc {
-    font-size: 12px;
-    line-height: 1.55;
-    color: var(--gray-bright);
-    opacity: 0.88;
-  }
-  .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-top: 10px;
-  }
-  .tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 4px 8px;
-    border-radius: 999px;
-    border: 1px solid transparent;
+    margin: 0 0 8px;
   }
 
-  /* Card themes */
-  .card-teal {
-    background: linear-gradient(145deg, rgba(13,148,136,0.22) 0%, rgba(13,148,136,0.06) 100%);
-  }
-  .card-teal::after { background: var(--teal-light); }
-  .card-teal .card-title { color: var(--teal-light); }
-  .card-teal .card-icon { background: rgba(45,212,191,0.15); border-color: rgba(45,212,191,0.25); }
-  .card-teal .tag { background: rgba(13,148,136,0.15); color: var(--teal-light); border-color: rgba(45,212,191,0.3); }
-
-  .card-blue {
-    background: linear-gradient(145deg, rgba(37,99,235,0.22) 0%, rgba(37,99,235,0.06) 100%);
-  }
-  .card-blue::after { background: var(--blue-light); }
-  .card-blue .card-title { color: var(--blue-light); }
-  .card-blue .card-icon { background: rgba(96,165,250,0.15); border-color: rgba(96,165,250,0.25); }
-  .card-blue .tag { background: rgba(37,99,235,0.15); color: var(--blue-light); border-color: rgba(96,165,250,0.3); }
-
-  .card-purple {
-    background: linear-gradient(145deg, rgba(124,58,237,0.22) 0%, rgba(124,58,237,0.06) 100%);
-  }
-  .card-purple::after { background: var(--purple-light); }
-  .card-purple .card-title { color: var(--purple-light); }
-  .card-purple .card-icon { background: rgba(167,139,250,0.15); border-color: rgba(167,139,250,0.25); }
-  .card-purple .tag { background: rgba(124,58,237,0.15); color: var(--purple-light); border-color: rgba(167,139,250,0.3); }
-
-  .card-amber {
-    background: linear-gradient(145deg, rgba(217,119,6,0.22) 0%, rgba(217,119,6,0.06) 100%);
-  }
-  .card-amber::after { background: var(--amber-light); }
-  .card-amber .card-title { color: var(--amber-light); }
-  .card-amber .card-icon { background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.25); }
-  .card-amber .tag { background: rgba(217,119,6,0.15); color: var(--amber-light); border-color: rgba(251,191,36,0.3); }
-
-  .card-green {
-    background: linear-gradient(145deg, rgba(5,150,105,0.22) 0%, rgba(5,150,105,0.06) 100%);
-  }
-  .card-green::after { background: var(--green-light); }
-  .card-green .card-title { color: var(--green-light); }
-  .card-green .card-icon { background: rgba(52,211,153,0.15); border-color: rgba(52,211,153,0.25); }
-  .card-green .tag { background: rgba(5,150,105,0.15); color: var(--green-light); border-color: rgba(52,211,153,0.3); }
-
-  .card-rose {
-    background: linear-gradient(145deg, rgba(225,29,72,0.22) 0%, rgba(225,29,72,0.06) 100%);
-  }
-  .card-rose::after { background: #fb7185; }
-  .card-rose .card-title { color: #fb7185; }
-  .card-rose .card-icon { background: rgba(251,113,133,0.12); border-color: rgba(251,113,133,0.25); }
-  .card-rose .tag { background: rgba(225,29,72,0.15); color: #fb7185; border-color: rgba(251,113,133,0.3); }
-
-  /* FLOW ARROWS between sections */
-  .flow-arrow {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    padding-left: 164px;
-    margin: -14px 0 0;
-    height: 28px;
-    color: rgba(255,255,255,0.35);
-    font-size: 14px;
-    font-family: 'DM Mono', monospace;
-  }
-  .flow-arrow::before {
-    content: '';
-    width: 2px;
-    height: 20px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.25));
-    margin-right: 10px;
-    border-radius: 1px;
-  }
-
-  /* LAYER DIAGRAM — the stack visual */
-  .stack-diagram {
-    max-width: 900px;
-    margin: 48px auto 0;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 32px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    position: relative;
-    overflow: hidden;
-  }
-  .stack-diagram::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--teal-light), var(--blue-light), var(--amber-light));
-    opacity: 0.7;
-  }
-  .stack-diagram-title {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 24px;
-    text-align: center;
-  }
-  .stack-row {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 8px;
-  }
-  .stack-box {
-    border-radius: 10px;
-    padding: 14px 16px;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .stack-box:hover,
-  .stack-box-full:hover {
-    transform: scale(1.01);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  }
-  .stack-arrow-center {
+  h3 {
     font-size: 18px;
-    color: rgba(255,255,255,0.25);
-    text-align: center;
-    width: 32px;
+    font-weight: 700;
+    margin: 0 0 4px;
   }
-  .stack-box-full {
-    grid-column: 1 / -1;
+
+  p { margin: 0 0 12px; }
+
+  .muted { color: var(--muted); }
+  .meta { color: var(--muted); font-size: 15px; margin: 0 0 12px; }
+
+  header { margin-bottom: 40px; }
+  header .lede { font-size: 17px; }
+
+  section { margin: 56px 0 0; }
+
+  .phases-key {
+    margin: 0;
+    padding-left: 20px;
+  }
+  .phases-key li + li { margin-top: 4px; }
+
+  /* Proof path list */
+  .proof-list {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+  .proof-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .proof-list strong { color: var(--text); }
+  .status { color: var(--ok); font-weight: 500; font-size: 15px; margin-left: 6px; }
+  .proof-list p { margin: 4px 0 0; color: var(--muted); }
+
+  /* Bordered groups */
+  .box {
+    background: var(--white);
+    border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 14px 16px;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 600;
-    font-family: 'DM Sans', sans-serif;
+    padding: 20px;
   }
+  .box p:last-child, .box ul:last-child { margin-bottom: 0; }
 
-  .sb-learner { background: rgba(13,148,136,0.15); color: var(--teal-light); border: 1px solid rgba(13,148,136,0.3); }
-  .sb-frontend { background: rgba(37,99,235,0.15); color: var(--blue-light); border: 1px solid rgba(37,99,235,0.3); }
-  .sb-supabase { background: rgba(124,58,237,0.15); color: var(--purple-light); border: 1px solid rgba(124,58,237,0.3); }
-  .sb-bs { background: rgba(217,119,6,0.15); color: var(--amber-light); border: 1px solid rgba(217,119,6,0.3); }
-  .sb-api { background: rgba(5,150,105,0.12); color: var(--green-light); border: 1px solid rgba(5,150,105,0.25); font-size: 11px; font-family: 'DM Mono', monospace; }
-
-  .v-connector {
-    display: flex;
-    justify-content: center;
-    color: rgba(255,255,255,0.2);
-    font-size: 18px;
-    margin: 2px 0;
-  }
-
-  /* DATA FLOWS */
-  .data-flows {
-    max-width: 900px;
-    margin: 16px auto 0;
+  .grid-3,
+  .grid-2 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
-  .flow-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 22px 20px 18px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .flow-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(0,0,0,0.25);
-  }
-  .flow-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
-  .fc-bs.flow-card::before { background: var(--amber-light); }
-  .fc-own.flow-card::before { background: var(--purple-light); }
-  .fc-out.flow-card::before { background: var(--teal-light); }
-  .flow-card-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .flow-card h3 {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: white;
-  }
-  .flow-card ul {
+    gap: 16px;
+    margin: 20px 0 0;
+    padding: 0;
     list-style: none;
   }
-  .flow-card ul li {
-    font-size: 12px;
-    color: var(--gray-bright);
-    padding: 6px 0 6px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    position: relative;
-    line-height: 1.45;
+  .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .flow-steps { counter-reset: step; }
+  .flow-steps li { counter-increment: step; }
+  .flow-steps h3::before { content: counter(step) ". "; }
+
+  .box ul {
+    margin: 8px 0 0;
+    padding-left: 20px;
   }
-  .flow-card ul li:last-child { border-bottom: none; }
-  .flow-card ul li::before {
-    content: '·';
-    position: absolute;
-    left: 4px;
-    font-size: 16px;
-    line-height: 1;
-    top: 3px;
+  .box ul li + li { margin-top: 4px; }
+
+  /* Phases */
+  .phase {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .phase:first-of-type { margin-top: 20px; }
+  .items {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 32px;
+    margin: 16px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .items strong { display: block; color: var(--text); }
+  .items p { margin: 2px 0 0; }
+  .items .tags { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+  /* System stack */
+  .stack {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .stack > li {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .stack > li:last-child { border-bottom: none; }
+  .stack strong { color: var(--text); }
+  .stack .sub { display: block; color: var(--muted); font-size: 15px; }
+  .stack-pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
   }
 
-  .fc-bs .flow-card-label { color: var(--amber-light); }
-  .fc-bs ul li::before { color: var(--amber-light); }
-  .fc-own .flow-card-label { color: var(--purple-light); }
-  .fc-own ul li::before { color: var(--purple-light); }
-  .fc-out .flow-card-label { color: var(--teal-light); }
-  .fc-out ul li::before { color: var(--teal-light); }
+  .footnote { margin-top: 20px; color: var(--muted); font-size: 15px; }
 
-  @media (max-width: 600px) {
-    .phase { grid-template-columns: 90px 1fr; }
-    .phase-label { padding-right: 12px; }
-    .flow-arrow { padding-left: 114px; }
-    .data-flows { grid-template-columns: 1fr; }
-    .stack-row { grid-template-columns: 1fr auto 1fr; }
-    .proof-grid { grid-template-columns: 1fr; }
-    .simple-flow { grid-template-columns: 1fr; }
-    .simple-flow-arrow { min-height: 26px; transform: rotate(90deg); }
-    .proof-step::after {
-      content: '↓';
-      right: 50%;
-      top: auto;
-      bottom: -16px;
-    }
+  @media (max-width: 760px) {
+    .page { padding: 20px 16px 56px; }
+    .grid-3, .grid-2, .items, .stack-pair { grid-template-columns: 1fr; }
+    section { margin-top: 44px; }
   }
 </style>
 <script>
@@ -787,337 +210,279 @@
 </head>
 <body>
 
-<div class="page-wrap">
+<a class="skip-link" href="#main">Skip to content</a>
 
-<a href="index.html" class="back-link"><span class="arrow" aria-hidden="true">&larr;</span> Home</a>
-<a href="team-wiki.html" class="back-link"><span class="arrow" aria-hidden="true">&larr;</span> Team Wiki</a>
+<div class="page">
 
-<div class="header">
-  <div class="header-tag">System Architecture · Legal Aid Training Hub (formerly LACE Learning Hub)</div>
-  <h1>What We're <span>Building</span></h1>
-  <p>November 2026: learner login works with real Brightspace OAuth on the test site, and the team site requires login on every page. The catalog and dashboards are still sample data; the production Brightspace site is not live. Next: service-user sync, real catalog and dashboard data, and the pre-pilot hardening list ahead of the spring 2027 pilot. A native app shell around the Hub is planned for April/May 2027. See <a href="november-2026-status.html" style="color:inherit;text-decoration:underline">November 2026 Status</a>.</p>
-</div>
+<nav class="crumbs" aria-label="Wiki navigation">
+  <a href="index.html">Home</a> /
+  <a href="team-wiki.html">Team Wiki</a>
+</nav>
 
-<div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> Phase 0 · Built</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#14b8a6"></div> Phase 1 · Login live · service-user sync next</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> Phase 2 · Planned — after RLS applied</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Phase 3 · Before / during spring 2027 pilot</div>
-</div>
+<main id="main">
 
-<div class="proof-panel">
-  <div class="proof-kicker">Proof path · May 26, 2026 (login since verified on the test site, July 2026)</div>
-  <h2>What is real now</h2>
+<header>
+  <h1>What We're Building</h1>
+  <p class="meta">System architecture for the Legal Aid Training Hub (formerly LACE Learning Hub).</p>
+  <p class="lede">November 2026: learner login works with real Brightspace OAuth on the test site, and the team site requires login on every page. The catalog and dashboards are still sample data; the production Brightspace site is not live. Next: service-user sync, real catalog and dashboard data, and the pre-pilot hardening list ahead of the spring 2027 pilot. A native app shell around the Hub is planned for April/May 2027. See <a href="november-2026-status.html">November 2026 Status</a>.</p>
+  <ul class="phases-key">
+    <li>Phase 0: Built</li>
+    <li>Phase 1: Login live, service-user sync next</li>
+    <li>Phase 2: Planned — after RLS applied</li>
+    <li>Phase 3: Before / during spring 2027 pilot</li>
+  </ul>
+</header>
+
+<section aria-labelledby="real-now">
+  <h2 id="real-now">What is real now</h2>
+  <p class="meta">Proof path as of May 26, 2026. Login has since been verified on the test site (July 2026).</p>
   <p>
     The architecture has moved from planning to a working local integration spike. The Learning Hub can read Supabase, complete Brightspace OAuth, call <code>whoami</code>, read one known Brightspace course, inspect its content outline, and sync that course into Supabase.
   </p>
-  <div class="proof-grid">
-    <div class="proof-step">
-      <div class="proof-status">Working</div>
-      <strong>LACE Learning Hub UI</strong>
-      <span>Admin page shows live integration status instead of mock cards.</span>
-    </div>
-    <div class="proof-step">
-      <div class="proof-status">Working</div>
-      <strong>Next.js API routes</strong>
-      <span>Server routes handle Supabase reads and Brightspace OAuth/token checks.</span>
-    </div>
-    <div class="proof-step">
-      <div class="proof-status">Working</div>
-      <strong>Supabase</strong>
-      <span><code>learning_items</code> exists and returns the test Brightspace course row.</span>
-    </div>
-    <div class="proof-step">
-      <div class="proof-status">Working</div>
-      <strong>Brightspace OAuth</strong>
-      <span>User login complete (OAuth → session → <code>/api/me</code>, token refresh). Service-user path for server-to-server sync is pending registration.</span>
-    </div>
-    <div class="proof-step proof-next">
-      <div class="proof-status">Working</div>
-      <strong>Course metadata</strong>
-      <span>Course <code>6703</code> is the validation course for metadata sync into <code>learning_items</code>.</span>
-    </div>
-  </div>
-</div>
+  <ol class="proof-list">
+    <li>
+      <strong>LACE Learning Hub UI</strong><span class="status">Working</span>
+      <p>Admin page shows live integration status instead of mock cards.</p>
+    </li>
+    <li>
+      <strong>Next.js API routes</strong><span class="status">Working</span>
+      <p>Server routes handle Supabase reads and Brightspace OAuth/token checks.</p>
+    </li>
+    <li>
+      <strong>Supabase</strong><span class="status">Working</span>
+      <p><code>learning_items</code> exists and returns the test Brightspace course row.</p>
+    </li>
+    <li>
+      <strong>Brightspace OAuth</strong><span class="status">Working</span>
+      <p>User login complete (OAuth → session → <code>/api/me</code>, token refresh). Service-user path for server-to-server sync is pending registration.</p>
+    </li>
+    <li>
+      <strong>Course metadata</strong><span class="status">Working</span>
+      <p>Course <code>6703</code> is the validation course for metadata sync into <code>learning_items</code>.</p>
+    </li>
+  </ol>
+</section>
 
-<div class="simple-flow-panel">
-  <div class="simple-flow-kicker">Current integration diagram</div>
-  <h2>Simple flow: Brightspace to Learning Hub to Supabase</h2>
+<section aria-labelledby="simple-flow">
+  <h2 id="simple-flow">Simple flow: Brightspace to Learning Hub to Supabase</h2>
   <p>
     Brightspace remains the course and learner-auth system of record. The Learning Hub reads selected Brightspace data through secure server-side API routes, then stores the pieces we need for the Learning Hub experience in the shared Supabase project. Supabase Auth is reserved for Brightspace Manager staff/admin access.
   </p>
-  <div class="simple-flow">
-    <div class="simple-flow-node source">
-      <div>
-        <strong>Brightspace</strong>
-        <span>Courses, modules, topics, enrollments, completion rules, and learner activity that Brightspace already manages.</span>
-      </div>
-      <small>System of record</small>
-    </div>
-    <div class="simple-flow-arrow">&rarr;</div>
-    <div class="simple-flow-node app">
-      <div>
-        <strong>Learning Hub</strong>
-        <span>Our custom front end and API layer. Learner sign-in should come through Brightspace; the Hub requests approved Brightspace data and presents learner, manager, and program/reporting views.</span>
-      </div>
-      <small>Experience layer</small>
-    </div>
-    <div class="simple-flow-arrow">&rarr;</div>
-    <div class="simple-flow-node data">
-      <div>
-        <strong>Supabase</strong>
-        <span>Shared project for Learning Hub and Brightspace Manager data: synced catalog records, search behavior, feedback, future reporting support, and Manager staff/admin auth.</span>
-      </div>
-      <small>Custom data layer</small>
-    </div>
-  </div>
-  <div class="simple-flow-note">
+  <ol class="grid-3 flow-steps">
+    <li class="box">
+      <h3>Brightspace</h3>
+      <p class="meta">System of record</p>
+      <p>Courses, modules, topics, enrollments, completion rules, and learner activity that Brightspace already manages.</p>
+    </li>
+    <li class="box">
+      <h3>Learning Hub</h3>
+      <p class="meta">Experience layer</p>
+      <p>Our custom front end and API layer. Learner sign-in should come through Brightspace; the Hub requests approved Brightspace data and presents learner, manager, and program/reporting views.</p>
+    </li>
+    <li class="box">
+      <h3>Supabase</h3>
+      <p class="meta">Custom data layer</p>
+      <p>Shared project for Learning Hub and Brightspace Manager data: synced catalog records, search behavior, feedback, future reporting support, and Manager staff/admin auth.</p>
+    </li>
+  </ol>
+  <p style="margin-top: 16px;">
     Current proof: OAuth works and Brightspace course/content reads work. Validation focuses on syncing Course <code>6703</code> metadata into <code>learning_items</code> with production-ready terminology and route hardening.
-  </div>
-</div>
-
-<!-- PHASES -->
-<div class="diagram">
-
-  <div class="phase p5">
-    <div class="phase-label">
-      <div class="phase-num">Phase 0</div>
-      <div class="phase-name">In-Course HTML Wrappers</div>
-      <div class="phase-timeline">Built</div>
-    </div>
-    <div class="phase-content">
-      <div class="cards">
-        <div class="card card-green">
-          <div class="card-icon">📄</div>
-          <div class="card-title">Course Template Package</div>
-          <div class="card-desc">Shared config, nav, styles — single source in course-config.js</div>
-          <div class="card-tags"><span class="tag">brightspace-courses</span><span class="tag">No API</span></div>
-        </div>
-        <div class="card card-green">
-          <div class="card-icon">🔗</div>
-          <div class="card-title">Architecture B Tracking</div>
-          <div class="card-desc">Local dev via filenames; production via BS topic URLs</div>
-          <div class="card-tags"><span class="tag">Completions</span><span class="tag">deployMode</span></div>
-        </div>
-        <div class="card card-green">
-          <div class="card-icon">🧭</div>
-          <div class="card-title">Calm In-Course UX</div>
-          <div class="card-desc">Course menu, prev/next, clean-view URLs (d2l_body_type=3)</div>
-          <div class="card-tags"><span class="tag">Navigation</span><span class="tag">LACE theme</span></div>
-        </div>
-        <div class="card card-green">
-          <div class="card-icon">📋</div>
-          <div class="card-title">Course Creation SOP</div>
-          <div class="card-desc">Cheatsheet + admin guide for upload and Content setup</div>
-          <div class="card-tags"><span class="tag">Docs</span><span class="tag">Proven</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="flow-arrow">↓</div>
-
-  <div class="phase p1">
-    <div class="phase-label">
-      <div class="phase-num">Phase 1</div>
-      <div class="phase-name">Connect to Brightspace</div>
-      <div class="phase-timeline">Login live · sync hardening (Aug)</div>
-    </div>
-    <div class="phase-content">
-      <div class="cards">
-        <div class="card card-teal">
-          <div class="card-icon">🔌</div>
-          <div class="card-title">Brightspace API Auth</div>
-          <div class="card-desc">3-legged OAuth works locally; production sync hardens around Service User/headless OAuth</div>
-          <div class="card-tags"><span class="tag">OAuth 2.0</span><span class="tag">June</span></div>
-        </div>
-        <div class="card card-teal">
-          <div class="card-icon">📊</div>
-          <div class="card-title">Pull Core Data</div>
-          <div class="card-desc">Validate Course 6703 metadata and confirm LMS API version for Course Offerings</div>
-          <div class="card-tags"><span class="tag">6703</span><span class="tag">learning_items</span></div>
-        </div>
-        <div class="card card-teal">
-          <div class="card-icon">🖥️</div>
-          <div class="card-title">Display in Frontend</div>
-          <div class="card-desc">Admin diagnostics are live; catalog display follows first metadata sync</div>
-          <div class="card-tags"><span class="tag">Frontend</span><span class="tag">Live status</span></div>
-        </div>
-        <div class="card card-teal">
-          <div class="card-icon">🔑</div>
-          <div class="card-title">SSO / Auth</div>
-          <div class="card-desc">Use Brightspace for Learning Hub learner auth; use Service User/headless OAuth for data harvesting. Supabase Auth belongs to Brightspace Manager staff/admin access</div>
-          <div class="card-tags"><span class="tag">SSO</span><span class="tag">Service User</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="flow-arrow">↓</div>
-
-  <div class="phase p2">
-    <div class="phase-label">
-      <div class="phase-num">Phase 2</div>
-      <div class="phase-name">Your Own Data Layer</div>
-      <div class="phase-timeline">Planned — after RLS applied</div>
-    </div>
-    <div class="phase-content">
-      <div class="cards">
-        <div class="card card-blue">
-          <div class="card-icon">🗄️</div>
-          <div class="card-title">Supabase Backend</div>
-          <div class="card-desc">Project and learning_items table are live; production catalog sync route is next</div>
-          <div class="card-tags"><span class="tag">Supabase</span><span class="tag">Connected</span></div>
-        </div>
-        <div class="card card-blue">
-          <div class="card-icon">🔍</div>
-          <div class="card-title">Search Tracking</div>
-          <div class="card-desc">What learners search for, what they don't find</div>
-          <div class="card-tags"><span class="tag">Events</span><span class="tag">Custom</span></div>
-        </div>
-        <div class="card card-blue">
-          <div class="card-icon">⏱️</div>
-          <div class="card-title">Engagement Events</div>
-          <div class="card-desc">Time on page, clicks, path navigation, drop-off</div>
-          <div class="card-tags"><span class="tag">Analytics</span><span class="tag">Events</span></div>
-        </div>
-        <div class="card card-blue">
-          <div class="card-icon">⭐</div>
-          <div class="card-title">Learner Feedback</div>
-          <div class="card-desc">Ratings, flags, content usefulness signals</div>
-          <div class="card-tags"><span class="tag">UX</span><span class="tag">Feedback</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="flow-arrow">↓</div>
-
-  <div class="phase p3">
-    <div class="phase-label">
-      <div class="phase-num">Phase 3</div>
-      <div class="phase-name">Reporting & Evaluation</div>
-      <div class="phase-timeline">Fall 2026</div>
-    </div>
-    <div class="phase-content">
-      <div class="cards">
-        <div class="card card-purple">
-          <div class="card-icon">👤</div>
-          <div class="card-title">Learner Dashboard</div>
-          <div class="card-desc">Personal progress, completions, recommendations</div>
-          <div class="card-tags"><span class="tag">Learner</span><span class="tag">UI</span></div>
-        </div>
-        <div class="card card-purple">
-          <div class="card-icon">👥</div>
-          <div class="card-title">Manager View</div>
-          <div class="card-desc">Team completion rates, gaps, activity</div>
-          <div class="card-tags"><span class="tag">Manager</span><span class="tag">Reports</span></div>
-        </div>
-        <div class="card card-purple">
-          <div class="card-icon">📈</div>
-          <div class="card-title">Program Evaluation</div>
-          <div class="card-desc">Cohort analysis, equity gaps, completion predictors</div>
-          <div class="card-tags"><span class="tag">Evaluation</span><span class="tag">Econometrics</span></div>
-        </div>
-        <div class="card card-purple">
-          <div class="card-icon">🗺️</div>
-          <div class="card-title">Population Insights</div>
-          <div class="card-desc">Who's completing, who isn't, and why — by learner segment</div>
-          <div class="card-tags"><span class="tag">Equity</span><span class="tag">Mission</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- SYSTEM STACK -->
-<div class="stack-diagram">
-  <div class="stack-diagram-title">System Stack — How the layers connect</div>
-
-  <div class="stack-box-full sb-learner">👤 Learner / Manager / Admin — Browser</div>
-  <div class="v-connector">↕</div>
-  <div class="stack-row">
-    <div class="stack-box sb-frontend">🖥️ LACE Learning Hub<br><small style="opacity:0.6;font-size:11px">Discovery · Catalog · Resume</small></div>
-    <div class="stack-arrow-center">⟷</div>
-    <div class="stack-box sb-supabase">🗄️ Supabase<br><small style="opacity:0.6;font-size:11px">Shared data · Events · Manager auth</small></div>
-  </div>
-  <div class="v-connector">↕</div>
-  <div class="stack-box-full" style="background: rgba(5,150,105,0.12); color: var(--green-light); border: 1px solid rgba(5,150,105,0.25); font-size: 12px;">📄 In-Course HTML Wrappers — course-config.js · course-nav.js · topic pages<br><small style="opacity:0.6;font-size:11px">Phase 0 · works today without API</small></div>
-  <div class="v-connector">↕</div>
-  <div class="stack-box-full sb-api">Brightspace REST API — OAuth 2.0</div>
-  <div class="v-connector">↕</div>
-  <div class="stack-box-full sb-bs">📚 Brightspace (D2L) — Course content · Completions · Grades · Enrollments</div>
-</div>
-
-<!-- DATA FLOWS -->
-<div class="data-flows">
-  <div class="flow-card fc-bs">
-    <div class="flow-card-label">From Brightspace API</div>
-    <h3>What BS gives you next</h3>
-    <ul>
-      <li>Course offering metadata</li>
-      <li>Module / topic structure</li>
-      <li>Stable learner-facing URLs</li>
-      <li>Later: enrollment status</li>
-      <li>Later: completions</li>
-      <li>Later: grade data</li>
-    </ul>
-  </div>
-  <div class="flow-card fc-own">
-    <div class="flow-card-label">Your Own Data (Supabase)</div>
-    <h3>What you capture</h3>
-    <ul>
-      <li>Catalog records in learning_items</li>
-      <li>Search queries + results</li>
-      <li>Click paths & navigation</li>
-      <li>Content ratings / flags</li>
-      <li>Learning path choices</li>
-      <li>Drop-off points</li>
-    </ul>
-  </div>
-  <div class="flow-card fc-out">
-    <div class="flow-card-label">Outputs / Reporting</div>
-    <h3>What you surface first</h3>
-    <ul>
-      <li>Admin connection health</li>
-      <li>Synced learning item preview</li>
-      <li>Catalog discovery cards</li>
-      <li>Later: learner progress dashboards</li>
-      <li>Later: manager team views</li>
-      <li>Later: program completion rates</li>
-    </ul>
-  </div>
-</div>
-
-<!-- BRIGHTSPACE API DECISIONS -->
-<div class="stack-diagram" style="margin-top: 48px;">
-  <div class="stack-diagram-title">Brightspace API integration decisions</div>
-  <p style="text-align: center; font-size: 13px; color: var(--gray-bright); max-width: 640px; margin: 0 auto 16px; line-height: 1.6;">
-    Outcome: <a href="api-integration-architecture.html" style="color: var(--teal-light);">API Integration Decisions</a> confirms Brightspace as the system of record and the Learning Hub as the learner-facing discovery layer.
   </p>
-  <div class="data-flows" style="grid-template-columns: repeat(3, 1fr); margin-top: 0;">
-    <div class="flow-card fc-bs">
-      <div class="flow-card-label">Auth model</div>
+</section>
+
+<section aria-labelledby="phases">
+  <h2 id="phases">Phases</h2>
+
+  <div class="phase">
+    <h3>In-Course HTML Wrappers</h3>
+    <p class="meta">Phase 0 · Built</p>
+    <ul class="items">
+      <li>
+        <strong>Course Template Package</strong>
+        <p>Shared config, nav, styles — single source in course-config.js</p>
+        <p class="tags">brightspace-courses · No API</p>
+      </li>
+      <li>
+        <strong>Architecture B Tracking</strong>
+        <p>Local dev via filenames; production via BS topic URLs</p>
+        <p class="tags">Completions · deployMode</p>
+      </li>
+      <li>
+        <strong>Calm In-Course UX</strong>
+        <p>Course menu, prev/next, clean-view URLs (d2l_body_type=3)</p>
+        <p class="tags">Navigation · LACE theme</p>
+      </li>
+      <li>
+        <strong>Course Creation SOP</strong>
+        <p>Cheatsheet + admin guide for upload and Content setup</p>
+        <p class="tags">Docs · Proven</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="phase">
+    <h3>Connect to Brightspace</h3>
+    <p class="meta">Phase 1 · Login live · sync hardening (Aug)</p>
+    <ul class="items">
+      <li>
+        <strong>Brightspace API Auth</strong>
+        <p>3-legged OAuth works locally; production sync hardens around Service User/headless OAuth</p>
+        <p class="tags">OAuth 2.0 · June</p>
+      </li>
+      <li>
+        <strong>Pull Core Data</strong>
+        <p>Validate Course 6703 metadata and confirm LMS API version for Course Offerings</p>
+        <p class="tags">6703 · learning_items</p>
+      </li>
+      <li>
+        <strong>Display in Frontend</strong>
+        <p>Admin diagnostics are live; catalog display follows first metadata sync</p>
+        <p class="tags">Frontend · Live status</p>
+      </li>
+      <li>
+        <strong>SSO / Auth</strong>
+        <p>Use Brightspace for Learning Hub learner auth; use Service User/headless OAuth for data harvesting. Supabase Auth belongs to Brightspace Manager staff/admin access</p>
+        <p class="tags">SSO · Service User</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="phase">
+    <h3>Your Own Data Layer</h3>
+    <p class="meta">Phase 2 · Planned — after RLS applied</p>
+    <ul class="items">
+      <li>
+        <strong>Supabase Backend</strong>
+        <p>Project and learning_items table are live; production catalog sync route is next</p>
+        <p class="tags">Supabase · Connected</p>
+      </li>
+      <li>
+        <strong>Search Tracking</strong>
+        <p>What learners search for, what they don't find</p>
+        <p class="tags">Events · Custom</p>
+      </li>
+      <li>
+        <strong>Engagement Events</strong>
+        <p>Time on page, clicks, path navigation, drop-off</p>
+        <p class="tags">Analytics · Events</p>
+      </li>
+      <li>
+        <strong>Learner Feedback</strong>
+        <p>Ratings, flags, content usefulness signals</p>
+        <p class="tags">UX · Feedback</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="phase">
+    <h3>Reporting &amp; Evaluation</h3>
+    <p class="meta">Phase 3 · Fall 2026</p>
+    <ul class="items">
+      <li>
+        <strong>Learner Dashboard</strong>
+        <p>Personal progress, completions, recommendations</p>
+        <p class="tags">Learner · UI</p>
+      </li>
+      <li>
+        <strong>Manager View</strong>
+        <p>Team completion rates, gaps, activity</p>
+        <p class="tags">Manager · Reports</p>
+      </li>
+      <li>
+        <strong>Program Evaluation</strong>
+        <p>Cohort analysis, equity gaps, completion predictors</p>
+        <p class="tags">Evaluation · Econometrics</p>
+      </li>
+      <li>
+        <strong>Population Insights</strong>
+        <p>Who's completing, who isn't, and why — by learner segment</p>
+        <p class="tags">Equity · Mission</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section aria-labelledby="stack">
+  <h2 id="stack">System stack: how the layers connect</h2>
+  <p class="muted">From the browser at the top down to Brightspace at the bottom.</p>
+  <ol class="stack">
+    <li><strong>Learner / Manager / Admin</strong> (browser)</li>
+    <li class="stack-pair">
+      <div><strong>LACE Learning Hub</strong><span class="sub">Discovery · Catalog · Resume</span></div>
+      <div><strong>Supabase</strong><span class="sub">Shared data · Events · Manager auth</span></div>
+    </li>
+    <li><strong>In-Course HTML Wrappers</strong>: <code>course-config.js</code> · <code>course-nav.js</code> · topic pages<span class="sub">Phase 0 · works today without API</span></li>
+    <li><strong>Brightspace REST API</strong>: OAuth 2.0</li>
+    <li><strong>Brightspace (D2L)</strong>: Course content · Completions · Grades · Enrollments</li>
+  </ol>
+
+  <div class="grid-3">
+    <div class="box">
+      <h3>What BS gives you next</h3>
+      <p class="meta">From Brightspace API</p>
+      <ul>
+        <li>Course offering metadata</li>
+        <li>Module / topic structure</li>
+        <li>Stable learner-facing URLs</li>
+        <li>Later: enrollment status</li>
+        <li>Later: completions</li>
+        <li>Later: grade data</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>What you capture</h3>
+      <p class="meta">Your own data (Supabase)</p>
+      <ul>
+        <li>Catalog records in <code>learning_items</code></li>
+        <li>Search queries + results</li>
+        <li>Click paths &amp; navigation</li>
+        <li>Content ratings / flags</li>
+        <li>Learning path choices</li>
+        <li>Drop-off points</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>What you surface first</h3>
+      <p class="meta">Outputs / reporting</p>
+      <ul>
+        <li>Admin connection health</li>
+        <li>Synced learning item preview</li>
+        <li>Catalog discovery cards</li>
+        <li>Later: learner progress dashboards</li>
+        <li>Later: manager team views</li>
+        <li>Later: program completion rates</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="api-decisions">
+  <h2 id="api-decisions">Brightspace API integration decisions</h2>
+  <p>
+    Outcome: <a href="api-integration-architecture.html">API Integration Decisions</a> confirms Brightspace as the system of record and the Learning Hub as the learner-facing discovery layer.
+  </p>
+  <div class="grid-3">
+    <div class="box">
       <h3>Service user</h3>
+      <p class="meta">Auth model</p>
       <ul>
         <li>Dedicated Brightspace service account</li>
         <li>Role assigned high enough for org unit inheritance</li>
         <li>Scopes narrowed before production</li>
       </ul>
     </div>
-    <div class="flow-card fc-own">
-      <div class="flow-card-label">Data source split</div>
+    <div class="box">
       <h3>APIs plus Data Hub</h3>
+      <p class="meta">Data source split</p>
       <ul>
         <li>APIs for learner-facing search and content structure</li>
         <li>Data Hub for initial load and reporting</li>
         <li>Store Brightspace IDs in Supabase</li>
       </ul>
     </div>
-    <div class="flow-card fc-out">
-      <div class="flow-card-label">Sync model</div>
+    <div class="box">
       <h3>Bulk load, then refresh</h3>
+      <p class="meta">Sync model</p>
       <ul>
         <li>Nightly catalog/course/module reconciliation</li>
         <li>More frequent sync only for awards or completion if needed</li>
@@ -1125,47 +490,46 @@
       </ul>
     </div>
   </div>
-</div>
+</section>
 
-<!-- LACE HUB DASHBOARD -->
-<div class="stack-diagram" style="margin-top: 48px;">
-  <div class="stack-diagram-title">LACE Learning Hub — one app, role-based views</div>
-  <p style="text-align: center; font-size: 13px; color: var(--gray-bright); max-width: 640px; margin: 0 auto 24px; line-height: 1.6;">
-    Dashboards are built <strong style="color: #fff;">into LACE Learning Hub</strong>, not as separate Brightspace, Supabase, or Monday products.
+<section aria-labelledby="hub-views">
+  <h2 id="hub-views">LACE Learning Hub — one app, role-based views</h2>
+  <p>
+    Dashboards are built <strong>into LACE Learning Hub</strong>, not as separate Brightspace, Supabase, or Monday products.
     A single API layer merges Brightspace + Supabase; each user sees only their role's screens.
   </p>
 
-  <div class="data-flows" style="grid-template-columns: repeat(2, 1fr); margin-top: 0;">
-    <div class="flow-card fc-out">
-      <div class="flow-card-label">Learner · Phase 1</div>
+  <div class="grid-2">
+    <div class="box">
       <h3>My Learning</h3>
+      <p class="meta">Learner · Phase 1</p>
       <ul>
         <li>Enrolled courses + completion %</li>
         <li>Last visited · resume link</li>
         <li>Own data only (API + RLS)</li>
       </ul>
     </div>
-    <div class="flow-card fc-own">
-      <div class="flow-card-label">Manager · Phase 3</div>
+    <div class="box">
       <h3>My Team</h3>
+      <p class="meta">Manager · Phase 3</p>
       <ul>
         <li>Team completion rates</li>
         <li>Gaps · last active</li>
         <li>Scoped — not org-wide by default</li>
       </ul>
     </div>
-    <div class="flow-card fc-bs">
-      <div class="flow-card-label">Program staff · Phase 3</div>
+    <div class="box">
       <h3>Program reporting</h3>
+      <p class="meta">Program staff · Phase 3</p>
       <ul>
         <li>Cohort &amp; equity analysis</li>
         <li>Content effectiveness</li>
         <li>May not need BS super-admin</li>
       </ul>
     </div>
-    <div class="flow-card" style="border-color: rgba(255,255,255,0.12);">
-      <div class="flow-card-label" style="color: #94a3b8;">Brightspace Manager</div>
+    <div class="box">
       <h3>Admin command center</h3>
+      <p class="meta">Brightspace Manager</p>
       <ul>
         <li>API health · sync status</li>
         <li>Course builder · file checks</li>
@@ -1174,13 +538,15 @@
     </div>
   </div>
 
-  <p style="text-align: center; font-size: 12px; color: var(--gray); margin-top: 20px;">
+  <p class="footnote">
     Monday.com = build/ops tasks only · Wiki = policies &amp; decisions ·
-    <a href="marlana.html#lace-hub-dashboard" style="color: var(--teal-light);">Full plan in Marlie's workspace</a>
+    <a href="marlana.html#lace-hub-dashboard">Full plan in Marlie's workspace</a>
   </p>
-</div>
+</section>
 
-</div><!-- .page-wrap -->
+</main>
+
+</div>
 
 </body>
 </html>

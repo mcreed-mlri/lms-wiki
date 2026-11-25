@@ -264,69 +264,59 @@
     });
 
     syncUi();
-    initMotion();
   }
 
-  /* ── Reading progress, scroll-to-top, and section reveal ──
-     All motion is skipped when the user prefers reduced motion. */
-  function initMotion() {
-    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ── Scrollable regions ──
+     Wide tables (.table-wrap) and code blocks (pre) scroll horizontally.
+     Keyboard users can only scroll them if they are focusable, so make
+     overflowing ones a named, focusable region (WCAG 2.1.1). */
+  function initScrollRegions() {
+    var wraps = Array.prototype.slice.call(document.querySelectorAll('.table-wrap, main pre'));
+    if (!wraps.length) return;
 
-    // Reading progress bar
-    var progress = document.createElement('div');
-    progress.id = 'reading-progress';
-    document.body.appendChild(progress);
+    function labelFor(wrap) {
+      var caption = wrap.querySelector('caption');
+      if (caption && caption.textContent.trim()) return caption.textContent.trim();
+      var section = wrap.closest('section, .guide-section, article') || document.body;
+      var heading = null;
+      var headings = section.querySelectorAll('h1, h2, h3, h4');
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].compareDocumentPosition(wrap) & Node.DOCUMENT_POSITION_FOLLOWING) heading = headings[i];
+      }
+      var kind = wrap.tagName === 'PRE' ? ' code' : ' table';
+      return heading ? heading.textContent.trim() + kind : 'Scrollable' + kind;
+    }
 
-    // Scroll-to-top button
-    var toTop = document.createElement('button');
-    toTop.type = 'button';
-    toTop.id = 'scroll-top';
-    toTop.setAttribute('aria-label', 'Scroll to top');
-    toTop.title = 'Back to top';
-    toTop.innerHTML = '↑';
-    document.body.appendChild(toTop);
-
-    toTop.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
-    });
-
-    var ticking = false;
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(function () {
-        var doc = document.documentElement;
-        var scrollTop = window.pageYOffset || doc.scrollTop;
-        var max = (doc.scrollHeight - doc.clientHeight) || 1;
-        var pct = Math.min(100, Math.max(0, (scrollTop / max) * 100));
-        progress.style.width = pct + '%';
-        toTop.classList.toggle('is-visible', scrollTop > 400);
-        ticking = false;
+    function update() {
+      wraps.forEach(function (wrap) {
+        var scrollable = wrap.scrollWidth > wrap.clientWidth + 1 || wrap.scrollHeight > wrap.clientHeight + 1;
+        if (scrollable) {
+          wrap.setAttribute('tabindex', '0');
+          wrap.setAttribute('role', 'region');
+          if (!wrap.hasAttribute('aria-label')) wrap.setAttribute('aria-label', labelFor(wrap));
+        } else if (wrap.getAttribute('tabindex') === '0') {
+          wrap.removeAttribute('tabindex');
+          wrap.removeAttribute('role');
+        }
       });
     }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    onScroll();
 
-    // Section reveal on scroll
-    var sections = Array.prototype.slice.call(document.querySelectorAll('.guide-section'));
-    if (!prefersReduced && sections.length && 'IntersectionObserver' in window) {
-      document.documentElement.classList.add('reveal-ready');
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-revealed');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-      sections.forEach(function (section) { observer.observe(section); });
-    }
+    update();
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(update, 150);
+    }, { passive: true });
+  }
+
+  function boot() {
+    init();
+    initScrollRegions();
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', boot);
   } else {
-    init();
+    boot();
   }
 })();

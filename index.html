@@ -12,6 +12,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#1E3A5F">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#10151C">
   <meta name="description" content="Documentation home for the LACE learning platform build: a shared learning infrastructure for Massachusetts legal aid advocates.">
   <link rel="canonical" href="https://mcreed-mlri.github.io/lms-wiki/index.html">
   <meta property="og:type" content="website">
@@ -24,7 +25,7 @@
   <meta name="twitter:title" content="LACE Platform">
   <meta name="twitter:description" content="The shared front door for the LACE learning platform build: a shared learning infrastructure for Massachusetts legal aid advocates.">
   <meta name="twitter:image" content="https://mcreed-mlri.github.io/lms-wiki/assets/icons/icon.svg">
-  <script src="assets/js/sidebar.js?v=20260529-redesign"></script>
+  <script src="assets/js/sidebar.js?v=20261125-calm"></script>
 </head>
 <body class="page-landing">
 
@@ -57,26 +58,19 @@
 <main id="main">
 
   <header class="home-hero">
-    <span class="hero-kicker">LACE Platform</span>
     <h1>Building the <em>future of legal aid learning</em> in Massachusetts.</h1>
     <p class="hero-sub">LACE is MLRI's practice-centered learning initiative for strengthening legal aid through accessible training, shared resources, and long-term learning infrastructure for advocates across the Commonwealth.</p>
-    <div class="hero-meta">
-      <span>Expert research &middot; Winter 2026&ndash;27</span>
-      <span>Pilot &middot; Spring 2027</span>
-    </div>
+    <p class="hero-meta">Expert research runs through winter 2026&ndash;27. The pilot starts in spring 2027.</p>
   </header>
 
   <section class="guide-section app-home" id="home">
-    <div class="home-kicker">Platform Home</div>
     <h2>Project North Star</h2>
 
     <div class="home-priority">
       <div>
-        <span class="home-label">Purpose</span>
         <h3>Strengthening legal aid requires strengthening learning.</h3>
         <p>MLRI is developing LACE to expand access to high-quality, evidence-informed training for the Massachusetts legal aid community. The platform should make practical legal knowledge, skills-based training, curated resources, and practice tools easier to find, use, revisit, and share across organizations.</p>
       </div>
-      <span class="status in-progress">North Star</span>
     </div>
 
     <div class="table-wrap">
@@ -97,7 +91,7 @@
 
     <div class="home-dashboard">
       <div class="home-panel home-spotlight">
-        <h3>What Matters Now</h3>
+        <h3>Open decisions</h3>
         <ul class="home-checklist">
           <li>
             <span class="status blocked">Urgent</span>
@@ -138,79 +132,57 @@
       </div>
     </div>
 
-    <h2 class="home-nav-heading">Jump To A Page</h2>
+    <h2 class="home-nav-heading">Jump to a page</h2>
     <p class="home-nav-sub">The Team Wiki is the shared operating reference; the other pages cover the worklist, build workspace, architecture, and optional native tools.</p>
 
     <div class="home-grid">
       <a class="home-link-card" href="team-wiki.html">
-        <span class="card-chip" aria-hidden="true">&#128218;</span>
-        <span class="home-label">Operating reference</span>
         <strong>Team Wiki</strong>
         <span>Project status, legal guardrails, Brightspace hierarchy, policies, decisions, glossary, and quick tasks.</span>
       </a>
       <a class="home-link-card" href="november-2026-status.html">
-        <span class="card-chip" aria-hidden="true">&#9989;</span>
-        <span class="home-label">Current status</span>
         <strong>November 2026 Status</strong>
         <span>Spring 2027 pilot, the Training Hub name, what shipped since July, native app plan, and open decisions.</span>
       </a>
       <a class="home-link-card" href="marlana.html">
-        <span class="card-chip" aria-hidden="true">&#128736;</span>
-        <span class="home-label">Build workspace</span>
         <strong>Marlie's Workspace</strong>
         <span>Training Hub dashboard plan, Brightspace Manager command center, data/reporting roadmap, open decisions, and phase-level tracking.</span>
       </a>
       <a class="home-link-card" href="mlri-architecture.html">
-        <span class="card-chip" aria-hidden="true">&#128506;</span>
-        <span class="home-label">System map</span>
         <strong>LACE Architecture</strong>
         <span>How the Training Hub, Brightspace, content, integrations, and reporting pieces fit together.</span>
       </a>
       <a class="home-link-card" href="curriculum-map.html">
-        <span class="card-chip" aria-hidden="true">&#128220;</span>
-        <span class="home-label">Curriculum plan</span>
         <strong>Curriculum Map</strong>
         <span>An interactive, click-to-explore sticky-note wall of how the curriculum is organized: Legal Skills across the case lifecycle and Substantive Law practice areas.</span>
       </a>
       <a class="home-link-card" href="api-integration-architecture.html">
-        <span class="card-chip" aria-hidden="true">&#128279;</span>
-        <span class="home-label">API decision record</span>
         <strong>API Integration Decisions</strong>
         <span>D2L-confirmed architecture: service user auth, API/Data Hub split, sync cadence, lifecycle statuses, and open questions.</span>
       </a>
       <a class="home-link-card" href="brightspace-map.html">
-        <span class="card-chip" aria-hidden="true">&#129518;</span>
-        <span class="home-label">Platform map</span>
         <strong>Brightspace Map</strong>
         <span>An interactive, click-to-explore map of how Brightspace is structured: hierarchy, content, users, integrations, and course design.</span>
       </a>
       <a class="home-link-card" href="user-attributes.html">
-        <span class="card-chip" aria-hidden="true">&#128272;</span>
-        <span class="home-label">Access routing</span>
         <strong>User Attributes</strong>
         <span>Planning guide for jurisdiction, user type, practice area, bar records, UPL acknowledgement, Learning Groups, and Manager Dashboard metadata.</span>
       </a>
       <a class="home-link-card" href="brightspace-interactive-guide.html">
-        <span class="card-chip" aria-hidden="true">&#129513;</span>
-        <span class="home-label">Optional tools</span>
         <strong>Brightspace Interactive Guide</strong>
         <span>Reference notes for native Brightspace tools when custom HTML is not the best fit.</span>
       </a>
       <a class="home-link-card" href="supabase-schema.html">
-        <span class="card-chip" aria-hidden="true">&#128196;</span>
-        <span class="home-label">Database plan</span>
         <strong>Supabase Schema</strong>
         <span>Planned tables (catalog, profiles, events, feedback) and security guardrails for custom LACE data.</span>
       </a>
       <a class="home-link-card" href="supabase-visualizer.html">
-        <span class="card-chip" aria-hidden="true">&#128421;</span>
-        <span class="home-label">Interactive tool</span>
         <strong>Supabase Visualizer</strong>
         <span>Interactive ER diagram with foreign key highlights, RLS policy detail viewer, and SQL DDL generator.</span>
       </a>
     </div>
 
-    <h2 class="home-nav-heading">For The Team</h2>
+    <h2 class="home-nav-heading">For the team</h2>
     <p class="home-nav-sub">Team-facing reference for how LACE works: access, data, structure, and growth: <a href="team/">LACE: For the Team</a>.</p>
 
     <p class="last-updated"><em>Last updated: 2026-11-25</em></p>
