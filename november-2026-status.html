@@ -89,7 +89,9 @@
           <tr><td><strong>Public site</strong></td><td>One-page sketch started November 10. Not deployed; center name still a placeholder.</td><td><span class="status proposed">Sketch</span></td></tr>
           <tr><td><strong>Native apps</strong></td><td>Plan written November 25: iPhone and Android app targeted for April/May 2027.</td><td><span class="status not-started">Planned</span></td></tr>
           <tr><td><strong>Names &amp; branding</strong></td><td>Platform name set to "Legal Aid Training Hub" (Nov 17). Center name still undecided; an outside design firm is producing name, identity and design guide.</td><td><span class="status blocked">Waiting</span></td></tr>
-          <tr><td><strong>Production Brightspace site</strong></td><td>Not live yet. Integration work still targets the test site (mlritest.brightspace.com).</td><td><span class="status blocked">Waiting</span></td></tr>
+          <tr><td><strong>Production Brightspace site</strong></td><td>Not live yet. Integration work still targets the test site (mlritest.brightspace.com). D2L implementation is closed; MLRI is on Standard Support.</td><td><span class="status blocked">Waiting</span></td></tr>
+          <tr><td><strong>Integration work</strong> (service user, Supabase security rules, attribute limit)</td><td>Paused this fall. What was finished before the pause was not recorded; see the check list under Before the Pilot.</td><td><span class="status blocked">Paused</span></td></tr>
+          <tr><td><strong>Brightspace Admin MCP</strong></td><td>Still set up and in use; idle until there is course content to work with.</td><td><span class="status proposed">Standby</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -201,6 +203,13 @@
       <li><strong>Decisions:</strong> 20 logged. Only DEC-001 ("Program" as the umbrella name) is resolved. Five are proposed and DEC-009 (December to March milestones) is tentative. The rest are open, including DEC-015 program scope (does it start at trial prep, filing or client intake; end at verdict, post-trial motions or appeal?) and DEC-020 sequencing (Ashley is drafting).</li>
       <li><strong>Glossary:</strong> 29 working terms, almost all proposed. The "Agreed definitions" section is still empty.</li>
     </ul>
+    <h3>People</h3>
+    <ul>
+      <li><strong>Ashley:</strong> proposed the three-phase research design (surveys, interviews, flowcharts and validation) and is drafting the trial-process sequence (DEC-020).</li>
+      <li><strong>Carolina Silva Portero:</strong> wrote "Mapping Trial Focused Advocacy (Adapting 4C/ID and Survey Process)", the memo the program's 4C/ID approach and the term "Program" come from.</li>
+      <li><strong>Marlie Creed:</strong> runs the research workspace and owns the LMS side.</li>
+      <li><strong>Olivia Carini:</strong> shares the learner outreach email templates and admin email work with Marlie on Monday.com.</li>
+    </ul>
   </section>
 
   <section class="guide-section" id="public-site">
@@ -248,6 +257,12 @@
       <li><input type="checkbox" disabled> Branch protection on the main branch.</li>
       <li><input type="checkbox" disabled> Production secrets and a rotation note for the session secret.</li>
     </ul>
+    <h3>Check what got done before the pause</h3>
+    <ul class="task-list">
+      <li><input type="checkbox" disabled> Supabase: check whether the RLS migrations are applied in production (look in the Supabase dashboard's migration history or table policies).</li>
+      <li><input type="checkbox" disabled> Brightspace: check Manage Extensibility for a service-user app registration, and whether a JWKS URL and scopes were set.</li>
+      <li><input type="checkbox" disabled> D2L: ask Standard Support to confirm the attribute limit (10 vs 50, and how many can be multi-value).</li>
+    </ul>
     <h3>Should do before the pilot</h3>
     <ul class="task-list">
       <li><input type="checkbox" disabled> No names in team URLs.</li>
@@ -261,21 +276,22 @@
 
   <section class="guide-section" id="august-follow-up">
     <h2>August Items: Follow-up</h2>
-    <p>The <a href="august-2026-priority-tasks.html">August Priority Tasks</a> page is now historical. This is what the repos show about each item. Items marked <span class="status proposed">Unconfirmed</span> are not recorded anywhere in the repos and need an update from the team.</p>
+    <p>The <a href="august-2026-priority-tasks.html">August Priority Tasks</a> page is now historical. This is what the repos show about each item. Items marked <span class="status blocked">Paused</span> were set aside during the pause and their state was not recorded; each one is on the <a href="#before-pilot">Before the Pilot</a> list to check.</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>August item</th><th>What we know</th><th>Status</th></tr></thead>
         <tbody>
           <tr><td>Official org &amp; platform name</td><td>Platform named (Nov 17). Center name still open; design firm engaged.</td><td><span class="status in-progress">Partly done</span></td></tr>
           <tr><td>UPL access matrix</td><td>Still drives role mapping "until" it is approved; real logins default to the most restricted type.</td><td><span class="status blocked">Open</span></td></tr>
-          <tr><td>User Attributes sign-off</td><td>Not recorded.</td><td><span class="status proposed">Unconfirmed</span></td></tr>
-          <tr><td>Completion criteria</td><td>Not recorded.</td><td><span class="status proposed">Unconfirmed</span></td></tr>
-          <tr><td>Supabase RLS migration</td><td>Migrations written in September; whether they are applied to production is not recorded.</td><td><span class="status proposed">Unconfirmed</span></td></tr>
+          <tr><td>User Attributes sign-off</td><td>Still in progress on Monday.com, due Feb 5, 2027.</td><td><span class="status in-progress">In Progress</span></td></tr>
+          <tr><td>Completion criteria</td><td>Not started on Monday.com, due Feb 19, 2027.</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td>Supabase RLS migration</td><td>Migrations written in September. Work paused; whether they were applied to production is not recorded.</td><td><span class="status blocked">Paused</span></td></tr>
           <tr><td>Production login on the deployed Hub</td><td>Sign-in works on the test site; the production Brightspace site is not live.</td><td><span class="status blocked">Waiting</span></td></tr>
-          <tr><td>Service-user sync registration</td><td>Still listed as the next integration milestone in Brightspace Manager.</td><td><span class="status proposed">Unconfirmed</span></td></tr>
-          <tr><td>D2L trainings, custom email, closure call</td><td>Not recorded.</td><td><span class="status proposed">Unconfirmed</span></td></tr>
-          <tr><td>Vanity URL</td><td>No domain recorded anywhere. Now also matters for the native app (theming Brightspace to match the Hub).</td><td><span class="status blocked">Open</span></td></tr>
-          <tr><td>10 vs 50 attribute limit</td><td>No answer recorded.</td><td><span class="status proposed">Unconfirmed</span></td></tr>
+          <tr><td>Service-user sync registration</td><td>The service user exists (August). Work on the app registration paused; how far it got is not recorded. Still the next integration milestone in Brightspace Manager.</td><td><span class="status blocked">Paused</span></td></tr>
+          <tr><td>D2L trainings and closure call</td><td>Done. MLRI is now on D2L Standard Support.</td><td><span class="status done">Done</span></td></tr>
+          <tr><td>Custom email templates</td><td>Not done. Waiting on the center name. Monday.com: "Learner outreach email templates ready", due Feb 19, 2027.</td><td><span class="status blocked">Waiting</span></td></tr>
+          <tr><td>Vanity URL</td><td>Waiting on the center name. Now also matters for the native app (theming Brightspace to match the Hub).</td><td><span class="status blocked">Waiting</span></td></tr>
+          <tr><td>10 vs 50 attribute limit</td><td>Paused; no answer recorded. Can go to D2L as a Standard Support ticket.</td><td><span class="status blocked">Paused</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -287,7 +303,7 @@
       <table>
         <thead><tr><th>Decision</th><th>Why it matters</th><th>Where it is tracked</th></tr></thead>
         <tbody>
-          <tr><td>Center name</td><td>Public site, app name, vanity URL. Pilot status notes branding "may take roughly two months".</td><td>public-site PRODUCT.md; lms-discovery lib/brand.ts</td></tr>
+          <tr><td>Center name</td><td>Public site, app name, vanity URL, custom email templates. Pilot status notes branding "may take roughly two months".</td><td>public-site PRODUCT.md; lms-discovery lib/brand.ts</td></tr>
           <tr><td>UPL access matrix and user-type mapping</td><td>How real people get their user type and jurisdiction. Lean: set by MLRI, never self-edited.</td><td>lms-discovery pilot-decisions #8</td></tr>
           <tr><td>Privacy and supervisor visibility</td><td>Who reads feedback, what supervisors see, what happens to data when someone leaves, where the supervisor-to-learner link comes from.</td><td>lms-discovery pilot-decisions #1 to #7</td></tr>
           <tr><td>Should learners see "Sign in with Brightspace"?</td><td>Pilot login copy.</td><td>lms-discovery pilot-decisions #16</td></tr>
