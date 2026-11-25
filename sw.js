@@ -7,6 +7,7 @@ const PRECACHE_URLS = [
   './',
   './index.html',
   './team-wiki.html',
+  './november-2026-status.html',
   './august-2026-priority-tasks.html',
   './june-2026-priority-tasks.html',
   './marlana.html',

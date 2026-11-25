@@ -530,6 +530,7 @@ body.page-brightspace-map  { --accent: #2C6FAC; --accent-2: #2A8F82; --focus-col
 body.page-team             { --accent: #7A3B57; --accent-2: #A8702F; --focus-color: #7A3B57; --focus-ring: 0 0 0 3px rgba(122, 59, 87, 0.35); }
 body.page-team-wiki        { --accent: #1d4ed8; --accent-2: #38bdf8; --focus-color: #1d4ed8; --focus-ring: 0 0 0 3px rgba(29, 78, 216, 0.35); }
 body.page-june-tasks       { --accent: #64748b; --accent-2: #94a3b8; --focus-color: #64748b; --focus-ring: 0 0 0 3px rgba(100, 116, 139, 0.35); }
+body.page-november-status  { --accent: #15803d; --accent-2: #4ade80; --focus-color: #15803d; --focus-ring: 0 0 0 3px rgba(21, 128, 61, 0.35); }
 body.page-august-tasks     { --accent: #c2410c; --accent-2: #fb923c; --focus-color: #c2410c; --focus-ring: 0 0 0 3px rgba(194, 65, 12, 0.35); }
 body.page-supabase-schema  { --accent: #7c3aed; --accent-2: #a78bfa; --focus-color: #7c3aed; --focus-ring: 0 0 0 3px rgba(124, 58, 237, 0.35); }
 body.page-user-attributes  { --accent: #a21caf; --accent-2: #e879f9; --focus-color: #a21caf; --focus-ring: 0 0 0 3px rgba(162, 28, 175, 0.35); }
@@ -621,6 +622,29 @@ body.page-june-tasks {
   --sidebar-toggle-fg: #e2e8f0;
   --sidebar-toggle-hover-bg: #4a5568;
   --sidebar-toggle-focus: #94a3b8;
+}
+
+body.page-november-status {
+  --sidebar-bg: #052e16;
+  --sidebar-fg: #dcfce7;
+  --sidebar-header-bg: #14532d;
+  --sidebar-header-border: rgba(74, 222, 128, 0.2);
+  --sidebar-brand: #4ade80;
+  --sidebar-title: #f0fdf4;
+  --sidebar-label: #6fb88a;
+  --sidebar-link: #bbf7d0;
+  --sidebar-link-sub: #86efac;
+  --sidebar-active-bg: rgba(74, 222, 128, 0.2);
+  --sidebar-active-border: #4ade80;
+  --sidebar-accordion-active-bg: rgba(74, 222, 128, 0.2);
+  --sidebar-accordion-active-border: #4ade80;
+  --sidebar-external: #6fb88a;
+  --sidebar-search-focus: #4ade80;
+  --sidebar-toggle-bg: #14532d;
+  --sidebar-toggle-border: rgba(74, 222, 128, 0.35);
+  --sidebar-toggle-fg: #bbf7d0;
+  --sidebar-toggle-hover-bg: #166534;
+  --sidebar-toggle-focus: #4ade80;
 }
 
 body.page-august-tasks {
