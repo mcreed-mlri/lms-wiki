@@ -14,7 +14,7 @@
   <meta name="theme-color" content="#1E3A5F">
   <meta name="description" content="An interactive sticky-note wall of how the LACE curriculum will be organized: Legal Skills across the case lifecycle and Substantive Law practice areas.">
   <link rel="canonical" href="https://mcreed-mlri.github.io/lms-wiki/curriculum-map.html">
-  <script src="assets/js/sidebar.js?v=20261125-calm"></script>
+  <script src="assets/js/sidebar.js?v=20261125-theme"></script>
   <style>
     /* Sticky-note palette: page-level so dark mode can override it. */
     body.page-curriculum-map {
@@ -29,7 +29,7 @@
       --note-flag:        #8A5300;
     }
     @media (prefers-color-scheme: dark) {
-      body.page-curriculum-map {
+      :root:not([data-theme="light"]) body.page-curriculum-map {
         --note-blue:        #1D3245;
         --note-blue-edge:   #36536E;
         --note-orange:      #3A2B1C;
@@ -40,6 +40,17 @@
         --note-muted:       #BAC5D2;
         --note-flag:        #F0C37C;
       }
+    }
+    :root[data-theme="dark"] body.page-curriculum-map {
+      --note-blue:        #1D3245;
+      --note-blue-edge:   #36536E;
+      --note-orange:      #3A2B1C;
+      --note-orange-edge: #65492F;
+      --note-teal:        #18352F;
+      --note-teal-edge:   #2F5C53;
+      --note-ink:         #E6ECF2;
+      --note-muted:       #BAC5D2;
+      --note-flag:        #F0C37C;
     }
 
     /* The wall keeps its original 900px content width. */

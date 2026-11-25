@@ -86,13 +86,16 @@
 }
 
 /* ── Dark mode ────────────────────────────────────
-   Follows the system setting. Every component reads these
-   variables, so this block is the whole dark theme.
-   (The Supabase Visualizer sets its own dark palette.) */
+   Follows the system setting unless the reader picks a theme with the
+   sidebar toggle, which sets data-theme="light" or "dark" on <html>.
+   Every component reads these variables, so the palette below is the
+   whole dark theme. (The Supabase Visualizer sets its own dark palette.) */
 :root { color-scheme: light dark; }
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --navy:    #DCE6F2;  /* heading color */
     --blue:    #82B6EA;
     --teal:    #5FC4B5;
@@ -119,12 +122,45 @@
     --sidebar-accordion-active-bg: rgba(130, 182, 234, 0.16);
   }
 
-  pre { background: #0B1018; border: 1px solid var(--border); }
-  .page-search-mark { background: #6B5410; color: #FFF6D6; }
-  .page-search-mark.is-active { background: #8A6512; }
-  .skip-link { background: var(--blue); color: #0B1018; }
-  input[type="checkbox"] { accent-color: var(--blue); }
+  :root:not([data-theme="light"]) pre { background: #0B1018; border: 1px solid var(--border); }
+  :root:not([data-theme="light"]) .page-search-mark { background: #6B5410; color: #FFF6D6; }
+  :root:not([data-theme="light"]) .page-search-mark.is-active { background: #8A6512; }
+  :root:not([data-theme="light"]) .skip-link { background: var(--blue); color: #0B1018; }
+  :root:not([data-theme="light"]) input[type="checkbox"] { accent-color: var(--blue); }
 }
+
+:root[data-theme="dark"] {
+  --navy:    #DCE6F2;  /* heading color */
+  --blue:    #82B6EA;
+  --teal:    #5FC4B5;
+  --amber:   #E3AD55;
+  --red:     #F19AA5;
+  --bg:      #10151C;
+  --white:   #181F29;  /* panel and card surface */
+  --border:  #2E3947;
+  --text:    #E2E7EE;
+  --muted:   #A4AFBE;
+  --ph-bg:   #1C2430;
+  --ph-border: #4A5A70;
+  --code-bg: #232C39;
+  --ok:      #6DD0BC;
+  --warn:    #E7B25C;
+  --proposed: #ABBAD6;
+  --focus-ring: 0 0 0 3px rgba(130, 182, 234, 0.45);
+
+  --sidebar-bg: #121A25;
+  --sidebar-header-bg: #0D141D;
+  --sidebar-toggle-bg: #0D141D;
+  --sidebar-toggle-hover-bg: #1D2A3B;
+  --sidebar-active-bg: rgba(130, 182, 234, 0.16);
+  --sidebar-accordion-active-bg: rgba(130, 182, 234, 0.16);
+}
+
+:root[data-theme="dark"] pre { background: #0B1018; border: 1px solid var(--border); }
+:root[data-theme="dark"] .page-search-mark { background: #6B5410; color: #FFF6D6; }
+:root[data-theme="dark"] .page-search-mark.is-active { background: #8A6512; }
+:root[data-theme="dark"] .skip-link { background: var(--blue); color: #0B1018; }
+:root[data-theme="dark"] input[type="checkbox"] { accent-color: var(--blue); }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -311,6 +347,32 @@ html.sidebar-collapsed #sidebar {
 .sidebar-search input:focus {
   border-color: var(--sidebar-search-focus);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--sidebar-search-focus) 22%, transparent);
+}
+
+.theme-toggle {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0 0.35rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid rgba(184, 204, 226, 0.28);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--sidebar-link);
+  font: inherit;
+  font-size: 0.82rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: var(--sidebar-link-hover-bg);
+  color: var(--sidebar-link-hover-fg);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--sidebar-search-focus);
+  outline-offset: 2px;
+  box-shadow: none;
 }
 
 .sidebar-search-empty {
