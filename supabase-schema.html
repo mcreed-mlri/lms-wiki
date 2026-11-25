@@ -79,7 +79,7 @@
     <p>The LACE platform uses one shared Supabase project as its <strong>custom data layer</strong> across the Learning Hub and Brightspace Manager. Brightspace stays the system of record for learner authentication, courses, enrollments, completions, and grades. Supabase fills the gaps: staff/admin auth for Brightspace Manager, extended operational data, catalog records synced from Brightspace, engagement events, and learner feedback.</p>
 
     <div class="note">
-      <strong>Current auth boundary:</strong> Supabase Auth is for <strong>Brightspace Manager</strong>, the staff/admin command center. Learning Hub learner authentication should come from Brightspace when that flow is built out. Both apps can still use the same Supabase project for shared data and backend services.
+      <strong>Current auth boundary:</strong> Supabase Auth is for <strong>Brightspace Manager</strong>, the staff/admin command center. Training Hub learner authentication comes from Brightspace (live on the test site since July 2026; a signed session cookie, not Supabase Auth). Both apps can still use the same Supabase project for shared data and backend services.
     </div>
 
     <div class="table-wrap">
@@ -160,7 +160,7 @@
           <tr>
             <td>User identity / login</td>
             <td>Brightspace for Learning Hub; Supabase Auth for Brightspace Manager</td>
-            <td>Learning Hub learner login comes from Brightspace when built out. Brightspace Manager can use Supabase Auth for staff/admin access, with <code>profiles</code> or a manager-specific user table extending roles and permissions.</td>
+            <td>Training Hub learner login comes from Brightspace (live on the test site since July 2026). Brightspace Manager can use Supabase Auth for staff/admin access, with <code>profiles</code> or a manager-specific user table extending roles and permissions.</td>
           </tr>
           <tr>
             <td>What a user searched for</td>

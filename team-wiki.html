@@ -62,7 +62,8 @@
 
     <span class="section-label">Related Docs</span>
     <a href="index.html" class="external">Home</a>
-    <a href="august-2026-priority-tasks.html" class="external">Priority Tasks</a>
+    <a href="november-2026-status.html" class="external">November 2026 Status</a>
+    <a href="august-2026-priority-tasks.html" class="external">August Tasks (Historical)</a>
     <a href="june-2026-priority-tasks.html" class="external">June Tasks (Historical)</a>
     <a href="marlana.html" class="external">Marlie's Workspace</a>
     <a href="mlri-architecture.html" class="external">LACE Architecture</a>
@@ -105,7 +106,7 @@
       </div>
     </div>
 
-    <p class="last-updated"><em>Last updated: 2026-07-06</em></p>
+    <p class="last-updated"><em>Last updated: 2026-11-25</em></p>
   </section>
 
   <section class="guide-section" id="project-north-star">
@@ -206,25 +207,39 @@
             <td>August 2026</td>
             <td>D2L implementation</td>
             <td>Trainings, vanity URL, custom email, closure call</td>
-            <td><span class="status in-progress">In Progress</span></td>
+            <td><span class="status proposed">Outcome not recorded</span></td>
           </tr>
           <tr>
-            <td><strong>Pilot 1</strong></td>
-            <td>September 2026</td>
-            <td>Internal LACE cohort</td>
+            <td><strong>Pilots 1 &amp; 2</strong></td>
+            <td><s>September &amp; October 2026</s></td>
+            <td>Internal cohort, then broader community</td>
             <td>Pre-Trial Skills</td>
+            <td><span class="status blocked">Replaced</span></td>
+          </tr>
+          <tr>
+            <td><strong>Expert research (CTA)</strong></td>
+            <td>December 2026 &ndash; March 2027 (tentative)</td>
+            <td>Expert attorneys</td>
+            <td>Survey recruitment in December, limited survey release mid-January, workshops in March</td>
+            <td><span class="status in-progress">Planning</span></td>
+          </tr>
+          <tr>
+            <td><strong>Training Hub pilot</strong></td>
+            <td>Spring 2027 (decided October 2026)</td>
+            <td>Attorneys first; other roles later</td>
+            <td>Pretrial and Trial Skills</td>
             <td><span class="status not-started">Not Started</span></td>
           </tr>
           <tr>
-            <td><strong>Pilot 2</strong></td>
-            <td>October 2026</td>
-            <td>Broader legal aid community</td>
-            <td>Pre-Trial Skills, refined</td>
-            <td><span class="status not-started">Not Started</span></td>
+            <td><strong>Native app launch</strong></td>
+            <td>April/May 2027 (target)</td>
+            <td>Learners on iPhone and Android (unlisted)</td>
+            <td>Training Hub in an app shell</td>
+            <td><span class="status not-started">Planned</span></td>
           </tr>
           <tr>
-            <td><strong>Partial Public Launch</strong></td>
-            <td>Mid-January 2027</td>
+            <td><strong>Public launch</strong></td>
+            <td>Not set (was mid-January 2027)</td>
             <td>Legal aid community</td>
             <td>Foundations, Pre-Trial, Trial Skills</td>
             <td><span class="status not-started">Not Started</span></td>
@@ -233,7 +248,7 @@
       </table>
     </div>
 
-    <p><strong>Technical build:</strong> see <a href="marlana.html#current-phase">Current Phase</a>, <a href="marlana.html#lace-hub-dashboard">LACE Learning Hub dashboard plan</a>, <a href="marlana.html#brightspace-manager">Brightspace Manager</a>, and <a href="mlri-architecture.html">LACE Architecture</a>.</p>
+    <p><strong>Current status:</strong> see <a href="november-2026-status.html">November 2026 Status</a>. <strong>Technical build:</strong> see <a href="marlana.html#current-phase">Current Phase</a>, <a href="marlana.html#lace-hub-dashboard">LACE Learning Hub dashboard plan</a>, <a href="marlana.html#brightspace-manager">Brightspace Manager</a>, and <a href="mlri-architecture.html">LACE Architecture</a>.</p>
   </section>
 
   <section class="guide-section" id="course-content-model">
@@ -755,6 +770,41 @@
             <td>2026-05-13</td>
             <td>Keeps learner names clean and admin views scannable.</td>
           </tr>
+          <tr id="decision-pilot-spring-2027">
+            <td>Move the pilot to spring 2027. Run expert interviews and surveys (CTA) first and build content from them.</td>
+            <td>2026-10</td>
+            <td>Content should come from expert research before learners see it. Replaces the September/October 2026 pilots.</td>
+          </tr>
+          <tr id="decision-program-term">
+            <td>Use "Program" as the umbrella term (Program 1: Pretrial and Trial Skills).</td>
+            <td>2026-10-22</td>
+            <td>Matches the term used in the 4C/ID mapping memo (pretrial-trial-skills DEC-001).</td>
+          </tr>
+          <tr id="decision-no-state-names">
+            <td>Public materials name no state except inside MLRI's name, and do not mention expansion plans.</td>
+            <td>2026-11-13</td>
+            <td>Advocates in neighboring states such as Rhode Island should not feel excluded.</td>
+          </tr>
+          <tr id="decision-training-hub-name">
+            <td>Rename the learner platform to <strong>Legal Aid Training Hub</strong> ("Training Hub"), with no acronym. Credit MLRI alone until the center is named.</td>
+            <td>2026-11-17</td>
+            <td>Name from the design firm. Center name is still open.</td>
+          </tr>
+          <tr id="decision-supervisor-progress-only">
+            <td>Supervisors see learner progress only; no supervisor sign-off step.</td>
+            <td>2026-11-17</td>
+            <td>Keeps the supervisor view simple for the pilot.</td>
+          </tr>
+          <tr id="decision-no-brightspace-name">
+            <td>Stop naming Brightspace to learners in the Training Hub.</td>
+            <td>2026-11-18</td>
+            <td>Learners see one platform. (Whether the login button may say "Sign in with Brightspace" is still open.)</td>
+          </tr>
+          <tr id="decision-login-every-page">
+            <td>Require login on every page of the Training Hub team site; never require it on the demo site.</td>
+            <td>2026-11-19</td>
+            <td>Hub ADR 0018. Replaces the earlier rule that course detail pages were public.</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -772,7 +822,7 @@
           <tr id="glossary-offering"><td><strong>Course Offering</strong></td><td>Learner-facing course. Enroll learners here.</td></tr>
           <tr id="glossary-template"><td><strong>Course Template</strong></td><td>Reusable parent/library for related Course Offerings. It can hold shared setup or copied components, but settings do not automatically inherit into every Offering.</td></tr>
           <tr id="glossary-section"><td><strong>Section</strong></td><td>Optional cohort or scheduled-run subdivision inside an Offering.</td></tr>
-          <tr id="glossary-program"><td><strong>Program</strong></td><td>LACE planning label for a group of related Course Templates; implementation may be a Department/custom org unit or a Learning Hub catalog category.</td></tr>
+          <tr id="glossary-program"><td><strong>Program</strong></td><td>LACE planning label for a group of related Course Templates; implementation may be a Department/custom org unit or a Training Hub catalog category. Also the agreed curriculum umbrella term (Oct 2026), e.g. Program 1: Pretrial and Trial Skills.</td></tr>
           <tr id="glossary-training-area"><td><strong>Training Area</strong></td><td>LACE planning label for broad catalog categories such as Legal Skills or Substantive Law.</td></tr>
           <tr id="glossary-org"><td><strong>Org</strong></td><td>D2L term for the top Brightspace site/container, not MLRI's staff org chart.</td></tr>
           <tr id="glossary-org-unit"><td><strong>Org Unit</strong></td><td>Brightspace structure object such as Organization, Department, Semester, Course Template, Course Offering, Group, or Section.</td></tr>
@@ -782,7 +832,12 @@
           <tr id="glossary-discover"><td><strong>Discover</strong></td><td>Brightspace's built-in catalog/self-enrollment page.</td></tr>
           <tr id="glossary-manage-files"><td><strong>Manage Files</strong></td><td>Brightspace storage area for course files such as HTML, CSS, images, and documents.</td></tr>
           <tr id="glossary-course-builder"><td><strong>Course Builder / Content</strong></td><td>Brightspace course outline layer made of modules and topics. Topics can point to files stored in Manage Files.</td></tr>
-          <tr id="glossary-brightspace-manager"><td><strong>Brightspace Manager</strong></td><td>LACE-built admin command center and course builder. It centralizes sync health, course drafts, file checks, integrity review, and publishing workflows so the Learning Hub can stay focused on learner, manager, and program views.</td></tr>
+          <tr id="glossary-brightspace-manager"><td><strong>Brightspace Manager</strong></td><td>LACE-built admin command center and course builder. It centralizes sync health, course drafts, file checks, integrity review, and publishing workflows so the Training Hub can stay focused on learner, supervisor, and program views. It is the only tool that writes to Brightspace or to Supabase catalog data.</td></tr>
+          <tr id="glossary-training-hub"><td><strong>Legal Aid Training Hub</strong></td><td>The learner-facing platform ("Training Hub" when short), named November 17, 2026. Formerly the LACE Learning Hub. Handles discovery, browsing and search, and hands learners off to courses in Brightspace.</td></tr>
+          <tr id="glossary-team-demo-site"><td><strong>Team site / Demo site</strong></td><td>The two Training Hub deployments. The team site requires staff login on every page. The demo site never asks for login and offers new learner, returning learner and supervisor views for stakeholders.</td></tr>
+          <tr id="glossary-cta"><td><strong>CTA (Cognitive Task Analysis)</strong></td><td>Research method for capturing how experts actually do a task, through surveys, interviews, flowcharts and validation. Used to build the Pretrial and Trial Skills program.</td></tr>
+          <tr id="glossary-4cid"><td><strong>4C/ID</strong></td><td>Four-Component Instructional Design: learning tasks built around whole tasks, supportive information, procedural information and part-task practice. The design model for the first program.</td></tr>
+          <tr id="glossary-whole-task"><td><strong>Whole Task / Task Class</strong></td><td>4C/ID terms. A whole task is a realistic piece of work (the top-level one is the lifecycle of a trial). Task classes group learning tasks from easy to hard.</td></tr>
           <tr id="glossary-module"><td><strong>Module</strong></td><td>Content outline container used to organize topics inside a Course Offering.</td></tr>
           <tr id="glossary-topic"><td><strong>Topic</strong></td><td>Individual Content item such as a page, file, activity, link, quiz, or assignment.</td></tr>
           <tr id="glossary-completion"><td><strong>Completion</strong></td><td>Brightspace record that a learner finished a Course Offering.</td></tr>

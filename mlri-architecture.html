@@ -793,20 +793,20 @@
 <a href="team-wiki.html" class="back-link"><span class="arrow" aria-hidden="true">&larr;</span> Team Wiki</a>
 
 <div class="header">
-  <div class="header-tag">System Architecture · LACE Learning Hub</div>
+  <div class="header-tag">System Architecture · Legal Aid Training Hub (formerly LACE Learning Hub)</div>
   <h1>What We're <span>Building</span></h1>
-  <p>Learner login is live with real Brightspace OAuth. August focus: service-user sync registration, vanity URL finalization, team decisions (attributes, UPL access matrix, completion criteria), and production verification.</p>
+  <p>November 2026: learner login works with real Brightspace OAuth on the test site, and the team site requires login on every page. The catalog and dashboards are still sample data; the production Brightspace site is not live. Next: service-user sync, real catalog and dashboard data, and the pre-pilot hardening list ahead of the spring 2027 pilot. A native app shell around the Hub is planned for April/May 2027. See <a href="november-2026-status.html" style="color:inherit;text-decoration:underline">November 2026 Status</a>.</p>
 </div>
 
 <div class="legend">
   <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> Phase 0 · Built</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#14b8a6"></div> Phase 1 · Login live · sync hardening (Aug)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#14b8a6"></div> Phase 1 · Login live · service-user sync next</div>
   <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> Phase 2 · Planned — after RLS applied</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Phase 3 · Fall 2026</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Phase 3 · Before / during spring 2027 pilot</div>
 </div>
 
 <div class="proof-panel">
-  <div class="proof-kicker">Current proof path · May 26, 2026</div>
+  <div class="proof-kicker">Proof path · May 26, 2026 (login since verified on the test site, July 2026)</div>
   <h2>What is real now</h2>
   <p>
     The architecture has moved from planning to a working local integration spike. The Learning Hub can read Supabase, complete Brightspace OAuth, call <code>whoami</code>, read one known Brightspace course, inspect its content outline, and sync that course into Supabase.

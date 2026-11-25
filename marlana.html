@@ -59,7 +59,8 @@
 
     <span class="section-label">Related Docs</span>
     <a href="index.html" class="external">Home</a>
-    <a href="august-2026-priority-tasks.html" class="external">August Priority Tasks</a>
+    <a href="november-2026-status.html" class="external">November 2026 Status</a>
+    <a href="august-2026-priority-tasks.html" class="external">August Tasks (Historical)</a>
     <a href="june-2026-priority-tasks.html" class="external">June Tasks (Historical)</a>
     <a href="team-wiki.html" class="external">Team Wiki</a>
     <a href="brightspace-interactive-guide.html" class="external">Brightspace Native Tools Reference</a>
@@ -85,7 +86,7 @@
     </div>
 
     <div class="note">
-      <strong>Current checklist:</strong> see <a href="august-2026-priority-tasks.html">LACE Learning Hub: August 2026 Priority Tasks</a> for D2L wrap-up, team decisions, and production verification. Historical context on June work is in the <a href="june-2026-priority-tasks.html">June 2026 Priority Tasks</a> archive.
+      <strong>Current status:</strong> see <a href="november-2026-status.html">November 2026 Status</a> for the spring 2027 pilot, the Training Hub name, what shipped since July, the native app plan and open decisions. The <a href="august-2026-priority-tasks.html">August 2026 Priority Tasks</a> page is now historical. Historical context on June work is in the <a href="june-2026-priority-tasks.html">June 2026 Priority Tasks</a> archive.
     </div>
 
     <div class="table-wrap">
@@ -108,20 +109,20 @@
           </tr>
           <tr>
             <td><strong>Brightspace API</strong></td>
-            <td>Learner login is live end-to-end (OAuth → session → <code>/api/me</code>, token refresh). Service-user sync app registration is pending.</td>
-            <td>Finalize service-user OAuth registration, then validate metadata sync into <code>learning_items</code> with Course Offering <code>6703</code>.</td>
+            <td>Learner login works end-to-end on the test site (OAuth → session → <code>/api/me</code>, token refresh). Production Brightspace site is not live yet. Brightspace Manager still uses a person's refresh-token chain; the service-user flow is the next milestone.</td>
+            <td>Service-user (client credentials) registration, then validate metadata sync into <code>learning_items</code>. Monday: "Brightspace API integration established", due Jan 15, 2027 (Waiting/Paused).</td>
             <td><span class="status in-progress">In Progress</span></td>
           </tr>
           <tr>
-            <td><strong>LACE Learning Hub dashboards</strong></td>
-            <td>One app with learner-facing discovery/progress views; Brightspace operations now hand off to Brightspace Manager.</td>
-            <td>Keep the Hub focused on learner, manager, and program reporting while Brightspace Manager owns sync and diagnostics.</td>
+            <td><strong>Legal Aid Training Hub</strong> (formerly LACE Learning Hub)</td>
+            <td>Redesigned in November with the design firm. Team site (login on every page) and demo site (new learner, returning learner, supervisor views). Catalog and dashboards are still sample data.</td>
+            <td>Work through the pre-pilot production-readiness list; swap in real catalog and <code>/api/me/dashboard</code> data. Monday: "Training Hub experience developed and launched", due Jan 22, 2027.</td>
             <td><span class="status in-progress">In Progress</span></td>
           </tr>
           <tr>
             <td><strong>Brightspace Manager &amp; Admin MCP</strong></td>
-            <td>Command center for sync monitoring and operations; Claude integration for automated diagnostics.</td>
-            <td>Integrate into ops workflows for troubleshooting and data verification during pilot ramp-up.</td>
+            <td>Command center for sync monitoring and operations, plus Course Studio and the shared Curriculum Map. Restyled to match the Training Hub (Nov 19 to 21). Evaluation and learner pages still use mock data.</td>
+            <td>Integrity Checker v1, service-user sync, live data for evaluation and learner pages. Monday: "Brightspace manager and admin tools ready", due Mar 5, 2027.</td>
             <td><span class="status in-progress">In Progress</span></td>
           </tr>
           <tr>
@@ -132,7 +133,7 @@
           </tr>
           <tr>
             <td><strong>Open decisions</strong></td>
-            <td>Domain, login page, audience routing, sections, catalog path.</td>
+            <td>Center name, UPL matrix, native-app sign-in, domain, login page, audience routing, sections, catalog path.</td>
             <td>Resolve before external pilot configuration hardens.</td>
             <td><span class="status proposed">Needs Decisions</span></td>
           </tr>
@@ -140,10 +141,14 @@
       </table>
     </div>
 
-    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-07-06</em></p>
+    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 2rem;"><em>Last updated: 2026-11-25</em></p>
 
     <div class="tip">
-      <strong>July 2026 status.</strong> D2L granted an extension to <strong>August 2026</strong> for trainings, the vanity URL, and remaining wrap-up items. The Learning Hub gained real Brightspace login (OAuth → session → <code>/api/me</code>, with token refresh), locked-down API routes, a written Supabase RLS migration, and local operations runbooks (credentials, rotation, rollback; assumption-by-assumption test plan, including the unresolved 10-vs-50 user-attribute limit question for D2L). See <a href="august-2026-priority-tasks.html">August 2026 Priority Tasks</a> for current status.
+      <strong>November 2026 status.</strong> The pilot moved to <strong>spring 2027</strong> (decided October 2026); the team is running expert research (CTA) for Pretrial and Trial Skills first. The platform is now the <strong>Legal Aid Training Hub</strong> (Nov 17). Monday.com due dates were reset on Oct 21 to January to March 2027. A native iPhone and Android app is planned for April/May 2027. Details: <a href="november-2026-status.html">November 2026 Status</a>.
+    </div>
+
+    <div class="note">
+      <strong>July 2026 status (historical).</strong> D2L granted an extension to <strong>August 2026</strong> for trainings, the vanity URL, and remaining wrap-up items. The Learning Hub gained real Brightspace login (OAuth → session → <code>/api/me</code>, with token refresh), locked-down API routes, a written Supabase RLS migration, and local operations runbooks (credentials, rotation, rollback; assumption-by-assumption test plan, including the unresolved 10-vs-50 user-attribute limit question for D2L). See <a href="august-2026-priority-tasks.html">August 2026 Priority Tasks</a> for current status.
     </div>
   </section>
 
@@ -165,14 +170,14 @@
           <tr>
             <td><strong>Phase 1: API</strong></td>
             <td>Connect Brightspace to the custom frontend.</td>
-            <td>Supabase health route, Brightspace OAuth, <code>whoami</code>, and local Brightspace Manager diagnostics are working.</td>
+            <td>Supabase health route, Brightspace OAuth, <code>whoami</code>, and Brightspace Manager diagnostics are working. Hub login works on the test site; Supabase migrations written (Sep 2026).</td>
             <td>Create the Brightspace Service User, least-privilege role, OAuth Client Credentials registration, JWKS URL, scopes, API version, and sync route.</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <p><strong>Bottom line:</strong> the wrapper can carry course delivery now. API work unlocks real progress, dashboard data, SSO, and cross-system reporting. The active worklist is tracked in <a href="august-2026-priority-tasks.html">August 2026 Priority Tasks</a>.</p>
+    <p><strong>Bottom line:</strong> the wrapper can carry course delivery now. API work unlocks real progress, dashboard data, SSO, and cross-system reporting. Current status is tracked in <a href="november-2026-status.html">November 2026 Status</a>.</p>
   </section>
 
   <section class="guide-section" id="roadblocks">
@@ -298,24 +303,30 @@
           <tr><th>When</th><th>Focus</th><th>Status</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Now &middot; July 2026</strong></td><td>Brightspace API integration and service-user sync.</td><td><span class="status in-progress">In Progress</span></td></tr>
-          <tr><td><strong>Now &middot; July 2026</strong></td><td>LMS user attributes and data requirements.</td><td><span class="status in-progress">In Progress</span></td></tr>
-          <tr><td><strong>Now &middot; July 2026</strong></td><td>Reporting and evaluation metrics definition (pilot success criteria, key LMS metrics, end-of-course survey).</td><td><span class="status in-progress">In Progress</span></td></tr>
-          <tr><td><strong>Now &middot; July 2026</strong></td><td>Interactive tool guides for faculty and content creators.</td><td><span class="status in-progress">In Progress</span></td></tr>
-          <tr><td><strong>Blocked</strong></td><td>Branding rollout, direct-entry homepage, and H5P / Course Studio setup. Waiting on the official org name and approved branding.</td><td><span class="status blocked">Waiting</span></td></tr>
-          <tr><td><strong>Jul 21 &ndash; Sep 5</strong></td><td>Learner support resources ready.</td><td><span class="status not-started">Not Started</span></td></tr>
-          <tr><td><strong>Aug 1 &ndash; Sep 19</strong></td><td>Learner journey and usability testing.</td><td><span class="status not-started">Not Started</span></td></tr>
-          <tr><td><strong>Sept &ndash; Oct 2026</strong></td><td>Pilot content build, pilot cohort launch and evaluation.</td><td><span class="status not-started">Not Started</span></td></tr>
-          <tr><td><strong>January 2027</strong></td><td>Partial public launch: Foundations, Pre-Trial, Trial Skills.</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td><strong>Now &middot; Nov&ndash;Dec 2026</strong></td><td>Training Hub redesign with the design firm; native app accounts and sign-in answer; pre-pilot hardening.</td><td><span class="status in-progress">In Progress</span></td></tr>
+          <tr><td><strong>Ongoing</strong></td><td>LMS user attributes and data requirements (due Feb 5, 2027).</td><td><span class="status in-progress">Working on it</span></td></tr>
+          <tr><td><strong>Ongoing</strong></td><td>Reporting and analytics framework (due Mar 5, 2027); internal LMS team FAQ and admin guide (due Jan 22, 2027); backup and disaster recovery plan (due Mar 19, 2027).</td><td><span class="status in-progress">Working on it</span></td></tr>
+          <tr><td><strong>Waiting</strong></td><td>Approved branding across LMS systems (due Mar 12, 2027), H5P and Course Studio workflow (due Feb 19), direct-entry Brightspace fallback (due Jan 22). Waiting on the center name and design guide.</td><td><span class="status blocked">Waiting/Paused</span></td></tr>
+          <tr><td><strong>Jan 15, 2027</strong></td><td>Brightspace API integration established; learner data privacy and access controls.</td><td><span class="status not-started">Waiting / Not Started</span></td></tr>
+          <tr><td><strong>Jan 22, 2027</strong></td><td>Training Hub experience developed and launched.</td><td><span class="status blocked">Waiting/Paused</span></td></tr>
+          <tr><td><strong>Feb 5, 2027</strong></td><td>UPL access matrix sign-off; LMS roles and access model finalized.</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td><strong>Feb 12&ndash;19, 2027</strong></td><td>Browser, device and mobile testing; completion criteria definition; learner outreach email templates.</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td><strong>Mar 5&ndash;19, 2027</strong></td><td>Brightspace platform configuration; Brightspace Manager and admin tools ready; accessibility standards and audit; data structure; environments and release process; policies and governance.</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td><strong>Spring 2027</strong></td><td>Training Hub pilot (attorneys first). Native app launch targeted for May 2027.</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td><strong>Jun 18, 2027</strong></td><td>Post-launch maintenance and support ownership plan.</td><td><span class="status not-started">Not Started</span></td></tr>
         </tbody>
       </table>
     </div>
 
-    <p style="color: var(--muted); font-size: 0.85rem;"><em>Snapshot of my active and upcoming work, synced from the team's Monday.com boards.</em></p>
+    <p style="color: var(--muted); font-size: 0.85rem;"><em>Snapshot of my active and upcoming work, synced from the Monday.com LMS board on 2026-11-25 (due dates reset Oct 21, 2026).</em></p>
   </section>
 
   <section class="guide-section" id="marlies-roadmap">
     <h2>Platform Roadmap & Timeline</h2>
+
+    <div class="warning">
+      <strong>July 2026 snapshot.</strong> The month-by-month board below predates the October decision to move the pilot to spring 2027 and has not been redrawn. Use <a href="#marlie-program-timeline">My Timeline</a> and <a href="november-2026-status.html#dates">November 2026 Status &rarr; Dates</a> for current dates.
+    </div>
 
     <div class="note">
       <strong>Two tracks, one vision:</strong> the wrapper delivers the in-course experience now. LACE Learning Hub adds API-backed dashboards, data, and reporting over time.

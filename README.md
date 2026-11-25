@@ -6,6 +6,8 @@ This is the stable project memory: current status, open decisions, waiting items
 
 > **Workspace map:** See [`../README.md`](../README.md) for how this folder relates to the rest of `c:\dev`.
 
+> **Naming (Nov 2026):** the learner platform is now the **Legal Aid Training Hub** ("Training Hub"). "LACE" remains the internal working name used in this wiki and in repo names. Related repos: `lms-discovery` (Training Hub), `brightspace-manager`, `pretrial-trial-skills`, `public-site`.
+
 ## Layout
 
 ```
@@ -27,8 +29,11 @@ platform-wiki/
 | File | What it is | Audience |
 |---|---|---|
 | [`index.html`](index.html) | Platform home: landing hub that links to every reference page, plus the current status/phase dashboard | Anyone arriving at the site |
+| [`november-2026-status.html`](november-2026-status.html) | **Current status (Nov 2026):** spring 2027 pilot, Legal Aid Training Hub name, what shipped since July, the four workstreams, native app plan, pre-pilot checklist, open decisions | Everyone on the team |
 | [`team-wiki.html`](team-wiki.html) | Team wiki: project status, custom HTML course model, org structure, compliance, policies, decisions, glossary, quick tasks | Internal LACE staff (ED, program managers, admin) |
-| [`june-2026-priority-tasks.html`](june-2026-priority-tasks.html) | June 2026 priority task list: production hardening, routing policy, accessibility, completion criteria, and Intelligent Agent recipes | LACE implementation team |
+| [`august-2026-priority-tasks.html`](august-2026-priority-tasks.html) | **Historical.** August 2026 D2L wrap-up worklist; follow-up lives on the November status page | LACE implementation team |
+| [`june-2026-priority-tasks.html`](june-2026-priority-tasks.html) | **Historical.** June 2026 priority task list: production hardening, routing policy, accessibility, completion criteria, and Intelligent Agent recipes | LACE implementation team |
+| [`curriculum-map.html`](curriculum-map.html) | Interactive sticky-note wall of the curriculum (digitized June 30, 2026) | Anyone planning content |
 | [`marlana.html`](marlana.html) | Marlie's workspace: executive scan for the wrapper, LACE Learning Hub dashboard plan, Brightspace Manager command center/course builder, data/reporting roadmap, open decisions | Marlie; future technical hires |
 | [`brightspace-interactive-guide.html`](brightspace-interactive-guide.html) | Secondary reference for optional Brightspace-native tools (Creator+, H5P, quizzes, discussions, assignments) when custom HTML is not the best fit | Marlie; admins evaluating native-tool options |
 | [`brightspace-map.html`](brightspace-map.html) | Interactive, expandable map of the Brightspace platform structure (hierarchy, content, users, integrations, course design); replaces the old static mind-map image | Anyone orienting to how Brightspace is organized |
@@ -41,9 +46,9 @@ platform-wiki/
 | [`assets/css/styles.css`](assets/css/styles.css) | Shared visual language used by the HTML pages |  |
 | [`assets/js/sidebar.js`](assets/js/sidebar.js) | Sidebar search, collapse, service worker registration |  |
 | [`assets/icons/`](assets/icons/) | Favicons and PWA launcher icons (SVG sources + PNG exports) |  |
-| [`screenshots/`](screenshots) | Screenshot assets referenced from reference pages |  |
+| [`pics/`](pics/) | Planning-wall photos used by the curriculum map |  |
 | [`docs/`](docs/) | Local working notes and research PDFs (not deployed) |  |
-| [`scripts/`](scripts/) | Dev server and icon generation tooling (not deployed) |  |
+| [`scripts/`](scripts/) | Dev server, icon generation and Supabase schema SQL (copied to the site by the deploy workflow) |  |
 
 The Team Wiki intentionally links only to core team references. Optional native-tool notes are kept secondary so the custom HTML course model stays clear.
 
@@ -51,17 +56,17 @@ The Team Wiki intentionally links only to core team references. Optional native-
 
 - `index.html` is the platform home: a landing hub that links to every page and surfaces the current status/phase dashboard. It is the GitHub Pages front page.
 - `team-wiki.html` (Team Wiki) is what LACE staff read. It documents how things are organized and what's been decided.
-- `june-2026-priority-tasks.html` is the short-term execution list for June 2026 hardening work.
+- `november-2026-status.html` is the current status page. `august-2026-priority-tasks.html` and `june-2026-priority-tasks.html` are historical records.
 - `marlana.html` (Workspace) is Marlie's working space: technical roadmap, LACE Learning Hub dashboard plan, Brightspace Manager command center/course builder, open questions, and phase-level task tracking. Open decisions live here until they resolve, then move to the Team Wiki's Decision Log.
 - LACE course content is built as custom HTML files inside a shared wrapper. Brightspace provides LMS infrastructure: hosting, enrollment, access, completion records, notices, and reporting.
 - Obsidian notes in [`../notes/`](../notes/) are the workbench for priorities, meetings, drafts, and scratch thinking. Promote stable sections into this wiki; don't maintain parallel full copies elsewhere.
 
 ### Canonical Wiki Homes
 
-- Current project status and phase roadmap: `index.html` and `marlana.html`
+- Current project status and phase roadmap: `index.html`, `november-2026-status.html` and `marlana.html`
 - Waiting items and open decisions: `marlana.html`
 - Resolved decisions, glossary, SOPs, and team-facing rules: `team-wiki.html`
-- June execution tasks: `june-2026-priority-tasks.html`
+- Historical worklists: `june-2026-priority-tasks.html`, `august-2026-priority-tasks.html`
 - System architecture: `mlri-architecture.html`
 
 ## Editing
@@ -97,7 +102,7 @@ A static server is recommended over `file://` so the stylesheet and inter-file l
 
 ## Deployment
 
-GitHub Pages, via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). On push to `main`, the workflow copies all root `*.html`, `team/*.html`, shared assets, icons, and `screenshots/` into a Pages artifact and publishes it. No build step.
+GitHub Pages, via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). On push to `main`, the workflow copies all root `*.html`, `team/*.html`, shared assets, icons, and `screenshots/`, `pics/` and `scripts/` (when present) into a Pages artifact and publishes it. No build step.
 
 ### Adding a new page
 
