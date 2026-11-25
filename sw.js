@@ -21,7 +21,7 @@ const PRECACHE_URLS = [
   './supabase-visualizer.html',
   './team/',
   './team/index.html',
-  './assets/css/styles.css',
+  `./assets/css/styles.css?v=${BUILD_VERSION}`,
   `./assets/js/sidebar.js?v=${BUILD_VERSION}`,
   './assets/icons/favicon.svg',
   './assets/icons/icon.svg',
@@ -35,7 +35,12 @@ const PRECACHE_URLS = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_VERSION).then((cache) => cache.addAll(PRECACHE_URLS))
+    // cache: 'reload' bypasses the browser's HTTP cache, so a deploy that
+    // lands within GitHub Pages' 10-minute cache window cannot precache a
+    // stale copy of a file.
+    caches.open(CACHE_VERSION).then((cache) =>
+      cache.addAll(PRECACHE_URLS.map((url) => new Request(url, { cache: 'reload' })))
+    )
   );
   self.skipWaiting();
 });
