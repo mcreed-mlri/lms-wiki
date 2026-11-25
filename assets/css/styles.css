@@ -15,6 +15,10 @@
   --tip-border: #2A8F82;
   --note-bg: #FEF6E8;
   --note-border: #B06A00;
+  --code-bg: #E8EDF4;
+  --ok:      #1D7469;
+  --warn:    #975900;
+  --proposed: #55698C;
   --sidebar-w: 260px;
   --sidebar-toggle-size: 2rem;
 
@@ -54,7 +58,7 @@
   --accent: var(--blue);
 
   /* Sidebar theme (one theme for every page) */
-  --sidebar-bg: var(--navy);
+  --sidebar-bg: #1E3A5F;
   --sidebar-fg: #C8D8EC;
   --sidebar-header-bg: #16304F;
   --sidebar-header-border: rgba(255, 255, 255, 0.1);
@@ -81,6 +85,47 @@
   --sidebar-toggle-focus: #5ba8e0;
 }
 
+/* ── Dark mode ────────────────────────────────────
+   Follows the system setting. Every component reads these
+   variables, so this block is the whole dark theme.
+   (The Supabase Visualizer sets its own dark palette.) */
+:root { color-scheme: light dark; }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --navy:    #DCE6F2;  /* heading color */
+    --blue:    #82B6EA;
+    --teal:    #5FC4B5;
+    --amber:   #E3AD55;
+    --red:     #F19AA5;
+    --bg:      #10151C;
+    --white:   #181F29;  /* panel and card surface */
+    --border:  #2E3947;
+    --text:    #E2E7EE;
+    --muted:   #A4AFBE;
+    --ph-bg:   #1C2430;
+    --ph-border: #4A5A70;
+    --code-bg: #232C39;
+    --ok:      #6DD0BC;
+    --warn:    #E7B25C;
+    --proposed: #ABBAD6;
+    --focus-ring: 0 0 0 3px rgba(130, 182, 234, 0.45);
+
+    --sidebar-bg: #121A25;
+    --sidebar-header-bg: #0D141D;
+    --sidebar-toggle-bg: #0D141D;
+    --sidebar-toggle-hover-bg: #1D2A3B;
+    --sidebar-active-bg: rgba(130, 182, 234, 0.16);
+    --sidebar-accordion-active-bg: rgba(130, 182, 234, 0.16);
+  }
+
+  pre { background: #0B1018; border: 1px solid var(--border); }
+  .page-search-mark { background: #6B5410; color: #FFF6D6; }
+  .page-search-mark.is-active { background: #8A6512; }
+  .skip-link { background: var(--blue); color: #0B1018; }
+  input[type="checkbox"] { accent-color: var(--blue); }
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -104,7 +149,7 @@ body {
   left: 0.65rem;
   z-index: 300;
   padding: 0.55rem 1rem;
-  background: var(--navy);
+  background: var(--sidebar-bg);
   color: #fff;
   font-size: 0.85rem;
   font-weight: 700;
@@ -527,7 +572,7 @@ body.page-supabase-visualizer {
 
 .home-priority {
   align-items: flex-start;
-  background: #FFFFFF;
+  background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   display: flex;
@@ -927,7 +972,7 @@ pre[tabindex]:focus-visible,
 }
 
 code {
-  background: #E8EDF4;
+  background: var(--code-bg);
   border: 1px solid var(--border);
   border-radius: 3px;
   padding: 0.1em 0.4em;
@@ -1055,7 +1100,7 @@ ul.task-list li.done span.label {
 .tip > :last-child, .note > :last-child,
 .warning > :last-child, .danger > :last-child { margin-bottom: 0; }
 
-.warning > strong:first-child { color: #8A4F00; }
+.warning > strong:first-child { color: var(--warn); }
 .danger > strong:first-child { color: var(--red); }
 
 /* ── Screenshot placeholders ─────────────────── */
@@ -1177,10 +1222,10 @@ tbody tr:last-child td { border-bottom: none; }
 
 .badge { --status-color: var(--teal); }
 
-.status.in-progress { --status-color: #975900; }
-.status.not-started { --status-color: #5A6478; }
-.status.done        { --status-color: #1D7469; }
-.status.proposed    { --status-color: #55698C; }
+.status.in-progress { --status-color: var(--warn); }
+.status.not-started { --status-color: var(--muted); }
+.status.done        { --status-color: var(--ok); }
+.status.proposed    { --status-color: var(--proposed); }
 .status.blocked     { --status-color: var(--red); }
 
 /* ── Reference sections (index): scan-friendly layout ──
@@ -1288,7 +1333,7 @@ tbody tr:last-child td { border-bottom: none; }
   margin-top: 1.75rem;
   margin-bottom: 0.45rem;
   padding-bottom: 0.35rem;
-  border-bottom: 2px solid rgba(44, 111, 172, 0.22);
+  border-bottom: 1px solid var(--border);
 }
 
 #quick-tasks ol.steps + h4,
@@ -2418,11 +2463,11 @@ body:not(.page-supabase-visualizer) .sv-callout-content p {
 
 .roadmap-mode-btn:hover {
   color: var(--navy);
-  background: rgba(30, 58, 95, 0.04);
+  background: color-mix(in srgb, var(--navy) 6%, transparent);
 }
 
 .roadmap-mode-btn.active {
-  color: var(--white);
+  color: var(--bg);
   background: var(--navy);
 }
 
@@ -2432,7 +2477,7 @@ body:not(.page-supabase-visualizer) .sv-callout-content p {
   overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #f8fafc;
+  background: var(--bg);
 }
 
 .roadmap-timeline-map {
@@ -2591,7 +2636,7 @@ body:not(.page-supabase-visualizer) .sv-callout-content p {
   background: color-mix(in srgb, var(--muted) 10%, var(--white));
 }
 
-.phase-status-pill.done { color: #1D7469; background: color-mix(in srgb, #1D7469 10%, var(--white)); }
+.phase-status-pill.done { color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--white)); }
 .phase-status-pill.active { color: var(--blue); background: color-mix(in srgb, var(--blue) 10%, var(--white)); }
 
 .phase-card-content {
@@ -2626,7 +2671,7 @@ body:not(.page-supabase-visualizer) .sv-callout-content p {
   content: '✓';
   position: absolute;
   left: 0;
-  color: #1D7469;
+  color: var(--ok);
   font-weight: 700;
 }
 
@@ -2658,7 +2703,8 @@ body:not(.page-supabase-visualizer) .sv-callout-content p {
 }
 
 
-/* Supabase schema page: dark text on the violet accent fails contrast. */
+/* Supabase schema page: button text follows the theme so it contrasts
+   with the accent in both light and dark mode. */
 body.page-supabase-schema .sv-callout-btn {
-  color: #fff;
+  color: var(--bg);
 }
