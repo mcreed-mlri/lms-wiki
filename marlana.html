@@ -24,7 +24,7 @@
   <meta name="twitter:title" content="Marlie's Workspace">
   <meta name="twitter:description" content="The technical source of truth behind the Team Wiki: wrapper, Brightspace API, LACE Learning Hub dashboards, data layer, reporting, and open decisions.">
   <meta name="twitter:image" content="https://mcreed-mlri.github.io/lms-wiki/assets/icons/icon.svg">
-  <script src="assets/js/sidebar.js?v=20261125-a11y"></script>
+  <script src="assets/js/sidebar.js?v=20261125-calm"></script>
 </head>
 <body class="page-marlana">
 
@@ -99,7 +99,7 @@
             <td><strong>Course wrapper</strong></td>
             <td>Reusable custom HTML course package is built.</td>
             <td>Deploy demo course 6698 and finish Brightspace Content setup.</td>
-            <td><span class="status done">Largely Complete</span></td>
+            <td><span class="status done">Largely complete</span></td>
           </tr>
           <tr>
             <td><strong>Course content model</strong></td>
@@ -110,32 +110,32 @@
           <tr>
             <td><strong>Brightspace API</strong></td>
             <td>Learner login works end-to-end on the test site (OAuth → session → <code>/api/me</code>, token refresh). Production Brightspace site is not live yet. Brightspace Manager still uses a person's refresh-token chain; the service-user flow is the next milestone.</td>
-            <td>Service-user (client credentials) registration, then validate metadata sync into <code>learning_items</code>. Monday: "Brightspace API integration established", due Jan 15, 2027 (Waiting/Paused).</td>
-            <td><span class="status in-progress">In Progress</span></td>
+            <td>Service-user (client credentials) registration, then validate metadata sync into <code>learning_items</code>. Monday: "Brightspace API integration established", due Jan 15, 2027 (Waiting/paused).</td>
+            <td><span class="status in-progress">In progress</span></td>
           </tr>
           <tr>
             <td><strong>Legal Aid Training Hub</strong> (formerly LACE Learning Hub)</td>
             <td>Redesigned in November with the design firm. Team site (login on every page) and demo site (new learner, returning learner, supervisor views). Catalog and dashboards are still sample data.</td>
             <td>Work through the pre-pilot production-readiness list; swap in real catalog and <code>/api/me/dashboard</code> data. Monday: "Training Hub experience developed and launched", due Jan 22, 2027.</td>
-            <td><span class="status in-progress">In Progress</span></td>
+            <td><span class="status in-progress">In progress</span></td>
           </tr>
           <tr>
             <td><strong>Brightspace Manager &amp; Admin MCP</strong></td>
             <td>Command center for sync monitoring and operations, plus Course Studio and the shared Curriculum Map. Restyled to match the Training Hub (Nov 19 to 21). Evaluation and learner pages still use mock data.</td>
             <td>Integrity Checker v1, service-user sync, live data for evaluation and learner pages. Monday: "Brightspace manager and admin tools ready", due Mar 5, 2027.</td>
-            <td><span class="status in-progress">In Progress</span></td>
+            <td><span class="status in-progress">In progress</span></td>
           </tr>
           <tr>
             <td><strong>Attributes and groups</strong></td>
             <td>User Attributes and Learning Groups will shape access, due dates, automation, and reports.</td>
             <td>Freeze a clean attributes/groups plan before relying on automation.</td>
-            <td><span class="status proposed">Needs Decisions</span></td>
+            <td><span class="status proposed">Needs decisions</span></td>
           </tr>
           <tr>
             <td><strong>Open decisions</strong></td>
             <td>Center name, UPL matrix, native-app sign-in, domain, login page, audience routing, sections, catalog path.</td>
             <td>Resolve before external pilot configuration hardens.</td>
-            <td><span class="status proposed">Needs Decisions</span></td>
+            <td><span class="status proposed">Needs decisions</span></td>
           </tr>
         </tbody>
       </table>
@@ -189,9 +189,7 @@
       <div class="roadblock-lane">
         <!-- Blocker Node -->
         <div class="roadblock-node blocker">
-          <span class="roadblock-label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            External dependency
+          <span class="roadblock-label">External dependency
           </span>
           <h3>Official org name</h3>
           <p>Needed before the learner-facing Brightspace identity and URL can be finalized.</p>
@@ -203,9 +201,7 @@
         
         <!-- Waiting Node -->
         <div class="roadblock-node waiting">
-          <span class="roadblock-label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            Blocked setup
+          <span class="roadblock-label">Blocked setup
           </span>
           <h3>Official Brightspace URL</h3>
           <p>D2L needs the final URL/domain path before DNS and production-facing links harden.</p>
@@ -217,9 +213,7 @@
         
         <!-- Impact Node -->
         <div class="roadblock-node impact">
-          <span class="roadblock-label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-            Delayed work
+          <span class="roadblock-label">Delayed work
           </span>
           <h3>Learning Hub polish</h3>
           <p>Deep links, login language, dashboard URLs, and launch docs should wait for the official address.</p>
@@ -229,9 +223,7 @@
       <div class="roadblock-lane">
         <!-- Blocker Node -->
         <div class="roadblock-node blocker">
-          <span class="roadblock-label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            External dependency
+          <span class="roadblock-label">External dependency
           </span>
           <h3>Service User API path</h3>
           <p>Need a non-human Brightspace identity with least-privilege permissions for background sync.</p>
@@ -243,9 +235,7 @@
         
         <!-- Waiting Node -->
         <div class="roadblock-node waiting">
-          <span class="roadblock-label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            Blocked setup
+          <span class="roadblock-label">Blocked setup
           </span>
           <h3>Headless OAuth / scopes</h3>
           <p>Do not bind production sync, catalog reads, or diagnostics to a personal admin account.</p>
@@ -257,9 +247,7 @@
         
         <!-- Impact Node -->
         <div class="roadblock-node impact">
-          <span class="roadblock-label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-            Delayed work
+          <span class="roadblock-label">Delayed work
           </span>
           <h3>API-backed Hub data</h3>
           <p>Course metadata sync, dashboard progress, and stable manager/program reporting depend on this.</p>
@@ -303,17 +291,17 @@
           <tr><th>When</th><th>Focus</th><th>Status</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Now &middot; Nov&ndash;Dec 2026</strong></td><td>Training Hub redesign with the design firm; native app accounts and sign-in answer; pre-pilot hardening.</td><td><span class="status in-progress">In Progress</span></td></tr>
+          <tr><td><strong>Now &middot; Nov&ndash;Dec 2026</strong></td><td>Training Hub redesign with the design firm; native app accounts and sign-in answer; pre-pilot hardening.</td><td><span class="status in-progress">In progress</span></td></tr>
           <tr><td><strong>Ongoing</strong></td><td>LMS user attributes and data requirements (due Feb 5, 2027).</td><td><span class="status in-progress">Working on it</span></td></tr>
           <tr><td><strong>Ongoing</strong></td><td>Reporting and analytics framework (due Mar 5, 2027); internal LMS team FAQ and admin guide (due Jan 22, 2027); backup and disaster recovery plan (due Mar 19, 2027).</td><td><span class="status in-progress">Working on it</span></td></tr>
-          <tr><td><strong>Waiting</strong></td><td>Approved branding across LMS systems (due Mar 12, 2027), H5P and Course Studio workflow (due Feb 19), direct-entry Brightspace fallback (due Jan 22). Waiting on the center name and design guide.</td><td><span class="status blocked">Waiting/Paused</span></td></tr>
-          <tr><td><strong>Jan 15, 2027</strong></td><td>Brightspace API integration established; learner data privacy and access controls.</td><td><span class="status not-started">Waiting / Not Started</span></td></tr>
-          <tr><td><strong>Jan 22, 2027</strong></td><td>Training Hub experience developed and launched.</td><td><span class="status blocked">Waiting/Paused</span></td></tr>
-          <tr><td><strong>Feb 5, 2027</strong></td><td>UPL access matrix sign-off; LMS roles and access model finalized.</td><td><span class="status not-started">Not Started</span></td></tr>
-          <tr><td><strong>Feb 12&ndash;19, 2027</strong></td><td>Browser, device and mobile testing; completion criteria definition; learner outreach email templates.</td><td><span class="status not-started">Not Started</span></td></tr>
-          <tr><td><strong>Mar 5&ndash;19, 2027</strong></td><td>Brightspace platform configuration; Brightspace Manager and admin tools ready; accessibility standards and audit; data structure; environments and release process; policies and governance.</td><td><span class="status not-started">Not Started</span></td></tr>
-          <tr><td><strong>Spring 2027</strong></td><td>Training Hub pilot (attorneys first). Native app launch targeted for May 2027.</td><td><span class="status not-started">Not Started</span></td></tr>
-          <tr><td><strong>Jun 18, 2027</strong></td><td>Post-launch maintenance and support ownership plan.</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td><strong>Waiting</strong></td><td>Approved branding across LMS systems (due Mar 12, 2027), H5P and Course Studio workflow (due Feb 19), direct-entry Brightspace fallback (due Jan 22). Waiting on the center name and design guide.</td><td><span class="status blocked">Waiting/paused</span></td></tr>
+          <tr><td><strong>Jan 15, 2027</strong></td><td>Brightspace API integration established; learner data privacy and access controls.</td><td><span class="status not-started">Waiting, not started</span></td></tr>
+          <tr><td><strong>Jan 22, 2027</strong></td><td>Training Hub experience developed and launched.</td><td><span class="status blocked">Waiting/paused</span></td></tr>
+          <tr><td><strong>Feb 5, 2027</strong></td><td>UPL access matrix sign-off; LMS roles and access model finalized.</td><td><span class="status not-started">Not started</span></td></tr>
+          <tr><td><strong>Feb 12&ndash;19, 2027</strong></td><td>Browser, device and mobile testing; completion criteria definition; learner outreach email templates.</td><td><span class="status not-started">Not started</span></td></tr>
+          <tr><td><strong>Mar 5&ndash;19, 2027</strong></td><td>Brightspace platform configuration; Brightspace Manager and admin tools ready; accessibility standards and audit; data structure; environments and release process; policies and governance.</td><td><span class="status not-started">Not started</span></td></tr>
+          <tr><td><strong>Spring 2027</strong></td><td>Training Hub pilot (attorneys first). Native app launch targeted for May 2027.</td><td><span class="status not-started">Not started</span></td></tr>
+          <tr><td><strong>Jun 18, 2027</strong></td><td>Post-launch maintenance and support ownership plan.</td><td><span class="status not-started">Not started</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -361,7 +349,7 @@
                 <span class="timeline-block-phase">Phase 0</span>
                 <span class="timeline-block-title">Wrapper Template</span>
                 <span class="timeline-block-desc">Custom course templates, LACE nav chrome.</span>
-                <span class="timeline-block-status">✓ Complete</span>
+                <span class="timeline-block-status">Complete</span>
               </a>
             </div>
             <!-- June -->
@@ -370,7 +358,7 @@
                 <span class="timeline-block-phase">Phase 0</span>
                 <span class="timeline-block-title">LMS Wrapper Pilot</span>
                 <span class="timeline-block-desc">Demo 6698 deploy, Content outline links.</span>
-                <span class="timeline-block-status">✓ Done</span>
+                <span class="timeline-block-status">Done</span>
               </a>
             </div>
             <!-- July -->
@@ -379,7 +367,7 @@
                 <span class="timeline-block-phase">Phase 1-2</span>
                 <span class="timeline-block-title">Outreach Prep</span>
                 <span class="timeline-block-desc">Coordination of custom learner outreach & templates.</span>
-                <span class="timeline-block-status">● Active</span>
+                <span class="timeline-block-status">Active</span>
               </a>
             </div>
             <!-- August -->
@@ -388,7 +376,7 @@
                 <span class="timeline-block-phase">Phase 2-3</span>
                 <span class="timeline-block-title">Learner Portal</span>
                 <span class="timeline-block-desc">V1 Learning Hub dashboard.</span>
-                <span class="timeline-block-status">○ Next</span>
+                <span class="timeline-block-status">Next</span>
               </a>
             </div>
             <!-- Sept-Feb -->
@@ -414,7 +402,7 @@
                 <span class="timeline-block-phase">Phase 1</span>
                 <span class="timeline-block-title">Initial Auth Setup</span>
                 <span class="timeline-block-desc">OAuth registered, basic whoami test.</span>
-                <span class="timeline-block-status">✓ Complete</span>
+                <span class="timeline-block-status">Complete</span>
               </a>
             </div>
             <!-- June -->
@@ -423,7 +411,7 @@
                 <span class="timeline-block-phase">Phase 1</span>
                 <span class="timeline-block-title">API & Sync</span>
                 <span class="timeline-block-desc">Learner login live end-to-end; service-user sync pending.</span>
-                <span class="timeline-block-status">✓ Done</span>
+                <span class="timeline-block-status">Done</span>
               </a>
             </div>
             <!-- July -->
@@ -432,7 +420,7 @@
                 <span class="timeline-block-phase">Phase 2</span>
                 <span class="timeline-block-title">Custom Data Layer</span>
                 <span class="timeline-block-desc">Supabase RLS deployment, catalog sync, activity tracking.</span>
-                <span class="timeline-block-status">● Active</span>
+                <span class="timeline-block-status">Active</span>
               </a>
             </div>
             <!-- August -->
@@ -441,7 +429,7 @@
                 <span class="timeline-block-phase">Phase 3</span>
                 <span class="timeline-block-title">Reporting Engine</span>
                 <span class="timeline-block-desc">Manager/staff summaries, equity analysis.</span>
-                <span class="timeline-block-status">● Active</span>
+                <span class="timeline-block-status">Active</span>
               </a>
             </div>
             <!-- Sept-Feb -->
@@ -463,7 +451,7 @@
         <a href="#marlie-phase-0" class="roadmap-phase-card">
           <div class="phase-card-header">
             <span class="phase-number-badge">Phase 0</span>
-            <span class="phase-status-pill done">Largely Complete</span>
+            <span class="phase-status-pill done">Largely complete</span>
           </div>
           <div class="phase-card-header-title">
             <h3>In-Course HTML Wrappers</h3>
@@ -488,7 +476,7 @@
         <a href="#marlie-phase-1" class="roadmap-phase-card active">
           <div class="phase-card-header">
             <span class="phase-number-badge">Phase 1</span>
-            <span class="phase-status-pill active">In Progress</span>
+            <span class="phase-status-pill active">In progress</span>
           </div>
           <div class="phase-card-header-title">
             <h3>Connect to Brightspace</h3>
@@ -538,7 +526,7 @@
         <a href="#marlie-phase-3" class="roadmap-phase-card active">
           <div class="phase-card-header">
             <span class="phase-number-badge">Phase 3</span>
-            <span class="phase-status-pill active">In Progress</span>
+            <span class="phase-status-pill active">In progress</span>
           </div>
           <div class="phase-card-header-title">
             <h3>Reporting & Evaluation</h3>
@@ -581,7 +569,7 @@
   </section>
 
   <section class="guide-section" id="marlie-phase-0">
-    <h2>Phase 0: In-Course HTML Wrappers <span class="status done">Largely Complete</span></h2>
+    <h2>Phase 0: In-Course HTML Wrappers <span class="status done">Largely complete</span></h2>
 
     <div class="tip">
       <strong>Clean View breakthrough:</strong> append <code>?ou={orgUnitId}&amp;d2l_body_type=3</code> to Brightspace topic URLs. This is the gold-standard wrapper pattern: Brightspace keeps hosting, access, and tracking, while standard navigation chrome drops away so LACE navigation and styling can own the viewport.
@@ -629,7 +617,7 @@
   </section>
 
   <section class="guide-section" id="brightspace-native-fallback">
-    <h2>Brightspace Native Fallback <span class="status proposed">Make Presentable</span></h2>
+    <h2>Brightspace Native Fallback <span class="status proposed">Make presentable</span></h2>
 
     <div class="note">
       <strong>Design stance:</strong> LACE Learning Hub remains the intended front door. Brightspace still needs to look intentional because learners may enter through Brightspace login, bookmarks, Pulse, emails, notifications, or admin links.
@@ -753,7 +741,7 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
   </section>
 
   <section class="guide-section" id="brightspace-manager">
-    <h2>Brightspace Manager <span class="status in-progress">In Progress</span></h2>
+    <h2>Brightspace Manager <span class="status in-progress">In progress</span></h2>
 
     <div class="tip">
       <strong>Product role:</strong> Brightspace Manager is the command center for the platform build. It handles administrative operations, course building, sync checks, file management, and publishing workflows so the learner-facing LACE Learning Hub can stay simpler.
@@ -784,7 +772,7 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
   </section>
 
   <section class="guide-section" id="marlie-phase-1">
-    <h2>Phase 1: Connect to Brightspace <span class="status in-progress">In Progress</span></h2>
+    <h2>Phase 1: Connect to Brightspace <span class="status in-progress">In progress</span></h2>
 
     <div class="tip">
       <strong>Phase 1 auth model:</strong> use 3-legged OAuth for logged-in user context and a non-human Service User / headless OAuth path for administrative data harvesting and background catalog sync. Brightspace admin setup comes first: Service User, least-privilege role, Org Unit enrollment, OAuth registration, JWKS URL, and scopes.
@@ -898,7 +886,7 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
   </section>
 
   <section class="guide-section" id="marlie-phase-2">
-    <h2>Phase 2: Own Data Layer <span class="status not-started">Not Started</span></h2>
+    <h2>Phase 2: Own Data Layer <span class="status not-started">Not started</span></h2>
 
     <p>Brightspace remains the system of record for compliance data: enrollments, visits, completions, certificates, and CLE reporting. Supabase is the LACE experience layer for search queries, click paths, UX feedback, reporting tables/views, and content-improvement signals.</p>
 
@@ -918,7 +906,7 @@ Contact support, accessibility help, and Brightspace/Pulse guidance if needed.
   </section>
 
   <section class="guide-section" id="marlie-phase-3">
-    <h2>Phase 3: Reporting &amp; Evaluation <span class="status in-progress">In Progress</span></h2>
+    <h2>Phase 3: Reporting &amp; Evaluation <span class="status in-progress">In progress</span></h2>
 
     <div class="note">
       <strong>Definition underway:</strong> pilot success criteria, key LMS metrics, and the end-of-course survey are being scoped now on the Monday Data &amp; Evaluation board. The dashboard build below starts during the August wrap-up.

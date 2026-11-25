@@ -24,7 +24,7 @@
   <meta name="twitter:title" content="LACE November 2026 Status">
   <meta name="twitter:description" content="Current status and open decisions heading into the spring 2027 pilot.">
   <meta name="twitter:image" content="https://mcreed-mlri.github.io/lms-wiki/assets/icons/icon.svg">
-  <script src="assets/js/sidebar.js?v=20261125-a11y"></script>
+  <script src="assets/js/sidebar.js?v=20261125-calm"></script>
 </head>
 <body class="page-november-status">
 
@@ -84,7 +84,7 @@
         </thead>
         <tbody>
           <tr><td><strong>Training Hub</strong> (learner app, formerly Learning Hub)</td><td>Redesigned in November after Workshops 2 and 3 and design-firm review. Real Brightspace login works. Login is required on every team-site page; a separate demo site has a view picker (new learner, returning learner, supervisor). Catalog and dashboards are still sample data.</td><td><span class="status in-progress">Pre-pilot</span></td></tr>
-          <tr><td><strong>Brightspace Manager</strong> (staff command center)</td><td>Restyled to match the Training Hub (Nov 19 to 21). Feature work paused from mid-July to mid-November apart from security hardening, CI and dependency updates.</td><td><span class="status in-progress">In Progress</span></td></tr>
+          <tr><td><strong>Brightspace Manager</strong> (staff command center)</td><td>Restyled to match the Training Hub (Nov 19 to 21). Feature work paused from mid-July to mid-November apart from security hardening, CI and dependency updates.</td><td><span class="status in-progress">In progress</span></td></tr>
           <tr><td><strong>Pretrial &amp; Trial Skills</strong> (first program)</td><td>CTA research workspace started October 22. Glossary and decision log drafted; survey not yet approved or live.</td><td><span class="status in-progress">Planning</span></td></tr>
           <tr><td><strong>Public site</strong></td><td>One-page sketch started November 10. Not deployed; center name still a placeholder.</td><td><span class="status proposed">Sketch</span></td></tr>
           <tr><td><strong>Native apps</strong></td><td>Plan written November 25: iPhone and Android app targeted for April/May 2027.</td><td><span class="status not-started">Planned</span></td></tr>
@@ -184,7 +184,7 @@
   </section>
 
   <section class="guide-section" id="brightspace-manager">
-    <h2>Brightspace Manager <span class="status in-progress">In Progress</span></h2>
+    <h2>Brightspace Manager <span class="status in-progress">In progress</span></h2>
     <p>Repo: <code>brightspace-manager</code>. Internal staff app with two modes. Rule: it is the only thing that writes to Brightspace or to Supabase catalog data.</p>
     <ul>
       <li><strong>Operator mode:</strong> dashboard, Course Inventory, Sync Diagnostics (preview, confirm, upsert, audit), Brightspace Files (read-only), Supabase data inspector, settings. Evaluation and Learner Progress pages use mock data. Integrity Checker is still a placeholder.</li>
@@ -283,8 +283,8 @@
         <tbody>
           <tr><td>Official org &amp; platform name</td><td>Platform named (Nov 17). Center name still open; design firm engaged.</td><td><span class="status in-progress">Partly done</span></td></tr>
           <tr><td>UPL access matrix</td><td>Still drives role mapping "until" it is approved; real logins default to the most restricted type.</td><td><span class="status blocked">Open</span></td></tr>
-          <tr><td>User Attributes sign-off</td><td>Still in progress on Monday.com, due Feb 5, 2027.</td><td><span class="status in-progress">In Progress</span></td></tr>
-          <tr><td>Completion criteria</td><td>Not started on Monday.com, due Feb 19, 2027.</td><td><span class="status not-started">Not Started</span></td></tr>
+          <tr><td>User Attributes sign-off</td><td>Still in progress on Monday.com, due Feb 5, 2027.</td><td><span class="status in-progress">In progress</span></td></tr>
+          <tr><td>Completion criteria</td><td>Not started on Monday.com, due Feb 19, 2027.</td><td><span class="status not-started">Not started</span></td></tr>
           <tr><td>Supabase RLS migration</td><td>Migrations written in September. Work paused; whether they were applied to production is not recorded.</td><td><span class="status blocked">Paused</span></td></tr>
           <tr><td>Production login on the deployed Hub</td><td>Sign-in works on the test site; the production Brightspace site is not live.</td><td><span class="status blocked">Waiting</span></td></tr>
           <tr><td>Service-user sync registration</td><td>The service user exists (August). Work on the app registration paused; how far it got is not recorded. Still the next integration milestone in Brightspace Manager.</td><td><span class="status blocked">Paused</span></td></tr>
