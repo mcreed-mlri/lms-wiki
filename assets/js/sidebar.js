@@ -319,14 +319,76 @@
             observer.unobserve(entry.target);
           }
         });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      // threshold 0: reveal as soon as any part of a section is on screen.
+      // A ratio threshold never fires for sections taller than the viewport
+      // allows (e.g. the home section on phones), leaving them invisible.
+      }, { threshold: 0 });
       sections.forEach(function (section) { observer.observe(section); });
+
+      // Never print or deep-link into hidden content.
+      var revealAll = function () {
+        sections.forEach(function (section) {
+          section.classList.add('is-revealed');
+          observer.unobserve(section);
+        });
+      };
+      window.addEventListener('beforeprint', revealAll);
+      window.addEventListener('hashchange', revealAll);
+      if (window.location.hash) revealAll();
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
+  /* ── Scrollable regions ──
+     Wide tables (.table-wrap) and code blocks (pre) scroll horizontally.
+     Keyboard users can only scroll them if they are focusable, so make
+     overflowing ones a named, focusable region (WCAG 2.1.1). */
+  function initScrollRegions() {
+    var wraps = Array.prototype.slice.call(document.querySelectorAll('.table-wrap, main pre'));
+    if (!wraps.length) return;
+
+    function labelFor(wrap) {
+      var caption = wrap.querySelector('caption');
+      if (caption && caption.textContent.trim()) return caption.textContent.trim();
+      var section = wrap.closest('section, .guide-section, article') || document.body;
+      var heading = null;
+      var headings = section.querySelectorAll('h1, h2, h3, h4');
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].compareDocumentPosition(wrap) & Node.DOCUMENT_POSITION_FOLLOWING) heading = headings[i];
+      }
+      var kind = wrap.tagName === 'PRE' ? ' code' : ' table';
+      return heading ? heading.textContent.trim() + kind : 'Scrollable' + kind;
+    }
+
+    function update() {
+      wraps.forEach(function (wrap) {
+        var scrollable = wrap.scrollWidth > wrap.clientWidth + 1 || wrap.scrollHeight > wrap.clientHeight + 1;
+        if (scrollable) {
+          wrap.setAttribute('tabindex', '0');
+          wrap.setAttribute('role', 'region');
+          if (!wrap.hasAttribute('aria-label')) wrap.setAttribute('aria-label', labelFor(wrap));
+        } else if (wrap.getAttribute('tabindex') === '0') {
+          wrap.removeAttribute('tabindex');
+          wrap.removeAttribute('role');
+        }
+      });
+    }
+
+    update();
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(update, 150);
+    }, { passive: true });
+  }
+
+  function boot() {
     init();
+    initScrollRegions();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
   }
 })();

@@ -24,7 +24,7 @@
   <meta name="twitter:title" content="LACE August 2026 Priority Tasks">
   <meta name="twitter:description" content="August 2026 D2L wrap-up and priority tasks.">
   <meta name="twitter:image" content="https://mcreed-mlri.github.io/lms-wiki/assets/icons/icon.svg">
-  <script src="assets/js/sidebar.js?v=20260529-redesign"></script>
+  <script src="assets/js/sidebar.js?v=20261125-a11y"></script>
 </head>
 <body class="page-august-tasks">
 
@@ -119,29 +119,29 @@
 
     <h3>Supabase &amp; Data Layer</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label"><strong>Apply RLS migration:</strong> deploy <code>supabase-rls-learning-items.sql</code> to production before Phase 2 learner data lands.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Validate catalog sync:</strong> verify <code>learning_items</code> table populates correctly from the Brightspace Course Offering API.</span></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Apply RLS migration:</strong> deploy <code>supabase-rls-learning-items.sql</code> to production before Phase 2 learner data lands.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Validate catalog sync:</strong> verify <code>learning_items</code> table populates correctly from the Brightspace Course Offering API.</span></label></li>
     </ul>
 
     <h3>Production Login &amp; Authentication</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label"><strong>Configure production environment:</strong> set <code>NEXT_PUBLIC_OAUTH_TENANT</code>, <code>NEXT_PUBLIC_OAUTH_REDIRECT_URI</code>, and related OAuth environment variables on the deployed Hub.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>End-to-end Brightspace sign-in test:</strong> verify learners can sign in through the real Brightspace OAuth flow on the deployed Learning Hub (no demo mode).</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Session &amp; token verification:</strong> confirm session cookies, token refresh, and <code>/api/me</code> identity endpoint work correctly in production.</span></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Configure production environment:</strong> set <code>NEXT_PUBLIC_OAUTH_TENANT</code>, <code>NEXT_PUBLIC_OAUTH_REDIRECT_URI</code>, and related OAuth environment variables on the deployed Hub.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>End-to-end Brightspace sign-in test:</strong> verify learners can sign in through the real Brightspace OAuth flow on the deployed Learning Hub (no demo mode).</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Session &amp; token verification:</strong> confirm session cookies, token refresh, and <code>/api/me</code> identity endpoint work correctly in production.</span></label></li>
     </ul>
 
     <h3>Service-User &amp; Server-to-Server OAuth</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label"><strong>Service-user sync app registration:</strong> finalize the D2L Manage Extensibility app registration for server-to-server OAuth, including JWKS URL and required scopes.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Client Credentials flow test:</strong> validate JWT client assertion generation and access token requests.</span></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Service-user sync app registration:</strong> finalize the D2L Manage Extensibility app registration for server-to-server OAuth, including JWKS URL and required scopes.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Client Credentials flow test:</strong> validate JWT client assertion generation and access token requests.</span></label></li>
     </ul>
 
     <h3>D2L Ticket Queue</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label"><strong>Attribute limit clarification:</strong> get written confirmation: 10 or 50 total attributes? How many can be multi-value? Which attributes can drive Learning Groups?</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Vanity URL:</strong> domain selection → submit to D2L for internal request and DNS records.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Custom email templates:</strong> review and approve branded email notifications for learner events.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Closure call:</strong> confirm all implementation items are covered and transition to standard support.</span></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Attribute limit clarification:</strong> get written confirmation: 10 or 50 total attributes? How many can be multi-value? Which attributes can drive Learning Groups?</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Vanity URL:</strong> domain selection → submit to D2L for internal request and DNS records.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Custom email templates:</strong> review and approve branded email notifications for learner events.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Closure call:</strong> confirm all implementation items are covered and transition to standard support.</span></label></li>
     </ul>
   </section>
 

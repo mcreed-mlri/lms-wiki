@@ -24,7 +24,7 @@
   <meta name="twitter:title" content="LACE June 2026 Priority Tasks">
   <meta name="twitter:description" content="Historical record of the June 2026 implementation window.">
   <meta name="twitter:image" content="https://mcreed-mlri.github.io/lms-wiki/assets/icons/icon.svg">
-  <script src="assets/js/sidebar.js?v=20260529-redesign"></script>
+  <script src="assets/js/sidebar.js?v=20261125-a11y"></script>
 </head>
 <body class="page-june-tasks">
 
@@ -109,15 +109,15 @@
     <h2>Critical Milestones</h2>
 
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label"><strong>Vanity URL / custom domain:</strong> finalize domain and ownership by June 15-19, 2026, then send the requested URL to D2L for DNS records.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Brightspace test site:</strong> ask D2L to launch the test instance early in June so API sync work happens outside the live catalog.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Production login model:</strong> use 3-legged OAuth for user-context calls and headless/server-to-server OAuth with a Service User for administrative data harvesting and background sync.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Service User:</strong> create the non-human Brightspace account, assign a least-privilege role, and enroll it in the Org Units needed for catalog sync before coding against the production flow.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>User Attribute configuration:</strong> provide D2L the final Attribute Name and Description table, request the custom set, and confirm Learning Groups/Manager Dashboard mapping.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Hierarchy audit:</strong> confirm the MLRI &gt; Massachusetts &gt; Training Area &gt; Program parent structure before routing and reports depend on it.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>LTI 1.3 readiness:</strong> incorporate LTI Asset Processor support, anonymous marking readiness, and Context Copy Notice workflows from the March 2026 release notes.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Attributes/groups freeze:</strong> finalize User Attributes and Learning Groups before relying on enrollment automation or manager reporting.</span></li>
-      <li><input type="checkbox" disabled><span class="label"><strong>Custom login test:</strong> upload a branded HTML login page sample and document any Brightspace constraints before the fall pilot build.</span></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Vanity URL / custom domain:</strong> finalize domain and ownership by June 15-19, 2026, then send the requested URL to D2L for DNS records.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Brightspace test site:</strong> ask D2L to launch the test instance early in June so API sync work happens outside the live catalog.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Production login model:</strong> use 3-legged OAuth for user-context calls and headless/server-to-server OAuth with a Service User for administrative data harvesting and background sync.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Service User:</strong> create the non-human Brightspace account, assign a least-privilege role, and enroll it in the Org Units needed for catalog sync before coding against the production flow.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>User Attribute configuration:</strong> provide D2L the final Attribute Name and Description table, request the custom set, and confirm Learning Groups/Manager Dashboard mapping.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Hierarchy audit:</strong> confirm the MLRI &gt; Massachusetts &gt; Training Area &gt; Program parent structure before routing and reports depend on it.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>LTI 1.3 readiness:</strong> incorporate LTI Asset Processor support, anonymous marking readiness, and Context Copy Notice workflows from the March 2026 release notes.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Attributes/groups freeze:</strong> finalize User Attributes and Learning Groups before relying on enrollment automation or manager reporting.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label"><strong>Custom login test:</strong> upload a branded HTML login page sample and document any Brightspace constraints before the fall pilot build.</span></label></li>
     </ul>
   </section>
 
@@ -126,44 +126,44 @@
 
     <h3>API Connection &amp; Data Mapping</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">Use Course Offering Org Unit ID <code>6703</code> for Eviction Defense metadata sync testing.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Map title, description, start date, and end date into the Supabase <code>learning_items</code> table.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Confirm the LMS API version needed to view all Course Offerings from the Wednesday Brightspace session requirements.</span></li>
+      <li><label><input type="checkbox" disabled><span class="label">Use Course Offering Org Unit ID <code>6703</code> for Eviction Defense metadata sync testing.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Map title, description, start date, and end date into the Supabase <code>learning_items</code> table.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Confirm the LMS API version needed to view all Course Offerings from the Wednesday Brightspace session requirements.</span></label></li>
     </ul>
 
     <h3>Supabase Development</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">Wire the production catalog sync route to populate <code>learning_items</code>.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Use <code>learning_items</code> terminology in docs and code instead of generic catalog-cache wording.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Keep Learning Hub admin/reporting views simple; put live data-pipe diagnostics in Brightspace Manager.</span></li>
+      <li><label><input type="checkbox" disabled><span class="label">Wire the production catalog sync route to populate <code>learning_items</code>.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Use <code>learning_items</code> terminology in docs and code instead of generic catalog-cache wording.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Keep Learning Hub admin/reporting views simple; put live data-pipe diagnostics in Brightspace Manager.</span></label></li>
     </ul>
 
     <h3>Health Diagnostics &amp; Endpoint Paths</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">Harden <code>GET /api/health/brightspace/whoami</code> for production identity confirmation.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Harden <code>GET /api/health/brightspace/course?orgUnitId=6703</code> for course data validation.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Finalize <code>/api/me/dashboard</code> with learner identity, role permissions, enrollment status, completion %, and Brightspace resume links.</span></li>
+      <li><label><input type="checkbox" disabled><span class="label">Harden <code>GET /api/health/brightspace/whoami</code> for production identity confirmation.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Harden <code>GET /api/health/brightspace/course?orgUnitId=6703</code> for course data validation.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Finalize <code>/api/me/dashboard</code> with learner identity, role permissions, enrollment status, completion %, and Brightspace resume links.</span></label></li>
     </ul>
 
     <h3>OAuth Configuration</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">Create a dedicated Brightspace Service User; do not use a personal admin account for integration sync.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Create a least-privilege role such as <code>Learning Hub Sync Service</code> with read access to course content and user identity; add Brightspace Data Sets access only if bulk reporting is needed later.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Enroll the Service User in the Org Units it needs to see for catalog sync.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Register the production OAuth 2.0 app in Manage Extensibility using the headless/server-to-server pattern for data harvesting.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Associate the registered app with the Service User.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Host an HTTPS JWKS URL for the public signing keys Brightspace uses to verify JWT client assertions.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Verify required <code>core:*:*</code> scopes for the approved API routes.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Wait for D2L implementation specialist confirmation on Service User role setup, Org Unit inheritance/enrollment requirements, Client Credentials/JWKS requirements, API versions, and production scopes.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Store short-lived tokens in secure, HTTP-only cookies.</span></li>
+      <li><label><input type="checkbox" disabled><span class="label">Create a dedicated Brightspace Service User; do not use a personal admin account for integration sync.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Create a least-privilege role such as <code>Learning Hub Sync Service</code> with read access to course content and user identity; add Brightspace Data Sets access only if bulk reporting is needed later.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Enroll the Service User in the Org Units it needs to see for catalog sync.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Register the production OAuth 2.0 app in Manage Extensibility using the headless/server-to-server pattern for data harvesting.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Associate the registered app with the Service User.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Host an HTTPS JWKS URL for the public signing keys Brightspace uses to verify JWT client assertions.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Verify required <code>core:*:*</code> scopes for the approved API routes.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Wait for D2L implementation specialist confirmation on Service User role setup, Org Unit inheritance/enrollment requirements, Client Credentials/JWKS requirements, API versions, and production scopes.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Store short-lived tokens in secure, HTTP-only cookies.</span></label></li>
     </ul>
 
     <h3>Vanity URL &amp; SSL</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">Choose the desired learner-facing Brightspace vanity URL.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Send the desired vanity URL to D2L so they can submit the internal request and return DNS records.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Preferred path: let D2L manage the SSL certificate and renewals through AWS Certificate Manager; MLRI IT adds the D2L-provided validation DNS record.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Fallback path: use MLRI's existing wildcard certificate only if IT accepts sending D2L the certificate and private key and owning renewals.</span></li>
+      <li><label><input type="checkbox" disabled><span class="label">Choose the desired learner-facing Brightspace vanity URL.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Send the desired vanity URL to D2L so they can submit the internal request and return DNS records.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Preferred path: let D2L manage the SSL certificate and renewals through AWS Certificate Manager; MLRI IT adds the D2L-provided validation DNS record.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Fallback path: use MLRI's existing wildcard certificate only if IT accepts sending D2L the certificate and private key and owning renewals.</span></label></li>
     </ul>
 
     <h3>Implementation Exit Checklist</h3>
@@ -184,11 +184,11 @@
 
     <h3>Server-to-Server Implementation</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled><span class="label">Implement JWT client assertions with <code>alg</code>, <code>aud</code>, and <code>kid</code> in the header.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Include <code>iss</code>, <code>sub</code>, <code>iat</code>, <code>exp</code>, and one-time <code>jti</code> values in the JWT payload.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Keep assertion expiration short, ideally 60 seconds or less.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Request access tokens from <code>https://auth.brightspace.com/core/connect/token</code> with <code>grant_type=client_credentials</code>.</span></li>
-      <li><input type="checkbox" disabled><span class="label">Use <code>Authorization: Bearer {token}</code> for API requests, over HTTPS only.</span></li>
+      <li><label><input type="checkbox" disabled><span class="label">Implement JWT client assertions with <code>alg</code>, <code>aud</code>, and <code>kid</code> in the header.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Include <code>iss</code>, <code>sub</code>, <code>iat</code>, <code>exp</code>, and one-time <code>jti</code> values in the JWT payload.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Keep assertion expiration short, ideally 60 seconds or less.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Request access tokens from <code>https://auth.brightspace.com/core/connect/token</code> with <code>grant_type=client_credentials</code>.</span></label></li>
+      <li><label><input type="checkbox" disabled><span class="label">Use <code>Authorization: Bearer {token}</code> for API requests, over HTTPS only.</span></label></li>
     </ul>
 
     <h3>Security Checklist</h3>

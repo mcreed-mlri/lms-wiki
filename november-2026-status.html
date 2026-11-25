@@ -24,7 +24,7 @@
   <meta name="twitter:title" content="LACE November 2026 Status">
   <meta name="twitter:description" content="Current status and open decisions heading into the spring 2027 pilot.">
   <meta name="twitter:image" content="https://mcreed-mlri.github.io/lms-wiki/assets/icons/icon.svg">
-  <script src="assets/js/sidebar.js?v=20260529-redesign"></script>
+  <script src="assets/js/sidebar.js?v=20261125-a11y"></script>
 </head>
 <body class="page-november-status">
 
@@ -248,29 +248,29 @@
     <p>From the Training Hub's production-readiness list (Nov 16, 2026). Tracked in <code>lms-discovery/docs/production-readiness.md</code>.</p>
     <h3>Must do before any real learner signs in</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled> Turn off demo mode and demo personas in production.</li>
-      <li><input type="checkbox" disabled> Make Brightspace token refresh safe when several requests refresh at once.</li>
-      <li><input type="checkbox" disabled> Retire the Google demo login, or record why it stays.</li>
-      <li><input type="checkbox" disabled> Real role mapping driven by the UPL access matrix.</li>
-      <li><input type="checkbox" disabled> Real catalog and dashboard data in place of sample data.</li>
-      <li><input type="checkbox" disabled> Error monitoring.</li>
-      <li><input type="checkbox" disabled> Branch protection on the main branch.</li>
-      <li><input type="checkbox" disabled> Production secrets and a rotation note for the session secret.</li>
+      <li><label><input type="checkbox" disabled> Turn off demo mode and demo personas in production.</label></li>
+      <li><label><input type="checkbox" disabled> Make Brightspace token refresh safe when several requests refresh at once.</label></li>
+      <li><label><input type="checkbox" disabled> Retire the Google demo login, or record why it stays.</label></li>
+      <li><label><input type="checkbox" disabled> Real role mapping driven by the UPL access matrix.</label></li>
+      <li><label><input type="checkbox" disabled> Real catalog and dashboard data in place of sample data.</label></li>
+      <li><label><input type="checkbox" disabled> Error monitoring.</label></li>
+      <li><label><input type="checkbox" disabled> Branch protection on the main branch.</label></li>
+      <li><label><input type="checkbox" disabled> Production secrets and a rotation note for the session secret.</label></li>
     </ul>
     <h3>Check what got done before the pause</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled> Supabase: check whether the RLS migrations are applied in production (look in the Supabase dashboard's migration history or table policies).</li>
-      <li><input type="checkbox" disabled> Brightspace: check Manage Extensibility for a service-user app registration, and whether a JWKS URL and scopes were set.</li>
-      <li><input type="checkbox" disabled> D2L: ask Standard Support to confirm the attribute limit (10 vs 50, and how many can be multi-value).</li>
+      <li><label><input type="checkbox" disabled> Supabase: check whether the RLS migrations are applied in production (look in the Supabase dashboard's migration history or table policies).</label></li>
+      <li><label><input type="checkbox" disabled> Brightspace: check Manage Extensibility for a service-user app registration, and whether a JWKS URL and scopes were set.</label></li>
+      <li><label><input type="checkbox" disabled> D2L: ask Standard Support to confirm the attribute limit (10 vs 50, and how many can be multi-value).</label></li>
     </ul>
     <h3>Should do before the pilot</h3>
     <ul class="task-list">
-      <li><input type="checkbox" disabled> No names in team URLs.</li>
-      <li><input type="checkbox" disabled> Supabase migrations as the single source of truth, with explicit grants (Supabase changed its defaults on Oct 30, 2026).</li>
-      <li><input type="checkbox" disabled> Database access-rule (RLS) tests run automatically.</li>
-      <li><input type="checkbox" disabled> Durable rate limiting and a stricter content security policy.</li>
-      <li><input type="checkbox" disabled> Manual screen-reader pass.</li>
-      <li><input type="checkbox" disabled> Privacy notice covering analytics and browser storage.</li>
+      <li><label><input type="checkbox" disabled> No names in team URLs.</label></li>
+      <li><label><input type="checkbox" disabled> Supabase migrations as the single source of truth, with explicit grants (Supabase changed its defaults on Oct 30, 2026).</label></li>
+      <li><label><input type="checkbox" disabled> Database access-rule (RLS) tests run automatically.</label></li>
+      <li><label><input type="checkbox" disabled> Durable rate limiting and a stricter content security policy.</label></li>
+      <li><label><input type="checkbox" disabled> Manual screen-reader pass.</label></li>
+      <li><label><input type="checkbox" disabled> Privacy notice covering analytics and browser storage.</label></li>
     </ul>
   </section>
 

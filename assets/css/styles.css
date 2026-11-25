@@ -1,8 +1,8 @@
 :root {
   --navy:    #1E3A5F;
   --blue:    #2C6FAC;
-  --teal:    #2A8F82;
-  --amber:   #B06A00;
+  --teal:    #23776C;
+  --amber:   #995C00;
   --red:     #9B2335;
   --bg:      #F4F6F9;
   --white:   #FFFFFF;
@@ -559,14 +559,14 @@ body.page-team-wiki {
   --sidebar-header-bg: #254a75;
   --sidebar-brand: #7dd3fc;
   --sidebar-title: #f0f9ff;
-  --sidebar-label: #7ba3c4;
+  --sidebar-label: #84a9c8;
   --sidebar-link: #c8dff0;
   --sidebar-link-sub: #9ec5e8;
   --sidebar-active-bg: rgba(56, 189, 248, 0.2);
   --sidebar-active-border: #38bdf8;
   --sidebar-accordion-active-bg: rgba(56, 189, 248, 0.2);
   --sidebar-accordion-active-border: #38bdf8;
-  --sidebar-external: #7ba3c4;
+  --sidebar-external: #84a9c8;
   --sidebar-search-focus: #38bdf8;
   --sidebar-toggle-bg: #1a3354;
   --sidebar-toggle-border: rgba(125, 211, 252, 0.35);
@@ -606,16 +606,16 @@ body.page-june-tasks {
   --sidebar-fg: #e2e8f0;
   --sidebar-header-bg: #3d4a5c;
   --sidebar-header-border: rgba(255, 255, 255, 0.08);
-  --sidebar-brand: #a0aec0;
+  --sidebar-brand: #afbbca;
   --sidebar-title: #f7fafc;
-  --sidebar-label: #718096;
+  --sidebar-label: #97a2b2;
   --sidebar-link: #cbd5e0;
   --sidebar-link-sub: #a0aec0;
   --sidebar-active-bg: rgba(148, 163, 184, 0.22);
   --sidebar-active-border: #94a3b8;
   --sidebar-accordion-active-bg: rgba(148, 163, 184, 0.22);
   --sidebar-accordion-active-border: #94a3b8;
-  --sidebar-external: #718096;
+  --sidebar-external: #97a2b2;
   --sidebar-search-focus: #94a3b8;
   --sidebar-toggle-bg: #3d4a5c;
   --sidebar-toggle-border: rgba(203, 213, 224, 0.25);
@@ -652,16 +652,16 @@ body.page-august-tasks {
   --sidebar-fg: #fde8d0;
   --sidebar-header-bg: #78350f;
   --sidebar-header-border: rgba(251, 146, 60, 0.2);
-  --sidebar-brand: #fb923c;
+  --sidebar-brand: #fca65f;
   --sidebar-title: #fff7ed;
-  --sidebar-label: #c2784a;
+  --sidebar-label: #c68155;
   --sidebar-link: #fcd9b6;
   --sidebar-link-sub: #f0b980;
   --sidebar-active-bg: rgba(251, 146, 60, 0.22);
   --sidebar-active-border: #fb923c;
   --sidebar-accordion-active-bg: rgba(251, 146, 60, 0.22);
   --sidebar-accordion-active-border: #fb923c;
-  --sidebar-external: #c2784a;
+  --sidebar-external: #c68155;
   --sidebar-search-focus: #fb923c;
   --sidebar-toggle-bg: #78350f;
   --sidebar-toggle-border: rgba(251, 146, 60, 0.35);
@@ -677,14 +677,14 @@ body.page-supabase-schema {
   --sidebar-header-border: rgba(196, 181, 253, 0.18);
   --sidebar-brand: #c4b5fd;
   --sidebar-title: #f5f3ff;
-  --sidebar-label: #8b7cc8;
+  --sidebar-label: #9385cc;
   --sidebar-link: #ddd6fe;
   --sidebar-link-sub: #b8a9f0;
   --sidebar-active-bg: rgba(167, 139, 250, 0.22);
   --sidebar-active-border: #a78bfa;
   --sidebar-accordion-active-bg: rgba(167, 139, 250, 0.22);
   --sidebar-accordion-active-border: #a78bfa;
-  --sidebar-external: #8b7cc8;
+  --sidebar-external: #9385cc;
   --sidebar-search-focus: #a78bfa;
   --sidebar-toggle-bg: #4c1d95;
   --sidebar-toggle-border: rgba(196, 181, 253, 0.35);
@@ -745,7 +745,7 @@ body.page-interactive-guide {
   --sidebar-header-bg: #115e59;
   --sidebar-header-border: rgba(255, 255, 255, 0.12);
   --sidebar-brand: #5eead4;
-  --sidebar-label: #5a9e94;
+  --sidebar-label: #6daca3;
   --sidebar-link: #b8ebe3;
   --sidebar-link-sub: #7ecbc0;
   --sidebar-active-bg: rgba(20, 184, 166, 0.32);
@@ -753,7 +753,7 @@ body.page-interactive-guide {
   --sidebar-accordion-active-bg: rgba(20, 184, 166, 0.32);
   --sidebar-accordion-active-border: #5eead4;
   --sidebar-accordion-open-summary: #ecfdf5;
-  --sidebar-external: #5a9e94;
+  --sidebar-external: #6daca3;
   --sidebar-search-focus: #5eead4;
   --sidebar-toggle-bg: #115e59;
   --sidebar-toggle-border: rgba(94, 234, 212, 0.35);
@@ -769,7 +769,7 @@ body.page-supabase-visualizer {
   --sidebar-header-border: rgba(255, 255, 255, 0.05);
   --sidebar-brand: #3ecf8e;
   --sidebar-title: #f3f4f6;
-  --sidebar-label: #4b5563;
+  --sidebar-label: #6d7c90;
   --sidebar-link: #9ca3af;
   --sidebar-link-hover-bg: rgba(255, 255, 255, 0.04);
   --sidebar-active-bg: rgba(62, 207, 142, 0.12);
@@ -834,15 +834,15 @@ body.page-marlana #main h2::after {
 }
 
 body.page-marlana #main h3 {
-  color: #0d9488;
+  color: #0b7d72;
 }
 
 body.page-marlana #main a {
-  color: #0d9488;
+  color: #0b7d72;
 }
 
 body.page-marlana #main a:hover {
-  border-bottom-color: #0d9488;
+  border-bottom-color: #0b7d72;
 }
 
 body.page-marlana .guide-section + .guide-section {
@@ -1546,6 +1546,27 @@ a:hover {
   border-bottom-color: var(--blue);
 }
 
+/* Links inside running text are underlined so they are not identified by
+   color alone (WCAG 1.4.1). Buttons, cards and nav links carry a class and
+   keep their own styling. */
+main :is(p, li, td, dd, blockquote, figcaption) a:not([class]) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  border-bottom: none;
+}
+
+main :is(p, li, td, dd, blockquote, figcaption) a:not([class]):hover {
+  text-decoration-thickness: 2px;
+}
+
+.table-wrap[tabindex]:focus-visible,
+pre[tabindex]:focus-visible,
+[role="region"][tabindex]:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
 code {
   background: #E8EDF4;
   border: 1px solid var(--border);
@@ -1894,10 +1915,10 @@ tbody tr:hover td {
   flex: none;
 }
 
-.status.in-progress { --status-color: #9A5B00; }
+.status.in-progress { --status-color: #975900; }
 .status.not-started { --status-color: #5A6478; }
-.status.done        { --status-color: #1F7A6E; }
-.status.proposed    { --status-color: #5A6F94; }
+.status.done        { --status-color: #1D7469; }
+.status.proposed    { --status-color: #55698C; }
 .status.blocked     { --status-color: var(--red); }
 
 /* ── Reference sections (index): scan-friendly layout ──
@@ -2284,10 +2305,10 @@ ul.bs-leaves li strong { color: var(--navy); }
 
 /* Per-branch accents */
 .bs-branch.bs-c1 { --bs-accent: #2C6FAC; }
-.bs-branch.bs-c2 { --bs-accent: #2A8F82; }
-.bs-branch.bs-c3 { --bs-accent: #7C5CBF; }
-.bs-branch.bs-c4 { --bs-accent: #B06A00; }
-.bs-branch.bs-c5 { --bs-accent: #C2506A; }
+.bs-branch.bs-c2 { --bs-accent: #23776C; }
+.bs-branch.bs-c3 { --bs-accent: #7655BC; }
+.bs-branch.bs-c4 { --bs-accent: #995C00; }
+.bs-branch.bs-c5 { --bs-accent: #B6405B; }
 
 /* Call-to-action link to the full map (used in the Team Wiki embed) */
 .bs-cta {
@@ -4158,3 +4179,8 @@ body:not(.page-supabase-visualizer) .sv-callout-content p {
   }
 }
 
+
+/* Supabase schema page: dark text on the violet accent fails contrast. */
+body.page-supabase-schema .sv-callout-btn {
+  color: #fff;
+}
