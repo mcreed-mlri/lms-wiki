@@ -18,6 +18,48 @@
     });
   }
 
+  /* ── Theme ──
+     With no saved choice the site follows the system setting through CSS.
+     A saved choice sets data-theme on <html>. This runs from <head>, before
+     the page paints, so there is no flash of the wrong theme. */
+  var THEME_KEY = 'lace-wiki-theme';
+  var darkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+  var memoryTheme = null; // used when browser storage is blocked
+
+  function savedTheme() {
+    try {
+      var t = localStorage.getItem(THEME_KEY);
+      return t === 'light' || t === 'dark' ? t : null;
+    } catch (e) { return memoryTheme; }
+  }
+
+  function effectiveTheme() {
+    return savedTheme() || (darkQuery && darkQuery.matches ? 'dark' : 'light');
+  }
+
+  function applyTheme(theme) {
+    var root = document.documentElement;
+    if (theme) root.setAttribute('data-theme', theme);
+    else root.removeAttribute('data-theme');
+    // Browser chrome color: pin it to the chosen theme, or restore the
+    // media-based defaults when following the system.
+    var metas = document.querySelectorAll('meta[name="theme-color"]');
+    Array.prototype.forEach.call(metas, function (m) {
+      if (!m.hasAttribute('data-default')) m.setAttribute('data-default', m.getAttribute('content'));
+      if (!m.hasAttribute('data-media') && m.hasAttribute('media')) m.setAttribute('data-media', m.getAttribute('media'));
+      if (theme) {
+        m.removeAttribute('media');
+        m.setAttribute('content', theme === 'dark' ? '#10151C' : '#1E3A5F');
+      } else {
+        m.setAttribute('content', m.getAttribute('data-default'));
+        if (m.hasAttribute('data-media')) m.setAttribute('media', m.getAttribute('data-media'));
+      }
+    });
+  }
+
+  applyTheme(savedTheme());
+
   var STORAGE_KEY = 'lace-wiki-sidebar-collapsed';
 
   try {
@@ -52,6 +94,36 @@
 
       searchWrap.appendChild(search);
       searchWrap.appendChild(searchStatus);
+
+      // The Supabase Visualizer is always dark, so it gets no toggle.
+      if (!document.body.classList.contains('page-supabase-visualizer')) {
+        var themeBtn = document.createElement('button');
+        themeBtn.type = 'button';
+        themeBtn.className = 'theme-toggle';
+        var syncThemeBtn = function () {
+          var dark = effectiveTheme() === 'dark';
+          themeBtn.textContent = dark ? 'Switch to light mode' : 'Switch to dark mode';
+        };
+        themeBtn.addEventListener('click', function () {
+          var next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+          // Choosing what the system already prefers clears the override,
+          // so the site goes back to following the system setting.
+          var systemTheme = darkQuery && darkQuery.matches ? 'dark' : 'light';
+          var choice = next === systemTheme ? null : next;
+          memoryTheme = choice;
+          try {
+            if (choice) localStorage.setItem(THEME_KEY, choice);
+            else localStorage.removeItem(THEME_KEY);
+          } catch (e) { /* storage blocked: memoryTheme covers this page */ }
+          applyTheme(choice);
+          syncThemeBtn();
+        });
+        if (darkQuery && darkQuery.addEventListener) {
+          darkQuery.addEventListener('change', syncThemeBtn);
+        }
+        syncThemeBtn();
+        searchWrap.appendChild(themeBtn);
+      }
       header.insertAdjacentElement('afterend', searchWrap);
 
       var pageMatches = [];

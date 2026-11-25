@@ -1,552 +1,432 @@
 <!DOCTYPE html>
-<html lang="en" style="color-scheme: light only;">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light">
-<title>LACE Platform Architecture</title>
-<meta name="description" content="System architecture for the Legal Aid Training Hub: what is working now, the phased roadmap, the system stack, and the Brightspace API integration decisions.">
-<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#1E3A5F">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy: #1E3A5F;
-    --blue: #2C6FAC;
-    --bg: #F4F6F9;
-    --white: #FFFFFF;
-    --border: #D0D7E2;
-    --text: #222831;
-    --muted: #5A6478;
-    --ok: #1E6B45;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LACE Platform Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1E3A5F">
+  <meta name="description" content="System architecture for the Legal Aid Training Hub: what is working now, the phased roadmap, the system stack, and the Brightspace API integration decisions.">
+  <link rel="canonical" href="https://mcreed-mlri.github.io/lms-wiki/mlri-architecture.html">
+  <script src="assets/js/sidebar.js?v=20261125-theme"></script>
+  <style>
+    /* Page-specific layout only. Colors come from the shared tokens. */
+    .page-subtitle + p + ul { margin-bottom: 2.5rem; }
+    .arch-meta { color: var(--muted); font-size: 0.9rem; margin: -0.5rem 0 0.6rem; }
+    .phase > .arch-meta { margin: -0.4rem 0 0.75rem; }
 
-  * { box-sizing: border-box; }
+    .arch-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin: 1.25rem 0;
+      padding: 0;
+      list-style: none;
+    }
+    .arch-grid-3 > li { margin: 0; }
+    .home-panel > :last-child { margin-bottom: 0; }
+    .home-panel ul { padding-left: 1.2rem; }
+    .home-panel li { margin-bottom: 0.2rem; }
 
-  html { -webkit-text-size-adjust: 100%; }
+    .flow-steps { counter-reset: flow; }
+    .flow-steps > li { counter-increment: flow; }
+    .flow-steps h3::before { content: counter(flow) ". "; }
 
-  body {
-    margin: 0;
-    font-family: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--text);
-    background: var(--bg);
-  }
+    /* Proof path: bordered rows */
+    .proof-list { list-style: none; padding: 0; border-top: 1px solid var(--border); }
+    .proof-list > li { padding: 0.85rem 0; margin: 0; border-bottom: 1px solid var(--border); }
+    .proof-list p { margin: 0.25rem 0 0; color: var(--muted); }
 
-  a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
-  a:hover { color: var(--navy); }
-  a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 2px; }
+    /* Phases */
+    .phase { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .phase > h3 { margin-top: 0; }
+    .items {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem 2rem;
+      padding: 0;
+      list-style: none;
+    }
+    .items > li { margin: 0; }
+    .items strong { display: block; }
+    .items p { margin: 0.1rem 0 0; }
+    .items .tags { color: var(--muted); font-size: 0.9rem; }
 
-  code {
-    font-family: 'DM Mono', Consolas, monospace;
-    font-size: 0.92em;
-    color: var(--navy);
-  }
+    /* System stack: one panel, layers from browser down to Brightspace */
+    .stack { list-style: none; padding: 0; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); }
+    .stack > li { padding: 0.85rem 1.25rem; margin: 0; border-bottom: 1px solid var(--border); }
+    .stack > li:last-child { border-bottom: none; }
+    .stack .sub { display: block; color: var(--muted); font-size: 0.9rem; }
+    .stack-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 
-  .skip-link {
-    position: absolute;
-    left: -999px;
-    top: 0;
-    background: var(--navy);
-    color: #fff;
-    padding: 8px 14px;
-    border-radius: 6px;
-  }
-  .skip-link:focus { left: 16px; top: 16px; color: #fff; }
+    .footnote { color: var(--muted); font-size: 0.9rem; }
 
-  .page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 32px 24px 80px;
-  }
-
-  .crumbs {
-    margin: 0 0 32px;
-    font-size: 15px;
-    color: var(--muted);
-  }
-  .crumbs a { margin-right: 4px; }
-
-  h1, h2, h3 { color: var(--navy); line-height: 1.25; }
-
-  h1 {
-    font-size: clamp(30px, 5vw, 40px);
-    font-weight: 700;
-    margin: 0 0 8px;
-  }
-
-  h2 {
-    font-size: 24px;
-    font-weight: 700;
-    margin: 0 0 8px;
-  }
-
-  h3 {
-    font-size: 18px;
-    font-weight: 700;
-    margin: 0 0 4px;
-  }
-
-  p { margin: 0 0 12px; }
-
-  .muted { color: var(--muted); }
-  .meta { color: var(--muted); font-size: 15px; margin: 0 0 12px; }
-
-  header { margin-bottom: 40px; }
-  header .lede { font-size: 17px; }
-
-  section { margin: 56px 0 0; }
-
-  .phases-key {
-    margin: 0;
-    padding-left: 20px;
-  }
-  .phases-key li + li { margin-top: 4px; }
-
-  /* Proof path list */
-  .proof-list {
-    list-style: none;
-    margin: 20px 0 0;
-    padding: 0;
-    border-top: 1px solid var(--border);
-  }
-  .proof-list li {
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .proof-list strong { color: var(--text); }
-  .status { color: var(--ok); font-weight: 500; font-size: 15px; margin-left: 6px; }
-  .proof-list p { margin: 4px 0 0; color: var(--muted); }
-
-  /* Bordered groups */
-  .box {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px;
-  }
-  .box p:last-child, .box ul:last-child { margin-bottom: 0; }
-
-  .grid-3,
-  .grid-2 {
-    display: grid;
-    gap: 16px;
-    margin: 20px 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-  .flow-steps { counter-reset: step; }
-  .flow-steps li { counter-increment: step; }
-  .flow-steps h3::before { content: counter(step) ". "; }
-
-  .box ul {
-    margin: 8px 0 0;
-    padding-left: 20px;
-  }
-  .box ul li + li { margin-top: 4px; }
-
-  /* Phases */
-  .phase {
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-  }
-  .phase:first-of-type { margin-top: 20px; }
-  .items {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px 32px;
-    margin: 16px 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .items strong { display: block; color: var(--text); }
-  .items p { margin: 2px 0 0; }
-  .items .tags { color: var(--muted); font-size: 14px; margin-top: 4px; }
-
-  /* System stack */
-  .stack {
-    list-style: none;
-    margin: 20px 0 0;
-    padding: 0;
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-  }
-  .stack > li {
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-  }
-  .stack > li:last-child { border-bottom: none; }
-  .stack strong { color: var(--text); }
-  .stack .sub { display: block; color: var(--muted); font-size: 15px; }
-  .stack-pair {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-  }
-
-  .footnote { margin-top: 20px; color: var(--muted); font-size: 15px; }
-
-  @media (max-width: 760px) {
-    .page { padding: 20px 16px 56px; }
-    .grid-3, .grid-2, .items, .stack-pair { grid-template-columns: 1fr; }
-    section { margin-top: 44px; }
-  }
-</style>
-<script>
-  if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js').catch(function () { /* ignore */ });
-    });
-  }
-</script>
+    @media (max-width: 800px) {
+      .arch-grid-3, .items, .stack-pair { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-<body>
+<body class="page-architecture">
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<div class="page">
+<aside id="sidebar">
+  <div id="sidebar-header">
+    <div class="brand">Platform architecture</div>
+    <h2>LACE Architecture</h2>
+  </div>
+  <nav>
+    <span class="section-label">Architecture</span>
+    <a href="#real-now">What Is Real Now</a>
+    <a href="#simple-flow">Simple Flow</a>
+    <a href="#phases">Phases</a>
+    <a href="#stack">System Stack</a>
 
-<nav class="crumbs" aria-label="Wiki navigation">
-  <a href="index.html">Home</a> /
-  <a href="team-wiki.html">Team Wiki</a>
-</nav>
+    <span class="section-label">Decisions &amp; Views</span>
+    <a href="#api-decisions">API Integration Decisions</a>
+    <a href="#hub-views">Role-Based Hub Views</a>
+
+    <span class="section-label">Related Docs</span>
+    <a href="index.html" class="external">Home</a>
+    <a href="team-wiki.html" class="external">Team Wiki</a>
+    <a href="november-2026-status.html" class="external">November 2026 Status</a>
+    <a href="api-integration-architecture.html" class="external">API Integration Decisions</a>
+    <a href="supabase-schema.html" class="external">Supabase Schema</a>
+    <a href="marlana.html" class="external">Marlie's Workspace</a>
+  </nav>
+</aside>
 
 <main id="main">
 
-<header>
   <h1>What We're Building</h1>
-  <p class="meta">System architecture for the Legal Aid Training Hub (formerly LACE Learning Hub).</p>
-  <p class="lede">November 2026: learner login works with real Brightspace OAuth on the test site, and the team site requires login on every page. The catalog and dashboards are still sample data; the production Brightspace site is not live. Next: service-user sync, real catalog and dashboard data, and the pre-pilot hardening list ahead of the spring 2027 pilot. A native app shell around the Hub is planned for April/May 2027. See <a href="november-2026-status.html">November 2026 Status</a>.</p>
-  <ul class="phases-key">
+  <p class="page-subtitle">System architecture for the Legal Aid Training Hub (formerly LACE Learning Hub).</p>
+
+  <p>November 2026: learner login works with real Brightspace OAuth on the test site, and the team site requires login on every page. The catalog and dashboards are still sample data; the production Brightspace site is not live. Next: service-user sync, real catalog and dashboard data, and the pre-pilot hardening list ahead of the spring 2027 pilot. A native app shell around the Hub is planned for April/May 2027. See <a href="november-2026-status.html">November 2026 Status</a>.</p>
+  <ul>
     <li>Phase 0: Built</li>
     <li>Phase 1: Login live, service-user sync next</li>
     <li>Phase 2: Planned — after RLS applied</li>
     <li>Phase 3: Before / during spring 2027 pilot</li>
   </ul>
-</header>
 
-<section aria-labelledby="real-now">
-  <h2 id="real-now">What is real now</h2>
-  <p class="meta">Proof path as of May 26, 2026. Login has since been verified on the test site (July 2026).</p>
-  <p>
-    The architecture has moved from planning to a working local integration spike. The Learning Hub can read Supabase, complete Brightspace OAuth, call <code>whoami</code>, read one known Brightspace course, inspect its content outline, and sync that course into Supabase.
-  </p>
-  <ol class="proof-list">
-    <li>
-      <strong>LACE Learning Hub UI</strong><span class="status">Working</span>
-      <p>Admin page shows live integration status instead of mock cards.</p>
-    </li>
-    <li>
-      <strong>Next.js API routes</strong><span class="status">Working</span>
-      <p>Server routes handle Supabase reads and Brightspace OAuth/token checks.</p>
-    </li>
-    <li>
-      <strong>Supabase</strong><span class="status">Working</span>
-      <p><code>learning_items</code> exists and returns the test Brightspace course row.</p>
-    </li>
-    <li>
-      <strong>Brightspace OAuth</strong><span class="status">Working</span>
-      <p>User login complete (OAuth → session → <code>/api/me</code>, token refresh). Service-user path for server-to-server sync is pending registration.</p>
-    </li>
-    <li>
-      <strong>Course metadata</strong><span class="status">Working</span>
-      <p>Course <code>6703</code> is the validation course for metadata sync into <code>learning_items</code>.</p>
-    </li>
-  </ol>
-</section>
+  <section class="guide-section" id="real-now">
+    <h2>What is real now</h2>
+    <p class="arch-meta">Proof path as of May 26, 2026. Login has since been verified on the test site (July 2026).</p>
+    <p>
+      The architecture has moved from planning to a working local integration spike. The Learning Hub can read Supabase, complete Brightspace OAuth, call <code>whoami</code>, read one known Brightspace course, inspect its content outline, and sync that course into Supabase.
+    </p>
+    <ol class="proof-list">
+      <li>
+        <strong>LACE Learning Hub UI</strong><span class="status done">Working</span>
+        <p>Admin page shows live integration status instead of mock cards.</p>
+      </li>
+      <li>
+        <strong>Next.js API routes</strong><span class="status done">Working</span>
+        <p>Server routes handle Supabase reads and Brightspace OAuth/token checks.</p>
+      </li>
+      <li>
+        <strong>Supabase</strong><span class="status done">Working</span>
+        <p><code>learning_items</code> exists and returns the test Brightspace course row.</p>
+      </li>
+      <li>
+        <strong>Brightspace OAuth</strong><span class="status done">Working</span>
+        <p>User login complete (OAuth → session → <code>/api/me</code>, token refresh). Service-user path for server-to-server sync is pending registration.</p>
+      </li>
+      <li>
+        <strong>Course metadata</strong><span class="status done">Working</span>
+        <p>Course <code>6703</code> is the validation course for metadata sync into <code>learning_items</code>.</p>
+      </li>
+    </ol>
+  </section>
 
-<section aria-labelledby="simple-flow">
-  <h2 id="simple-flow">Simple flow: Brightspace to Learning Hub to Supabase</h2>
-  <p>
-    Brightspace remains the course and learner-auth system of record. The Learning Hub reads selected Brightspace data through secure server-side API routes, then stores the pieces we need for the Learning Hub experience in the shared Supabase project. Supabase Auth is reserved for Brightspace Manager staff/admin access.
-  </p>
-  <ol class="grid-3 flow-steps">
-    <li class="box">
-      <h3>Brightspace</h3>
-      <p class="meta">System of record</p>
-      <p>Courses, modules, topics, enrollments, completion rules, and learner activity that Brightspace already manages.</p>
-    </li>
-    <li class="box">
-      <h3>Learning Hub</h3>
-      <p class="meta">Experience layer</p>
-      <p>Our custom front end and API layer. Learner sign-in should come through Brightspace; the Hub requests approved Brightspace data and presents learner, manager, and program/reporting views.</p>
-    </li>
-    <li class="box">
-      <h3>Supabase</h3>
-      <p class="meta">Custom data layer</p>
-      <p>Shared project for Learning Hub and Brightspace Manager data: synced catalog records, search behavior, feedback, future reporting support, and Manager staff/admin auth.</p>
-    </li>
-  </ol>
-  <p style="margin-top: 16px;">
-    Current proof: OAuth works and Brightspace course/content reads work. Validation focuses on syncing Course <code>6703</code> metadata into <code>learning_items</code> with production-ready terminology and route hardening.
-  </p>
-</section>
+  <section class="guide-section" id="simple-flow">
+    <h2>Simple flow: Brightspace to Learning Hub to Supabase</h2>
+    <p>
+      Brightspace remains the course and learner-auth system of record. The Learning Hub reads selected Brightspace data through secure server-side API routes, then stores the pieces we need for the Learning Hub experience in the shared Supabase project. Supabase Auth is reserved for Brightspace Manager staff/admin access.
+    </p>
+    <ol class="arch-grid-3 flow-steps">
+      <li class="home-panel">
+        <h3>Brightspace</h3>
+        <p class="arch-meta">System of record</p>
+        <p>Courses, modules, topics, enrollments, completion rules, and learner activity that Brightspace already manages.</p>
+      </li>
+      <li class="home-panel">
+        <h3>Learning Hub</h3>
+        <p class="arch-meta">Experience layer</p>
+        <p>Our custom front end and API layer. Learner sign-in should come through Brightspace; the Hub requests approved Brightspace data and presents learner, manager, and program/reporting views.</p>
+      </li>
+      <li class="home-panel">
+        <h3>Supabase</h3>
+        <p class="arch-meta">Custom data layer</p>
+        <p>Shared project for Learning Hub and Brightspace Manager data: synced catalog records, search behavior, feedback, future reporting support, and Manager staff/admin auth.</p>
+      </li>
+    </ol>
+    <p>
+      Current proof: OAuth works and Brightspace course/content reads work. Validation focuses on syncing Course <code>6703</code> metadata into <code>learning_items</code> with production-ready terminology and route hardening.
+    </p>
+  </section>
 
-<section aria-labelledby="phases">
-  <h2 id="phases">Phases</h2>
+  <section class="guide-section" id="phases">
+    <h2>Phases</h2>
 
-  <div class="phase">
-    <h3>In-Course HTML Wrappers</h3>
-    <p class="meta">Phase 0 · Built</p>
-    <ul class="items">
-      <li>
-        <strong>Course Template Package</strong>
-        <p>Shared config, nav, styles — single source in course-config.js</p>
-        <p class="tags">brightspace-courses · No API</p>
-      </li>
-      <li>
-        <strong>Architecture B Tracking</strong>
-        <p>Local dev via filenames; production via BS topic URLs</p>
-        <p class="tags">Completions · deployMode</p>
-      </li>
-      <li>
-        <strong>Calm In-Course UX</strong>
-        <p>Course menu, prev/next, clean-view URLs (d2l_body_type=3)</p>
-        <p class="tags">Navigation · LACE theme</p>
-      </li>
-      <li>
-        <strong>Course Creation SOP</strong>
-        <p>Cheatsheet + admin guide for upload and Content setup</p>
-        <p class="tags">Docs · Proven</p>
-      </li>
-    </ul>
-  </div>
-
-  <div class="phase">
-    <h3>Connect to Brightspace</h3>
-    <p class="meta">Phase 1 · Login live · sync hardening (Aug)</p>
-    <ul class="items">
-      <li>
-        <strong>Brightspace API Auth</strong>
-        <p>3-legged OAuth works locally; production sync hardens around Service User/headless OAuth</p>
-        <p class="tags">OAuth 2.0 · June</p>
-      </li>
-      <li>
-        <strong>Pull Core Data</strong>
-        <p>Validate Course 6703 metadata and confirm LMS API version for Course Offerings</p>
-        <p class="tags">6703 · learning_items</p>
-      </li>
-      <li>
-        <strong>Display in Frontend</strong>
-        <p>Admin diagnostics are live; catalog display follows first metadata sync</p>
-        <p class="tags">Frontend · Live status</p>
-      </li>
-      <li>
-        <strong>SSO / Auth</strong>
-        <p>Use Brightspace for Learning Hub learner auth; use Service User/headless OAuth for data harvesting. Supabase Auth belongs to Brightspace Manager staff/admin access</p>
-        <p class="tags">SSO · Service User</p>
-      </li>
-    </ul>
-  </div>
-
-  <div class="phase">
-    <h3>Your Own Data Layer</h3>
-    <p class="meta">Phase 2 · Planned — after RLS applied</p>
-    <ul class="items">
-      <li>
-        <strong>Supabase Backend</strong>
-        <p>Project and learning_items table are live; production catalog sync route is next</p>
-        <p class="tags">Supabase · Connected</p>
-      </li>
-      <li>
-        <strong>Search Tracking</strong>
-        <p>What learners search for, what they don't find</p>
-        <p class="tags">Events · Custom</p>
-      </li>
-      <li>
-        <strong>Engagement Events</strong>
-        <p>Time on page, clicks, path navigation, drop-off</p>
-        <p class="tags">Analytics · Events</p>
-      </li>
-      <li>
-        <strong>Learner Feedback</strong>
-        <p>Ratings, flags, content usefulness signals</p>
-        <p class="tags">UX · Feedback</p>
-      </li>
-    </ul>
-  </div>
-
-  <div class="phase">
-    <h3>Reporting &amp; Evaluation</h3>
-    <p class="meta">Phase 3 · Fall 2026</p>
-    <ul class="items">
-      <li>
-        <strong>Learner Dashboard</strong>
-        <p>Personal progress, completions, recommendations</p>
-        <p class="tags">Learner · UI</p>
-      </li>
-      <li>
-        <strong>Manager View</strong>
-        <p>Team completion rates, gaps, activity</p>
-        <p class="tags">Manager · Reports</p>
-      </li>
-      <li>
-        <strong>Program Evaluation</strong>
-        <p>Cohort analysis, equity gaps, completion predictors</p>
-        <p class="tags">Evaluation · Econometrics</p>
-      </li>
-      <li>
-        <strong>Population Insights</strong>
-        <p>Who's completing, who isn't, and why — by learner segment</p>
-        <p class="tags">Equity · Mission</p>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<section aria-labelledby="stack">
-  <h2 id="stack">System stack: how the layers connect</h2>
-  <p class="muted">From the browser at the top down to Brightspace at the bottom.</p>
-  <ol class="stack">
-    <li><strong>Learner / Manager / Admin</strong> (browser)</li>
-    <li class="stack-pair">
-      <div><strong>LACE Learning Hub</strong><span class="sub">Discovery · Catalog · Resume</span></div>
-      <div><strong>Supabase</strong><span class="sub">Shared data · Events · Manager auth</span></div>
-    </li>
-    <li><strong>In-Course HTML Wrappers</strong>: <code>course-config.js</code> · <code>course-nav.js</code> · topic pages<span class="sub">Phase 0 · works today without API</span></li>
-    <li><strong>Brightspace REST API</strong>: OAuth 2.0</li>
-    <li><strong>Brightspace (D2L)</strong>: Course content · Completions · Grades · Enrollments</li>
-  </ol>
-
-  <div class="grid-3">
-    <div class="box">
-      <h3>What BS gives you next</h3>
-      <p class="meta">From Brightspace API</p>
-      <ul>
-        <li>Course offering metadata</li>
-        <li>Module / topic structure</li>
-        <li>Stable learner-facing URLs</li>
-        <li>Later: enrollment status</li>
-        <li>Later: completions</li>
-        <li>Later: grade data</li>
+    <div class="phase">
+      <h3>In-Course HTML Wrappers</h3>
+      <p class="arch-meta">Phase 0 · Built</p>
+      <ul class="items">
+        <li>
+          <strong>Course Template Package</strong>
+          <p>Shared config, nav, styles — single source in course-config.js</p>
+          <p class="tags">brightspace-courses · No API</p>
+        </li>
+        <li>
+          <strong>Architecture B Tracking</strong>
+          <p>Local dev via filenames; production via BS topic URLs</p>
+          <p class="tags">Completions · deployMode</p>
+        </li>
+        <li>
+          <strong>Calm In-Course UX</strong>
+          <p>Course menu, prev/next, clean-view URLs (d2l_body_type=3)</p>
+          <p class="tags">Navigation · LACE theme</p>
+        </li>
+        <li>
+          <strong>Course Creation SOP</strong>
+          <p>Cheatsheet + admin guide for upload and Content setup</p>
+          <p class="tags">Docs · Proven</p>
+        </li>
       </ul>
     </div>
-    <div class="box">
-      <h3>What you capture</h3>
-      <p class="meta">Your own data (Supabase)</p>
-      <ul>
-        <li>Catalog records in <code>learning_items</code></li>
-        <li>Search queries + results</li>
-        <li>Click paths &amp; navigation</li>
-        <li>Content ratings / flags</li>
-        <li>Learning path choices</li>
-        <li>Drop-off points</li>
-      </ul>
-    </div>
-    <div class="box">
-      <h3>What you surface first</h3>
-      <p class="meta">Outputs / reporting</p>
-      <ul>
-        <li>Admin connection health</li>
-        <li>Synced learning item preview</li>
-        <li>Catalog discovery cards</li>
-        <li>Later: learner progress dashboards</li>
-        <li>Later: manager team views</li>
-        <li>Later: program completion rates</li>
-      </ul>
-    </div>
-  </div>
-</section>
 
-<section aria-labelledby="api-decisions">
-  <h2 id="api-decisions">Brightspace API integration decisions</h2>
-  <p>
-    Outcome: <a href="api-integration-architecture.html">API Integration Decisions</a> confirms Brightspace as the system of record and the Learning Hub as the learner-facing discovery layer.
-  </p>
-  <div class="grid-3">
-    <div class="box">
-      <h3>Service user</h3>
-      <p class="meta">Auth model</p>
-      <ul>
-        <li>Dedicated Brightspace service account</li>
-        <li>Role assigned high enough for org unit inheritance</li>
-        <li>Scopes narrowed before production</li>
+    <div class="phase">
+      <h3>Connect to Brightspace</h3>
+      <p class="arch-meta">Phase 1 · Login live · sync hardening (Aug)</p>
+      <ul class="items">
+        <li>
+          <strong>Brightspace API Auth</strong>
+          <p>3-legged OAuth works locally; production sync hardens around Service User/headless OAuth</p>
+          <p class="tags">OAuth 2.0 · June</p>
+        </li>
+        <li>
+          <strong>Pull Core Data</strong>
+          <p>Validate Course 6703 metadata and confirm LMS API version for Course Offerings</p>
+          <p class="tags">6703 · learning_items</p>
+        </li>
+        <li>
+          <strong>Display in Frontend</strong>
+          <p>Admin diagnostics are live; catalog display follows first metadata sync</p>
+          <p class="tags">Frontend · Live status</p>
+        </li>
+        <li>
+          <strong>SSO / Auth</strong>
+          <p>Use Brightspace for Learning Hub learner auth; use Service User/headless OAuth for data harvesting. Supabase Auth belongs to Brightspace Manager staff/admin access</p>
+          <p class="tags">SSO · Service User</p>
+        </li>
       </ul>
     </div>
-    <div class="box">
-      <h3>APIs plus Data Hub</h3>
-      <p class="meta">Data source split</p>
-      <ul>
-        <li>APIs for learner-facing search and content structure</li>
-        <li>Data Hub for initial load and reporting</li>
-        <li>Store Brightspace IDs in Supabase</li>
-      </ul>
-    </div>
-    <div class="box">
-      <h3>Bulk load, then refresh</h3>
-      <p class="meta">Sync model</p>
-      <ul>
-        <li>Nightly catalog/course/module reconciliation</li>
-        <li>More frequent sync only for awards or completion if needed</li>
-        <li>Archive or hide locally instead of hard-deleting courses</li>
-      </ul>
-    </div>
-  </div>
-</section>
 
-<section aria-labelledby="hub-views">
-  <h2 id="hub-views">LACE Learning Hub — one app, role-based views</h2>
-  <p>
-    Dashboards are built <strong>into LACE Learning Hub</strong>, not as separate Brightspace, Supabase, or Monday products.
-    A single API layer merges Brightspace + Supabase; each user sees only their role's screens.
-  </p>
+    <div class="phase">
+      <h3>Your Own Data Layer</h3>
+      <p class="arch-meta">Phase 2 · Planned — after RLS applied</p>
+      <ul class="items">
+        <li>
+          <strong>Supabase Backend</strong>
+          <p>Project and learning_items table are live; production catalog sync route is next</p>
+          <p class="tags">Supabase · Connected</p>
+        </li>
+        <li>
+          <strong>Search Tracking</strong>
+          <p>What learners search for, what they don't find</p>
+          <p class="tags">Events · Custom</p>
+        </li>
+        <li>
+          <strong>Engagement Events</strong>
+          <p>Time on page, clicks, path navigation, drop-off</p>
+          <p class="tags">Analytics · Events</p>
+        </li>
+        <li>
+          <strong>Learner Feedback</strong>
+          <p>Ratings, flags, content usefulness signals</p>
+          <p class="tags">UX · Feedback</p>
+        </li>
+      </ul>
+    </div>
 
-  <div class="grid-2">
-    <div class="box">
-      <h3>My Learning</h3>
-      <p class="meta">Learner · Phase 1</p>
-      <ul>
-        <li>Enrolled courses + completion %</li>
-        <li>Last visited · resume link</li>
-        <li>Own data only (API + RLS)</li>
+    <div class="phase">
+      <h3>Reporting &amp; Evaluation</h3>
+      <p class="arch-meta">Phase 3 · Fall 2026</p>
+      <ul class="items">
+        <li>
+          <strong>Learner Dashboard</strong>
+          <p>Personal progress, completions, recommendations</p>
+          <p class="tags">Learner · UI</p>
+        </li>
+        <li>
+          <strong>Manager View</strong>
+          <p>Team completion rates, gaps, activity</p>
+          <p class="tags">Manager · Reports</p>
+        </li>
+        <li>
+          <strong>Program Evaluation</strong>
+          <p>Cohort analysis, equity gaps, completion predictors</p>
+          <p class="tags">Evaluation · Econometrics</p>
+        </li>
+        <li>
+          <strong>Population Insights</strong>
+          <p>Who's completing, who isn't, and why — by learner segment</p>
+          <p class="tags">Equity · Mission</p>
+        </li>
       </ul>
     </div>
-    <div class="box">
-      <h3>My Team</h3>
-      <p class="meta">Manager · Phase 3</p>
-      <ul>
-        <li>Team completion rates</li>
-        <li>Gaps · last active</li>
-        <li>Scoped — not org-wide by default</li>
-      </ul>
-    </div>
-    <div class="box">
-      <h3>Program reporting</h3>
-      <p class="meta">Program staff · Phase 3</p>
-      <ul>
-        <li>Cohort &amp; equity analysis</li>
-        <li>Content effectiveness</li>
-        <li>May not need BS super-admin</li>
-      </ul>
-    </div>
-    <div class="box">
-      <h3>Admin command center</h3>
-      <p class="meta">Brightspace Manager</p>
-      <ul>
-        <li>API health · sync status</li>
-        <li>Course builder · file checks</li>
-        <li>Keeps Hub learner-facing</li>
-      </ul>
-    </div>
-  </div>
+  </section>
 
-  <p class="footnote">
-    Monday.com = build/ops tasks only · Wiki = policies &amp; decisions ·
-    <a href="marlana.html#lace-hub-dashboard">Full plan in Marlie's workspace</a>
-  </p>
-</section>
+  <section class="guide-section" id="stack">
+    <h2>System stack: how the layers connect</h2>
+    <p class="arch-meta">From the browser at the top down to Brightspace at the bottom.</p>
+    <ol class="stack">
+      <li><strong>Learner / Manager / Admin</strong> (browser)</li>
+      <li class="stack-pair">
+        <div><strong>LACE Learning Hub</strong><span class="sub">Discovery · Catalog · Resume</span></div>
+        <div><strong>Supabase</strong><span class="sub">Shared data · Events · Manager auth</span></div>
+      </li>
+      <li><strong>In-Course HTML Wrappers</strong>: <code>course-config.js</code> · <code>course-nav.js</code> · topic pages<span class="sub">Phase 0 · works today without API</span></li>
+      <li><strong>Brightspace REST API</strong>: OAuth 2.0</li>
+      <li><strong>Brightspace (D2L)</strong>: Course content · Completions · Grades · Enrollments</li>
+    </ol>
+
+    <div class="arch-grid-3">
+      <div class="home-panel">
+        <h3>What BS gives you next</h3>
+        <p class="arch-meta">From Brightspace API</p>
+        <ul>
+          <li>Course offering metadata</li>
+          <li>Module / topic structure</li>
+          <li>Stable learner-facing URLs</li>
+          <li>Later: enrollment status</li>
+          <li>Later: completions</li>
+          <li>Later: grade data</li>
+        </ul>
+      </div>
+      <div class="home-panel">
+        <h3>What you capture</h3>
+        <p class="arch-meta">Your own data (Supabase)</p>
+        <ul>
+          <li>Catalog records in <code>learning_items</code></li>
+          <li>Search queries + results</li>
+          <li>Click paths &amp; navigation</li>
+          <li>Content ratings / flags</li>
+          <li>Learning path choices</li>
+          <li>Drop-off points</li>
+        </ul>
+      </div>
+      <div class="home-panel">
+        <h3>What you surface first</h3>
+        <p class="arch-meta">Outputs / reporting</p>
+        <ul>
+          <li>Admin connection health</li>
+          <li>Synced learning item preview</li>
+          <li>Catalog discovery cards</li>
+          <li>Later: learner progress dashboards</li>
+          <li>Later: manager team views</li>
+          <li>Later: program completion rates</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide-section" id="api-decisions">
+    <h2>Brightspace API integration decisions</h2>
+    <p>
+      Outcome: <a href="api-integration-architecture.html">API Integration Decisions</a> confirms Brightspace as the system of record and the Learning Hub as the learner-facing discovery layer.
+    </p>
+    <div class="arch-grid-3">
+      <div class="home-panel">
+        <h3>Service user</h3>
+        <p class="arch-meta">Auth model</p>
+        <ul>
+          <li>Dedicated Brightspace service account</li>
+          <li>Role assigned high enough for org unit inheritance</li>
+          <li>Scopes narrowed before production</li>
+        </ul>
+      </div>
+      <div class="home-panel">
+        <h3>APIs plus Data Hub</h3>
+        <p class="arch-meta">Data source split</p>
+        <ul>
+          <li>APIs for learner-facing search and content structure</li>
+          <li>Data Hub for initial load and reporting</li>
+          <li>Store Brightspace IDs in Supabase</li>
+        </ul>
+      </div>
+      <div class="home-panel">
+        <h3>Bulk load, then refresh</h3>
+        <p class="arch-meta">Sync model</p>
+        <ul>
+          <li>Nightly catalog/course/module reconciliation</li>
+          <li>More frequent sync only for awards or completion if needed</li>
+          <li>Archive or hide locally instead of hard-deleting courses</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide-section" id="hub-views">
+    <h2>LACE Learning Hub — one app, role-based views</h2>
+    <p>
+      Dashboards are built <strong>into LACE Learning Hub</strong>, not as separate Brightspace, Supabase, or Monday products.
+      A single API layer merges Brightspace + Supabase; each user sees only their role's screens.
+    </p>
+
+    <div class="home-grid">
+      <div class="home-panel">
+        <h3>My Learning</h3>
+        <p class="arch-meta">Learner · Phase 1</p>
+        <ul>
+          <li>Enrolled courses + completion %</li>
+          <li>Last visited · resume link</li>
+          <li>Own data only (API + RLS)</li>
+        </ul>
+      </div>
+      <div class="home-panel">
+        <h3>My Team</h3>
+        <p class="arch-meta">Manager · Phase 3</p>
+        <ul>
+          <li>Team completion rates</li>
+          <li>Gaps · last active</li>
+          <li>Scoped — not org-wide by default</li>
+        </ul>
+      </div>
+      <div class="home-panel">
+        <h3>Program reporting</h3>
+        <p class="arch-meta">Program staff · Phase 3</p>
+        <ul>
+          <li>Cohort &amp; equity analysis</li>
+          <li>Content effectiveness</li>
+          <li>May not need BS super-admin</li>
+        </ul>
+      </div>
+      <div class="home-panel">
+        <h3>Admin command center</h3>
+        <p class="arch-meta">Brightspace Manager</p>
+        <ul>
+          <li>API health · sync status</li>
+          <li>Course builder · file checks</li>
+          <li>Keeps Hub learner-facing</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footnote">
+      Monday.com = build/ops tasks only · Wiki = policies &amp; decisions ·
+      <a href="marlana.html#lace-hub-dashboard">Full plan in Marlie's workspace</a>
+    </p>
+  </section>
 
 </main>
-
-</div>
 
 </body>
 </html>
